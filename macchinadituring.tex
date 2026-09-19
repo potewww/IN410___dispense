@@ -1,0 +1,173 @@
+Alla luce di quanto fatto prima, sembrerebbe naturale chiamare algoritmica qualsiasi procedura costruita a partire da un
+automa finito.
+In particolare è chiaro che una tale procedura può essere descritta in un linguaggio di
+programmazione e implementata in un qualsiasi sistema informatico. L’affermazione reciproca al contrario
+sembrerebbe troppo restrittiva: non sembra difendibile che ogni procedura che si voglia definire algoritmica
+debba essere realizzata mediante il modello di algoritmi associato agli automi finiti (più avanti vederemo degli esempi). 
+Abolire completamente il carattere finito dell’insieme degli stati
+svuoterebbe di significato la nozione stessa di algoritmo. Un algoritmo è, per definizione, una procedura descritta da un insieme finito di istruzioni/regole — è proprio questo che lo rende "eseguibile", trascrivibile, comunicabile, implementabile in un programma. Se l'insieme degli stati fosse infinito, la "macchina" non sarebbe più descrivibile con una quantità finita di dati.
+Per conservare il carattere finitario auspicato senza rinunciare a fondamentali
+capacità di calcolo, si può prescindere dal principio che l’automa non modifica la parola iniziale, dunque nel
+leggere un certo simbolo dalla memoria potrà successivamente utilizzare questa informazione per modificare il
+proprio stato ma anche per modificare la memoria scrivendo sulla stessa un nuovo carattere.
+Questa variante
+risulta interessante solo se a sua volta lo scorrimento automatico dei caratteri in lettura viene modificato per
+permettere alla macchina di riesaminare i caratteri che sono stati modificati nei passi di calcolo precedenti,
+altrimenti la modifica che permette di scrivere non avrebbe alcun impatto sul calcolo effettuato.
+
+
+
+\begin{defi} Una \emph{configurazione ad un nastro di alfabeto $A$ e insieme degli stati $Q$} è una tripla $(f,p,q)$, dove
+\begin{enumerate}
+\item il \textit{nastro} è una funzione $f : \mathbb{Z} \to A'$ dove $A' := A \cup \{\square\}$ (a volte indicato anche con $\tilde{A}$) e tale che $|f^{-1}(A)| < \infty$,
+\item $p \in \mathbb{Z}$,
+\item $q \in Q'$ dove $Q' = Q \cup \{q_F^0, q_F^1\}$ essendo $q_F^0$ e $q_F^1$ due stati che non appartengono a $Q$.
+\end{enumerate}
+
+L'insieme delle configurazioni per un nastro di alfabeto $A$ e insieme degli stati $Q$ sarà denotato con
+\[
+Conf_1^{A,Q} := \{(f,p,q) \text{ che verificano i punti {(1)}, {(2)}, e {(3)}}\}
+\]
+\end{defi}
+Il criterio di arresto, che questa volta non è determinato dalla fine della lettura del nastro, deve essere
+specificato esplicitamente utilizzando un certo numero di stati terminali, che nella definizione sopra sono $q_F^0$ e $q_F^1$.
+Bisogna inoltre fissare uno stato particolare da utilizzare per la codifica della configurazione iniziale a partire dalla parola di ingresso. Questo stato iniziale indicato da $q_0 \in  Q$ determina allora la configurazione
+iniziale tramite una funzione di input $\epsilon()$.
+Lo stato iniziale sarà d’ora in poi indicato da $q_0$.
+\begin{defi}[Machcina di Turing]
+     Dato un alfabeto $A$ e un insieme finito di stati $Q$, la \emph{macchina di Turing di alfabeto $A$ e stati $Q$} è un'applicazione
+\[
+\mu : Q \times \tilde{A} \to Q' \times \tilde{A} \times \{+1,-1\}.
+\]
+
+\end{defi}
+
+In realtà  vorremmo che la macchina di Turing sia allo stesso tempo i seguenti tre oggetti:
+\[
+Q\times A \to A, \qquad Q\times A \to \{-1,+1\}, \qquad Q \times A \to Q
+\]
+Le precedenti funzioni rappresentano rispettivamente il sovrascrimento di un carattere, il cambio di stato e lo spostamento del puntatore.
+La funzione $\mu$ della definizione precedente formalizza in un'unica funzione i tre precedenti dati, infatti
+\[
+\mu : Q \times \tilde{A} \to Q' \times \tilde{A} \times \{+1,-1\}
+\]
+prende in input una coppia $(q,a)$, dove:
+\begin{itemize}
+\item $q \in Q$ è lo \textit{stato corrente} della macchina,
+\item $a \in \tilde{A}$ è il \textit{carattere letto} sotto il puntatore (può essere un simbolo di $A$ oppure il blank $\square$),
+\end{itemize}
+e restituisce una tripla $(q', a', m)$, dove:
+\begin{itemize}
+\item $q' \in Q'$ è il \textit{nuovo stato} in cui passa la macchina (può essere uno stato ``di lavoro'' in $Q$, oppure uno dei due stati terminali $q_F^0, q_F^1$ se il calcolo deve fermarsi),
+\item $a' \in \tilde{A}$ è il \textit{carattere da scrivere} al posto di $a$ nella cella corrente,
+\item $m \in \{+1,-1\}$ è lo \textit{spostamento} del puntatore: $+1$ a destra, $-1$ a sinistra.
+\end{itemize}
+In altre parole, $\mu$ è la \emph{tabella delle regole}: ``se sono nello stato $q$ e leggo il carattere $a$, allora scrivo $a'$, mi sposto di $m$ e passo allo stato $q'$''. 
+
+\begin{defi}
+Sia $\mu$ una macchina di Turing di alfabeto $A$ e insieme degli stati $Q$, l'\emph{algoritmo formale} $\mathcal{A}_\mu$ associato a $\mu$ è la tupla $(A,\{0,1\}, Conf_1^{A,Q},\epsilon, \tau, \delta)$: dove
+\begin{enumerate}
+\item l'insieme delle configurazioni è dato da
+\[
+Conf_1^{A,Q}
+\]
+
+\item la funzione di input $\epsilon : A^* \to Conf_1^{A,Q}$ dove $\epsilon(w) = (f_w, 1, q_0)$ con $f_w$ corrisponde alla funzione nastro per cui
+\[
+f_w(n) = \begin{cases} w(n) & \text{se } 1 \le n \le |w| \\ \square & \text{altrimenti} \end{cases}
+\]
+
+\item la funzione di transizione
+\[
+\tau : Conf_1^{A,Q} \to Conf_1^{A,Q}
+\]
+è definita come $\tau((f,p,q)) = (f',p',q')$ dove supposta $\mu(q,f(p)) = (q',a',m)$ si porrà $p' = p+m$ e
+\[
+f'(x) = \begin{cases} f(x) & \text{se } x \neq p \\ a' & \text{se } x = p. \end{cases}
+\]
+
+\item la funzione di uscita $\delta$ associa ad una configurazione data $(f,p,q)$ dove $q \in \{q_F^0, q_F^1\}$ il valore $0$ se $q = q_F^0$ e il valore $1$ se $q = q_F^1$.
+\end{enumerate}
+\end{defi}
+
+Cerchiamo di capire come si esegue un passo di calcolo in questo caso.
+\begin{rema}
+Data una configurazione $(f,p,q) \in Conf_1^{A,Q}$ (nastro, posizione del puntatore, stato corrente), un passo di calcolo si esegue così:
+\begin{enumerate}
+\item si legge il carattere sotto il puntatore: $a := f(p)$;
+\item si applica $\mu$: $\mu(q,a) = (q',a',m)$;
+\item si aggiorna lo stato: il nuovo stato è $q'$;
+\item si aggiorna la posizione: $p' = p+m$ (il puntatore si sposta di una cella a destra o sinistra);
+\item si aggiorna il nastro: resta identico ovunque tranne che nella cella $p$, dove viene scritto $a'$:
+\[
+f'(x) = \begin{cases} f(x) & x \neq p \\ a' & x = p. \end{cases}
+\]
+\end{enumerate}
+Questo definisce la funzione di transizione $\tau : Conf_1^{A,Q}\to Conf_1^{A,Q}$, $\tau(f,p,q)=(f',p',q')$.
+
+\end{rema}
+Vediamo ora l'avvio e l'arresto del calcolo.
+\begin{rema}\
+\begin{itemize}
+\item \emph{Avvio:} data una parola di input $w \in A^*$, la configurazione iniziale è $\epsilon(w) = (f_w, 1, q_0)$: il nastro contiene $w$ scritta a partire dalla cella $1$ (blank altrove), il puntatore parte dalla cella $1$ (inizio della parola), lo stato iniziale è $q_0$.
+\item \emph{Iterazione:} si applica ripetutamente $\tau$ per ottenere la sequenza di configurazioni $$\epsilon(w), \tau(\epsilon(w)), \tau^2(\epsilon(w)), \dots$$  questa è l'esecuzione del calcolo, passo dopo passo.
+\item \emph{Arresto:} il calcolo si ferma quando si raggiunge una configurazione il cui stato è $q_F^0$ oppure $q_F^1$ (questi sono gli unici stati per cui $\mu$ non è più definita/rilevante, essendo terminali).
+\item \emph{Output:} se ci si ferma in $q_F^1$ l'output è $1$ (accetta); se ci si ferma in $q_F^0$ l'output è $0$ (rifiuta). Se non ci si ferma mai, l'algoritmo non produce output su quell'input (il calcolo diverge).
+\end{itemize}
+In sintesi, $\mu$ è la ``regola locale'' (cosa fare dato stato+carattere letto); $\tau$ applica questa regola a una configurazione globale producendone la successiva; $\epsilon$ dice come tradurre l'input iniziale in una configurazione; l'iterazione di $\tau$ a partire da $\epsilon(w)$, fino a un eventuale stato terminale, è \emph{l'esecuzione dell'algoritmo} $\mathcal{A}_\mu$ sull'input $w$.
+\end{rema}
+
+
+\begin{defi}
+Sia $X \subset A^*$, allora $X$ si dice \emph{decidibile tramite Macchina di Turing} (o \emph{Turing-decidibile}) se esiste $Q$ insieme finito di stati e una macchina di alfabeto $A$ e insieme degli stati $Q$ per cui l'algoritmo associato $\mathcal{A}_\mu$ decide l'insieme $X$.
+
+\end{defi}
+
+Analogamente si ottiene la definizione di insieme \emph{semi-decidibile} per macchina di Turing se esiste una macchina di Turing tale che l'algoritmo associato semi-decide $X$.
+
+\begin{prop}
+Ogni insieme decidibile per macchina di Turing è anche semidecidibile per macchina di
+Turing.
+\begin{proof}
+    Per dimostrare questa proposizione è suﬀiciente costruire una macchina 
+$\tilde \mu$ che per ogni
+parola $w\in A^*$ e $w \notin X$ entri in una configurazione non terminale.
+A questo scopo, sia $\mu$ la macchina che decide $X$ e sia $Q$ il suo insieme degli stati, andiamo a modificarla
+nelle transizioni che coinvolgono il suo stato finale non accettante.
+Consideriamo la macchina $\mu^{*}$ di alfabeto $A$ e insieme degli stati
+$Q^{*}=Q\cup\{q^{*}\}$ che in corrispondenza delle transizioni di $\mu$
+che coinvolgono lo stato non accettante opera una transizione verso una
+configurazione $(f,p,q^{*})$ per cui
+\[
+\tau(f,p,q^{*})=(f,p',q^{*})
+\]
+che porta la macchina in una computazione che non termina.
+Più precisamente, data la macchina
+\[
+\mu : Q\times A' \longrightarrow Q' \times A' \times \{-1,+1\},
+\]
+si costruisce la macchina
+\[
+\mu^{*}:Q^{*}\times A'
+\longrightarrow
+Q^{*'}\times A'\times\{-1,+1\},
+\]
+dove
+\[
+Q^{*}=Q\cup\{q^{*}\}
+\]
+e
+\[
+\mu^{*}(q,a)=
+\begin{cases}
+\mu(q,a)
+&
+\text{se }\mu(q,a)=(q',a',m)\text{ e }q'\neq q_{F}^{0},
+\\[1ex]
+(q^{*},a,+1)
+&
+\text{altrimenti.}
+\end{cases}
+\]
+\end{proof}
+\end{prop}

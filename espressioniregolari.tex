@@ -1,0 +1,78 @@
+Avendo individuato i costrutti rispetto ai quali l’insieme di tutti gli insiemi regolari resta invariato (concatenazione, unione e operatore * di Kleene), si può formalizzare una grammatica data dalla rappresentazione
+simbolica di alcuni insiemi regolari di base.
+\begin{defi}
+    Fissiamo un alfabeto $A$. L'insieme $\mathcal E$ (anche indicato con $E$) delle \textit{espressioni regolari} sull'alfabeto 
+$A$ è il più piccolo insieme tale che: 
+\begin{itemize}
+    \item $\mathbb  0, \mathbb 1 \in \mathcal E$;
+
+    \item  per ogni $a \in A$ $a \in \mathcal E$;
+
+    \item se $E_1, E_2 \in \mathcal E $ allora 
+    \(
+    E_1 + E_2,
+    E_1 \cdot E_2,
+    E_1^*\in \mathcal E
+    \)
+\end{itemize}
+\end{defi}
+\begin{exam}
+    Alcune espressioni regolari sull’alfabeto $A= {0,1}$ sono:
+    \begin{itemize}
+        \item $\mathbb 0$;
+
+        \item $\mathbb 0+0$;
+
+        \item $(0+1)^*$;
+
+        \item $0\cdot (0+1\cdot 1)^*\cdot \mathbb 1$.
+    \end{itemize}
+\end{exam}
+\begin{rema}
+    Chiaramente, fino ad ora, abbiamo usato i simboli $+,\cdot, \cdot$ in due contesti diversi: per la definizione formale di espressione regolare e per le definizioni di operazioni sui sottoinsiemi degli alfabeti.
+    Questo non è un problema visto che si capisce a quale definizione si fa riferimento in base al contesto.
+\end{rema}
+\begin{defi}[Interpretazione di un'espressione regolare]
+\label{def:22}
+Per ogni espressione regolare $e\in E$, di alfabeto $A$, definiamo un'interpretazione
+\[
+\llbracket\ \rrbracket : E \longrightarrow 2^{A^*}
+\]
+dove
+\[
+\llbracket e\rrbracket :=
+\left\{
+\begin{matrix}
+\varnothing & \text{se } e=\mathbb{0} & \text{(insieme vuoto)}\\[2pt]
+\{\epsilon\} & \text{se } e=\mathbb{1} & \text{(insieme singleton parola vuota)}\\[2pt]
+\{a\} & \text{se } e=a\in A & \text{(insieme singleton simbolo)}\\[2pt]
+\llbracket e_1\rrbracket\cdot\llbracket e_2\rrbracket & \text{se } e=e_1\cdot e_2 & \text{(concatenazione)}\\[2pt]
+\llbracket e_1\rrbracket+\llbracket e_2\rrbracket & \text{se } e=e_1+e_2 & \text{(unione)}\\[2pt]
+\llbracket e_1\rrbracket^* & \text{se } e=e_1^* & \text{(insieme star)}
+\end{matrix}
+\right.
+\]
+\end{defi}
+\begin{rema}
+    Chiaramente, riprendendo la precedente osservazione, con $\llbracket e_1\rrbracket\cdot\llbracket e_2\rrbracket$ indichiamo la conatenazione degli insiemi $\llbracket e_1\rrbracket$ e $\llbracket e_2\rrbracket$.
+\end{rema}
+
+\begin{prop} Data un’espressione regolare $e\in E$ l’insieme $\llbracket e \rrbracket$ è un insieme regolare.
+\begin{proof} Questo risultato è conseguenza delle proprietà di chiusura (per prodotto, somma e star)
+soddisfatte dagli insiemi DFA-decidibili, e dal fatto che le tre espressioni regolari di base si interpretano
+con insiemi DFA-decidibili: infatti l’insieme vuoto è deciso dall’automa ... (pagina 31).
+\end{proof}
+\end{prop}
+Quello che invece vorremmo mostrare ora è che vale anche l'implicazione inversa della proposizione precedente. Per farlo introdurremo una nuova versione di automa.
+\begin{defi}
+Un \textit{automa a stati finiti non-deterministico generalizzato} di alfabeto $A$ e insieme degli stati $Q$ è una tripla:
+\[
+(T, q_0, F)
+\]
+dove
+\[
+T : Q \times E \to 2^Q,
+\]
+$q_0 \in Q$ è detto stato iniziale, $F \subset Q$ è detto insieme degli stati finali accettanti.
+\end{defi}
+Da finire ...

@@ -1,0 +1,31 @@
+\usepackage[margin=1in]{geometry}
+\usepackage{comment, amsmath, amsthm, amssymb, amsfonts, mathtools, graphicx, thmtools, tikz-cd, amscd, subcaption, enumitem,  hyperref, bbm}
+\usepackage{bbold}
+  \usepackage{stmaryrd}
+\usepackage[english]{babel}
+\usetikzlibrary{automata,positioning,arrows}
+
+\usepackage[dvipsnames]{xcolor} % Adds more colour for the links
+
+
+\definecolor{lilla}{RGB}{160,  90, 210}   % più scuro/viola
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=lilla,
+    citecolor=lilla,
+    urlcolor=lilla,
+}
+
+
+
+\theoremstyle{definition}
+\newtheorem{theo}{Theorem} [section] 
+\newtheorem{defi}[theo]{Definition}
+\newtheorem{lemm} [theo]{Lemma}
+\newtheorem{rema} [theo] {Remark}
+\newtheorem{prop} [theo] {Proposition}
+\newtheorem{exam} [theo]{Example}
+\newtheorem{coro} [theo]{Corollary}
+\newtheorem{ex} {Exercise}
+\newtheorem*{sol} {Solution}

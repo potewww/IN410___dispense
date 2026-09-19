@@ -1,0 +1,121 @@
+Per determinare se un determinato linguaggio è regolare: mentre la dimostrazione suﬀiciente di AF-
+decidibilità (esibendo esplicitamente un automa) può risultare noiosa e complicata, è possibile fornire dimo-
+strazioni alternative (possibilmente più semplici) mostrando che l’insieme è ottenibile a partire da insiemi
+AF-decidibili utilizzando operazioni “compatibili” con l’AF-decidibilità (proprietà di chiusura).
+In questa sezione vedremo dunque che esistono operazioni fatte su insiemi AF-decidibili che permettono
+di ottenere un altro insieme DFA-decidibile.
+\begin{defi}
+    Sia $A$ un alfabeto e $X_1$ e $x_2$ due inisemi di parole su $A$, ovvero $X_1,X_2 \subset A^*$. Definiamo allora:
+    \begin{itemize}
+    \item l'operazione di \emph{concatenazione}:
+    \[
+    X_1 \cdot X_2 := \{ w_1 w_2 \in A^* \mid w_i \in X_i \};
+    \]
+
+    \item l'operazione di \emph{somma}:
+    \[
+    X_1 + X_2 := \{ w \in A^* \mid w \in X_1 \text{ oppure } w \in X_2 \}
+    \]
+    (di fatto, è l'unione insiemistica di $X_1$ con $X_2$);
+
+    \item l'operazione di \emph{star di Kleene}:
+    \[
+    X^* := \{ w_1 w_2 \dots w_n \mid w_i \in X, \text{for } i=1,\dots,n \text{ e } n\geq 0 \}
+    \]
+\end{itemize}
+
+\end{defi}
+
+\begin{prop}\label{prop:8}
+Siano $X_1$ e $X_2$ regolari allora anche $X_1+X_2$ è regolare.
+
+
+\begin{proof}
+    
+Sia $\mathcal{A}_1 = (T_1,q_0,F_1)$ l'automa che decide l'insieme $X_1$ e sia $\mathcal{A}_2 = (T_2,q_0',F_2)$ l'automa che decide $X_2$.
+L'automa che riconosce $X_1+X_2$ è ottenuto utilizzando il prodotto cartesiano degli stati dei due automi e calcolando l'evoluzione ``parallela'' di entrambi gli automi a partire da uno stato coppia, in questo modo se una delle due componenti dello stato è accettante alla fine della computazione la parola sarà accettata poiché apparterrà ad uno dei due insiemi e quindi sarà nella loro unione.
+
+Costruzione dell'automa $\mathcal{A} = (T,q_0'',F)$ di alfabeto $A$ e insieme degli stati $Q = Q_1\times Q_2$: definiamo
+\[
+q_0'' = (q_0,q_0'), \qquad F = F_1\times Q_2 \cup Q_1\times F_2
+\]
+
+e
+\[
+T((q_1,q_2),a) = (T_1(q_1,a), T_2(q_2,a)).
+\]
+Mostriamo che $\mathcal{A}$ decide precisamente $X_1+X_2$.
+\[
+T^*((q_0,q_0'),w)
+=
+\left(T_1^*(q_0,w),T_2^*(q_0',w)\right).
+\]
+
+Mostriamo ora che l'automa $\mathcal{A}$ decide l'insieme $X_1+X_2$, 
+ovvero che la funzione associata all'automa coincide con la funzione caratteristica
+di tale insieme.
+
+Sia $w\in A^*$. Dalla definizione dell'insieme degli stati finali si ha:
+\[
+\begin{aligned}
+f_{\mathcal{A}}(w)=1
+&\iff
+T^*((q_0,q_0'),w)\in F\\
+&\iff
+\left(T_1^*(q_0,w),T_2^*(q_0',w)\right)
+\in (F_1\times Q_2)\cup(Q_1\times F_2)\\
+&\iff
+T_1^*(q_0,w)\in F_1
+\ \text{oppure}\
+T_2^*(q_0',w)\in F_2\\
+&\iff
+f_{\mathcal{A}_1}(w)=1
+\ \text{oppure}\
+f_{\mathcal{A}_2}(w)=1\\
+&\iff
+w\in X_1
+\ \text{oppure}\
+w\in X_2\\
+&\iff
+w\in X_1+X_2.
+\end{aligned}
+\]
+
+Quindi, per ogni $w\in A^*$,
+\[
+f_{\mathcal{A}}(w)=\mathbf{1}_{X_1+X_2}(w).
+\]
+
+Pertanto l'automa $\mathcal{A}$ decide l'insieme $X_1+X_2$, e quindi
+$X_1+X_2$ è regolare.
+\end{proof}
+\end{prop}
+
+
+\begin{ex}\label{es:3}
+Si consideri l'alfabeto $A=\{0,1\}$ e sia $B=\{1\}$ la restrizione all'insieme che contiene il solo simbolo $1$; si considerino l'insieme delle parole di alfabeto $A$ di lunghezza pari:
+\[
+X_1 = \{ w \in A^* \mid |w| = 2n,\ n\geq 0 \}
+\]
+e l'insieme delle parole di alfabeto $A$ che contengono un numero pari di $1$:
+\[
+X_2 = \{ w \in A^* \mid |w_{|B}| = 2k,\ k\geq 0 \}
+\]
+qui si è utilizzata la notazione $w_{|B}$ per indicare la parola $w$ ristretta ai soli elementi di alfabeto $B$, (si noti che si tratta degli insiemi considerati in Figura~\ref{fig:automa} e in Figura~\ref{fig:parita}).
+
+Costruire l'automa che decide $X_1+X_2$.
+
+
+\begin{proof}
+L'automa si può ottenere utilizzando la costruzione di composizione parallela utilizzata nella prova della proposizione a partire dai due automi per $X_1$ e $X_2$.
+\end{proof}
+\end{ex}
+
+
+Mostriamo ora un'altra proprietà di chiusura degli insiemi regolari: la classe degli insiemi regolari è chiusa per concatenazione, ovvero:
+
+\begin{prop}\label{prop:9}
+Siano $X_1$ e $X_2$ regolari allora anche $X_1\cdot X_2$ è regolare.
+\end{prop}
+
+Potremmo tentare la costruzione di un automa come nella proposizione precedente in modo che ogni parola $w\in X_1X_2$ abbia un inizio riconosciuto dall'automa che riconosce $X_1$ e continui con una seconda parte che sia accettata dall'automa che riconosce $X_2$. In pratica si potrebbe concatenare il primo automa con il secondo, ma il problema sarebbe che potrebbero esserci più modi di fattorizzare $w$ in modo che il primo automa accetti la prima parte di $w$. Per poter definire l'automa concatenazione bisognerebbe sapere a quale punto passare dal primo al secondo automa (e non è detto che ci sia un unico punto che vada bene per tutte le parole di $X_1\cdot X_2$). Per risolvere questo problema si introduce una nuova nozione: la nozione di computazione \emph{non-deterministica}.

@@ -1,0 +1,579 @@
+Il concetto di computazione non deterministica viene introdotto per modellare la possibilità di effettuare
+transizioni multiple (in questo caso il non determinismo modella una sorta di computazione parallela) oppure
+la possibiltà di scegliere tra più possibili evoluzioni della computazione.
+Per ottenere una versione non deterministica del concetto di automa a stati finiti introdotto nella sezione
+precedente, bisogna variare la definizione nel punto in cui si stabilisce che $Q$ è il codominio della tabella
+delle transizioni, sostituendo $Q$ con l’insieme delle parti di $Q$, ovvero $2^Q$: quindi dando alla funzione T la
+possibilità di fornire non un unico stato ma un insieme di stati; in questo modo avremo un modello di calcolo
+simile al precedente con una dinamica non deterministica poiché può seguire più computazioni allo stesso
+tempo, quindi definiamo:
+\begin{defi}[Automa Finito Non-deterministico]
+Siano $A$ e $Q$ insiemi finiti. Un \emph{automa finito non-deterministico} di alfabeto $A$ e insieme degli stati $Q$ è una tripla $(T,q_0,F)$ dove
+\[
+T : Q \times A \longrightarrow 2^Q,
+\]
+\[
+F \subseteq Q,
+\]
+e $q_0\in Q$ è uno stato particolare, detto \emph{stato iniziale}.
+\end{defi}
+
+Come nel caso deterministico, associamo alla nozione di automa finito non-deterministico quella di algoritmo formale che fornisce una semantica (operazionale) al modello di calcolo, mostrando come la computazione viene effettuata dall'automa. Per prima cosa è necessario stabilire lo spazio delle configurazioni.
+
+\begin{defi}[Configurazione per Automa Finito Non-deterministico]
+Una configurazione per un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ è una tripla $(w,p,S)$, dove
+\begin{enumerate}
+    \item $w\in A^*$ è la parola da analizzare;
+    \item $p\in\mathbb{N}$ è il puntatore alla posizione della parola che contiene il simbolo dell'alfabeto da considerare per effettuare la successiva transizione;
+    \item $S\in 2^Q$ è un insieme di stati.
+\end{enumerate}
+L'insieme delle configurazioni di alfabeto $A$ e insieme degli stati $Q$ per un automa finito sarà denotato con
+\[
+\operatorname{Conf}^{A,Q}_{ND}=A^*\times\mathbb{N}\times 2^Q.
+\]
+Inoltre introduciamo la seguente notazione, quando $S\subseteq Q$:
+\[
+T(S,a):=\bigcup_{q\in S}\{T(q,a)\}
+\]
+\end{defi}
+Grazie a tale notazione possiamo definire l'algoritmo associato ad un automa finito non-deterministico.
+
+\begin{defi}[Algoritmo associato ad un Automa Finito Non-deterministico]
+L'algoritmo associato ad un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ è la tupla $(A,\{0,1\}, Conf_{ND}^{A,Q},\varepsilon,\tau,\delta)$  dove le tre funzioni si definscoo come segue :
+
+\begin{itemize}
+    \item la \emph{funzione di ingresso}
+    \[
+    e:A^*\longrightarrow {Conf}^{A,Q}_{ND},
+    \]
+    definita da
+    \[
+    e(w)=(w,1,\{q_0\});
+    \]
+
+    \item la \emph{funzione di transizione}
+    \[
+    \tau:{Conf}^{A,Q}_{ND}\longrightarrow
+    {Conf}^{A,Q}_{ND},
+    \]
+    definita da
+    \[
+    \tau((w,p,S))
+    =
+    (w,p+1,T(S,w(p)));
+    \]
+
+    \item la \emph{funzione di uscita}
+    \[
+    \delta:{Conf}^{A,Q}_{ND}\longrightarrow\{0,1\}^*,
+    \]
+    definita da
+    \[
+    \delta((w,p,S))
+    =
+    \max_{q\in S}F'(q),
+    \qquad
+    \text{se }p=|w|+1.
+    \]
+\end{itemize}
+\end{defi}
+
+Di conseguenza resta definito il concetto di decidibilità di un insieme mediante automi finiti non-deterministici.
+
+\begin{defi}[Insieme decidibile per Automa Finito Non-deterministico]
+Un insieme $X\subseteq A^*$ è detto \emph{decidibile per automa finito non-deterministico} (o \emph{NDFA-decidibile}) se esistono un insieme finito $Q$ ed un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ tali che l'algoritmo associato decide $X$.
+\end{defi}
+Un primo esempio di automa finito non-deterministico:
+
+\begin{exam}[Un esempio di NDFA]
+\label{es:14}
+ Consideriamo $A=\{0,1\}$, $Q=\{ q_0,q_1,q_2,q_3\}$ e definiamo il seguente  NDFA
+\[
+(T,q_0,F)
+\]
+dove $F:=\{q_3\}$ e 
+\[
+\begin{matrix}
+T: & Q \times \{ 0,1\} & \to & 2^Q
+   \\
+   &(q_0, 0) & \mapsto & \{q_0\} \\
+   &(q_0, 1) & \mapsto & \{q_0, q_1\} 
+    \\
+    &(q_1, 0) &\mapsto& \{q_2\} 
+    \\ &
+    (q_1, 1) & \mapsto & \emptyset 
+    \\&(q_2, 0) & \mapsto & \emptyset & 
+    \\&(q_2, 1) 
+    & \mapsto &
+    \{q_3\} \\
+&(q_3, 0) & \mapsto & \{q_3\} 
+\\&(q_3, 1) & \mapsto & \{q_3\}
+\end{matrix}
+\]
+che può essere rappresenato graficamente come
+\[
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, auto,
+    every state/.style={minimum size=1cm}]
+  \node[state, initial] (q0) {$q_0$};
+  \node[state] (q1) [right of=q0] {$q_1$};
+  \node[state] (q2) [right of=q1] {$q_2$};
+  \node[state, accepting] (q3) [right of=q2] {$q_3$};
+
+  \path[->]
+    (q0) edge [loop below] node {$0,1$} (q0)
+    (q0) edge node {$1$} (q1)
+    (q1) edge node {$0$} (q2)
+    (q2) edge node {$1$} (q3)
+    (q3) edge [loop above] node {$0$} (q3)
+    (q3) edge [loop below] node {$1$} (q3);
+\end{tikzpicture}
+\]
+Analizziamo ora il comportamento dell'automa su alcune parole:
+
+\begin{itemize}
+    \item Consideriamo la parola
+    \[
+    w=1101.
+    \]
+    Calcoliamo l'insieme degli stati raggiungibili dopo la lettura di ciascun simbolo:
+    \[
+    \begin{aligned}
+    \widehat{T}(q_0,1)&=\{q_0,q_1\},\\
+    \widehat{T}(q_0,11)
+        &=T(q_0,1)\cup T(q_1,1)
+        =\{q_0,q_1\}\cup\emptyset
+        =\{q_0,q_1\},\\
+    \widehat{T}(q_0,110)
+        &=T(q_0,0)\cup T(q_1,0)
+        =\{q_0\}\cup\{q_2\}
+        =\{q_0,q_2\},\\
+    \widehat{T}(q_0,1101)
+        &=T(q_0,1)\cup T(q_2,1)
+        =\{q_0,q_1\}\cup\{q_3\}
+        =\{q_0,q_1,q_3\}.
+    \end{aligned}
+    \]
+    Poiché l'insieme finale contiene lo stato finale $q_3$, la parola
+    \[
+    1101
+    \]
+    è accettata.
+
+    \item Consideriamo ora la parola
+    \[
+    w=1000.
+    \]
+    Si ha
+    \[
+    \begin{aligned}
+    \widehat{T}(q_0,1)&=\{q_0,q_1\},\\
+    \widehat{T}(q_0,10)
+        &=T(q_0,0)\cup T(q_1,0)
+        =\{q_0\}\cup\{q_2\}
+        =\{q_0,q_2\},\\
+    \widehat{T}(q_0,100)
+        &=T(q_0,0)\cup T(q_2,0)
+        =\{q_0\}\cup\emptyset
+        =\{q_0\},\\
+    \widehat{T}(q_0,1000)
+        &=T(q_0,0)
+        =\{q_0\}.
+    \end{aligned}
+    \]
+    L'insieme degli stati raggiungibili non contiene alcuno stato finale, quindi la parola
+    \[
+    1000
+    \]
+    è rifiutata.
+    \item Consideriamo infine la parola
+\[
+w=1100101.
+\]
+Si ha
+\[
+\begin{aligned}
+\widehat{T}(q_0,1)&=\{q_0,q_1\},\\
+\widehat{T}(q_0,11)
+    &=T(q_0,1)\cup T(q_1,1)
+    =\{q_0,q_1\}\cup\emptyset
+    =\{q_0,q_1\},\\
+\widehat{T}(q_0,110)
+    &=T(q_0,0)\cup T(q_1,0)
+    =\{q_0\}\cup\{q_2\}
+    =\{q_0,q_2\},\\
+\widehat{T}(q_0,1100)
+    &=T(q_0,0)\cup T(q_2,0)
+    =\{q_0\}\cup\emptyset
+    =\{q_0\},\\
+\widehat{T}(q_0,11001)
+    &=T(q_0,1)
+    =\{q_0,q_1\},\\
+\widehat{T}(q_0,110010)
+    &=T(q_0,0)\cup T(q_1,0)
+    =\{q_0\}\cup\{q_2\}
+    =\{q_0,q_2\},\\
+\widehat{T}(q_0,1100101)
+    &=T(q_0,1)\cup T(q_2,1)
+    =\{q_0,q_1\}\cup\{q_3\}
+    =\{q_0,q_1,q_3\}.
+\end{aligned}
+\]
+Poiché l'insieme finale contiene lo stato finale $q_3$, la parola
+\[
+1100101
+\]
+è accettata.
+\end{itemize}
+Si può mostrare infatti che questo automa è quello che decide l'insieme delle parole che contengono come sottostringa $101$.
+Consideriamo ora lo stesso automa sostituendo la transizione
+\[
+T(q_0,1)=\{q_0,q_1\}
+\]
+con
+\[
+T(q_0,1)=\{q_1\},
+\]
+lasciando invariate tutte le altre transizioni.
+Mostriamo che questo automa non riconosce più tutte le parole contenenti la sottostringa \(101\).
+Infatti, la parola
+\[
+w=1101
+\]
+contiene la sottostringa \(101\), ma l'automa si comporta nel modo seguente:
+\[
+\begin{aligned}
+\widehat{T}(q_0,\varepsilon)&=\{q_0\},\\
+\widehat{T}(q_0,1)&=\{q_1\},\\
+\widehat{T}(q_0,11)&=T(q_1,1)=\emptyset,\\
+\widehat{T}(q_0,110)&=\bigcup_{q\in\emptyset}T(q,0)=\emptyset,\\
+\widehat{T}(q_0,1101)&=\bigcup_{q\in\emptyset}T(q,1)=\emptyset.
+\end{aligned}
+\]
+Poiché la computazione termina con l'insieme vuoto, la parola \(1101\) viene rifiutata.
+
+L'errore consiste nel fatto che l'automa è costretto a scegliere il \emph{primo} simbolo \(1\) come possibile inizio della sottostringa \(101\). Nell'automa non deterministico originale, invece, il ramo che rimane nello stato \(q_0\) permette di ignorare il primo \(1\) e di scegliere il secondo \(1\) come inizio della sottostringa, accettando così correttamente la parola.
+\end{exam}
+In vista, dell'obiettivo di mostrare che l'insieme $X_1 \cdot X_2$ ottenuto a partire da due insiemi $X_1$ e $X_2$ DFA-decidibili è lui stesso DFA-decidibile dobbiamo poter costruire un automa che ``concatena'' la computazione di un automa con quella del secondo, a questo fine è comodo utilizzare una ulteriore variante della definizione di NDFA che può effettuare transizioni senza fare avanzare il puntatore alla posizione corrente:
+
+\begin{defi}[Automa Finito non-deterministico con $\epsilon$-mosse]
+\label{def:15}
+Siano $A$ e $Q$ insiemi finiti, un automa finito non-deterministico con $\epsilon$-mosse \emph{di alfabeto $A$ e insieme degli stati $Q$} è una tripla $(T, q_0, F)$ dove
+\[
+T : Q \times A \cup \{\epsilon\} \to 2^Q
+\]
+\[
+F \subset Q
+\]
+e $q_0 \in Q$ è uno stato particolare, detto \emph{stato iniziale}.
+\end{defi}
+
+
+
+Per la descrizione della computazione dovremo introdurre una variante della funzione di transizione che prenda in considerazione le $\epsilon$-mosse, a questo scopo introduciamo la seguente notazione per $S \in 2^Q$:
+\[
+T^k(S,a) :=
+\begin{cases}
+S & \text{se } k = 0 \\
+T(T^{k-1}(S,a), a) & k > 0
+\end{cases}
+\]
+
+\begin{defi}[Algoritmo associato ad un automa finito non-deterministico con $\epsilon$-mosse]
+\label{def:17}
+L'algoritmo associato ad un automa non-deterministico di alfabeto $A$ e insieme degli stati $Q$ viene descritto definendo le tre funzioni:
+\begin{itemize}
+\item la \textbf{funzione di ingresso} che associa ad un parola $w \in A^*$, la configurazione
+\[
+\varepsilon(w) = \left(w, 1, \bigcup_{k \geq 0} T^k(\{q_0\}, \epsilon)\right),
+\]
+
+\item la \textbf{funzione di transizione} $\tau : \mathrm{Conf}_{ND}^{A,Q} \to \mathrm{Conf}_{ND}^{A,Q}$ è data da
+\[
+\tau((w,p,S)) = \left(w, p+1, \bigcup_{k \geq 0} T^k(T(S, w(p)), \epsilon)\right),
+\]
+
+\item la \textbf{funzione di uscita} $\delta : \mathrm{Conf}_{ND}^{A,Q} \to \{0,1\}$, data da
+\[
+\delta((w,p,S)) =
+\begin{cases}
+0 & \text{se } p > |w| \text{ e } F \cap S = \emptyset \\
+1 & \text{se } p > |w| \text{ e } F \cap S \neq \emptyset
+\end{cases}
+\]
+\end{itemize}
+\end{defi}
+
+
+\begin{exam}[Un esempio di $\epsilon$-NDFA]
+\label{es:16}
+
+Consideriamo l'alfabeto
+\[
+A=\{0,1\},
+\]
+l'insieme degli stati
+\[
+Q=\{q_0,q_1,q_2,q_3\},
+\]
+e definiamo il seguente $\epsilon$-NDFA
+\[
+(T,q_0,F),
+\]
+dove
+\[
+F=\{q_3\}
+\]
+e
+\[
+T:Q\times(A\cup\{\epsilon\})\to 2^Q
+\]
+è definita da
+\[
+\begin{matrix}
+T(q_0,0)&=&\{q_0\},\\
+T(q_0,1)&=&\{q_0,q_1\},\\
+T(q_1,0)&=&\{q_2\},\\
+T(q_1,1)&=&\emptyset,\\
+T(q_1,\epsilon)&=&\{q_2\},\\
+T(q_2,0)&=&\emptyset,\\
+T(q_2,1)&=&\{q_3\},\\
+T(q_3,0)&=&\{q_3\},\\
+T(q_3,1)&=&\{q_3\}.
+\end{matrix}
+\]
+L'automa può essere rappresentato graficamente come
+\[
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, auto,
+    every state/.style={minimum size=1cm}]
+  \node[state, initial] (q0) {$q_0$};
+  \node[state] (q1) [right of=q0] {$q_1$};
+  \node[state] (q2) [right of=q1] {$q_2$};
+  \node[state, accepting] (q3) [right of=q2] {$q_3$};
+
+  \path[->]
+    (q0) edge [loop below] node {$0,1$} (q0)
+    (q0) edge node {$1$} (q1)
+    (q1) edge node {$0,\epsilon$} (q2)
+    (q2) edge node {$1$} (q3)
+    (q3) edge [loop above] node {$0$} (q3)
+    (q3) edge [loop below] node {$1$} (q3);
+\end{tikzpicture}
+\]
+Per descrivere la computazione consideriamo la funzione di transizione estesa
+\[
+\widehat{T}:2^Q\times A^*\to 2^Q
+\]
+definita considerando le $\epsilon$-mosse come transizioni gratuite. In
+particolare, per ogni insieme di stati $S\subseteq Q$ poniamo
+\[
+T^0(S,\epsilon)=S,
+\]
+e
+\[
+T^k(S,\epsilon)=T(T^{k-1}(S,\epsilon),\epsilon)
+\]
+per $k>0$.
+La computazione dell'automa consiste quindi nel considerare tutti gli stati
+ottenibili dopo un numero finito di $\epsilon$-mosse.
+
+\begin{itemize}
+
+\item Consideriamo la parola
+\[
+w=101.
+\]
+
+Partendo dallo stato iniziale otteniamo
+\[
+\widehat{T}(q_0,\epsilon)=\{q_0\}.
+\]
+
+Dopo aver letto il primo simbolo $1$:
+\[
+T(\{q_0\},1)=\{q_0,q_1\}.
+\]
+
+Applicando successivamente le $\epsilon$-mosse:
+\[
+T^0(\{q_0,q_1\},\epsilon)=\{q_0,q_1\},
+\]
+\[
+T^1(\{q_0,q_1\},\epsilon)
+=
+T(\{q_0,q_1\},\epsilon)
+=
+\{q_2\}.
+\]
+
+Quindi dopo il primo simbolo:
+\[
+\widehat{T}(q_0,1)
+=
+\{q_0,q_1,q_2\}.
+\]
+
+Ora leggiamo il simbolo $0$:
+\[
+T(\{q_0,q_1,q_2\},0)
+=
+\{q_0\}\cup\{q_2\}\cup\emptyset
+=
+\{q_0,q_2\}.
+\]
+
+Non sono possibili ulteriori $\epsilon$-mosse, quindi:
+\[
+\widehat{T}(q_0,10)=\{q_0,q_2\}.
+\]
+
+Infine leggiamo $1$:
+\[
+T(\{q_0,q_2\},1)
+=
+\{q_0,q_1\}\cup\{q_3\}
+=
+\{q_0,q_1,q_3\}.
+\]
+
+Poiché
+\[
+q_3\in\widehat{T}(q_0,101),
+\]
+la parola $101$ è accettata.
+
+\item Consideriamo la parola
+\[
+w=10.
+\]
+
+Dopo il simbolo $1$ abbiamo già visto che
+\[
+\widehat{T}(q_0,1)=\{q_0,q_1,q_2\}.
+\]
+
+Leggendo $0$ otteniamo:
+\[
+T(\{q_0,q_1,q_2\},0)
+=
+\{q_0\}\cup\{q_2\}\cup\emptyset
+=
+\{q_0,q_2\}.
+\]
+
+Non essendo presente lo stato finale:
+\[
+q_3\notin\widehat{T}(q_0,10),
+\]
+la parola $10$ è rifiutata.
+
+\end{itemize}
+
+\end{exam}
+
+Con la nozione appena introdotta è quindi possibile dimostrare in modo diretto che dati due insiemi NDFA-decidibili, l'insieme ottenuto come concatenazione è pure NDFA-decidibile, ovvero la Proposizione~\ref{prop:9} nel caso non-deterministico, e infatti
+\begin{prop}
+    Siano $X_1$ e $X_2$ decidibili per automa finito non-deterministico allora anche $X_1\cdot X_2$ è
+decidibile per automa finito non-deterministico.
+\begin{proof}
+Siano i due automi che decidono $X_1 \subset A^*$ e $X_2 \subset A^*$ rispettivamente dati su insiemi degli stati disgiunti $Q_1$ e $Q_2$, ovvero con $Q_1 \cap Q_2 = \emptyset$: $\mathcal{A}_1 = (T', q_0', F')$ e $\mathcal{A}_2 = (T'', q_0'', F'')$.
+
+Costruiamo l'automa che decide $X_1 \cdot X_2$ aggiungendo alle transizioni di $\mathcal{A}_1$ e $\mathcal{A}_2$ quelle che vanno dagli stati accettanti di $\mathcal{A}_1$ allo stato iniziale $q_0''$ del secondo automa, ovvero definiamo l'automa $\mathcal{A}$ con insieme degli stati $Q := Q_1 \cup Q_2$ dove lo stato iniziale è $q_0 := q_0' \in Q_1$ e gli stati finali accettanti sono definiti come quelli di $\mathcal{A}_2$, dunque:
+\[
+\mathcal{A} := (T, q_0, F)
+\]
+dove
+\[
+T(q,a) :=
+\begin{cases}
+T'(q,a) & \text{se } q \in F' \text{ e } a \neq \epsilon \text{ oppure } q \notin F', \\
+T'(q,a) \cup \{q_0''\} & q \in F' \text{ e } a = \epsilon, \\
+T''(q,a) & q \in Q_2,
+\end{cases}
+\]
+e l'insieme degli stati finali accettanti è dato da $F := F''$.
+\end{proof} 
+\end{prop}
+\begin{prop}
+\label{prop:19}
+Sia dato un insieme $X \subseteq A^*$ per un certo alfabeto finito $A$.
+Allora
+\[
+X \text{ è DFA-decidibile}
+\iff
+X \text{ è NDFA-decidibile}
+\iff
+X \text{ è }\epsilon\text{-NDFA-decidibile}.
+\]
+
+\begin{proof}
+Procediamo dimostrando le tre implicazioni.
+
+\begin{itemize}
+
+\item[$(\mathrm{DFA}\Rightarrow\mathrm{NDFA})$]
+Sia $(T,q_0,F)$ un DFA. Basta considerare la funzione di transizione come funzione a valori nell'insieme delle parti:
+\[
+T' : Q\times A\longrightarrow 2^Q,
+\]
+definita da
+\[
+T'(q,a):=\{T(q,a)\}.
+\]
+L'automa così ottenuto è un NDFA che produce esattamente la stessa computazione.
+
+\item[$(\mathrm{NDFA}\Rightarrow\epsilon\text{-}\mathrm{NDFA})$]
+Sia $(T,q_0,F)$ un NDFA. Definiamo
+\[
+T':Q\times(A\cup\{\epsilon\})\longrightarrow 2^Q
+\]
+ponendo
+\[
+T'(q,a):=T(q,a),
+\qquad
+a\in A,
+\]
+e
+\[
+T'(q,\epsilon):=\varnothing.
+\]
+In questo modo l'automa non utilizza mai $\epsilon$-mosse e coincide con quello di partenza.
+
+\item[$(\epsilon\text{-}\mathrm{NDFA}\Rightarrow\mathrm{DFA})$]
+Sia $(T,q_0,F)$ un $\epsilon$-NDFA.
+
+Consideriamo come insieme degli stati
+\[
+Q'=2^Q.
+\]
+
+La funzione di transizione del DFA è definita da
+\[
+T':2^Q\times A\longrightarrow 2^Q,
+\]
+ponendo
+\[
+T'(S,a):=
+\bigcup_{k\ge0}
+T^k(T(S,a),\epsilon).
+\]
+
+Lo stato iniziale è
+\[
+q_0':=
+\bigcup_{k\ge0}
+T^k(\{q_0\},\epsilon),
+\]
+mentre l'insieme degli stati finali è
+\[
+F':=
+\{\,S\subseteq Q\mid S\cap F\neq\varnothing\,\}.
+\]
+
+È facile controllare che per ogni parola $\omega$ le computazioni ottenute tramite i rispettivi algoritmi coincidono, pertanto le decisioni dei due automi coincideranno per ogni $\omega$ e quindi decideranno lo stesso
+insieme.
+
+\end{itemize}
+
+Ne segue che le tre nozioni di decidibilità coincidono.
+\end{proof}
+\end{prop}

@@ -1,0 +1,279 @@
+\subsection{Automi come grafi}
+A partire da un automa finito $(T,q_0,F)$ se ne può dare una descrizione grafica nel modo seguente: si consideri il grafo i cui nodi sono gli stati $Q$, e gli archi etichettati con elementi di $A$ che collegano due stati $(q_i,q_j)$ se esiste la transizione $T(q_i,a)=q_j$:
+\[
+G_{(T,q_0,F)} = \{(q_i,q_j,a) \mid q_i,q_j \in Q,\ a \in A,\ T(q_i,a)=q_j\}
+\]
+inoltre avremo una funzione che ci indica lo stato iniziale
+\[
+\texttt{init}(G_{(T,q_0,F)}) = q_0
+\]
+(di solito indicata da un arco entrante nel nodo iniziale $q_0$) ed una che distingue gli stati accettanti (risp. non accettanti)
+\[
+\texttt{acc}(G_{(T,q_0,F)}) = F \qquad (\text{risp. } \texttt{ref}(G_{(T,q_0,F)}) = Q \setminus F)
+\]
+(di solito si indicano gli stati accettanti con un doppio cerchio, mentre tutti gli altri nodi sono considerati non accettanti).
+Ad esempio il grafo associato all'automa dell'Esempio~\ref{esempio automa per parole pari}, è rappresentato in Figura~\ref{figura esempio automa per parole pari}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=3.5cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+    \node[state, accepting] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+
+    \draw[->] (-1.2,0.6) -- (q0);
+    \path (q0) edge [bend left=30] node {$a$} (q1)
+          (q1) edge [bend left=30] node {$a$} (q0);
+\end{tikzpicture}
+\caption{Automa dell'Esempio \ref{ex: parole lunghezze pari}, notare che $a$ è un qualsiasi elemento nell'alfabeto $A=\{0,1\}$.}
+\label{figura esempio automa per parole pari}
+\end{figure}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=4cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+    \node[state, accepting] (q0) {$q_0$};
+    \node[state] (q1) [right of=q0] {$q_1$};
+
+    \draw[->] (-1.2,0.6) -- (q0);
+
+    \path (q0) edge [loop above] node {$0$} (q0)
+          (q1) edge [loop above] node {$0$} (q1)
+          (q0) edge [bend left=25] node {$1$} (q1)
+          (q1) edge [bend left=25] node {$1$} (q0);
+\end{tikzpicture}
+\caption{In modo simile all'automa dell'Esempio~\ref{esempio automa per parole pari} si può dare l'automa che decide l'insieme di tutte le parole con un numero pari di 1.}
+\label{fig:parita}
+\end{figure}
+
+% =========================================================
+% FIGURA 3
+% =========================================================
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=3.5cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+    \node[state] (q0) {$q_0$};
+    \node[state, accepting] (q1) [right of=q0] {$q_1$};
+    \node[state] (q2) [below right=2cm and 0.3cm of q0] {$q_2$};
+
+    \draw[->] (-1.2,0.6) -- (q0);
+
+    \path (q0) edge [bend left=15] node {$0$} (q1)
+          (q1) edge [loop above] node {$1$} (q1)
+          (q0) edge [bend right=15] node {$1$} (q2)
+          (q1) edge [bend left=15] node {$0$} (q2)
+          (q2) edge [loop below, min distance=10mm, in=200, out=250] node[below left] {$0$} (q2)
+          (q2) edge [loop below, min distance=10mm, in=290, out=340] node[below right] {$1$} (q2);
+\end{tikzpicture}
+\caption{Automa che decide l'insieme $X=\{01^n \mid n\geq 0\}$.}
+\label{fig:01n}
+\end{figure}
+\subsection{Rappresentazione come matrice di adiacenza}
+
+Possiamo usare $M_E$ per indicare la matrice di adiacenza del grafo $G=(V,E)$ definita come 
+\[
+(M_E)_{ij} =
+\begin{cases}
+1 & \text{se } (v_i,v_j) \in E \\
+0 & \text{altrimenti.}
+\end{cases}
+\]
+Ad esempio, in Figura~\ref{fig:grafo7}, abbiamo un grafo orientato e la corrispondente matrice di adiacenza.
+È sensato, che ad ogni insieme $E$ corrisponda un'unica matrice una volta che è fissato un ordinamento degli elementi di $V$. Utilizzando le  operazioni aritmetiche  date dal semianello dei booleani $(\mathbb{B}, \vee, \wedge)$:
+
+\[
+\mathbb{B} = \{0,1\} \qquad
+\begin{array}{c|cc}
+a \vee b & a & b \\
+\hline
+0 & 0 & 0 \\
+1 & 1 & 0 \\
+1 & 0 & 1 \\
+1 & 1 & 1
+\end{array}
+\qquad
+\begin{array}{c|cc}
+a \wedge b & a & b \\
+\hline
+0 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+1 & 1 & 1
+\end{array}
+\]
+possiamo definire il prodotto seguente
+\[
+A=(a_{ij})\in\mathbb{B}^{m\times n},
+\qquad
+B=(b_{ij})\in\mathbb{B}^{n\times p},
+\]
+\[
+(AB)_{ij}
+:=
+\bigvee_{k=1}^{n}
+\left(a_{ik}\wedge b_{kj}\right),
+\qquad
+1\le i\le m,\;1\le j\le p.
+\]
+Usando il prodotto definito sopra,
+la matrice $M_E^2$ ha un 1 in posizione $i,j$ se esiste un cammino di lunghezza esattamente 2 che va dal vertice $v_i$ al vertice $v_j$, questo equivale a dire che esiste (almeno) un vertice $w$ tale che $(v_i,w),(w,v_j) \in E$.
+Inoltre, si può provare per induzione su $k$ il seguente fatto:
+\begin{prop}
+       $(M_E^k)_{ij}=1$ se e solo se esiste un cammino di lunghezza esattamente $k$ da $v_i$ a $v_j$.
+\end{prop}
+
+\begin{rema}\textcolor{red}{controlla}
+ La chiusura riflessiva e transitiva di $G$ si può ottenere come limite delle somme parziali delle potenze successive di $M_E^k$:
+\[
+M_E^* = \sum_{i\geq 0} M_E^i
+\]
+
+Si noti come in questo caso la somma infinita può essere limitata da un intero $L$ che certamente esiste e che corrisponde alla massima lunghezza del cammino più breve che connette una coppia di nodi (per ogni coppia). Una volta calcolata la potenza corrispondente a tale lunghezza, il valore della somma non sarà modificata ulteriormente:
+\[
+M_E^* = \sum_{i=0}^{L} M_E^i.
+\]
+\end{rema}
+
+\subsection{Grafi etichettati}
+Ovviamente, considerando matrici simmetriche, possiamo estendere la discussione anche a grafi non orientati e a grafi etichettati.
+
+
+Il grafo associato ad un automa ha in realtà una struttura di grafo etichettato con elementi dell'alfabeto $A$: dato un automa $(T,q_0,F)$ si può definire il grafo $G=(V,E,L)$ dove
+\begin{itemize}
+    \item l'insieme dei vertici è
+    \[
+    V:=Q;
+    \]
+    \item l'insieme dei lati è
+    \[
+    E:=\{(q_i,a,q_j)\in Q\times A\times Q \mid T(q_i,a)=q_j\};
+    \]
+    \item la funzione di etichettatura è
+    \[
+    L:E\to A, \qquad L(q_i,a,q_j)=a.
+    \]
+\end{itemize}
+
+Nel caso di un grafo etichettato si può ugualmente definire la matrice di adiacenza del grafo utilizzando le etichette come elementi della matrice, ma se si vuole mantenere l'interpretazione delle potenze successive della matrice di adiacenza è necessario avere una struttura algebrica (con somma e prodotto) definita sull'insieme delle etichette — struttura che introduciamo in \S~\ref{sec:semianelli-serie-formali}.\footnote{Riferimento alla sezione formale su semianelli e serie formali.}
+
+Per prima cosa sarà necessario introdurre un'etichetta ``non definita'' per segnalare l'assenza dell'arco. In particolare, se l'insieme delle etichette ha una struttura di \emph{monoide} (prodotto associativo tra etichette, con elemento neutro), si può considerare una struttura con una somma libera (le \emph{serie formali}, Definizione~\ref{def:serie-formali}) che fornisce un'operazione additiva in aggiunta a quella moltiplicativa di monoide: si ottiene così un semianello (Definizione~\ref{def:semianello}), sufficiente per introdurre il prodotto righe per colonne tra matrici a coefficienti nelle etichette (Definizione~\ref{def:Mn}).
+
+\subsection{Applicazione agli automi}
+
+Nel caso degli automi, iterare le potenze successive della matrice di adiacenza corrisponde al calcolo dell'insieme deciso dall'automa:
+\[
+E(M) = \sum_{k\geq 0} M^k.
+\]
+
+Si noti che $M^0$ corrisponde alla matrice diagonale con elemento neutro moltiplicativo sulla diagonale (la parola vuota, nel caso del monoide delle parole) e l'elemento neutro additivo altrove (la somma formale vuota $0$).
+
+Infatti, gli elementi che si trovano sulla riga di $E(M)$ corrispondente allo stato iniziale e sulle colonne corrispondenti agli stati finali sono proprio le parole che l'automa accetta; dunque si può dire che
+\[
+X = \Pi(E(M)),
+\]
+dove $\Pi$ serve ad ottenere una combinazione delle parole che etichettano un cammino che va dallo stato iniziale ad uno degli stati finali dell'automa.
+
+
+% =========================================================
+% FIGURA 4 (grafo generico + matrice di adiacenza)
+% =========================================================
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt,
+    every state/.style={circle, draw, minimum size=8mm}
+]
+    \node[state] (n1) at (0,3) {1};
+    \node[state] (n3) at (3,3) {3};
+    \node[state] (n2) at (1.3,2) {2};
+    \node[state] (n6) at (0,0.8) {6};
+    \node[state] (n4) at (3,0.8) {4};
+    \node[state] (n7) at (-1,-0.5) {7};
+    \node[state] (n5) at (1.3,-0.5) {5};
+
+    \path (n3) edge [bend right=15] (n1)
+          (n1) edge [bend right=15] (n2)
+          (n2) edge (n6)
+          (n2) edge (n4)
+          (n3) edge [bend left=15] (n4)
+          (n4) edge [bend left=15] (n3)
+          (n6) edge (n7)
+          (n4) edge (n5)
+          (n5) edge (n6);
+\end{tikzpicture}
+\hspace{1cm}
+$M = \begin{pmatrix}
+0 & 1 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 1
+\end{pmatrix}$
+\caption{Un generico grafo orientato e la corrispondente matrice di adiacenza.}
+\label{fig:grafo7}
+\end{figure}
+
+% =========================================================
+% FIGURA 5 (grafo con q0,q1,q2 e matrici M, M^2)
+% =========================================================
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt,
+    every state/.style={circle, draw, minimum size=8mm}
+]
+    \node[state] (q0) at (0,0) {$q_0$};
+    \node[state] (q1) at (2.5,0) {$q_1$};
+    \node[state] (q2) at (1.25,-1.8) {$q_2$};
+
+    \path (q0) edge [bend left=15] (q1)
+          (q1) edge [bend left=15] (q0)
+          (q0) edge [bend left=25] (q1)
+          (q1) edge [bend left=25] (q0)
+          (q0) edge [bend right=15] (q2)
+          (q2) edge [bend right=15] (q0)
+          (q1) edge [bend left=15] (q2)
+          (q2) edge [bend left=15] (q1)
+          (q2) edge [loop below] (q2);
+\end{tikzpicture}
+\qquad
+$M = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}$
+\qquad
+$M^2 =
+\begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}
+\begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}
+=
+\begin{pmatrix} 2 & 1 & 2 \\ 2 & 2 & 3 \\ 1 & 1 & 2 \end{pmatrix}$
+\caption{Esempio di grafo orientato (non etichettato). La matrice di adiacenza $M$ e il quadrato $M^2$ che ``conta'' il numero di cammini di lunghezza 2 presenti nel grafo.}
+\label{fig:grafo3}
+\end{figure}
+
+
+
+Anche l'applicazione $\Pi$ ha una rappresentazione matriciale: se si moltiplica a sinistra la matrice $E(M)$ per il versore riga che ha la parola vuota nella posizione dello stato iniziale (indicata con $\epsilon$) e la serie formale vuota in tutte le altre componenti, si ottiene un vettore riga contenente la riga corrispondente allo stato iniziale. Moltiplicando poi a destra questo vettore per il vettore colonna che ha la parola vuota in corrispondenza degli stati finali e la serie formale vuota nelle posizioni degli stati non accettanti, si ottiene la serie formale corrispondente all'insieme $X$:
+\[
+X = \Pi(E(M)) = V_0 \cdot E(M) \cdot V_F^t,
+\]
+dove
+\[
+V_0(i) =
+\begin{cases}
+\epsilon & q_i = q_0 \\
+\bot & q_i \neq q_0
+\end{cases}
+\qquad
+V_F(i) =
+\begin{cases}
+\epsilon & q_i \in F \\
+\bot & q_i \notin F.
+\end{cases}
+\]

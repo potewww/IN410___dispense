@@ -1,0 +1,278 @@
+\subsection{Definizione di automa a stati finiti.}
+
+\begin{defi}\label{def:1}
+Siano $A$ e $Q$ insiemi finiti, un \textit{automa finito} di alfabeto $A$ e insieme degli stati $Q$  è una tripla $(T,q_0,F)$ dove
+\[
+T: Q\times A \to Q
+\]
+$F \subset Q$ e $q_0\in Q$ è uno stato particolare, detto stato iniziale.
+\end{defi}
+
+
+\subsection{Definizione di algoritmo associato ad un automa}
+
+A partire dalla tripla $(T,q_0,F)$ che specifica un dato automa di alfabeto $A$ e insieme degli stati $Q$ si costruisce prima l'insieme delle configurazioni possibili:
+
+\begin{defi}[Configurazione per Automa Finito]\label{def:3}
+Una configurazione per automa a stati finiti di alfabeto $A$ e insieme degli stati $Q$ è una tripla $(w,p,q)$, dove
+\begin{enumerate}
+    \item $w\in A^*$ è la parola da analizzare,
+    \item $p\in\mathbb{N}$, è un intero che indica la posizione della parola da analizzare nella prossima transizione,
+    \item $q\in Q$ indica lo stato corrente e costituisce la memoria delle transizioni effettuate nei precedenti passi di computazione.
+\end{enumerate}
+\end{defi}
+
+L'insieme delle configurazioni di alfabeto $A$ e insieme degli stati $Q$ per automa finito sarà denotato con
+\[
+Conf_{DFA}^{A,Q} = A^* \times \mathbb{N} \times Q
+\]
+ed allora possiamo definire:
+
+\begin{defi}[Algoritmo associato ad un automa finito deterministico]\label{def:4}
+L'algoritmo associato ad un automa di alfabeto $A$ e insieme degli stati $Q$ è l'algoritmo $$(A,Conf_{DFA}^{A,Q}, \{0,1\},\epsilon,\tau,\delta)$$ dove le tre funzioni sono definite come segue:
+\begin{itemize}
+    \item la \textbf{funzione di ingresso} che associa ad una parola $w\in A^*$, la configurazione $\varepsilon(w) = (w,1,q_0)$,
+
+    \item la \textbf{funzione di transizione} $\tau: Conf_{DFA}^{A,Q} \to Conf_{DFA}^{A,Q}$ è data da
+    \[
+    \tau((w,p,q)) = (w,p+1,T(q,w(p))),
+    \]
+
+    \item la \textbf{funzione di uscita} $\delta: Conf_{DFA}^{A,Q} \to \{0,1\}*$, data da
+    \[
+    \delta((w,p,q)) =
+    \begin{cases}
+    0 & \text{se } p>|w| \text{ e se } q\notin F, \\
+    1 & \text{se } p>|w| \text{ e se } q\in F.
+    \end{cases}
+    \]
+\end{itemize}
+\end{defi}
+
+
+
+\begin{defi}[Insiemi decidibili per automa]\label{def:5}
+Un insieme $X\subset A^*$, è \textit{decidibile} per automa finito (oppure \textit{DFA-decidibile} oppure \textit{regolare}), se esiste un insieme finito $Q$ e un automa finito con alfabeto $A$ e insieme degli stati $Q$ tale che l'algoritmo associato decide $X$.
+\end{defi}
+\begin{exam}\label{ex: parole lunghezze pari}
+Descrivere l'automa finito che decide l'insieme delle parole di lunghezza pari (risp. dispari) su un alfabeto dato $A$.
+
+A partire dall'alfabeto finito $A$, e da un insieme di due stati $Q=\{0,1\}$ che corrisponderanno rispettivamente allo stato ``abbiamo letto un numero pari (oppure dispari) di caratteri della parola''; costruiamo la funzione di transizione che ad ogni carattere letto cambia stato:
+\[
+T: Q\times A \to Q
+\]
+tale che
+\[
+T(q,a) =
+\begin{cases}
+1 & \text{se } q=0 \\
+0 & \text{se } q=1,
+\end{cases}
+\]
+per ogni $a\in A$.
+
+Avremo allora che lo stato iniziale $q_0=0$, poiché inizialmente non avremo ancora letto nessun carattere e che l'insieme degli stati accettanti sarà: $F=\{0\}$.
+\begin{proof}
+Sia
+\[
+X=\{\,w\in A^* : |w|\text{ è pari}\,\}.
+\]
+Dimostriamo che l'algoritmo associato all'automa
+\[
+(T,q_0,F)
+\]
+decide l'insieme \(X\).
+
+Sia dunque \(w=a_1a_2\cdots a_n\in A^*\). La configurazione iniziale è
+\[
+\epsilon(w)=(w,1,0).
+\]
+
+Ad ogni applicazione della funzione di transizione viene letta una lettera della parola e lo stato viene invertito:
+\[
+0\longleftrightarrow1.
+\]
+Per induzione sul numero di transizioni effettuate si ottiene che dopo aver letto i primi \(k\) caratteri della parola la configurazione è
+\[
+(w,k+1,q_k),
+\]
+dove
+\[
+q_k=
+\begin{cases}
+0 & \text{se } k \text{ è pari},\\
+1 & \text{se } k \text{ è dispari}.
+\end{cases}
+\]
+
+Dopo la lettura dell'intera parola si raggiunge quindi la configurazione
+\[
+(w,n+1,q_n).
+\]
+Poiché
+\[
+n+1>|w|,
+\]
+questa appartiene al dominio della funzione di uscita. Inoltre
+\[
+q_n=
+\begin{cases}
+0 & \text{se } |w| \text{ è pari},\\
+1 & \text{se } |w| \text{ è dispari}.
+\end{cases}
+\]
+
+Essendo \(F=\{0\}\), segue che
+\[
+\delta(w,n+1,q_n)=
+\begin{cases}
+1 & \text{se } |w| \text{ è pari},\\
+0 & \text{se } |w| \text{ è dispari}.
+\end{cases}
+\]
+
+Pertanto
+\[
+f_{\mathcal A}(w)=
+\begin{cases}
+1 & \text{se } w\in X,\\
+0 & \text{se } w\notin X,
+\end{cases}
+\]
+cioè
+\[
+f_{\mathcal A}=\mathbf 1_X.
+\]
+
+Ne consegue che l'algoritmo associato all'automa decide l'insieme delle parole di lunghezza pari.
+\end{proof}
+\end{exam}
+\begin{ex}\label{es:1}
+Fissiamo l'alfabeto binario $A=\{0,1\}$, dimostrare che l'insieme
+\[
+X = \{ w0 \mid w\in A^* \}
+\]
+è decidibile per automa a stati finiti.
+
+
+\textbf{Soluzione.} Si richiede di mostrare un automa il cui algoritmo associato accetta le parole che terminano con uno zero. È dunque sufficiente memorizzare nello stato l'ultimo simbolo letto e alla fine della lettura della parola decidere in base allo stato: poniamo $Q=\{q_0,q_1\}$, e definiamo
+\[
+T(q,a) :=
+\begin{cases}
+q_0 & \text{se } a=0, \\
+q_1 & \text{se } a=1,
+\end{cases}
+\]
+prendiamo $q_0$ come stato iniziale e $F=\{q_0\}$ come insieme degli stati finali accettanti.
+\end{ex}
+\begin{proof}
+Sia
+\[
+X=\{w0\mid w\in A^*\}
+\]
+l'insieme delle parole sull'alfabeto binario che terminano con il simbolo \(0\).
+
+Costruiamo un automa finito che decide \(X\). Consideriamo l'insieme degli stati
+\[
+Q=\{q_0,q_1\},
+\]
+dove intuitivamente:
+\begin{itemize}
+    \item \(q_0\) rappresenta la situazione in cui l'ultimo simbolo letto è \(0\);
+    \item \(q_1\) rappresenta la situazione in cui l'ultimo simbolo letto è \(1\).
+\end{itemize}
+
+Definiamo la funzione di transizione
+\[
+T:Q\times A\to Q
+\]
+come
+\[
+T(q,a)=
+\begin{cases}
+q_0 & \text{se } a=0,\\
+q_1 & \text{se } a=1.
+\end{cases}
+\]
+
+Scegliamo come stato iniziale
+\[
+q_{\mathrm{init}}=q_0
+\]
+e come insieme degli stati accettanti
+\[
+F=\{q_0\}.
+\]
+
+Consideriamo ora l'algoritmo associato all'automa.
+Sia
+\[
+w=a_1a_2\cdots a_n\in A^*.
+\]
+La configurazione iniziale è
+\[
+\epsilon(w)=(w,1,q_0).
+\]
+
+Dopo \(k\) transizioni, per induzione su \(k\), la configurazione raggiunta è
+\[
+(w,k+1,q_k),
+\]
+dove
+\[
+q_k=
+\begin{cases}
+q_0 & \text{se } a_k=0,\\
+q_1 & \text{se } a_k=1.
+\end{cases}
+\]
+
+Infatti, ad ogni passo la funzione di transizione sostituisce lo stato corrente con lo stato corrispondente all'ultimo carattere letto.
+
+Dopo aver letto tutta la parola \(w\), la computazione termina nella configurazione
+\[
+(w,n+1,q_n).
+\]
+La funzione di uscita restituisce quindi
+\[
+\delta(w,n+1,q_n)=
+\begin{cases}
+1 & \text{se } q_n\in F,\\
+0 & \text{se } q_n\notin F.
+\end{cases}
+\]
+
+Poiché
+\[
+F=\{q_0\},
+\]
+si ha
+\[
+\delta(w,n+1,q_n)=
+\begin{cases}
+1 & \text{se l'ultimo simbolo di } w \text{ è }0,\\
+0 & \text{se l'ultimo simbolo di } w \text{ è }1.
+\end{cases}
+\]
+
+Quindi
+\[
+f_{\mathcal A}(w)=
+\begin{cases}
+1 & \text{se } w\in X,\\
+0 & \text{se } w\notin X.
+\end{cases}
+\]
+
+Pertanto
+\[
+f_{\mathcal A}=\mathbf 1_X
+\]
+e quindi l'algoritmo associato all'automa decide \(X\).
+
+Concludiamo che
+\[
+X=\{w0\mid w\in A^*\}
+\]
+è DFA-decidibile.
+\end{proof}
