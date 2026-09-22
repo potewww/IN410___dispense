@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790066947.298 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790066948.56202 0
+["pdflatex"] 1790067412.29978 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790067413.53531 0
   "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -231,13 +231,13 @@
   "automi_non_deterministici.tex" 1790064606.80076 16503 82f17ad401bc18cc8d3e3f30ee690c8c ""
   "complessità.tex" 1790064606.80076 10352 52fc6503c26a2413a007eea5d334a0ca ""
   "espressioniregolari.tex" 1790064606.80105 3316 09f74ebd98bfc8e0a66d8d88ef328b0b ""
-  "intro.tex" 1790066947.10163 7544 4b0d9ff013c3a1d73a3719a659b085ad ""
+  "intro.tex" 1790067412.10796 7583 9a6854867fe53754e5f9cc61d5e32726 ""
   "linguaggi_regolari.tex" 1790064606.80105 4978 dce47dad8da3be9e9cfb8ed5918a98e2 ""
   "macchinadituring.tex" 1790064606.80105 9698 f07172174ca22f0e5681250588692c8f ""
-  "main.aux" 1790066948.46137 20152 61e11457d91473f30295e081e089e80d "pdflatex"
-  "main.out" 1790066948.46337 3265 b4dd821cf2e01abbd3c0f37373551b16 "pdflatex"
+  "main.aux" 1790067413.43683 20152 676819f4be43415c2535e00fc0168495 "pdflatex"
+  "main.out" 1790067413.43783 3265 b4dd821cf2e01abbd3c0f37373551b16 "pdflatex"
   "main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
-  "main.toc" 1790066948.46337 1640 c79dfbbe8363bd0d80c353b143e8ef3a "pdflatex"
+  "main.toc" 1790067413.43783 1640 c79dfbbe8363bd0d80c353b143e8ef3a "pdflatex"
   "packages.tex" 1790064606.80605 853 f57f0fe14d903c1567e1394418f812f3 ""
   "prerequisiti.tex" 1790066786.36527 14474 b8f0e8881e59c9ee65408decd72d9520 ""
   "rappresentazione grafica degli automi.tex" 1790064606.80605 11481 3a3193e7fe5d4dbade82be3360c60eb4 ""

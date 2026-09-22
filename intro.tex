@@ -112,6 +112,7 @@ che chiameremo \textit{funzione associata all'algoritmo} $\mathcal A$.
 
 In pratica, ogni volta che diremo che la funzione $f$ associata ad un certo algoritmo formale è definita per ogni possibile parola $w \in A^*$, intenderemo dire che per ogni possibile input la computazione termina e restituisce attraverso la funzione di output $\delta$ il valore della funzione $f(w)$.
 
+
 \begin{defi}[Algoritmo che decide un insieme]
 Diremo che un certo \textit{algoritmo decide} un insieme 
 $X \subset A^*$
@@ -123,6 +124,19 @@ f_\mathcal{A}(w) =
 \begin{cases} 1 & w \in X \\ 0 & w \notin X. \end{cases}
 \]
 \end{defi}
+
+\begin{rema}
+Se un algoritmo $\mathcal A$
+decide un insieme $X$,
+allora abbiamo chiaramente che $f_{\mathcal A}$ 
+e' una funzione totale.
+In altre parole:
+quando un algoritmo decide un insieme,
+la computazione dell'algoritmo a partire da una qualsiasi parola di alfabeto 
+$A$
+termina.
+\end{rema}
+
 \begin{defi}[Algoritmo che semidecide un insieme]
 Diremo che un certo algoritmo  \textit{semidecide} un insieme
 $X \subseteq A^*$ quando la funzione parziale associata all'algoritmo
@@ -138,9 +152,7 @@ f_{\mathcal A}(x)=
 dove il simbolo $\bot$ indica che l'algoritmo non termina.
 \end{defi}
 
-\begin{rema}
-Questa è chiaramente una funzione totale pertanto nella definizione, implicitamente, stiamo affermando che quando un algoritmo decide un insieme, la computazione dell'algoritmo a partire da una qualsiasi parola di alfabeto $A$ termina.
-\end{rema}
+
 \textcolor{red}{controlla qui:}
 Pertanto, consideriamo i processi computazionali come metodi di decisione simbolici, in cui si rende automatico (per questo formalmente ineccepibile) il metodo di decisione di una proprietà. Le garanzie sulla correttezza della decisione vengono dalla verificabilità: il processo lavora su sequenze di simboli, e applica in maniera asettica alcune regole di trasformazione (i principi deduttivi) in maniera puntuale: da cui viene la richiesta specifica che le regole di trasformazione siano locali, applicabili in tempo finito e soprattutto in modo che la verifica della corretta applicazione sia finita.
 
