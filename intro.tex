@@ -9,23 +9,37 @@ dove $A^{\{1,\dots,k\}}:=\{ f \text{ è una funzione}\, | \, f: \{ 1, \dots ,k\}
 Si noti che per convenzione l'insieme $\{1, \dots, k\}$ per $k = 0$ corrisponde all'insieme vuoto. E pertanto l'insieme $A^*$ per definizione contiene anche la funzione $A^{\emptyset}$ che è detta la \textit{parola vuota}.
 
 \begin{defi}[Lunghezza di una parola]
-Si può definire la funzione ``lunghezza'' di una parola $|u|$ come il più piccolo $n$ tale che $u \in A^{\{1,\dots,n\}}$.
+La \textit{lunghezza} di una parola (in simboli $|u|$) è definita come il più piccolo $n$ tale che $u \in A^{\{1,\dots,n\}}$.
 \end{defi}
 
 \begin{defi}[Concatenazione di parole]
-La concatenazione di due parole $u$ e $v$ sarà una funzione $uv \in A^{\{1,\dots,|u|+|v|\}}$ tale che
+La \textit{concatenazione di due parole $u$ e $v$} è una funzione $uv \in A^{\{1,\dots,|u|+|v|\}}$ (indicata a volte anche come $u \cdot v$) definita come segue:
 \[
-uv(k) = \begin{cases} u(k) & \text{se } k \leq |u| \\ v(k - |u|) & \text{se } |u|+1 \leq k \leq |u|+|v| \end{cases}
+uv(k) := \begin{cases} u(k) & \text{se } k \leq |u| \\ v(k - |u|) & \text{se } |u|+1 \leq k \leq |u|+|v| \end{cases}
 \]
 \end{defi}
 \begin{rema}
-Equivalentemente, possiamo introdurre  l'insieme delle parole su $A$, con $A^*$, come l'insieme delle successioni finite di elementi di $A$ (compresa la parola vuota). Se $u, v \in A^*$ allora $uv \in A^*$ indicherà la parola ottenuta concatenando $u$ con $v$. 
+Equivalentemente, possiamo introdurre  l'insieme delle parole su $A$, con $A^*$, come l'insieme delle successioni finite di elementi di $A$ (compresa la parola vuota). Se $u, v \in A^*$ allora $uv \in A^*$ indicherà la parola ottenuta concatenando $u$ con $v$.
+Data l'equivalenza delle definizioni, 
+useremo una piuttosto che l'altra in modo completamente arbitrario.
+Inoltre,
+visto che vale
+$A \hookrightarrow A^*$,
+considereremo $A$ come un suo sottoinsieme a tutti gli effetti.
+\end{rema}
+\begin{rema}
+La tripla 
+$(A^*,A^\emptyset, \cdot  )$
+è un monoide.
 \end{rema}
 \subsection{Algoritmo}
 \begin{defi}[Algoritmo]
     Un \textit{algoritmo} è una sestupla $\mathcal A:=(A,B,C,\epsilon, \tau, \delta)$ dove
     $A$ e $B$ sono insiemi chiamati rispettivamente \textit{alfabeto di entrata} e \textit{alfabeto di uscita}, $C$ è un insieme chiamato \textit{spazio di configurazioni possibili} e tre funzioni
 \begin{align*} \epsilon &: A^* \to C \\ \tau &: C \to C \\ \delta &: C \to B^* \end{align*}
+tali che 
+$\{dom(\tau), dom(\delta)\}$
+è una partizione di $C$.
 La \textit{computazione associata ad una parola} $w \in A^*$ è la successione
 \[
 (\epsilon(w), \tau(\epsilon(w)), \tau^2(\epsilon(w)), \dots)
@@ -83,8 +97,6 @@ Se invece la computazione associata non termina si dirà che l'algoritmo \textit
 \end{tikzpicture}
 \end{center}
 
-\footnotetext{Tesi di Church: l'insieme dei risultati di equivalenza tra vari modelli effettivi di calcolo è noto come Tesi di Church, che afferma che tutti i modelli di calcolo si equivalgono.}
-
 \begin{defi}[Funzione associata ad un algoritmo]Sia $\mathcal A:=(A,B,C,\epsilon, \tau, \delta)$ un algoritmo. Possiamo definire la funzione
 \[
 \begin{matrix}
@@ -100,17 +112,15 @@ che chiameremo \textit{funzione associata all'algoritmo} $\mathcal A$.
 
 In pratica, ogni volta che diremo che la funzione $f$ associata ad un certo algoritmo formale è definita per ogni possibile parola $w \in A^*$, intenderemo dire che per ogni possibile input la computazione termina e restituisce attraverso la funzione di output $\delta$ il valore della funzione $f(w)$.
 
-\begin{defi}[Funzione caratteristica]
-La funzione $\mathbf{1}_X$ è la \textit{funzione caratteristica} (o indicatrice) dell'insieme $X$, definita come
-\[
-\mathbf{1}_X(w) = \begin{cases} 1 & w \in X \\ 0 & w \notin X. \end{cases}
-\]
-\end{defi}
-
 \begin{defi}[Algoritmo che decide un insieme]
-Diremo che un certo \textit{algoritmo decide} un insieme $X \subset A^*$ quando la funzione associata all'algoritmo coincide con la funzione caratteristica di $X$, quindi se vale:
+Diremo che un certo \textit{algoritmo decide} un insieme 
+$X \subset A^*$
+ quando la funzione associata all'algoritmo coincide su ogni elemento con la funzione caratteristica di 
+ $X$,
+quindi se vale:
 \[
-f_\mathcal{A}(x) = \mathbf{1}_X(x) \text{ per ogni } x \in A^*.
+f_\mathcal{A}(w) = 
+\begin{cases} 1 & w \in X \\ 0 & w \notin X. \end{cases}
 \]
 \end{defi}
 \begin{defi}[Algoritmo che semidecide un insieme]
