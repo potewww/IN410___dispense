@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790067412.29978 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790067413.53531 0
+["pdflatex"] 1790068415.07058 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790068416.31745 0
   "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -67,6 +67,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb" 1248133631 31764 459c573c03a4949a528c2cc7f557e217 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb" 1290383964 25452 d4e98a3bf6b13d4b7dcffd6302990a65 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb" 1290383964 25570 857e8ef1d068e88b2d8db4f6176e0f5c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb" 1215737283 136101 f533469f523533d38317ab5729d00c8a ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb" 1302307949 27430 0e29b053ae98d5f87d872ee72a12d5f5 ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1777593600 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -231,15 +232,15 @@
   "automi_non_deterministici.tex" 1790064606.80076 16503 82f17ad401bc18cc8d3e3f30ee690c8c ""
   "complessità.tex" 1790064606.80076 10352 52fc6503c26a2413a007eea5d334a0ca ""
   "espressioniregolari.tex" 1790064606.80105 3316 09f74ebd98bfc8e0a66d8d88ef328b0b ""
-  "intro.tex" 1790067412.10796 7583 9a6854867fe53754e5f9cc61d5e32726 ""
+  "intro.tex" 1790068413.63011 7827 b85a48399c5b38195b71e6f38d0fd40c ""
   "linguaggi_regolari.tex" 1790064606.80105 4978 dce47dad8da3be9e9cfb8ed5918a98e2 ""
   "macchinadituring.tex" 1790064606.80105 9698 f07172174ca22f0e5681250588692c8f ""
-  "main.aux" 1790067413.43683 20152 676819f4be43415c2535e00fc0168495 "pdflatex"
-  "main.out" 1790067413.43783 3265 b4dd821cf2e01abbd3c0f37373551b16 "pdflatex"
+  "main.aux" 1790068416.21791 20167 1dbf747242076ef097f5f050681d560f "pdflatex"
+  "main.out" 1790068416.21891 3351 c38e4905499ae80de0d4791c05aaf6a2 "pdflatex"
   "main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
-  "main.toc" 1790067413.43783 1640 c79dfbbe8363bd0d80c353b143e8ef3a "pdflatex"
+  "main.toc" 1790068416.21891 1657 3f2fe4faa3e4a1002781999b37fb3030 "pdflatex"
   "packages.tex" 1790064606.80605 853 f57f0fe14d903c1567e1394418f812f3 ""
-  "prerequisiti.tex" 1790066786.36527 14474 b8f0e8881e59c9ee65408decd72d9520 ""
+  "prerequisiti.tex" 1790068030.12849 14547 414d7cc257e901262049e672de76d412 ""
   "rappresentazione grafica degli automi.tex" 1790064606.80605 11481 3a3193e7fe5d4dbade82be3360c60eb4 ""
   (generated)
   "main.aux"

@@ -32,7 +32,7 @@ La tripla
 $(A^*,A^\emptyset, \cdot  )$
 è un monoide.
 \end{rema}
-\subsection{Algoritmo}
+\subsection{Algoritmo e decidibilita'}
 \begin{defi}[Algoritmo]
     Un \textit{algoritmo} è una sestupla $\mathcal A:=(A,B,C,\epsilon, \tau, \delta)$ dove
     $A$ e $B$ sono insiemi chiamati rispettivamente \textit{alfabeto di entrata} e \textit{alfabeto di uscita}, $C$ è un insieme chiamato \textit{spazio di configurazioni possibili} e tre funzioni
@@ -40,8 +40,11 @@ $(A^*,A^\emptyset, \cdot  )$
 tali che 
 $\{dom(\tau), dom(\delta)\}$
 è una partizione di $C$.
-La \textit{computazione associata ad una parola} $w \in A^*$ è la successione
+La \textit{computazione associata ad una parola} $w \in A^*$
+è la successione
 \[
+(\tau^n(\epsilon(w)))_{n \in \mathbb N}
+=
 (\epsilon(w), \tau(\epsilon(w)), \tau^2(\epsilon(w)), \dots)
 \]
 diremo che questultima è \textit{finita} (oppure diremo che \textit{termina}) se esiste un $n \in \mathbb N$ tale che $\tau ^n(\epsilon(w))\in dom(\delta)$, altrimenti diremo che è \textit{infinita}.
@@ -111,7 +114,11 @@ che chiameremo \textit{funzione associata all'algoritmo} $\mathcal A$.
 \end{defi}
 
 In pratica, ogni volta che diremo che la funzione $f$ associata ad un certo algoritmo formale è definita per ogni possibile parola $w \in A^*$, intenderemo dire che per ogni possibile input la computazione termina e restituisce attraverso la funzione di output $\delta$ il valore della funzione $f(w)$.
-
+\\ \\
+Le due precedenti definizioni sono state date nel modo più generale possibile.
+D'ora in poi invece,
+a meno di casi particolari,
+considereremo solo algoritmi tali che $B=\{ 0,1\}$.
 
 \begin{defi}[Algoritmo che decide un insieme]
 Diremo che un certo \textit{algoritmo decide} un insieme 
