@@ -1,8 +1,5 @@
 \subsection{Automi come grafi}
-A partire da un automa finito $(T,q_0,F)$ se ne può dare una descrizione grafica nel modo seguente: si consideri il grafo i cui nodi sono gli stati $Q$, e gli archi etichettati con elementi di $A$ che collegano due stati $(q_i,q_j)$ se esiste la transizione $T(q_i,a)=q_j$:
-\[
-G_{(T,q_0,F)} = \{(q_i,q_j,a) \mid q_i,q_j \in Q,\ a \in A,\ T(q_i,a)=q_j\}
-\]
+A partire da un automa finito $(T,q_0,F)$ se ne può dare una descrizione grafica nel modo seguente: si consideri il grafo i cui nodi sono gli stati $Q$, e gli archi etichettati con elementi di $A$ che collegano due stati $(q_i,q_j)$ se esiste la transizione $T(q_i,a)=q_j$.
 inoltre avremo una funzione che ci indica lo stato iniziale
 \[
 \texttt{init}(G_{(T,q_0,F)}) = q_0
@@ -12,8 +9,26 @@ inoltre avremo una funzione che ci indica lo stato iniziale
 \texttt{acc}(G_{(T,q_0,F)}) = F \qquad (\text{risp. } \texttt{ref}(G_{(T,q_0,F)}) = Q \setminus F)
 \]
 (di solito si indicano gli stati accettanti con un doppio cerchio, mentre tutti gli altri nodi sono considerati non accettanti).
-Ad esempio il grafo associato all'automa dell'Esempio~\ref{esempio automa per parole pari}, è rappresentato in Figura~\ref{figura esempio automa per parole pari}.
+Per essere più formali:
+\begin{defi}[Grafo associato ad un automa]
+Dato un automa $(T,q_0,F)$ definito su un alafabeto $A$ e insieme di stati $Q$ definiamo il suo grafo associato $G=(V,E,L)$ come segue:
+\begin{itemize}
+    \item l'insieme dei vertici è
+    \[
+    V:=Q;
+    \]
+    \item l'insieme dei lati è
+    \[
+    E:=\{(q_i,a,q_j)\in Q\times A\times Q \mid T(q_i,a)=q_j\};
+    \]
+    \item la funzione di etichettatura è
+    \[
+    L:E\to A, \qquad L(q_i,a,q_j)=a.
+    \]
+\end{itemize}
+\end{defi}
 
+Ad esempio il grafo associato all'automa dell'Esempio~\ref{ex: parole lunghezze pari}, è rappresentato in Figura~\ref{figura esempio automa per parole pari}.
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}[
@@ -46,7 +61,7 @@ Ad esempio il grafo associato all'automa dell'Esempio~\ref{esempio automa per pa
           (q0) edge [bend left=25] node {$1$} (q1)
           (q1) edge [bend left=25] node {$1$} (q0);
 \end{tikzpicture}
-\caption{In modo simile all'automa dell'Esempio~\ref{esempio automa per parole pari} si può dare l'automa che decide l'insieme di tutte le parole con un numero pari di 1.}
+\caption{In modo simile all'automa dell'Esempio~\ref{ex: parole lunghezze pari} si può dare l'automa che decide l'insieme di tutte le parole con un numero pari di 1.}
 \label{fig:parita}
 \end{figure}
 
@@ -75,6 +90,8 @@ Ad esempio il grafo associato all'automa dell'Esempio~\ref{esempio automa per pa
 \caption{Automa che decide l'insieme $X=\{01^n \mid n\geq 0\}$.}
 \label{fig:01n}
 \end{figure}
+
+\begin{comment}
 \subsection{Rappresentazione come matrice di adiacenza}
 
 Possiamo usare $M_E$ per indicare la matrice di adiacenza del grafo $G=(V,E)$ definita come 
@@ -141,139 +158,136 @@ M_E^* = \sum_{i=0}^{L} M_E^i.
 \]
 \end{rema}
 
-\subsection{Grafi etichettati}
-Ovviamente, considerando matrici simmetriche, possiamo estendere la discussione anche a grafi non orientati e a grafi etichettati.
+\end{comment}
 
-
-Il grafo associato ad un automa ha in realtà una struttura di grafo etichettato con elementi dell'alfabeto $A$: dato un automa $(T,q_0,F)$ si può definire il grafo $G=(V,E,L)$ dove
-\begin{itemize}
-    \item l'insieme dei vertici è
-    \[
-    V:=Q;
-    \]
-    \item l'insieme dei lati è
-    \[
-    E:=\{(q_i,a,q_j)\in Q\times A\times Q \mid T(q_i,a)=q_j\};
-    \]
-    \item la funzione di etichettatura è
-    \[
-    L:E\to A, \qquad L(q_i,a,q_j)=a.
-    \]
-\end{itemize}
-
-Nel caso di un grafo etichettato si può ugualmente definire la matrice di adiacenza del grafo utilizzando le etichette come elementi della matrice, ma se si vuole mantenere l'interpretazione delle potenze successive della matrice di adiacenza è necessario avere una struttura algebrica (con somma e prodotto) definita sull'insieme delle etichette — struttura che introduciamo in \S~\ref{sec:semianelli-serie-formali}.\footnote{Riferimento alla sezione formale su semianelli e serie formali.}
-
-Per prima cosa sarà necessario introdurre un'etichetta ``non definita'' per segnalare l'assenza dell'arco. In particolare, se l'insieme delle etichette ha una struttura di \emph{monoide} (prodotto associativo tra etichette, con elemento neutro), si può considerare una struttura con una somma libera (le \emph{serie formali}, Definizione~\ref{def:serie-formali}) che fornisce un'operazione additiva in aggiunta a quella moltiplicativa di monoide: si ottiene così un semianello (Definizione~\ref{def:semianello}), sufficiente per introdurre il prodotto righe per colonne tra matrici a coefficienti nelle etichette (Definizione~\ref{def:Mn}).
-
-\subsection{Applicazione agli automi}
-
-Nel caso degli automi, iterare le potenze successive della matrice di adiacenza corrisponde al calcolo dell'insieme deciso dall'automa:
+\subsection{Matrici di adiacenza per grafi di automi finiti}
+Consideriamo un automa 
+$(T,q_0,F)$ definito su un alafabeto 
+$A$ e insieme di stati $Q$.
+Possiamo sempre considerare il monoide $M=(A^*,A^\emptyset, \cdot)$ 
+e l'anello (che e/' anche un semianello) $\mathbb N$.
+A questo punto possiamo definire l'insieme delle serie formali
 \[
-E(M) = \sum_{k\geq 0} M^k.
+\mathbb N [M]
+:=
+\left\{
+    \sum_{w \in A^*}n_w w \, | \, n_w \in \mathbb N 
+\right\}
 \]
-
-Si noti che $M^0$ corrisponde alla matrice diagonale con elemento neutro moltiplicativo sulla diagonale (la parola vuota, nel caso del monoide delle parole) e l'elemento neutro additivo altrove (la somma formale vuota $0$).
-
-Infatti, gli elementi che si trovano sulla riga di $E(M)$ corrispondente allo stato iniziale e sulle colonne corrispondenti agli stati finali sono proprio le parole che l'automa accetta; dunque si può dire che
-\[
-X = \Pi(E(M)),
-\]
-dove $\Pi$ serve ad ottenere una combinazione delle parole che etichettano un cammino che va dallo stato iniziale ad uno degli stati finali dell'automa.
-
-
-% =========================================================
-% FIGURA 4 (grafo generico + matrice di adiacenza)
-% =========================================================
-\begin{figure}[h]
-\centering
+Ora possiamo considerare la matrice di adiacenza $Z$ dell'automa,
+che non sarà nient'altro che una matrice cha nelle entrate elementi di $\mathbb N[M]$.
+Come sappiamo, fare la potenza $k$-esima di una matrice di adiacenza con etichette,
+fornisce nell'entrata $(i,j)$
+tutti e i soli cammini di lunghezza $k$ che collegano il vertice
+$i$ al vertice $j$ (nel caso degli automi, dallo stato $q_i$ allo stato $q_j$).
+Vediamo un esempio:
+\begin{exam}
+    Consideriamo l'automa che decide l'inisieme delle parole di lunghezza pari. 
+    Questo e/' rappresentato dal seguente grafo etichettato.
+\begin{center}
 \begin{tikzpicture}[
-    ->, >=stealth', shorten >=1pt,
-    every state/.style={circle, draw, minimum size=8mm}
+    ->, >=stealth', shorten >=1pt, auto, node distance=4cm,
+    every state/.style={circle, draw, minimum size=1cm}
 ]
-    \node[state] (n1) at (0,3) {1};
-    \node[state] (n3) at (3,3) {3};
-    \node[state] (n2) at (1.3,2) {2};
-    \node[state] (n6) at (0,0.8) {6};
-    \node[state] (n4) at (3,0.8) {4};
-    \node[state] (n7) at (-1,-0.5) {7};
-    \node[state] (n5) at (1.3,-0.5) {5};
+    % Stati (q0 ha il doppio cerchio con 'accepting')
+    \node[state, accepting] (even) {$q_0$};
+    \node[state] (odd) [right of=even] {$q_1$};
 
-    \path (n3) edge [bend right=15] (n1)
-          (n1) edge [bend right=15] (n2)
-          (n2) edge (n6)
-          (n2) edge (n4)
-          (n3) edge [bend left=15] (n4)
-          (n4) edge [bend left=15] (n3)
-          (n6) edge (n7)
-          (n4) edge (n5)
-          (n5) edge (n6);
+    % Freccia iniziale esterna
+    \draw[->] (-1.2,0.6) -- (even);
+
+    % Transizioni SOPRA (da q0 a q1)
+    \path (even) edge [bend left=45] node[above] {$1$} (odd);
+    \path (even) edge [bend left=15] node[above] {$0$} (odd);
+
+    % Transizioni SOTTO (da q1 a q0)
+    \path (odd) edge [bend left=45] node[below] {$1$} (even);
+    \path (odd) edge [bend left=15] node[below] {$0$} (even);
 \end{tikzpicture}
-\hspace{1cm}
-$M = \begin{pmatrix}
-0 & 1 & 0 & 0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1 & 0 & 1 & 0 \\
-1 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0 & 1
-\end{pmatrix}$
-\caption{Un generico grafo orientato e la corrispondente matrice di adiacenza.}
-\label{fig:grafo7}
-\end{figure}
-
-% =========================================================
-% FIGURA 5 (grafo con q0,q1,q2 e matrici M, M^2)
-% =========================================================
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[
-    ->, >=stealth', shorten >=1pt,
-    every state/.style={circle, draw, minimum size=8mm}
-]
-    \node[state] (q0) at (0,0) {$q_0$};
-    \node[state] (q1) at (2.5,0) {$q_1$};
-    \node[state] (q2) at (1.25,-1.8) {$q_2$};
-
-    \path (q0) edge [bend left=15] (q1)
-          (q1) edge [bend left=15] (q0)
-          (q0) edge [bend left=25] (q1)
-          (q1) edge [bend left=25] (q0)
-          (q0) edge [bend right=15] (q2)
-          (q2) edge [bend right=15] (q0)
-          (q1) edge [bend left=15] (q2)
-          (q2) edge [bend left=15] (q1)
-          (q2) edge [loop below] (q2);
-\end{tikzpicture}
-\qquad
-$M = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}$
-\qquad
-$M^2 =
-\begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}
-\begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}
-=
-\begin{pmatrix} 2 & 1 & 2 \\ 2 & 2 & 3 \\ 1 & 1 & 2 \end{pmatrix}$
-\caption{Esempio di grafo orientato (non etichettato). La matrice di adiacenza $M$ e il quadrato $M^2$ che ``conta'' il numero di cammini di lunghezza 2 presenti nel grafo.}
-\label{fig:grafo3}
-\end{figure}
-
-
-
-Anche l'applicazione $\Pi$ ha una rappresentazione matriciale: se si moltiplica a sinistra la matrice $E(M)$ per il versore riga che ha la parola vuota nella posizione dello stato iniziale (indicata con $\epsilon$) e la serie formale vuota in tutte le altre componenti, si ottiene un vettore riga contenente la riga corrispondente allo stato iniziale. Moltiplicando poi a destra questo vettore per il vettore colonna che ha la parola vuota in corrispondenza degli stati finali e la serie formale vuota nelle posizioni degli stati non accettanti, si ottiene la serie formale corrispondente all'insieme $X$:
+\end{center}
+La sua matrice di adiacenza e/'
 \[
-X = \Pi(E(M)) = V_0 \cdot E(M) \cdot V_F^t,
+Z=
+\begin{pmatrix}
+   \bot & 0 + 1
+    \\
+    0+1 & \bot
+\end{pmatrix}
 \]
-dove
-\[
-V_0(i) =
-\begin{cases}
-\epsilon & q_i = q_0 \\
-\bot & q_i \neq q_0
-\end{cases}
-\qquad
-V_F(i) =
-\begin{cases}
-\epsilon & q_i \in F \\
-\bot & q_i \notin F.
-\end{cases}
-\]
+Infatti, gli archi $0$ e $1$ collegano i vertici 
+$q_0$ e $q_1$ in entrambe le direzioni.
+Inoltre, visto che non ci sono loop, 
+sulla diagonale si inserisce convenzionalmente la serie formale vuota, 
+indicata con $\bot$.
+A questo punto vogliamo trovare i cammini di lunghezza 2 del grafo.
+Per farlo basta calcolare la potenza seconda di $Z$:
+\begin{align*}
+Z^2&=
+\begin{pmatrix}
+    \bot \bot + (0+1)(0+1) & \bot(0+1) + (0+1)\bot
+    \\[6pt]
+    (0+1)\bot + \bot(0+1) & (0+1)(0+1) + \bot \bot
+\end{pmatrix}
+\\ &=
+\begin{pmatrix}
+    00+ 01+ 10+11 & \bot + \bot
+    \\[6pt]
+    \bot + \bot &  00+ 01+ 10+11
+\end{pmatrix}
+\\ &=
+\begin{pmatrix}
+    00+ 01+ 10+11 &  \bot
+    \\[6pt]
+    \bot &  00+ 01+ 10+11
+\end{pmatrix}
+\end{align*}
+Per verificare le operazioni effettuate con $\bot$, 
+basta usare la definizione presente in (\ref{def:serie-formali}).
+Dalla matrice possiamo quindi dedurre che
+esistono 4 cammini che collegano $q_0$ e $q_1$ con loro stessi,
+e nessuno che collega $q_0$ con $q_1$ o viceversa.
+\end{exam}
+
+A questo punto ci vogliamo porre la seguente domanda: 
+si può dedurre dala matrice di adiacenza tutti i cammini che uniscono lo stato iniziale
+ad uno stato accettante dell'automa?
+In altre parole:
+dalla matrice di adiacenza si può dedurre il calcolo che l'automa compie per decidere un insieme?
+La risposta e' si.
+Prima di affrontare il caso generale
+analizziamo questo problema nel caso dell'esempio precedente.
+\begin{exam}
+    In questo caso esiste un solo stato accettante,
+    che coincide esattamente con lo stato iniziale.
+    Quindi,
+    in una qualsiasi potenza di $Z$,
+    dovremmo considerare l'entrata $(1,1)$
+    per trovare il calcolo per la decisione dell'insieme.
+    Più precisamente, per ogni $k$ naturale, nell'entrata $(1,1)$
+    della matrice $Z^k$
+    troviamo le uniche e sole computazioni
+    di lunghezza $k$.
+    Facendo ancora un paio di potenze di $Z$, 
+    si può dedurre la seguente formula:
+    \[
+    Z^k=
+    \left\{
+    \begin{matrix}
+        \begin{pmatrix}
+            (0+1)^k & \bot
+            \\
+            \bot & (0+1)^k
+        \end{pmatrix}
+        ,& \text{se } k \text{ e/' pari}
+        \\
+        \\
+        \begin{pmatrix}
+            \bot & (0+1)^k
+            \\
+            (0+1)^k & \bot
+        \end{pmatrix}
+        ,& \text{se } k \text{ e/' pari}
+    \end{matrix}
+    \right.
+    \]
+\end{exam}

@@ -64,8 +64,7 @@ L'algoritmo associato ad un automa di alfabeto $A$ e insieme degli stati $Q$ è 
 Un insieme $X\subset A^*$, è \textit{decidibile} per automa finito (oppure \textit{DFA-decidibile} oppure \textit{regolare}), se esiste un insieme finito $Q$ e un automa finito con alfabeto $A$ e insieme degli stati $Q$ tale che l'algoritmo associato decide $X$.
 \end{defi}
 \begin{exam}\label{ex: parole lunghezze pari}
-Descrivere l'automa finito che decide l'insieme delle parole di lunghezza pari (risp. dispari) su un alfabeto dato $A$.
-
+Vogliamo ora descrivere l'automa finito che decide l'insieme delle parole di lunghezza pari (risp. dispari) su un alfabeto dato $A$.
 A partire dall'alfabeto finito $A$, e da un insieme di due stati $Q=\{0,1\}$ che corrisponderanno rispettivamente allo stato ``abbiamo letto un numero pari (oppure dispari) di caratteri della parola''; costruiamo la funzione di transizione che ad ogni carattere letto cambia stato:
 \[
 T: Q\times A \to Q
@@ -79,24 +78,20 @@ T(q,a) =
 \end{cases}
 \]
 per ogni $a\in A$.
-
 Avremo allora che lo stato iniziale $q_0=0$, poiché inizialmente non avremo ancora letto nessun carattere e che l'insieme degli stati accettanti sarà: $F=\{0\}$.
-\begin{proof}
-Sia
+Sia quindi 
 \[
 X=\{\,w\in A^* : |w|\text{ è pari}\,\}.
 \]
-Dimostriamo che l'algoritmo associato all'automa
+e dimostriamo che l'algoritmo associato all'automa
 \[
 (T,q_0,F)
 \]
 decide l'insieme \(X\).
-
 Sia dunque \(w=a_1a_2\cdots a_n\in A^*\). La configurazione iniziale è
 \[
 \epsilon(w)=(w,1,0).
 \]
-
 Ad ogni applicazione della funzione di transizione viene letta una lettera della parola e lo stato viene invertito:
 \[
 0\longleftrightarrow1.
@@ -113,7 +108,6 @@ q_k=
 1 & \text{se } k \text{ è dispari}.
 \end{cases}
 \]
-
 Dopo la lettura dell'intera parola si raggiunge quindi la configurazione
 \[
 (w,n+1,q_n).
@@ -130,7 +124,6 @@ q_n=
 1 & \text{se } |w| \text{ è dispari}.
 \end{cases}
 \]
-
 Essendo \(F=\{0\}\), segue che
 \[
 \delta(w,n+1,q_n)=
@@ -139,7 +132,6 @@ Essendo \(F=\{0\}\), segue che
 0 & \text{se } |w| \text{ è dispari}.
 \end{cases}
 \]
-
 Pertanto
 \[
 f_{\mathcal A}(w)=
@@ -152,9 +144,7 @@ cioè
 \[
 f_{\mathcal A}=\mathbf 1_X.
 \]
-
 Ne consegue che l'algoritmo associato all'automa decide l'insieme delle parole di lunghezza pari.
-\end{proof}
 \end{exam}
 \begin{ex}\label{es:1}
 Fissiamo l'alfabeto binario $A=\{0,1\}$, dimostrare che l'insieme
