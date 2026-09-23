@@ -156,9 +156,75 @@ f_{\mathcal A}(x)=
 \bot, & \text{se } x\notin X,
 \end{cases}
 \]
-dove il simbolo $\bot$ indica che l'algoritmo non termina.
 \end{defi}
 
+Chiaramente, uno dei due concetti e/' più forte dell'altro.
+\begin{prop}
+    Se esiste un algoritmo 
+    $\mathcal A$
+    che decide un un iniseme 
+    $X \subset A^*$ su un alfabeto $A$;
+    allora esiste un algortmo $\mathcal A'$
+    che semidecide $X$.
+    \begin{proof}
+        Per ipotesi abbiamo un algoritmo
+        $\mathcal A = (A,\{ 0,1\},C,\epsilon,\tau , \delta)$
+        che decide $X$.
+        Possiamo considerare
+        \[
+        T_0:=\delta^{-1}(\{0\}), \quad  T_1:=\delta^{-1}(\{1\})
+        \]
+        in modo tale da poter definire le seguenti funzioni:
+        \[
+        \begin{matrix}
+        \tau'(c): & C & \to & C
+            \\ & c & \mapsto &
+        \left\{
+            \begin{matrix}
+                c, & \text{se } c \in T_0
+                \\
+                \tau (c), & \text{se } c \notin T_0
+            \end{matrix}
+        \right.
+        \end{matrix}
+        \] 
+        \[
+        \begin{matrix}
+        \delta'(c): & C &\to & \{0,1\}^*
+        \\& c & \mapsto &
+        \left\{
+            \begin{matrix}
+                \delta (c), & \text{se } c \in T_1
+                \\
+                \bot, & \text{se } c \notin T_1
+            \end{matrix}
+        \right.
+        \end{matrix}
+        \]
+    Possiamo definire quindi l'algoritmo
+    $\mathcal A := (A,\{ 0,1\},C,\epsilon,\tau' , \delta')$. 
+        Ora, per ogni 
+        $w \in A^*$
+        esiste un $k \in \mathbb N$
+        tale che $\tau ^k(\epsilon (w)) \in dom(\delta)=T_0 \sqcup T_1$.
+        Questo vuol dire che, per ogni $i <k$ vale che 
+        $\tau ^i(\epsilon (w))\notin T_0$.
+        Quindi $\tau'^{k}(\epsilon(w))=\tau^{k}(\epsilon(w))$.
+    A qeusto punto dividiamo in casi:
+    \begin{itemize}
+        \item[$w \in X$:] allora $\tau'^{k}(\epsilon(w)) \in T_1$, quindi
+        $\delta'(\tau'^{k}(\epsilon(w)))=\delta (\tau'^{k}(\epsilon(w)))=1$; 
+
+        \item[$w \notin X$:] allora $\tau'^{k}(\epsilon(w)) \in T_0$, quindi
+        $\delta'(\tau'^{k}(\epsilon(w)))=\bot$, entrando cosi/' in un ciclo. 
+    \end{itemize}
+    
+    Quindi, $\mathcal A' $ semidecide $X$.
+
+    \end{proof}
+\end{prop}
+
+Il viceversa non vale, vedremo un esempio più avanti \textcolor{red}{CONTROLLA}
 
 \textcolor{red}{controlla qui:}
 Pertanto, consideriamo i processi computazionali come metodi di decisione simbolici, in cui si rende automatico (per questo formalmente ineccepibile) il metodo di decisione di una proprietà. Le garanzie sulla correttezza della decisione vengono dalla verificabilità: il processo lavora su sequenze di simboli, e applica in maniera asettica alcune regole di trasformazione (i principi deduttivi) in maniera puntuale: da cui viene la richiesta specifica che le regole di trasformazione siano locali, applicabili in tempo finito e soprattutto in modo che la verifica della corretta applicazione sia finita.

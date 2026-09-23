@@ -22,9 +22,9 @@ Una configurazione per automa a stati finiti di alfabeto $A$ e insieme degli sta
 \end{enumerate}
 \end{defi}
 
-L'insieme delle configurazioni di alfabeto $A$ e insieme degli stati $Q$ per automa finito sarà denotato con
+\textit{L'insieme delle configurazioni} di alfabeto $A$ e insieme degli stati $Q$ per automa finito sarà denotato con
 \[
-Conf_{DFA}^{A,Q} = A^* \times \mathbb{N} \times Q
+Conf_{DFA}^{A,Q} := A^* \times \mathbb{N} \times Q
 \]
 ed allora possiamo definire:
 
@@ -38,7 +38,7 @@ L'algoritmo associato ad un automa di alfabeto $A$ e insieme degli stati $Q$ è 
     \tau((w,p,q)) = (w,p+1,T(q,w(p))),
     \]
 
-    \item la \textbf{funzione di uscita} $\delta: Conf_{DFA}^{A,Q} \to \{0,1\}*$, data da
+    \item la \textbf{funzione di uscita} $\delta: Conf_{DFA}^{A,Q} \to \{0,1\}^*$, data da
     \[
     \delta((w,p,q)) =
     \begin{cases}
@@ -49,7 +49,16 @@ L'algoritmo associato ad un automa di alfabeto $A$ e insieme degli stati $Q$ è 
 \end{itemize}
 \end{defi}
 
-
+\begin{rema}
+    L'idea dietro la definizione precedente e/' 
+    quella di leggere una lettera alla volta della parola $w$
+    e tramite la funzione $T$ cambiare lo stato della macchina in base alla lettera letta
+    e allo stato corrente della macchina.
+    Ovviamente la computazione finisce quando sono state esaminate tutte le lettere
+    della parola (che vegnono esaminate esattamente una volta sola).
+    Inoltre, un automa non ha una vera e propria memoria,
+    bensi/' ha gli stati (che giocano il ruolo della memoria dell'automa).
+\end{rema}
 
 \begin{defi}[Insiemi decidibili per automa]\label{def:5}
 Un insieme $X\subset A^*$, è \textit{decidibile} per automa finito (oppure \textit{DFA-decidibile} oppure \textit{regolare}), se esiste un insieme finito $Q$ e un automa finito con alfabeto $A$ e insieme degli stati $Q$ tale che l'algoritmo associato decide $X$.

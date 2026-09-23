@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790068415.07058 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790068416.31745 0
+["pdflatex"] 1790186175.62175 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790186176.86005 0
   "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -228,19 +228,19 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1777593600 43785 66587115382950aca692b5f6e3c2fb74 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1789493230 5571897 18e76ddef8b9757a8bcef40270a4ee26 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1789492747 3520296 557dfeeb71425298727bcc8c3fc42ae1 ""
-  "automi_finiti.tex" 1790064606.80076 7199 cd99d31e4aae341b7e048cebd5e95eac ""
+  "automi_finiti.tex" 1790184006.69751 7762 cc1e7929ebd4e3e8fb910c8916c8447d ""
   "automi_non_deterministici.tex" 1790064606.80076 16503 82f17ad401bc18cc8d3e3f30ee690c8c ""
   "complessità.tex" 1790064606.80076 10352 52fc6503c26a2413a007eea5d334a0ca ""
   "espressioniregolari.tex" 1790064606.80105 3316 09f74ebd98bfc8e0a66d8d88ef328b0b ""
-  "intro.tex" 1790068413.63011 7827 b85a48399c5b38195b71e6f38d0fd40c ""
+  "intro.tex" 1790183659.17555 9966 6fe82a4011dea6e1228aa2d0d5a482ea ""
   "linguaggi_regolari.tex" 1790064606.80105 4978 dce47dad8da3be9e9cfb8ed5918a98e2 ""
   "macchinadituring.tex" 1790064606.80105 9698 f07172174ca22f0e5681250588692c8f ""
-  "main.aux" 1790068416.21791 20167 1dbf747242076ef097f5f050681d560f "pdflatex"
-  "main.out" 1790068416.21891 3351 c38e4905499ae80de0d4791c05aaf6a2 "pdflatex"
+  "main.aux" 1790186176.76301 19613 4d2b8d9be1f3c98923b77a181f5da311 "pdflatex"
+  "main.out" 1790186176.76338 3351 c38e4905499ae80de0d4791c05aaf6a2 "pdflatex"
   "main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
-  "main.toc" 1790068416.21891 1657 3f2fe4faa3e4a1002781999b37fb3030 "pdflatex"
+  "main.toc" 1790186176.76338 1657 d78b0242dca1054655086da81d738b06 "pdflatex"
   "packages.tex" 1790064606.80605 853 f57f0fe14d903c1567e1394418f812f3 ""
-  "prerequisiti.tex" 1790068030.12849 14547 414d7cc257e901262049e672de76d412 ""
+  "prerequisiti.tex" 1790186174.16815 13251 935985a947f15bfd2926a204274d6f7f ""
   "rappresentazione grafica degli automi.tex" 1790064606.80605 11481 3a3193e7fe5d4dbade82be3360c60eb4 ""
   (generated)
   "main.aux"
