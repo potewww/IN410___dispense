@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1790244172.87453 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790244174.11812 0
-  "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
+["pdflatex"] 1790287736.99038 "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" "main.pdf" "main" 1790287738.33303 0
+  "/home/filippo/Documenti/TEX/IN410___dispense/main.tex" 1790265009.22592 728 82af7954ff2d8db17c858864ec9ab740 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -236,13 +236,13 @@
   "intro.tex" 1790183659.17555 9966 6fe82a4011dea6e1228aa2d0d5a482ea ""
   "linguaggi_regolari.tex" 1790064606.80105 4978 dce47dad8da3be9e9cfb8ed5918a98e2 ""
   "macchinadituring.tex" 1790064606.80105 9698 f07172174ca22f0e5681250588692c8f ""
-  "main.aux" 1790244174.01633 19015 c933ba14f65338b699e4fcb6cd8f5fbf "pdflatex"
-  "main.out" 1790244174.01733 3055 258fe1e8c9506761ce6bb1b1a1a56d0c "pdflatex"
-  "main.tex" 1790064621.68541 728 82af7954ff2d8db17c858864ec9ab740 ""
-  "main.toc" 1790244174.01844 1487 5eb53aca806ccb27d7148288d0ee40a8 "pdflatex"
+  "main.aux" 1790287738.23057 19311 32fc3659eafe8a86f4159e10896ee4af "pdflatex"
+  "main.out" 1790287738.23257 3055 258fe1e8c9506761ce6bb1b1a1a56d0c "pdflatex"
+  "main.tex" 1790265009.22592 728 82af7954ff2d8db17c858864ec9ab740 ""
+  "main.toc" 1790287738.23257 1487 c289c23c2e88dba497cc4f413e8c7249 "pdflatex"
   "packages.tex" 1790064606.80605 853 f57f0fe14d903c1567e1394418f812f3 ""
   "prerequisiti.tex" 1790186297.76556 13251 935985a947f15bfd2926a204274d6f7f ""
-  "rappresentazione grafica degli automi.tex" 1790244172.67243 13898 633f6502780849a33abafcda1e694711 ""
+  "rappresentazione grafica degli automi.tex" 1790287736.78151 19515 ab98c019c3702fa6ecb95d8b054b54cb ""
   (generated)
   "main.aux"
   "main.log"

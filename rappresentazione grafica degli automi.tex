@@ -425,3 +425,191 @@ e che $\bot \cdot w = \bot$ per ogni serie formale $w \in \mathbb N[M]$.
     \end{align*}
     Che e/' esattamente quanto abbiamo osservato precedentemente.
 \end{exam}
+\begin{ex}
+{Si consideri il seguente automa di alfabeto $A = \{a, b\}$ e insieme degli stati $Q = \{q_0, q_1, q_2\}$:}\\
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm and 3.5cm, on grid, auto, thick]
+    % Definizione degli stati
+    \node[state, initial, initial text=] (q0) {$q_0$};
+    \node[state] (q1) [above right=of q0] {$q_1$};
+    \node[state, accepting] (q2) [below right=of q0] {$q_2$};
+    \node[state] (q3) [below right=of q1] {$q_3$};
+
+    % Transizioni
+    \path[->]
+    (q0) edge [bend left] node {$a$} (q1)
+         edge [bend left] node {$b$} (q2)
+    (q1) edge [bend left] node {$a$} (q3)
+         edge [bend left=15] node {$b$} (q2)
+    (q2) edge [bend left] node {$a$} (q0)
+         edge [bend right] node[below right] {$b$} (q3)
+    (q3) edge [loop above] node {$a$} ()
+         edge [loop below] node {$b$} ();
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+    \item {Scrivere la descrizione dell'automa in termini della tabella $T : Q \times A \to Q$ dello stato iniziale e dell'insieme $F$ degli stati finali accettanti;}
+    
+    \item {Calcolare la matrice $M$ corrispondente all'automa, separare la matrice $M$ in due matrici di adiacenza (con elementi 0/1) relative al grafo delle transizioni etichettate con $a$ e quelle etichettate con $b$, in modo tale che:
+    \[ M = aM_a + bM_b. \]
+    }
+    
+    \item {Calcolare $M_a^2$, $M_a^3$, $M_b^2$, $M_b^3$;}
+    
+    \item {Calcolare, con l'aiuto del punto precedente, $M^4$.}
+\end{enumerate}
+\begin{sol}
+\begin{enumerate}
+    \item La tabella delle transizioni $T$ è la seguente:
+    \[
+    \begin{matrix}
+        T: & Q \times A & \to & Q
+        \\
+        &(q_0, a) & \mapsto & q_1
+        \\
+        &(q_0, b) & \mapsto & q_2
+        \\
+        &(q_1, a) & \mapsto & q_3
+        \\
+        &(q_1, b) & \mapsto & q_2
+        \\
+        &(q_2, a) & \mapsto & q_0
+        \\
+        &(q_2, b) & \mapsto & q_3
+        \\
+        &(q_3, a) & \mapsto & q_3
+        \\
+        &(q_3, b) & \mapsto & q_3
+    \end{matrix}
+    \]
+    mentre lo stato iniziale è $q_0$
+    e l'insieme degli stati finali accettanti è $F = \{q_2\}$.
+
+    \item La matrice $M$ di adiacenza del grafo etichettato corrispondente all'automa è:
+    \[
+    M=
+    \begin{pmatrix}
+        \bot & a & b & \bot
+        \\
+        \bot & \bot & b & a
+        \\
+        a & \bot & \bot & b
+        \\
+        \bot & \bot & \bot & a + b
+    \end{pmatrix}
+    \]
+    Ricordando che $\bot$ rappresenta la serie formale vuota, 
+    e quindi vale $\bot \cdot w=\bot$ per ogni $w \in \mathbb N[M]$;
+    possiamo separere la matrice $M$ in due matrici di adiacenza $M_a$ e $M_b$ come segue:
+    \[
+    M_a=
+    \begin{pmatrix}
+        0& 1 & 0 & 0
+        \\
+        0 & 0 & 0 & 1
+        \\
+        1 & 0 & 0 & 0
+        \\
+        0 & 0 & 0 & 1
+    \end{pmatrix}
+    \]
+    \[
+    M_b=
+    \begin{pmatrix}
+        0 & 0 & 1 & 0
+        \\
+        0 & 0 & 1 & 0
+        \\
+        0 & 0 & 0 & 0
+        \\
+        0 & 0 & 0 & 1
+    \end{pmatrix}
+    \]
+    
+    \item Per fare i conti si hanno due strade: 
+    si possono calcolare le potenze di $M_a$ e $M_b$ separatamente,
+    oppure si puo/' consideraare il grafo etichettato di sopra e contare 
+    i cammini di lunghezza 2 e 3 che collegano i vertici $q_i$ e $q_j$ che utilizzano
+    solamente archi etichettati con $a$ (per calcolare $M_a^2$, $M_a^3$)
+    o solamente archi etichettati con $b$ (per calcolare $M_b^2$, $M_b^3$).
+\[
+M_a^2 =
+\begin{pmatrix}
+    0 & 0   & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+M_a^3 =
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+
+\[
+M_b^2 =
+\begin{pmatrix}
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+M_b^3 =
+\begin{pmatrix}
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}
+\]
+
+    \item A questo punto possiamo calcolare $M^4$ come segue:
+\[
+\begin{aligned}
+M^4&=    (aM_a + bM_b)^4 
+\\&= a^4 M_a^4 + a^3b M_a^3 M_b + a^2ba M_a^2 M_b M_a + a^2b^2 M_a^2 M_b^2 \\
+&+ aba^2 M_a M_b M_a^2 + abab M_a M_b M_a M_b + ab^2a M_a M_b^2 M_a + ab^3 M_a M_b^3 \\
+&+ ba^3 M_b M_a^3 + ba^2b M_b M_a^2 M_b + baba M_b M_a M_b M_a + bab^2 M_b M_a M_b^2 \\
+&+ b^2a^2 M_b^2 M_a^2 + b^2ab M_b^2 M_a M_b + b^3a M_b^3 M_a + b^4 M_b^4
+\\ &=
+\begin{pmatrix}
+    baba & abaa & baab + abab & ba(aa+bb) + ab(ba+bb) + (aa+bb)(a+b)^2 \\
+    baba & \bot & baab & ba(aa+bb) + (aa+ab+bb)(a+b)^2 \\
+    aaba & abaa & abab & aa(aa+ab+bb) + ab(ba+bb) + (ba+bb)(a+b)^2 \\
+    \bot & \bot & \bot & (a+b)^4
+\end{pmatrix}
+\end{aligned}
+\]
+\end{enumerate}
+Osserviamo
+che non abbiamo potuto usare
+la formula del binomio di Newton per calcolare $M^4$
+dalmomento che ne/' il prodotto nel monoide delle parole ne/'
+ il prodotto tra matrici di adiacenza e/' commutativo. 
+Se avessimo utilizzato il binomio di Newton, 
+avremmo avuto
+\begin{align*}
+        M^4
+        &=
+        (aM_a + bM_b)^4
+        \\ &=
+a^4 M_a^4 + a^3 b M_a^3 M_b + a^2 b^2 M_a^2 M_b^2 + a b^3 M_a M_b^3 + b^4 M_b^4 
+\\ & =
+\begin{pmatrix}
+    \bot & \bot& \bot & a^4 + a^3b + a^2b^2 \\
+    \bot& \bot & \bot & a^4 + a^3b + a^2b^2 + ab^3 \\
+    \bot & \bot & \bot & a^4 + a^3b \\
+    \bot & \bot & \bot & a^4 + a^3b + a^2b^2 + ab^3 + b^4
+\end{pmatrix}
+    \end{align*}
+Questo risultato e/' chiaramente sbagliato poiche/'
+nell'entrata $(0,0)$ appare la serie vuota,
+mentre dal grafo dell'automa sappiamo che esiste il cammino 
+$baba$ di lunghezza $4$ che parte e ritorna nello stato $q_0$.
+\end{sol}
+\end{ex}
