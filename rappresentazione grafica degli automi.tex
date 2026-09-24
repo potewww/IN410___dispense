@@ -254,6 +254,7 @@ ad uno stato accettante dell'automa?
 In altre parole:
 dalla matrice di adiacenza si può dedurre il calcolo che l'automa compie per decidere un insieme?
 La risposta e' si.
+In partiolare, e/' anche possibile dedurre l'intero insieme $X$ da decidere.
 Prima di affrontare il caso generale
 analizziamo questo problema nel caso dell'esempio precedente.
 \begin{exam}
@@ -262,11 +263,28 @@ analizziamo questo problema nel caso dell'esempio precedente.
     Quindi,
     in una qualsiasi potenza di $Z$,
     dovremmo considerare l'entrata $(1,1)$
-    per trovare il calcolo per la decisione dell'insieme.
+    per trovare le parole accettate dall'automa.
     Più precisamente, per ogni $k$ naturale, nell'entrata $(1,1)$
     della matrice $Z^k$
-    troviamo le uniche e sole computazioni
-    di lunghezza $k$.
+    troviamo le uniche e sole parole
+    di lunghezza $k$ accettate dall'automa.
+\end{exam}
+Lavoriamo ora al caso generale. Se con $Z$ indichiamo la matrice di adiacenza di un automa,
+possiamo definire
+definiamo
+\[
+E(Z)
+:=
+\sum_{k=0}^\infty Z^k
+\]
+dove $Z^0$ e/' la matrice cha ha sulla diagonale la parola vuota $A^\emptyset$
+e nelle altre entrate la serie vuota $\bot$.
+Assumendo che lo stato iniziale sia $q_0$
+e che corrisponda alla prima riga della matrice $Z$,
+allora sulla prima riga di $E(Z)$
+troveremo le parole che l'automa accetta nelle colonne corrispondenti
+agli stati accettanti.
+\begin{exam}
     Facendo ancora un paio di potenze di $Z$, 
     si può dedurre la seguente formula:
     \[
@@ -286,8 +304,124 @@ analizziamo questo problema nel caso dell'esempio precedente.
             \\
             (0+1)^k & \bot
         \end{pmatrix}
-        ,& \text{se } k \text{ e/' pari}
+        ,& \text{se } k \text{ e/' dispari}
     \end{matrix}
     \right.
     \]
+    quindi abbiamo
+    \begin{align*}
+    E(Z)&=
+    \begin{pmatrix}
+        A^\emptyset & \bot
+        \\
+        \bot & A^\emptyset
+    \end{pmatrix}
+    +
+    \begin{pmatrix}
+            \bot & (0+1)
+            \\
+            (0+1) & \bot
+    \end{pmatrix}
+    +
+    \begin{pmatrix}
+            (0+1)^2 & \bot
+            \\
+            \bot & (0+1)^2
+        \end{pmatrix}
+    + \cdots
+    \\&=
+    \begin{pmatrix}
+        A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} & \bot + \sum_{k =0}^{\infty}(0+1)^{2k+1}
+        \\
+        \bot + \sum_{k =0}^{\infty}(0+1)^{2k+1} &  A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} 
+    \end{pmatrix}
+    \\&=
+    \begin{pmatrix}
+        A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} & \sum_{k =0}^{\infty}(0+1)^{2k+1}
+        \\
+        \sum_{k =0}^{\infty}(0+1)^{2k+1} &  A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} 
+    \end{pmatrix}
+    \end{align*}
+    Per quanto osservato prima,
+    nel posto $(1,1)$ della matrice
+    $E(Z)$ troviamo le uniche e solo parole accettate dall'automa.
+    \textcolor{red}{Non coverrebbe scrivre E(Z) a partire con k=1? perhce ha priori non e/' vero che la parola vuota e/' decidibile}
+\end{exam}
+Usando un po' di algebra lineare,
+e/' possibile esplicitare esattamente l'inisieme delle parole accettate.
+Infatti, fi possiamo definire i seguenti vettori:
+\[
+V_0(i)=
+\left\{
+\begin{matrix}
+    A^\emptyset,  & q_i=q_0 
+    \\
+    \bot, & q_i\neq q_0 
+\end{matrix}
+\right.
+\]
+\[
+V_F(i)=
+\left\{
+\begin{matrix}
+    A^\emptyset,  & q_i \in F
+    \\
+    \bot, & q_i\notin F
+\end{matrix}
+\right.
+\]
+E calcolando il prodotto righe per colonne
+\[
+V_0 \cdot E(Z) \cdot V_F^t
+\]
+otteniamo la serie formale che ha come addendi esattamente le parole accettate da $X$.
+La formula appena enunciata prende il nome di \textit{formula dell'esecuzione}.
+\footnote{Ricordiamo che $\bot$ e/' l'elemento neutro additivo, 
+che $A^\emptyset$ e/' l'elemento neutro moltiplicativo,
+e che $\bot \cdot w = \bot$ per ogni serie formale $w \in \mathbb N[M]$.
+}
+\begin{exam}
+    Nel caso dell'esempio precedente abbiamo
+    \[
+    V_0=(A^\emptyset, \bot)
+    \]
+    \[
+    V_F=(A^\emptyset, \bot)
+    \]
+    Facendo il prodotto abbiamo
+    \begin{align*}
+        V_0 \cdot E(Z) \cdot V_F^t
+        &=
+        \begin{pmatrix}
+              A^\emptyset & \bot    
+        \end{pmatrix}
+        \cdot 
+        \begin{pmatrix}
+        A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} & \sum_{k =0}^{\infty}(0+1)^{2k+1}
+        \\
+        \sum_{k =0}^{\infty}(0+1)^{2k+1} &  A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} 
+    \end{pmatrix}
+        \cdot
+        \begin{pmatrix}
+            A^\emptyset
+            \\
+            \bot
+        \end{pmatrix}
+        \\
+        &=
+        \begin{pmatrix}
+            A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k}
+            &
+            \sum_{k =0}^{\infty}(0+1)^{2k+1}
+        \end{pmatrix}
+        \cdot
+        \begin{pmatrix}
+            A^\emptyset
+            \\
+            \bot
+        \end{pmatrix}
+        \\&=
+         A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k}
+    \end{align*}
+    Che e/' esattamente quanto abbiamo osservato precedentemente.
 \end{exam}
