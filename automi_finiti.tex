@@ -1,7 +1,7 @@
 \subsection{Definizione di automa a stati finiti.}
 
 \begin{defi}\label{def:1}
-Siano $A$ e $Q$ insiemi finiti, un \textit{automa finito} di alfabeto $A$ e insieme degli stati $Q$  è una tripla $(T,q_0,F)$ dove
+Siano $A$ e $Q$ insiemi finiti, un \textit{automa finito deterministico} di alfabeto $A$ e insieme degli stati $Q$  è una tripla $(T,q_0,F)$ dove
 \[
 T: Q\times A \to Q
 \]
@@ -11,9 +11,11 @@ $F \subset Q$ e $q_0\in Q$ è uno stato particolare, detto stato iniziale.
 
 \subsection{Definizione di algoritmo associato ad un automa}
 
-A partire dalla tripla $(T,q_0,F)$ che specifica un dato automa di alfabeto $A$ e insieme degli stati $Q$ si costruisce prima l'insieme delle configurazioni possibili:
+A partire dalla tripla $(T,q_0,F)$ 
+che specifica un dato automa di alfabeto 
+$A$ e insieme degli stati $Q$ si costruisce prima l'insieme delle configurazioni possibili:
 
-\begin{defi}[Configurazione per Automa Finito]\label{def:3}
+\begin{defi}[Configurazione per automa finito deterministico]\label{def:3}
 Una configurazione per automa a stati finiti di alfabeto $A$ e insieme degli stati $Q$ è una tripla $(w,p,q)$, dove
 \begin{enumerate}
     \item $w\in A^*$ è la parola da analizzare,

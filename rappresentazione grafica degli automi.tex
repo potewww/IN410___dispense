@@ -175,11 +175,25 @@ A questo punto possiamo definire l'insieme delle serie formali
 \right\}
 \]
 Ora possiamo considerare la matrice di adiacenza $Z$ dell'automa,
-che non sarà nient'altro che una matrice cha nelle entrate elementi di $\mathbb N[M]$.
-Come sappiamo, fare la potenza $k$-esima di una matrice di adiacenza con etichette,
+che non sarà nient'altro che una matrice cha nelle entrate elementi di 
+$\mathbb N[M]$:
+\[
+Z_{ij}
+=
+\left\{
+\begin{matrix}
+    \sum_{k}a_k & \text{se } T(q_i, a_k)=q_j
+    \\
+    \bot  & \text{altrimenti}
+\end{matrix}
+\right.
+\]
+Come sappiamo, 
+fare la potenza $k$-esima di una matrice di adiacenza con etichette,
 fornisce nell'entrata $(i,j)$
 tutti e i soli cammini di lunghezza $k$ che collegano il vertice
-$i$ al vertice $j$ (nel caso degli automi, dallo stato $q_i$ allo stato $q_j$).
+$i$ al vertice $j$ 
+(nel caso degli automi, dallo stato $q_i$ allo stato $q_j$).
 Vediamo un esempio:
 \begin{exam}
     Consideriamo l'automa che decide l'inisieme delle parole di lunghezza pari. 
