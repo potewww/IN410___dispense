@@ -5,7 +5,7 @@ AF-decidibili utilizzando operazioni “compatibili” con l’AF-decidibilità 
 In questa sezione vedremo dunque che esistono operazioni fatte su insiemi AF-decidibili che permettono
 di ottenere un altro insieme DFA-decidibile.
 \begin{defi}
-    Sia $A$ un alfabeto e $X_1$ e $x_2$ due inisemi di parole su $A$, ovvero $X_1,X_2 \subset A^*$. Definiamo allora:
+    Sia $A$ un alfabeto e $X_1$ e $X_2$ due inisemi di parole su $A$, ovvero $X_1,X_2 \subset A^*$. Definiamo allora:
     \begin{itemize}
     \item l'operazione di \emph{concatenazione}:
     \[
@@ -26,36 +26,61 @@ di ottenere un altro insieme DFA-decidibile.
 
 \end{defi}
 
+\begin{rema}
+    Si puo/' osservare che, un sottoinsieme $X$ di $A^*$
+    puo' essere visto come una serie, infatti la funzione
+    \[
+    \begin{matrix}
+    \mathcal P (A^*) & \to & \mathbb N[A^*]
+    \\
+    X & \mapsto & \sum_{w\in X} w 
+    \end{matrix}
+    \]
+    ammmette come inversa la funzione
+    \[
+    \begin{matrix}
+     \mathbb N[A^*] & \to &  \mathcal P (A^*) 
+    \\
+    \sum_{w\in A^*} a_w w & \mapsto  & \{ w \, | \, a_w \neq 0 \}
+    \end{matrix}
+    \]
+    Per convincersi basta osservare che la somma nell'anello delle serie formali e/' commutativo.
+\end{rema}
+
 \begin{prop}\label{prop:8}
 Siano $X_1$ e $X_2$ regolari allora anche $X_1+X_2$ è regolare.
 
 
 \begin{proof}
     
-Sia $\mathcal{A}_1 = (T_1,q_0,F_1)$ l'automa che decide l'insieme $X_1$ e sia $\mathcal{A}_2 = (T_2,q_0',F_2)$ l'automa che decide $X_2$.
-L'automa che riconosce $X_1+X_2$ è ottenuto utilizzando il prodotto cartesiano degli stati dei due automi e calcolando l'evoluzione ``parallela'' di entrambi gli automi a partire da uno stato coppia, in questo modo se una delle due componenti dello stato è accettante alla fine della computazione la parola sarà accettata poiché apparterrà ad uno dei due insiemi e quindi sarà nella loro unione.
-
-Costruzione dell'automa $\mathcal{A} = (T,q_0'',F)$ di alfabeto $A$ e insieme degli stati $Q = Q_1\times Q_2$: definiamo
+Sia $\mathcal{A}_1 = (T_1,q_0',F_1)$ l'automa che decide l'insieme $X_1$ e sia 
+$\mathcal{A}_2 = (T_2,q_0'',F_2)$ l'automa che decide $X_2$.
+L'automa che riconosce $X_1+X_2$
+è ottenuto utilizzando il prodotto cartesiano degli stati dei due automi e 
+calcolando l'evoluzione ``parallela'' di entrambi gli automi a partire da uno stato coppia, in questo modo se una delle due componenti dello stato è accettante alla fine della computazione la parola sarà accettata poiché apparterrà ad uno dei due insiemi e quindi sarà nella loro unione.
+Costruiamo l'automa $\mathcal{A} = (T,q_0,F)$ di alfabeto $A$ e insieme degli 
+stati $Q = Q_1\times Q_2$ definendo
 \[
-q_0'' = (q_0,q_0'), \qquad F = F_1\times Q_2 \cup Q_1\times F_2
+q_0'' = (q_0,q_0'), \qquad F =
+\{ (q_1,q_2) \in Q_1\times Q_2 \mid q_1 \in F_1 \wedge q_2 \in F_2 \}
+=
+F_1\times Q_2 \cup Q_1\times F_2
 \]
-
 e
 \[
 T((q_1,q_2),a) = (T_1(q_1,a), T_2(q_2,a)).
 \]
-Mostriamo che $\mathcal{A}$ decide precisamente $X_1+X_2$.
-\[
-T^*((q_0,q_0'),w)
-=
-\left(T_1^*(q_0,w),T_2^*(q_0',w)\right).
-\]
-
-Mostriamo ora che l'automa $\mathcal{A}$ decide l'insieme $X_1+X_2$, 
+Mostriamo che $\mathcal{A}$ decide precisamente $X_1+X_2$,
 ovvero che la funzione associata all'automa coincide con la funzione caratteristica
 di tale insieme.
-
-Sia $w\in A^*$. Dalla definizione dell'insieme degli stati finali si ha:
+\\
+Per farlo introduciamo la seguente notazione: per ogni parola $w\in A^*$, 
+indichiamo con $T^*((q_0',q_0''),w)$ lo stato in cui si trova l'automa $\mathcal{A}$ 
+dopo aver letto tutta la parola $w$ a partire dallo stato $(q_0',q_0'')$, 
+e con $T_i^*(q_i,w)$ lo stato in cui si trova l'automa $\mathcal{A}_i$ 
+dopo aver letto tutta
+la parola $w$ a partire dallo stato $q_i$, per $i=1,2$.
+Sia $w\in A^*$, dalla definizione dell'insieme degli stati finali si ha:
 \[
 \begin{aligned}
 f_{\mathcal{A}}(w)=1
@@ -80,17 +105,21 @@ w\in X_2\\
 w\in X_1+X_2.
 \end{aligned}
 \]
-
 Quindi, per ogni $w\in A^*$,
 \[
 f_{\mathcal{A}}(w)=\mathbf{1}_{X_1+X_2}(w).
 \]
-
 Pertanto l'automa $\mathcal{A}$ decide l'insieme $X_1+X_2$, e quindi
 $X_1+X_2$ è regolare.
 \end{proof}
 \end{prop}
-
+\begin{rema}
+    La proposizione precedente
+    rimane vera anche se si considera l'operazione di interesezione al posto della somma,
+    infatti se $X_1$ e $X_2$ sono regolari allora anche $X_1\cap X_2$ è regolare.
+    L'automa che decide $X_1\cap X_2$ si ottiene costruendo l'automa di prima
+    e modificando l'insieme degli stati accettanti, che diventa $F= F_1 \times F_2$.
+\end{rema}
 
 \begin{ex}\label{es:3}
 Si consideri l'alfabeto $A=\{0,1\}$ e sia $B=\{1\}$ la restrizione all'insieme che contiene il solo simbolo $1$; si considerino l'insieme delle parole di alfabeto $A$ di lunghezza pari:

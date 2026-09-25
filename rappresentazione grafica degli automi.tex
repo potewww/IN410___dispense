@@ -174,6 +174,8 @@ A questo punto possiamo definire l'insieme delle serie formali
     \sum_{w \in A^*}n_w w \, | \, n_w \in \mathbb N 
 \right\}
 \]
+(in generale scrivieremo $\mathbb N [A^*]$ al posto di $\mathbb N [M]$
+per indicare che il monoide e/' quello delle parole su un alfabeto $A$).
 Ora possiamo considerare la matrice di adiacenza $Z$ dell'automa,
 che non sarà nient'altro che una matrice cha nelle entrate elementi di 
 $\mathbb N[M]$:
@@ -291,13 +293,25 @@ E(Z)
 :=
 \sum_{k=0}^\infty Z^k
 \]
-dove $Z^0$ e/' la matrice cha ha sulla diagonale la parola vuota $A^\emptyset$
-e nelle altre entrate la serie vuota $\bot$.
+dove $Z^0$ e/' la matrice 
+cha ha nell'entrata entrata $(1,1)$ l'elemento $\bot$
+e la serie vuota $\bot$ nelle altre entrate, quindi
+\[
+Z^0_{i,j}
+=
+\left\{
+    \begin{matrix}
+        A^\emptyset & \text{se } i=j=1
+        \\
+        \bot & \text{altrimenti}
+    \end{matrix}
+\right.
+\]
 Assumendo che lo stato iniziale sia $q_0$
 e che corrisponda alla prima riga della matrice $Z$,
-allora sulla prima riga di $E(Z)$
-troveremo le parole che l'automa accetta nelle colonne corrispondenti
-agli stati accettanti.
+allora sulla prima riga di $E(Z)$ e nelle colonne corrispondenti
+agli stati accettanti
+troveremo le parole che l'automa accetta.
 \begin{exam}
     Facendo ancora un paio di potenze di $Z$, 
     si può dedurre la seguente formula:
@@ -328,7 +342,7 @@ agli stati accettanti.
     \begin{pmatrix}
         A^\emptyset & \bot
         \\
-        \bot & A^\emptyset
+        \bot & \bot
     \end{pmatrix}
     +
     \begin{pmatrix}
@@ -347,19 +361,22 @@ agli stati accettanti.
     \begin{pmatrix}
         A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} & \bot + \sum_{k =0}^{\infty}(0+1)^{2k+1}
         \\
-        \bot + \sum_{k =0}^{\infty}(0+1)^{2k+1} &  A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} 
+        \bot + \sum_{k =0}^{\infty}(0+1)^{2k+1} &  \bot + \sum_{k =1}^{\infty}(0+1)^{2k} 
     \end{pmatrix}
     \\&=
     \begin{pmatrix}
         A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} & \sum_{k =0}^{\infty}(0+1)^{2k+1}
         \\
-        \sum_{k =0}^{\infty}(0+1)^{2k+1} &  A^\emptyset + \sum_{k =1}^{\infty}(0+1)^{2k} 
+        \sum_{k =0}^{\infty}(0+1)^{2k+1} &   \sum_{k =1}^{\infty}(0+1)^{2k} 
     \end{pmatrix}
     \end{align*}
     Per quanto osservato prima,
     nel posto $(1,1)$ della matrice
     $E(Z)$ troviamo le uniche e solo parole accettate dall'automa.
-    \textcolor{red}{Non coverrebbe scrivre E(Z) a partire con k=1? perhce ha priori non e/' vero che la parola vuota e/' decidibile}
+    Come si puo'/ osservare, la parola vuota e/' accettata.
+    In effetti, ogni qual volta che uno stato iniziale e uno stato accettante coincidono,
+    allora la parola vuota e/' accettata 
+    (questo non ci deve suonare strano, infatti l'automa non deve fare niente per accettarla).
 \end{exam}
 Usando un po' di algebra lineare,
 e/' possibile esplicitare esattamente l'inisieme delle parole accettate.
@@ -536,7 +553,7 @@ e che $\bot \cdot w = \bot$ per ogni serie formale $w \in \mathbb N[M]$.
         \\
         0 & 0 & 1 & 0
         \\
-        0 & 0 & 0 & 0
+        0 & 0 & 0 & 1
         \\
         0 & 0 & 0 & 1
     \end{pmatrix}
@@ -568,24 +585,36 @@ M_a^3 =
 \[
 M_b^2 =
 \begin{pmatrix}
-    0 & 0 & 0 & 0 \\
-    0 & 0 & 0 & 0 \\
-    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
     0 & 0 & 0 & 1
-\end{pmatrix}, \quad
+\end{pmatrix} \quad
 M_b^3 =
 \begin{pmatrix}
-    0 & 0 & 0 & 0 \\
-    0 & 0 & 0 & 0 \\
-    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
     0 & 0 & 0 & 1
 \end{pmatrix}
 \]
-
-    \item A questo punto possiamo calcolare $M^4$ come segue:
+e abbiamo che 
+$$
+M_a^k = M_b^k=
+\begin{pmatrix}
+     0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}
+$$
+per ogni $k \ge 2$.
+\item A questo punto possiamo calcolare $M^4$ come segue:
 \[
 \begin{aligned}
 M^4&=    (aM_a + bM_b)^4 
+\\&= (aM_a + bM_b)^2  (aM_a + bM_b)^2
+\\&= (a^2M_a^2 + 2abM_aM_b + b^2M_b^2)(a^2M_a^2 + 2abM_aM_b + b^2M_b^2)
 \\&= a^4 M_a^4 + a^3b M_a^3 M_b + a^2ba M_a^2 M_b M_a + a^2b^2 M_a^2 M_b^2 \\
 &+ aba^2 M_a M_b M_a^2 + abab M_a M_b M_a M_b + ab^2a M_a M_b^2 M_a + ab^3 M_a M_b^3 \\
 &+ ba^3 M_b M_a^3 + ba^2b M_b M_a^2 M_b + baba M_b M_a M_b M_a + bab^2 M_b M_a M_b^2 \\
@@ -599,6 +628,121 @@ M^4&=    (aM_a + bM_b)^4
 \end{pmatrix}
 \end{aligned}
 \]
+Lasciamo anche esplicitamente tutte le potenze di $M_a$ e $M_b$ che compaiono nel calcolo di $M^4$:
+\begin{align*}
+M_a^4 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_a^3 M_b &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_a^2 M_b M_a &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_a^2 M_b^2 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_a M_b M_a^2 &=
+\begin{pmatrix}
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_a M_b M_a M_b &=
+\begin{pmatrix}
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_a M_b^2 M_a &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_a M_b^3 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_b M_a^3 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_b M_a^2 M_b &=
+\begin{pmatrix}
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_b M_a M_b M_a &=
+\begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_b M_a M_b^2 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_b^2 M_a^2 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_b^2 M_a M_b &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix} \\[10pt]
+M_b^3 M_a &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}, \quad
+&M_b^4 &=
+\begin{pmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}
+\end{align*}
 \end{enumerate}
 Osserviamo
 che non abbiamo potuto usare

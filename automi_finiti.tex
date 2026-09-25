@@ -51,6 +51,22 @@ L'algoritmo associato ad un automa di alfabeto $A$ e insieme degli stati $Q$ è 
 \end{itemize}
 \end{defi}
 
+Consideriamo quindi una parola $w=a_1a_2\cdots a_n \in A^*$ e un automa finito determenistico come sopra.
+Chiameremo \textit{computazione} di $w$ tramite l'automa,
+la seguente successione
+\[
+(c_0, \dots ,c_{n+1})
+\]
+dove
+\[
+\left\{
+        \begin{matrix}
+            c_0:= e(w)
+            \\
+            c_{i+1}:= \tau (c_i)& \text{se }i \geq 0
+        \end{matrix}
+\right.
+\]
 \begin{rema}
     L'idea dietro la definizione precedente e/' 
     quella di leggere una lettera alla volta della parola $w$

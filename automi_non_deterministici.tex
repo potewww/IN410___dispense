@@ -8,7 +8,8 @@ possibilità di fornire non un unico stato ma un insieme di stati; in questo mod
 simile al precedente con una dinamica non deterministica poiché può seguire più computazioni allo stesso
 tempo, quindi definiamo:
 \begin{defi}[Automa Finito Non-deterministico]
-Siano $A$ e $Q$ insiemi finiti. Un \emph{automa finito non-deterministico} di alfabeto $A$ e insieme degli stati $Q$ è una tripla $(T,q_0,F)$ dove
+Siano $A$ e $Q$ insiemi finiti. Un \emph{automa finito non-deterministico}
+(chiamato anche \textit{NDFA}) di alfabeto $A$ e insieme degli stati $Q$ è una tripla $(T,q_0,F)$ dove
 \[
 T : Q \times A \longrightarrow 2^Q,
 \]
@@ -71,9 +72,13 @@ L'algoritmo associato ad un automa finito non-deterministico di alfabeto $A$ e i
     \[
     \delta((w,p,S))
     =
-    \max_{q\in S}F'(q),
-    \qquad
-    \text{se }p=|w|+1.
+    \left\{
+    \begin{matrix}
+        0, & \text{se } p>|w| \text{ e } F\cap S=\emptyset,\\
+        \\
+        1,  & \text{se } p>|w| \text{ e } F\cap S\neq\emptyset.
+    \end{matrix}
+    \right.
     \]
 \end{itemize}
 \end{defi}
