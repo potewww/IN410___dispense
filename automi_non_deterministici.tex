@@ -88,8 +88,20 @@ Di conseguenza resta definito il concetto di decidibilità di un insieme mediant
 \begin{defi}[Insieme decidibile per Automa Finito Non-deterministico]
 Un insieme $X\subseteq A^*$ è detto \emph{decidibile per automa finito non-deterministico} (o \emph{NDFA-decidibile}) se esistono un insieme finito $Q$ ed un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ tali che l'algoritmo associato decide $X$.
 \end{defi}
-Un primo esempio di automa finito non-deterministico:
-
+\begin{rema}
+    Un automa di questo tipo
+ci permette di effettuare transizioni multiple, 
+quindi può seguire più computazioni allo stesso tempo. 
+In particolare, se una di queste computazioni termina in uno stato finale, 
+la parola viene accettata. 
+In altre parole, 
+l'automa non-deterministico può essere visto come un automa deterministico 
+che esplora tutte le possibili transizioni in parallelo.
+Come per il caso deterministico, anche per gli 
+automi non-deterministici è possibile considerare la matrice di 
+adiacenza associata al grafo etichettato.
+\end{rema}
+Vediamo un primo esempio di automa finito non-deterministico:
 \begin{exam}[Un esempio di NDFA]
 \label{es:14}
  Consideriamo $A=\{0,1\}$, $Q=\{ q_0,q_1,q_2,q_3\}$ e definiamo il seguente  NDFA

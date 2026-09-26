@@ -9,10 +9,10 @@
 \contentsline {subsection}{\numberline {3.1}Automi come grafi}{9}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Matrici di adiacenza per grafi di automi finiti}{11}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Linguaggi regolari}{18}{section.4}%
-\contentsline {section}{\numberline {5}Automi non deterministici}{21}{section.5}%
-\contentsline {section}{\numberline {6}Espressioni regolari}{30}{section.6}%
-\contentsline {section}{\numberline {7}Macchin di Turing}{31}{section.7}%
-\contentsline {section}{\numberline {8}Teoria della complessità}{35}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Look-up Table}{36}{subsection.8.1}%
-\contentsline {section}{\numberline {9}Prerequisiti}{39}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Semianelli e serie formali}{39}{subsection.9.1}%
+\contentsline {section}{\numberline {5}Automi non deterministici}{22}{section.5}%
+\contentsline {section}{\numberline {6}Espressioni regolari}{31}{section.6}%
+\contentsline {section}{\numberline {7}Macchin di Turing}{32}{section.7}%
+\contentsline {section}{\numberline {8}Teoria della complessità}{36}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Look-up Table}{37}{subsection.8.1}%
+\contentsline {section}{\numberline {9}Prerequisiti}{40}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Semianelli e serie formali}{40}{subsection.9.1}%
