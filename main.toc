@@ -16,3 +16,4 @@
 \contentsline {subsection}{\numberline {8.1}Look-up Table}{37}{subsection.8.1}%
 \contentsline {section}{\numberline {9}Prerequisiti}{40}{section.9}%
 \contentsline {subsection}{\numberline {9.1}Semianelli e serie formali}{40}{subsection.9.1}%
+\contentsline {section}{\numberline {10}Wolfram}{45}{section.10}%

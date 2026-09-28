@@ -1,0 +1,114 @@
+Non ci sono tipi, l'unico tipo è il tipo \textit{funzione}.
+Non c'e la memoria, ci sono solo gli stati (come per gli automi).
+Si possono aggiungere stati e/o regole (questultime allinterno del 'kernel' di wolfram).
+\begin{defi}
+    Una \textit{espressione}
+    è un oggetto della forma
+    \[
+    E[E_1, \dots , E_n]
+    \]
+    dove, a loro volta, $E_i$ sonp espressioni.
+\end{defi} 
+\begin{defi}
+    Si può costruire
+    \[
+    Map[f, E[E_1, \dots , E_n]]
+    \]
+\end{defi}
+\begin{exam}
+    \[
+    Map[f,\{ a_1, \dots , a_n\}]
+    =
+     Map[f,List[ a_1, \dots , a_n]]
+    =
+    List[f[a_1], \dots , f[a_n]]
+    \]
+\end{exam}
+\begin{defi}
+Ci sono due modi per introdurre le regole nel kernel.
+\begin{enumerate}
+    \item valutazione del membro destro e inserimento della regola di sostituzione per tutte le epsressione che hanno la stessa forma
+    \[
+    f[x_]
+    =
+    x+2*a
+    \]
+    \item a differenza di prima, con questa sintassi
+    non si effettua la vlautazione
+    ma si memorizza solo la regola
+    \[
+    f[x_]
+    :=
+    x+2*a
+    \]
+    In questo caso quindi, 
+    rimane la regola scritta come a destra.
+    Quindi, nel secondo caso,
+    la valutazione viene effettuata solamente
+    quando chiamata f[3], e 
+    vengono ricalcolate tutte le operazione con lultimo valore
+    dato anche per tutti i parametri nella regola.
+\end{enumerate}
+\end{defi}
+Vediamo degli esempi di codice:
+\begin{exam}
+    \[
+    In 1= f[x_]=2x+a
+    \]
+    \[
+    Out 1= 2x+a
+    \]
+    \[
+    In 2= f[3]
+    \]
+    \[
+    Out 2= 6+ a
+    \]
+    \[
+    In3 =a=2 
+    \]
+    \[
+    out 3=
+    \]
+\end{exam}
+Per vedere le regole definite su un simbolo $f$, basta digitare
+\[
+?f
+\]
+\begin{defi}
+    Con 
+    \[
+    List[1,2,3]
+    \]
+    si crea insieme \{1,2,3 \}.
+\end{defi}
+Con il comando 
+\[
+Apply[k, \{ 1,2,3\}]
+\]
+si applica a $k$ l'insieme $\{1,2,3 \}$
+avendo come output
+\[
+k[1,2,3]
+\]
+\begin{exam}
+    Plus fa la somma di un insieme, quindi avremo
+    \[
+    Apply[Plus, \{ 1,2,3\}]
+    \]
+    \[
+    Out= 6
+    \]
+    Cambiando Plus in Times si fa la produttoria
+\end{exam}
+Se voglio dare più istruzioni da fare in un certo ordine,
+le separo da un ";".
+\begin{exam}
+    \[
+    lista = Range[0,1000]; map[h, lista]
+    \]
+    Da come output ??
+\end{exam}
+\begin{defi}
+    Entrompia 
+\end{defi}
