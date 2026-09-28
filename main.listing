@@ -1,0 +1,6 @@
+init = InitAutomaton[
+    automa2, {0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1}
+    ] ;
+mu = DFA2TM[automa2] ;
+TuringMachineGraph[mu]
+ManipulateComputation[mu, init]

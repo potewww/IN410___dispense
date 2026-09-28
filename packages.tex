@@ -1,14 +1,13 @@
 \usepackage[margin=1in]{geometry}
-\usepackage{comment, amsmath, amsthm, amssymb, amsfonts, mathtools, graphicx, thmtools, tikz-cd, amscd, subcaption, enumitem,  hyperref, bbm}
+\usepackage{comment, amsmath, amsthm, amssymb, amsfonts, mathtools, graphicx, thmtools, tikz-cd, amscd, subcaption, enumitem, hyperref, bbm}
 \usepackage{bbold}
-  \usepackage{stmaryrd}
+\usepackage{stmaryrd}
 \usepackage[english]{babel}
 \usetikzlibrary{automata,positioning,arrows}
 
 \usepackage[dvipsnames]{xcolor} % Adds more colour for the links
 
-
-\definecolor{lilla}{RGB}{160,  90, 210}   % più scuro/viola
+\definecolor{lilla}{RGB}{160, 90, 210}   % più scuro/viola
 
 \hypersetup{
     colorlinks=true,
@@ -17,15 +16,51 @@
     urlcolor=lilla,
 }
 
+\usepackage[most]{tcolorbox}   % carica anche listings
+\tcbuselibrary{listings,skins}
 
+% --- colori ---
+\definecolor{wolfback}{RGB}{255,246,235}
+\definecolor{wolfframe}{RGB}{221,102,0}
+\definecolor{wolftext}{RGB}{90,40,0}
+
+% --- comando inline (anche in math mode): \wolfram{Map} oppure \wolfram|{1,2,3}| ---
+\NewDocumentCommand{\wolfram}{v}{%
+  \ifmmode
+    \text{\ttfamily\small\textcolor{wolftext}{\colorbox{wolfback}{\strut#1}}}%
+  \else
+    \begingroup
+    \ttfamily\small\textcolor{wolftext}{\colorbox{wolfback}{\strut#1}}%
+    \endgroup
+  \fi
+}
+
+% --- ambiente centrato: \begin{walfram} ... \end{walfram} ---
+\tcbset{
+  wolframbox/.style={
+    listing only,
+    center, width=0.85\linewidth,
+    colback=wolfback, colframe=wolfframe,
+    boxrule=0.5pt, arc=2pt,
+    left=8pt, right=8pt, top=5pt, bottom=5pt,
+    before skip=10pt, after skip=10pt,
+    listing options={
+      basicstyle=\ttfamily\small\color{wolftext},
+      breaklines=true,
+      columns=fullflexible,
+      keepspaces=true
+    }
+  }
+}
+\newtcblisting{walfram}{wolframbox}
 
 \theoremstyle{definition}
-\newtheorem{theo}{Theorem} [section] 
+\newtheorem{theo}{Theorem}[section]
 \newtheorem{defi}[theo]{Definition}
-\newtheorem{lemm} [theo]{Lemma}
-\newtheorem{rema} [theo] {Remark}
-\newtheorem{prop} [theo] {Proposition}
-\newtheorem{exam} [theo]{Example}
-\newtheorem{coro} [theo]{Corollary}
-\newtheorem{ex} {Exercise}
-\newtheorem*{sol} {Solution}
+\newtheorem{lemm}[theo]{Lemma}
+\newtheorem{rema}[theo]{Remark}
+\newtheorem{prop}[theo]{Proposition}
+\newtheorem{exam}[theo]{Example}
+\newtheorem{coro}[theo]{Corollary}
+\newtheorem{ex}{Exercise}
+\newtheorem*{sol}{Solution}

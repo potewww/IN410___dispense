@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  28 SEP 2026 12:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  28 SEP 2026 17:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -617,13 +617,123 @@ File: pgflibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )) (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 18.
-\c@theo=\count331
-\c@ex=\count332
+Package hyperref Info: Option `colorlinks' set `true' on input line 17.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2024/10/22 version 6.4.1 text color boxes
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks47
+\verbatim@line=\toks48
+\verbatim@in@stream=\read4
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box87
+\tcb@upperbox=\box88
+\tcb@lowerbox=\box89
+\tcb@phantombox=\box90
+\c@tcbbreakpart=\count331
+\c@tcblayer=\count332
+\c@tcolorbox@number=\count333
+\l__tcobox_tmpa_box=\box91
+\l__tcobox_tmpa_dim=\dimen299
+\tcb@temp=\box92
+\tcb@temp=\box93
+\tcb@temp=\box94
+\tcb@temp=\box95
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbraster.code.tex
+Library (tcolorbox): 'tcbraster.code.tex' version '6.4.1'
+\c@tcbrastercolumn=\count334
+\c@tcbrasterrow=\count335
+\c@tcbrasternum=\count336
+\c@tcbraster=\count337
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.4.1'
+(/usr/local/texlive/2025/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
+Package: tikzfill.image 2023/08/08 v1.0.1 Image filling library for TikZ
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/tikzfill/tikzfill-common.sty
+Package: tikzfill-common 2023/08/08 v1.0.1 Auxiliary code for tikzfill
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.image.code.tex
+File: tikzlibraryfill.image.code.tex 2023/08/08 v1.0.1 Image filling library
+\l__tikzfill_img_box=\box96
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.4.1'
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbbreakable.code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.4.1'
+(/usr/local/texlive/2025/texmf-dist/tex/latex/pdfcol/pdfcol.sty
+Package: pdfcol 2022-09-21 v1.7 Handle new color stacks for pdfTeX (HO)
+)
+Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
+\tcb@testbox=\box97
+\tcb@totalupperbox=\box98
+\tcb@totallowerbox=\box99
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbhooks.code.tex
+Library (tcolorbox): 'tcbhooks.code.tex' version '6.4.1'
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbtheorems.code.tex
+Library (tcolorbox): 'tcbtheorems.code.tex' version '6.4.1'
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbfitting.code.tex
+Library (tcolorbox): 'tcbfitting.code.tex' version '6.4.1'
+\tcbfitdim=\dimen300
+\tcb@lowerfitdim=\dimen301
+\tcb@upperfitdim=\dimen302
+\tcb@cur@hbadness=\count338
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcblistingsutf8.code.tex
+Library (tcolorbox): 'tcblistingsutf8.code.tex' version '6.4.1'
+(/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcblistings.code.tex
+Library (tcolorbox): 'tcblistings.code.tex' version '6.4.1'
+(/usr/local/texlive/2025/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count339
+\lst@gtempboxa=\box100
+\lst@token=\toks49
+\lst@length=\count340
+\lst@currlwidth=\dimen303
+\lst@column=\count341
+\lst@pos=\count342
+\lst@lostspace=\dimen304
+\lst@width=\dimen305
+\lst@newlines=\count343
+\lst@lineno=\count344
+\lst@maxwidth=\dimen306
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstpatch.sty
+File: lstpatch.sty 2024/09/23 1.10c (Carsten Heinz)
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
+\c@lstnumber=\count345
+\lst@skipnumbers=\count346
+\lst@framebox=\box101
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2024/09/23 1.10c listings configuration
+))
+Package: listings 2024/09/23 1.10c (Carsten Heinz)
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcblistingscore.code.tex
+Library (tcolorbox): 'tcblistingscore.code.tex' version '6.4.1'
+(/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbprocessing.code.tex
+Library (tcolorbox): 'tcbprocessing.code.tex' version '6.4.1'
+)
+\c@tcblisting=\count347
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/listingsutf8/listingsutf8.sty
+Package: listingsutf8 2019-12-10 v1.5 Allow UTF-8 in listings input (HO)
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbexternal.code.tex
+Library (tcolorbox): 'tcbexternal.code.tex' version '6.4.1'
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbmagazine.code.tex
+Library (tcolorbox): 'tcbmagazine.code.tex' version '6.4.1'
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbvignette.code.tex
+Library (tcolorbox): 'tcbvignette.code.tex' version '6.4.1'
+(/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryfadings.code.tex
+File: tikzlibraryfadings.code.tex 2023-01-15 v3.1.10 (3.1.10)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryfadings.code.tex
+File: pgflibraryfadings.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))) (/usr/local/texlive/2025/texmf-dist/tex/latex/tcolorbox/tcbposter.code.tex
+Library (tcolorbox): 'tcbposter.code.tex' version '6.4.1'
+))
+\c@theo=\count348
+\c@ex=\count349
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count333
-\l__pdf_internal_box=\box87
+\l__color_backend_stack_int=\count350
+\l__pdf_internal_box=\box102
 ) (./main.aux)
 \openout1 = `main.aux'.
 
@@ -682,37 +792,38 @@ LaTeX Font Info:    ... okay on input line 9.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count334
-\scratchdimen=\dimen299
-\scratchbox=\box88
-\nofMPsegments=\count335
-\nofMParguments=\count336
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count337
-\MPscratchDim=\dimen300
-\MPnumerator=\count338
-\makeMPintoPDFobject=\count339
-\everyMPtoPDFconversion=\toks48
+\scratchcounter=\count351
+\scratchdimen=\dimen307
+\scratchbox=\box103
+\nofMPsegments=\count352
+\nofMParguments=\count353
+\everyMPshowfont=\toks50
+\MPscratchCnt=\count354
+\MPscratchDim=\dimen308
+\MPnumerator=\count355
+\makeMPintoPDFobject=\count356
+\everyMPtoPDFconversion=\toks51
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
- (/usr/local/texlive/2025/texmf-dist/tex/latex/grfext/grfext.sty
-Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
-)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 504.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring ON on input line 9.
  (./main.out) (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
+\c@lstlisting=\count357
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks52
+\inpenc@posthook=\toks53
+)
 LaTeX Font Info:    Trying to load font information for U+msa on input line 11.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -792,7 +903,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has b
 l.14 D
       ato un automa $(T,q_0,F)$ definito su un alafabeto $A$ e insieme di st...
 
-[9] Excluding 'comment' comment.
+[9]
 
 [10]
 
@@ -1042,14 +1153,14 @@ pdfTeX warning (ext4): destination with the same identifier (name{defi.8}) has b
 l.55 U
       n \emph{semigruppo} è una coppia $(S,\ast)$ dove $S$ è un insieme e
 
-[40] Excluding 'comment' comment.
+[40]
 pdfTeX warning (ext4): destination with the same identifier (name{defi.10}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.98 S
-      ia $(S,+,\cdot)$ un semianello (Definizione~\ref{def:semianello}). Excluding 'comment' comment. Excluding 'comment' comment.
+      ia $(S,+,\cdot)$ un semianello (Definizione~\ref{def:semianello}).
 
-[41] Excluding 'comment' comment.
+[41]
 
 [42]
 Overfull \hbox (31.63713pt too wide) in paragraph at lines 221--222
@@ -1061,52 +1172,120 @@ Overfull \hbox (31.63713pt too wide) in paragraph at lines 221--222
 [43])
 
 [44] (./wolfram.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.5     U
-         na \textit{espressione}
 pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.13     S
-          i può costruire
-pdfTeX warning (ext4): destination with the same identifier (name{exam.3}) has been already used, duplicate ignored
+l.7 U
+     na \textit{espressione} è un oggetto della forma
+pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.19     \[
-           
-pdfTeX warning (ext4): destination with the same identifier (name{defi.4}) has been already used, duplicate ignored
+l.14 D
+      ata una funzione $f$ e un'espressione $E[E_1,\dots,E_n]$, si può cost...
+pdfTeX warning (ext4): destination with the same identifier (name{rema.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.28 C
-      i sono due modi per introdurre le regole nel kernel.
-pdfTeX warning (ext4): destination with the same identifier (name{exam.5}) has been already used, duplicate ignored
+l.21 A
+      d esempio,
+pdfTeX warning (ext4): destination with the same identifier (name{defi.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.55     \[
-           
-pdfTeX warning (ext4): destination with the same identifier (name{defi.6}) has been already used, duplicate ignored
+l.29 C
+      i sono due modi per introdurre regole nel kernel.
+pdfTeX warning (ext4): destination with the same identifier (name{rema.7}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.79     C
-          on
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 83.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
+l.45 E
+      sempio di codice:
+\g__tcobox_out_iow=\write7
+\openout7 = `main.listing'.
 
+ (./main.listing)
+pdfTeX warning (ext4): destination with the same identifier (name{rema.8}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.59 P
+      er vedere le regole definite su un simbolo $f$ basta digitare
 
 [45]
 pdfTeX warning (ext4): destination with the same identifier (name{defi.9}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.113     E
-           ntrompia)
+l.65 C
+      on \wolfram|List[1,2,3]| (o \wolfram|{1,2,3}|) si crea l'insieme ordin...
+pdfTeX warning (ext4): destination with the same identifier (name{defi.10}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.68 I
+      l comando
+\openout7 = `main.listing'.
 
-[46] (./main.aux)
+ (./main.listing)
+pdfTeX warning (ext4): destination with the same identifier (name{defi.14}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.101 E
+       ntropia \dots % da completare
+pdfTeX warning (ext4): destination with the same identifier (name{defi.15}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.104 S
+       ia $(\Omega,\mathcal{F},\mathbb{P})$ uno spazio di probabilità e sia...
+Overfull \hbox (6.09819pt too wide) in paragraph at lines 104--105
+[][]\OT1/cmr/bx/n/12 Definition 10.15. []\OT1/cmr/m/n/12 Sia $(
+\OML/cmm/m/it/12 ; \OMS/cmsy/m/n/12 F\OML/cmm/m/it/12 ; \U/bbold/m/n/12 P\OT1/cmr/m/n/12 )$ uno spazio di prob-a-bilit^^Ra e sia $\OMS/cmsy/m/n/12 X$ \OT1/cmr/m/n/12 un in-sieme finito (l'alfabeto),
+ []
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{defi.16}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.110 I
+       l \textit{contenuto informativo} (grezzo) di un esito $x\in\mathcal{X...
+pdfTeX warning (ext4): destination with the same identifier (name{defi.17}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.117 D
+       ate due variabili aleatorie $X\colon\Omega\to\mathcal{X}$ e $Y\colon\...
+
+[46]
+pdfTeX warning (ext4): destination with the same identifier (name{defi.18}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.123 L
+       e variabili $X$ e $Y$ sono \textit{indipendenti} se $\sigma(X)$ e $\s...
+\openout7 = `main.listing'.
+
+ (./main.listing)
+
+[47]
+LaTeX Font Info:    Trying to load font information for U+bbm on input line 176.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+)
+Overfull \hbox (162.15921pt too wide) in paragraph at lines 194--195
+[]\OT1/cmr/m/n/12 Assegnare la di-rec-tory cor-rente, cio^^Re la cartella che con-tiene il pac-chetto: [][][][][][][][] 
+ []
+
+\openout7 = `main.listing'.
+
+(./main.listing)
+
+[48]
+Overfull \hbox (0.35939pt too wide) in paragraph at lines 211--212
+[][][][][][][][][] \OT1/cmr/m/n/12 in-izial-izza l'automa, cio^^Re resti-tu-isce la con-fig-u-razione
+ []
+
+\openout7 = `main.listing'.
+
+(./main.listing)
+
+[49]
+\openout7 = `main.listing'.
+
+ (./main.listing))
+
+[50] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1119,18 +1298,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 7BDB0DB76FD3F3855BA303F6C76826E9;3135.
  ) 
 Here is how much of TeX's memory you used:
- 28078 strings out of 473190
- 545956 string characters out of 5715800
- 956124 words of memory out of 5000000
- 50564 multiletter control sequences out of 15000+600000
- 575809 words of font info for 105 fonts, out of 8000000 for 9000
+ 34894 strings out of 473190
+ 715888 string characters out of 5715800
+ 1185625 words of memory out of 5000000
+ 57184 multiletter control sequences out of 15000+600000
+ 576372 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 103i,18n,108p,1098b,1147s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (46 pages, 379038 bytes).
+ 103i,18n,108p,1098b,1647s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
+Output written on main.pdf (50 pages, 419944 bytes).
 PDF statistics:
- 685 PDF objects out of 1000 (max. 8388607)
- 578 compressed objects within 6 object streams
- 244 named destinations out of 1000 (max. 500000)
- 157 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 849 PDF objects out of 1000 (max. 8388607)
+ 709 compressed objects within 8 object streams
+ 330 named destinations out of 1000 (max. 500000)
+ 301 words of extra memory for PDF output out of 10000 (max. 10000000)
 

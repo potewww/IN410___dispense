@@ -1,114 +1,255 @@
-Non ci sono tipi, l'unico tipo è il tipo \textit{funzione}.
-Non c'e la memoria, ci sono solo gli stati (come per gli automi).
-Si possono aggiungere stati e/o regole (questultime allinterno del 'kernel' di wolfram).
+\begin{rema}
+Nel linguaggio Wolfram non ci sono tipi: l'unico tipo è il tipo \textit{funzione}.
+Non c'è memoria, ma solo \textit{stati} (come per gli automi).
+Si possono aggiungere stati e/o regole (queste ultime all'interno del ``kernel'' di Wolfram).
+\end{rema}
 \begin{defi}
-    Una \textit{espressione}
-    è un oggetto della forma
-    \[
-    E[E_1, \dots , E_n]
-    \]
-    dove, a loro volta, $E_i$ sonp espressioni.
-\end{defi} 
-\begin{defi}
-    Si può costruire
-    \[
-    Map[f, E[E_1, \dots , E_n]]
-    \]
+Una \textit{espressione} è un oggetto della forma
+\[
+E[E_1, \dots, E_n]
+\]
+dove, a loro volta, gli $E_i$ sono espressioni.
 \end{defi}
-\begin{exam}
-    \[
-    Map[f,\{ a_1, \dots , a_n\}]
-    =
-     Map[f,List[ a_1, \dots , a_n]]
-    =
-    List[f[a_1], \dots , f[a_n]]
-    \]
-\end{exam}
 \begin{defi}
-Ci sono due modi per introdurre le regole nel kernel.
+Data una funzione $f$ e un'espressione $E[E_1,\dots,E_n]$, si può costruire
+\[
+\wolfram{Map}[f, E[E_1, \dots, E_n]],
+\]
+che applica $f$ a ciascun argomento $E_i$, mantenendo la testa $E$.
+\end{defi}
+\begin{rema}
+Ad esempio,
+\[
+\wolfram{Map}[f,\{a_1, \dots, a_n\}]
+= \wolfram{Map}[f,\wolfram{List}[a_1, \dots, a_n]]
+= \wolfram{List}[f[a_1], \dots, f[a_n]].
+\]
+\end{rema}
+\begin{defi}
+Ci sono due modi per introdurre regole nel kernel.
 \begin{enumerate}
-    \item valutazione del membro destro e inserimento della regola di sostituzione per tutte le epsressione che hanno la stessa forma
-    \[
-    f[x_]
-    =
-    x+2*a
-    \]
-    \item a differenza di prima, con questa sintassi
-    non si effettua la vlautazione
-    ma si memorizza solo la regola
-    \[
-    f[x_]
-    :=
-    x+2*a
-    \]
-    In questo caso quindi, 
-    rimane la regola scritta come a destra.
-    Quindi, nel secondo caso,
-    la valutazione viene effettuata solamente
-    quando chiamata f[3], e 
-    vengono ricalcolate tutte le operazione con lultimo valore
-    dato anche per tutti i parametri nella regola.
+\item \textit{Assegnazione immediata} (\wolfram{=}): il membro destro viene \emph{valutato} e la regola di sostituzione così ottenuta viene inserita per tutte le espressioni che hanno la stessa forma:
+\[
+\wolfram{f[x_] = x + 2*a}
+\]
+\item \textit{Assegnazione ritardata} (\wolfram{:=}): il membro destro \emph{non} viene valutato, ma si memorizza soltanto la regola, che resta scritta così com'è:
+\[
+\wolfram{f[x_] := x + 2*a}
+\]
 \end{enumerate}
 \end{defi}
-Vediamo degli esempi di codice:
-\begin{exam}
-    \[
-    In 1= f[x_]=2x+a
-    \]
-    \[
-    Out 1= 2x+a
-    \]
-    \[
-    In 2= f[3]
-    \]
-    \[
-    Out 2= 6+ a
-    \]
-    \[
-    In3 =a=2 
-    \]
-    \[
-    out 3=
-    \]
-\end{exam}
-Per vedere le regole definite su un simbolo $f$, basta digitare
+\begin{rema}
+Nel secondo caso la valutazione avviene solo quando si chiama, ad esempio, \wolfram{f[3]}: in quel momento vengono ricalcolate tutte le operazioni usando l'ultimo valore assegnato anche a tutti i parametri presenti nella regola.
+\end{rema}
+\begin{rema}
+Esempio di codice:
+\begin{walfram}
+In[1]:=  f[x_] = 2x + a
+Out[1]=  2x + a
+In[2]:=  f[3]
+Out[2]=  6 + a
+In[3]:=  a = 2
+Out[3]=  2
+In[4]:=  f[3]
+Out[4]=  8
+\end{walfram}
+Con \wolfram{=} il membro destro è stato valutato subito (con $a$ ancora indeterminato), mentre $a$ viene sostituito solo alla chiamata successiva.
+\end{rema}
+\begin{rema}
+Per vedere le regole definite su un simbolo $f$ basta digitare
 \[
-?f
+\wolfram{?f}
 \]
+\end{rema}
 \begin{defi}
-    Con 
-    \[
-    List[1,2,3]
-    \]
-    si crea insieme \{1,2,3 \}.
+Con \wolfram|List[1,2,3]| (o \wolfram|{1,2,3}|) si crea l'insieme ordinato $\{1,2,3\}$.
 \end{defi}
-Con il comando 
-\[
-Apply[k, \{ 1,2,3\}]
-\]
-si applica a $k$ l'insieme $\{1,2,3 \}$
-avendo come output
-\[
-k[1,2,3]
-\]
-\begin{exam}
-    Plus fa la somma di un insieme, quindi avremo
-    \[
-    Apply[Plus, \{ 1,2,3\}]
-    \]
-    \[
-    Out= 6
-    \]
-    Cambiando Plus in Times si fa la produttoria
-\end{exam}
-Se voglio dare più istruzioni da fare in un certo ordine,
-le separo da un ";".
-\begin{exam}
-    \[
-    lista = Range[0,1000]; map[h, lista]
-    \]
-    Da come output ??
-\end{exam}
 \begin{defi}
-    Entrompia 
+Il comando
+\[
+\wolfram|Apply[k, {1,2,3}]|
+\]
+sostituisce la testa \wolfram{List} con $k$, dando come output
+\[
+k[1,2,3].
+\]
 \end{defi}
+\begin{rema}
+\wolfram{Plus} fa la somma degli elementi, quindi
+\[
+\wolfram|Apply[Plus, {1,2,3}]| \quad\longmapsto\quad 6.
+\]
+Cambiando \wolfram{Plus} in \wolfram{Times} si ottiene la produttoria:
+\[
+\wolfram|Apply[Times, {1,2,3}]| \quad\longmapsto\quad 6.
+\]
+\end{rema}
+\begin{rema}
+Per eseguire più istruzioni in un certo ordine, le si separa con un ``\wolfram{;}''. Il punto e virgola sopprime anche l'output dell'istruzione che precede.
+\end{rema}
+\begin{rema}
+Esempio di codice:
+\begin{walfram}
+lista = Range[0, 1000]; Map[h, lista]
+\end{walfram}
+Il comando \wolfram{Range}
+crea un'insieme
+ordinato (in questo caso da $0$ a $1000$).
+L'output è la lista $\{h[0], h[1], \dots, h[1000]\}$.
+\end{rema}
+\begin{defi}
+Entropia \dots % da completare
+\end{defi}
+\begin{defi}
+Sia $(\Omega,\mathcal{F},\mathbb{P})$ uno spazio di probabilità e sia $\mathcal{X}$ un insieme finito (l'alfabeto), munito della $\sigma$-algebra $2^{\mathcal{X}}$. Una variabile aleatoria è una funzione misurabile $X\colon \Omega \to \mathcal{X}$. La sua legge è la misura di probabilità $\mathbb{P}_X = \mathbb{P}\circ X^{-1}$ su $\mathcal{X}$, e si pone
+\[
+p(x) = \mathbb{P}_X(\{x\}) = \mathbb{P}(X = x), \qquad x \in \mathcal{X}.
+\]
+\end{defi}
+\begin{defi}
+Il \textit{contenuto informativo} (grezzo) di un esito $x\in\mathcal{X}$ con $p(x)>0$ è
+\[
+h(x) = \log \frac{1}{p(x)} = -\log p(x).
+\]
+Con il logaritmo in base $2$ l'unità di misura è il bit. Più un esito è improbabile, maggiore è la sua informazione: $h(x)=0$ se e solo se $p(x)=1$.
+\end{defi}
+\begin{defi}
+Date due variabili aleatorie $X\colon\Omega\to\mathcal{X}$ e $Y\colon\Omega\to\mathcal{Y}$, la loro legge congiunta è $p(x,y)=\mathbb{P}(X=x,\,Y=y)$. Il contenuto informativo della coppia è
+\[
+h(x,y) = \log \frac{1}{p(x,y)}.
+\]
+\end{defi}
+\begin{defi}
+Le variabili $X$ e $Y$ sono \textit{indipendenti} se $\sigma(X)$ e $\sigma(Y)$ sono indipendenti, cioè $\mathbb{P}(X\in A,\, Y\in B)=\mathbb{P}(X\in A)\,\mathbb{P}(Y\in B)$ per ogni $A\subseteq\mathcal{X}$ e $B\subseteq\mathcal{Y}$. Poiché gli alfabeti sono finiti, ciò equivale a
+\[
+p(x,y) = p(x)\,p(y) \qquad \forall\, x\in\mathcal{X},\ y\in\mathcal{Y}.
+\]
+\end{defi}
+\begin{rema}
+Se $X$ e $Y$ sono indipendenti, allora l'informazione della coppia è la somma delle informazioni:
+\[
+h(x,y) = \log\frac{1}{p(x)\,p(y)} = \log\frac{1}{p(x)} + \log\frac{1}{p(y)} = h(x) + h(y).
+\]
+Questa è la ragione per cui si usa il logaritmo: trasforma il prodotto delle probabilità (indipendenza) in una somma di informazioni.
+\end{rema}
+\begin{defi}
+L'\textit{entropia} di $X$ è il valore atteso del contenuto informativo:
+\[
+H(X) = \mathbb{E}\big[h(X)\big] = \int_{\Omega} h\big(X(\omega)\big)\, d\mathbb{P}(\omega).
+\]
+Per il teorema di cambio di variabili rispetto alla legge $\mathbb{P}_X$ si ottiene
+\[
+H(X) = \int_{\mathcal{X}} h(x)\, d\mathbb{P}_X(x) = \sum_{x\in\mathcal{X}} p(x)\, h(x) = \sum_{x\in\mathcal{X}} p(x)\log\frac{1}{p(x)},
+\]
+con la convenzione $0\log\frac{1}{0}=0$, che permette di sommare anche sugli $x$ con $p(x)=0$.
+\end{defi}
+\begin{rema}
+L'entropia misura l'informazione media, o equivalentemente l'incertezza, associata a $X$. Dipende solo dalla legge $\mathbb{P}_X$ e non dai valori assunti da $X$. Vale sempre $H(X)\ge 0$, poiché $h(x)\ge 0$ quando $p(x)>0$. Inoltre, essendo $\mathcal{X}$ finito, $h(X)$ è una funzione semplice e quindi integrabile, dunque $H(X)<\infty$.
+\end{rema}
+\begin{rema}
+Se $X$ e $Y$ sono indipendenti, $H(X,Y)=H(X)+H(Y)$. Infatti, per la linearità del valore atteso e l'additività di $h$,
+\[
+H(X,Y) = \mathbb{E}\big[h(X,Y)\big] = \mathbb{E}\big[h(X)+h(Y)\big] = \mathbb{E}\big[h(X)\big] + \mathbb{E}\big[h(Y)\big] = H(X) + H(Y).
+\]
+\end{rema}
+\begin{rema}
+Esempio di calcolo dell'entropia (in bit) di una distribuzione $p=(\tfrac12,\tfrac14,\tfrac14)$:
+\begin{walfram}
+p = {1/2, 1/4, 1/4};
+Total[p * Log[2, 1/p]]
+\end{walfram}
+L'output è $\tfrac{3}{2}$, infatti $\tfrac12\cdot 1+\tfrac14\cdot 2+\tfrac14\cdot 2=\tfrac32$.
+\end{rema}
+\begin{defi}
+Appendice: fondamenti di probabilità. Uno \textit{spazio di probabilità} è una terna $(\Omega,\mathcal{F},\mathbb{P})$ dove:
+\begin{itemize}
+\item $\mathcal{F}\subseteq 2^{\Omega}$ è una $\sigma$-algebra, cioè $\Omega\in\mathcal{F}$, è chiusa per complementare e per unioni numerabili;
+\item $\mathbb{P}\colon\mathcal{F}\to[0,1]$ è una misura con $\mathbb{P}(\Omega)=1$, cioè è $\sigma$-additiva sugli elementi disgiunti di $\mathcal{F}$.
+\end{itemize}
+Una funzione $X\colon(\Omega,\mathcal{F})\to(E,\mathcal{E})$ è \textit{misurabile} se $X^{-1}(A)\in\mathcal{F}$ per ogni $A\in\mathcal{E}$. La \textit{legge} di $X$ è $\mathbb{P}_X(A)=\mathbb{P}(X^{-1}(A))$ per $A\in\mathcal{E}$.
+\end{defi}
+\begin{defi}
+Sia $g\colon\Omega\to\mathbb{R}$ misurabile. Il \textit{valore atteso} di $g$ è l'integrale di Lebesgue
+\[
+\mathbb{E}[g] = \int_{\Omega} g\, d\mathbb{P},
+\]
+definito prima per le funzioni semplici $g=\sum_{i} c_i \mathbbm{1}_{A_i}$ come $\sum_i c_i\,\mathbb{P}(A_i)$, poi per $g\ge0$ come estremo superiore sulle funzioni semplici $0\le s\le g$, e infine per $g$ integrabile come $\mathbb{E}[g^+]-\mathbb{E}[g^-]$.
+\end{defi}
+\begin{rema}
+Vale il \textit{cambio di variabili}: se $X\colon\Omega\to E$ è misurabile e $f\colon E\to\mathbb{R}$ è misurabile e integrabile rispetto a $\mathbb{P}_X$, allora
+\[
+\mathbb{E}\big[f(X)\big] = \int_{\Omega} f\circ X\, d\mathbb{P} = \int_{E} f\, d\mathbb{P}_X.
+\]
+Se $E$ è finito o numerabile, l'ultimo integrale si riduce alla somma $\sum_{x\in E} f(x)\,\mathbb{P}_X(\{x\})$. Questa è la formula usata per scrivere $H(X)=\sum_x p(x)h(x)$.
+\end{rema}
+\begin{rema}
+Calcoliamo \wolfram|Integrate[x^2 Sin[x], x]| e vediamo il risultato:
+\[
+\int x^2 \sin x \, dx = (2 - x^2)\cos x + 2x \sin x + C.
+\]
+\end{rema}
+\begin{defi}
+Per implementare gli automi in Wolfram si usa il pacchetto \wolfram{TM-lib.ma}. Si procede in tre passi.
+\begin{enumerate}
+\item Assegnare la directory corrente, cioè la cartella che contiene il pacchetto: \wolfram|SetDirectory["/percorso/della/cartella"]|
+\item Caricare la libreria: \wolfram|Get["TM-lib.ma"]|
+\item Usare le funzioni implementate dalla libreria (elencate sotto).
+\end{enumerate}
+\end{defi}
+\begin{rema}
+Esempio di codice per i primi due passi:
+\begin{walfram}
+SetDirectory["/percorso/della/cartella"]
+Get["TM-lib.ma"]
+\end{walfram}
+\end{rema}
+\begin{defi}
+La libreria implementa le seguenti funzioni.
+\begin{itemize}
+\item \wolfram|ShowConfiguration[c_]| visualizza la configurazione (di una macchina di Turing).
+\item \wolfram|ManipulateComputation[mu_, init_]| visualizza la computazione di una macchina di Turing.
+\item \wolfram|InitAutomaton[automaton_, w_]| inizializza l'automa, cioè restituisce la configurazione iniziale associata alla parola $w$.
+\item \wolfram|DFA2TM[automaton_]| trasforma un automa nella macchina di Turing equivalente.
+\item \wolfram|States[automaton_]| restituisce la lista degli stati dell'automa.
+\item \wolfram|ProductFinalStates[A1_, A2_]| restituisce l'automa prodotto a partire da due automi (composizione parallela).
+\item \wolfram|TuringMachineGraph[mu_]| restituisce il grafo della macchina di Turing.
+\end{itemize}
+\end{defi}
+\begin{rema}
+Nelle firme delle funzioni il carattere \wolfram{_} indica un \emph{pattern}, cioè un parametro formale. Quando si chiama la funzione si scrive solo l'argomento, senza il trattino basso.
+\end{rema}
+\begin{defi}
+Un automa si specifica con tre oggetti:
+\begin{itemize}
+\item la lista \wolfram{T} delle transizioni, ciascuna della forma \wolfram|{stato, simbolo} -> nuovo_stato|;
+\item lo stato iniziale \wolfram{q0};
+\item l'insieme \wolfram{F} degli stati finali.
+\end{itemize}
+L'automa è la terna \wolfram|{T, q0, F}|.
+\end{defi}
+\begin{rema}
+Esempio di automa con due stati, \wolfram{pari} e \wolfram{dispari}, sull'alfabeto $\{0,1\}$. Lo stato cambia a ogni simbolo $1$ letto e resta invariato a ogni simbolo $0$, quindi l'automa accetta le parole con un numero pari di $1$.
+\begin{walfram}
+T = {
+  {pari, 0} -> pari,
+  {dispari, 0} -> dispari,
+  {pari, 1} -> dispari,
+  {dispari, 1} -> pari
+  }
+q0 = pari
+F = {pari}
+automa = {T, q0, F}
+\end{walfram}
+Per mostrare l'esecuzione:
+\begin{walfram}
+init = InitAutomaton[
+    automa2, {0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1}
+    ] ;
+mu = DFA2TM[automa2] ;
+TuringMachineGraph[mu]
+ManipulateComputation[mu, init]
+\end{walfram}
+\end{rema}
+\begin{rema}
+Una volta definito \wolfram{automa}, lo si può inizializzare su una parola $w$ con \wolfram|InitAutomaton[automa, w]|, che restituisce la configurazione iniziale. Con \wolfram|DFA2TM[automa]| si ottiene la macchina di Turing equivalente, di cui si può visualizzare la computazione con \wolfram|ManipulateComputation| e il grafo con \wolfram|TuringMachineGraph|.
+\end{rema}
