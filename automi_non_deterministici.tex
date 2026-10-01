@@ -145,8 +145,10 @@ che può essere rappresenato graficamente come
     (q3) edge [loop below] node {$1$} (q3);
 \end{tikzpicture}
 \]
-Analizziamo ora il comportamento dell'automa su alcune parole:
-
+Analizziamo ora il comportamento dell'automa su alcune parole
+(indichiamo con $\hat T(q_0, w)$ 
+l'insieme degli stati raggiungibili partendo dallo stato 
+$q_0$ dopo la lettura della parola $w$):
 \begin{itemize}
     \item Consideriamo la parola
     \[
@@ -268,9 +270,18 @@ contiene la sottostringa \(101\), ma l'automa si comporta nel modo seguente:
 \]
 Poiché la computazione termina con l'insieme vuoto, la parola \(1101\) viene rifiutata.
 
-L'errore consiste nel fatto che l'automa è costretto a scegliere il \emph{primo} simbolo \(1\) come possibile inizio della sottostringa \(101\). Nell'automa non deterministico originale, invece, il ramo che rimane nello stato \(q_0\) permette di ignorare il primo \(1\) e di scegliere il secondo \(1\) come inizio della sottostringa, accettando così correttamente la parola.
+L'errore consiste nel fatto che l'automa è costretto a scegliere il \emph{primo} simbolo \(1\) come possibile inizio della sottostringa \(101\). 
+Nell'automa non deterministico originale, invece, il ramo che rimane nello stato \(q_0\) permette di ignorare il primo \(1\) e di scegliere il secondo \(1\) come inizio della sottostringa, accettando così correttamente la parola.
 \end{exam}
-In vista, dell'obiettivo di mostrare che l'insieme $X_1 \cdot X_2$ ottenuto a partire da due insiemi $X_1$ e $X_2$ DFA-decidibili è lui stesso DFA-decidibile dobbiamo poter costruire un automa che ``concatena'' la computazione di un automa con quella del secondo, a questo fine è comodo utilizzare una ulteriore variante della definizione di NDFA che può effettuare transizioni senza fare avanzare il puntatore alla posizione corrente:
+In vista, dell'obiettivo di mostrare che l'insieme 
+$X_1 \cdot X_2$ 
+ottenuto a partire da due insiemi 
+$X_1$ e $X_2$ 
+DFA-decidibili è lui stesso DFA-decidibile dobbiamo poter costruire un automa 
+che ``concatena'' la computazione di un automa con quella del secondo,
+a questo fine è comodo utilizzare una ulteriore variante della definizione di 
+NDFA che può effettuare cambi di stato senza far avanzare il puntatore alla posizione 
+corrente:
 
 \begin{defi}[Automa Finito non-deterministico con $\epsilon$-mosse]
 \label{def:15}
@@ -284,7 +295,11 @@ F \subset Q
 e $q_0 \in Q$ è uno stato particolare, detto \emph{stato iniziale}.
 \end{defi}
 
-
+\begin{rema}
+    Di solito si usa simbnolo $\epsilon$ poiché rappresenta il simbolo della parola vuota, 
+    ovvero la parola di lunghezza zero in $A^*$ (quella che sopra abbiamo indicato come 
+    $A^\emptyset$).
+\end{rema}
 
 Per la descrizione della computazione dovremo introdurre una variante della funzione di transizione che prenda in considerazione le $\epsilon$-mosse, a questo scopo introduciamo la seguente notazione per $S \in 2^Q$:
 \[
@@ -294,6 +309,10 @@ S & \text{se } k = 0 \\
 T(T^{k-1}(S,a), a) & k > 0
 \end{cases}
 \]
+Perche dobbiamo introdurre questa notazione? 
+Dobbiamo farlo perché, a partire da un qualsiasi stato 
+$q_i$ vogliamo poter raggiungere tutti gli stati possibili 
+dopo un numero finito ma arbitrariamente grande di $\epsilon$-mosse, senza conusmare lettere della parola che stiamo analizzando.
 
 \begin{defi}[Algoritmo associato ad un automa finito non-deterministico con $\epsilon$-mosse]
 \label{def:17}
@@ -320,6 +339,58 @@ L'algoritmo associato ad un automa non-deterministico di alfabeto $A$ e insieme 
 \end{itemize}
 \end{defi}
 
+\begin{exam}
+    Consideriamo il seguente grafo etichettato, che rappresenta un automa finito non-deterministico con $\epsilon$-mosse:
+\[
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=3.5cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+\node[state] (q0) {$q_0$};
+\node[state] (q1) [right of=q0] {$q_1$};
+\node[state] (q3) [right of=q1] {$q_3$};
+\node[state, accepting] (q4) [right of=q3] {$q_4$};
+\node[state] (q2) [below of=q1] {$q_2$};
+
+\draw[->] (-1.2,0.8) -- (q0);
+
+\path (q0) edge [loop above] node {$1$} (q0)
+      (q0) edge [loop left]  node {$0$} (q0)
+      (q0) edge              node {$1$} (q1)
+      (q0) edge [bend left=30] node {$\varepsilon$} (q4)
+      (q1) edge              node {$\varepsilon$} (q3)
+      (q1) edge              node {$1$} (q2)
+      (q2) edge [bend left=20] node {$0$} (q0)
+      (q2) edge              node[swap] {$0$} (q3)
+      (q2) edge [loop below] node {$1$} (q2)
+      (q3) edge [bend left=20]  node {$1$} (q4)
+      (q3) edge [bend right=20] node[swap] {$\varepsilon$} (q4);
+\end{tikzpicture}
+\]
+In questo caso,
+se mi trovo nello stato $q_0$ e leggo $1$ ottengo gli stati
+$\{q_0, q_1 \}$. Inoltre, senza leggere alcun simbolo 
+(utilizzando quinid le $\epsilon$-mosse), 
+posso passare:
+\begin{itemize}
+    \item dallo stato $q_0$ allo stato $q_4$;
+    
+    \item dallo stato $q_1$ allo stato $q_3$ e poi
+    
+        dallo stato $q_3$ allo stato $q_4$.
+\end{itemize}
+Quindi, 
+dopo aver letto il simbolo $1$ partendo dallo stato iniziale $q_0$,
+si raggiunge lo stato
+$\{ q_0, q_1, q_3, q_4 \}$.
+Se non ci fosse stata la 
+$\epsilon $-mossa da $q_0$ a $q_4$, 
+avremmo raggiunto comunque anche lo stato $q_4$ poiché,
+possiamo fare un numero finito ma arbitrariamente grande 
+di $\epsilon$-mosse,
+quindi avremmo potuto passare da $q_1$ a $q_3$ e poi da $q_3$ a $q_4$
+con le 2 $\epsilon$-mosse che ci sono tra questi stati.
+\end{exam}
 
 \begin{exam}[Un esempio di $\epsilon$-NDFA]
 \label{es:16}
@@ -487,10 +558,15 @@ la parola $10$ è rifiutata.
 
 \end{exam}
 
-Con la nozione appena introdotta è quindi possibile dimostrare in modo diretto che dati due insiemi NDFA-decidibili, l'insieme ottenuto come concatenazione è pure NDFA-decidibile, ovvero la Proposizione~\ref{prop:9} nel caso non-deterministico, e infatti
+A questo punto possiamo mostrare che la 
+concatenazione di due insiemi decidibili per automa finito 
+non-deterministico è anch'essa decidibile per
+automa finito non-deterministico.
+Dimostriamo prima il seguente risultato intermedio:
 \begin{prop}
-    Siano $X_1$ e $X_2$ decidibili per automa finito non-deterministico allora anche $X_1\cdot X_2$ è
-decidibile per automa finito non-deterministico.
+    Siano $X_1$ e $X_2$ insiemi decidibili per automa finito non-deterministico
+    allora $X_1\cdot X_2$ è
+decidibile per automa finito non-deterministico con $\epsilon$-mosse.
 \begin{proof}
 Siano i due automi che decidono $X_1 \subset A^*$ e $X_2 \subset A^*$ rispettivamente dati su insiemi degli stati disgiunti $Q_1$ e $Q_2$, ovvero con $Q_1 \cap Q_2 = \emptyset$: $\mathcal{A}_1 = (T', q_0', F')$ e $\mathcal{A}_2 = (T'', q_0'', F'')$.
 
@@ -508,6 +584,37 @@ T''(q,a) & q \in Q_2,
 \end{cases}
 \]
 e l'insieme degli stati finali accettanti è dato da $F := F''$.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, minimum size=0.9cm, inner sep=1pt}
+]
+% Automa T1
+\draw[-] (0,0) rectangle (4,2.4);
+\node at (2,2.75) {$\mathcal A_1$};
+\node at (2,-0.4) {$\omega_1$};
+\node[state] (q01) at (0,1.2) {$q_0'$};
+\node[state, accepting] (f1) at (4,1.7) {$f_1$};
+\node[state, accepting] (f2) at (4,0.7) {$f_2$};
+
+% Automa T2
+\draw[-] (7,0) rectangle (11,2.4);
+\node at (9,2.75) {$\mathcal A_2$};
+\node at (9,-0.4) {$\omega_2$};
+\node[state] (q02) at (7,1.2) {$q_0''$};
+
+% epsilon-mosse
+\path[red] (f1) edge [bend left=20]  node {$\varepsilon$} (q02)
+           (f2) edge [bend right=20] node[swap] {$\varepsilon$} (q02);
+\end{tikzpicture}
+\caption{L'idea della dimostrazione per comporre in serie
+due automi e/' la seguente: 
+usiamo le $\varepsilon$-mosse per concatenare le 
+computazioni dei due automi du due parole arbitrarie 
+$\omega_1,\omega_2\in A^*$
+(nella figura abbiamo $F'=\{ f_1, f_2 \}$).}
+\end{figure}
 \end{proof} 
 \end{prop}
 \begin{prop}
@@ -594,3 +701,17 @@ insieme.
 Ne segue che le tre nozioni di decidibilità coincidono.
 \end{proof}
 \end{prop}
+Da quanto appena visto
+otteniamo più del risultato vouluto, 
+infatti abbiamo mostrato che ogni automa 
+finito non-deterministico con $\epsilon$-mosse 
+può essere trasformato in un automa finito deterministico, 
+quindi possiamo concludere che gli insiemi decidibili per 
+automi finiti non-deterministici coincidono con quelli 
+decidibili per automi finiti deterministici.
+In che modo si può trasformare un automa finito 
+non-deterministico con $\epsilon$-mosse in un automa 
+finito deterministico?
+\begin{exam}
+    
+\end{exam}
