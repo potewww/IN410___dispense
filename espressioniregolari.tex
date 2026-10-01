@@ -53,6 +53,40 @@ dove
 \right.
 \]
 \end{defi}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Rettangolo di A
+\draw[-, line width=2.5pt, rounded corners=3pt] (2,-1.4) rectangle (7,1.4);
+\node at (4.5,0) {$\mathcal{A}$};
+
+% Stati (q_0 ora sul bordo sinistro, in sovrimpressione)
+\node[state, accepting] (q0p) at (0,0)    {$q_0'$};
+\node[state]            (q0)  at (2,0)    {$q_0$};
+\node[state, accepting] (qi)  at (7,0.8)  {$q_i$};
+\node[state, accepting] (qj)  at (7,-0.8) {$q_j$};
+
+% Freccia d'ingresso e epsilon-mossa iniziale
+\draw[->] ([shift={(-0.7,0.7)}]q0p.center) -- (q0p);
+\draw[->] (q0p) -- node {$\varepsilon$} (q0);
+
+% epsilon-mossa di ritorno interna (da q_i)
+\draw[->, rounded corners=8pt]
+    (qi.45) -- (qi.45 |- 0,1.9) -- (q0.100 |- 0,1.9) -- (q0.100);
+\node at (7.55,1.5) {$\varepsilon$};
+
+% epsilon-mossa di ritorno esterna (da q_j)
+\draw[->, rounded corners=8pt]
+    (qj.0) -- (8.1,-0.8) -- (8.1,2.4) -- (q0.135 |- 0,2.4) -- (q0.135);
+\node at (8.4,-0.4) {$\varepsilon$};
+\end{tikzpicture}
+\caption{Costruzione dell'automa che decide $X^*$ a partire da quello che decide $X$.}
+\label{fig:kleene}
+\end{figure}
+
 \begin{rema}
     Chiaramente, riprendendo la precedente osservazione, con $\llbracket e_1\rrbracket\cdot\llbracket e_2\rrbracket$ indichiamo la conatenazione degli insiemi $\llbracket e_1\rrbracket$ e $\llbracket e_2\rrbracket$.
 \end{rema}
@@ -60,9 +94,86 @@ dove
 \begin{prop} Data un’espressione regolare $e\in E$ l’insieme $\llbracket e \rrbracket$ è un insieme regolare.
 \begin{proof} Questo risultato è conseguenza delle proprietà di chiusura (per prodotto, somma e star)
 soddisfatte dagli insiemi DFA-decidibili, e dal fatto che le tre espressioni regolari di base si interpretano
-con insiemi DFA-decidibili: infatti l’insieme vuoto è deciso dall’automa ... (pagina 31).
+con insiemi DFA-decidibili: si veda la figura 
+\ref{fig:automi-base} per gli automi che decidono le tre espressioni regolari di base.
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[
+        ->, >=stealth', shorten >=1pt, auto, node distance=3cm,
+        every state/.style={circle, draw, thick, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state] (q0) {$q_0$};
+    \draw[->] ([shift={(-0.8,0.8)}]q0.center) -- (q0);
+    \end{tikzpicture}
+    \caption{NDFA che decide l'insieme vuoto}
+    \label{fig:ndfa-vuoto}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[
+        ->, >=stealth', shorten >=1pt, auto, node distance=3cm,
+        every state/.style={circle, draw, thick, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state, accepting] (q0) {$q_0$};
+    \draw[->] ([shift={(-0.8,0.8)}]q0.center) -- (q0);
+    \end{tikzpicture}
+    \caption{NDFA che decide l'insieme singleton della parola vuota}
+    \label{fig:ndfa-epsilon}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.36\textwidth}
+    \centering
+    \begin{tikzpicture}[
+        ->, >=stealth', shorten >=1pt, auto, node distance=2.2cm,
+        every state/.style={circle, draw, thick, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state] (q0) {$q_0$};
+    \node[state, accepting] (q1) [right of=q0] {$q_1$};
+    \draw[->] ([shift={(-0.8,0.8)}]q0.center) -- (q0);
+    \path (q0) edge node {$a$} (q1);
+    \end{tikzpicture}
+    \caption{NDFA che decide l'insieme singleton di una lettera dell'alfabeto}
+    \label{fig:ndfa-lettera}
+\end{subfigure}
+\caption{Gli automi che decidono le tre espressioni regolari di base}
+\label{fig:automi-base}
+\end{figure}
 \end{proof}
 \end{prop}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Automa A1 (sopra)
+\draw[-, line width=2.5pt, rounded corners=3pt] (3,0.2) rectangle (6.6,2.8);
+\node at (4.8,1.5) {$\mathcal{A}_1$};
+\node[state] (q0a) at (3,1.5) {$q_0$};
+\node[state, accepting] (qia) at (6.6,2.3) {$q_i$};
+\node[state, accepting] (qja) at (6.6,0.7) {$q_j$};
+
+% Automa A2 (sotto)
+\draw[-, line width=2.5pt, rounded corners=3pt] (3,-2.8) rectangle (6.6,-0.2);
+\node at (4.8,-1.5) {$\mathcal{A}_2$};
+\node[state] (q0b) at (3,-1.5) {$q_0$};
+\node[state, accepting] (qib) at (6.6,-0.7) {$q_i$};
+\node[state, accepting] (qjb) at (6.6,-2.3) {$q_j$};
+
+% Nuovo stato iniziale
+\node[state] (q0p) at (1,0) {$q_0'$};
+\draw[->] ([shift={(-0.7,0.5)}]q0p.center) -- (q0p);
+
+% epsilon-mosse
+\draw[->] (q0p) -- node[above left, pos=0.5] {$\varepsilon$} (q0a);
+\draw[->] (q0p) -- node[below left, pos=0.5] {$\varepsilon$} (q0b);
+\end{tikzpicture}
+\caption{Costruzione dell'automa che decide $X_1 + X_2$ a partire da quelli che decidono $X_1$ e $X_2$.}
+\label{fig:somma}
+\end{figure}
 Quello che invece vorremmo mostrare ora è che vale anche l'implicazione inversa della proposizione precedente. Per farlo introdurremo una nuova versione di automa.
 \begin{defi}
 Un \textit{automa a stati finiti non-deterministico generalizzato} di alfabeto $A$ e insieme degli stati $Q$ è una tripla:

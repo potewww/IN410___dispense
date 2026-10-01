@@ -40,7 +40,7 @@ T(S,a):=\bigcup_{q\in S}\{T(q,a)\}
 Grazie a tale notazione possiamo definire l'algoritmo associato ad un automa finito non-deterministico.
 
 \begin{defi}[Algoritmo associato ad un Automa Finito Non-deterministico]
-L'algoritmo associato ad un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ è la tupla $(A,\{0,1\}, Conf_{ND}^{A,Q},\varepsilon,\tau,\delta)$  dove le tre funzioni si definscoo come segue :
+L'algoritmo associato ad un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ è la tupla $(A,\{0,1\}, Conf_{ND}^{A,Q},\epsilon,\tau,\delta)$  dove le tre funzioni si definscoo come segue :
 
 \begin{itemize}
     \item la \emph{funzione di ingresso}
@@ -85,9 +85,25 @@ L'algoritmo associato ad un automa finito non-deterministico di alfabeto $A$ e i
 
 Di conseguenza resta definito il concetto di decidibilità di un insieme mediante automi finiti non-deterministici.
 
+
 \begin{defi}[Insieme decidibile per Automa Finito Non-deterministico]
 Un insieme $X\subseteq A^*$ è detto \emph{decidibile per automa finito non-deterministico} (o \emph{NDFA-decidibile}) se esistono un insieme finito $Q$ ed un automa finito non-deterministico di alfabeto $A$ e insieme degli stati $Q$ tali che l'algoritmo associato decide $X$.
 \end{defi}
+
+Per alleggerire la notazione, con
+$\widehat T(q_0, w)$ (a volte useremo anche $T^*$) indichiamo
+l'insieme degli stati raggiungibili partendo dallo stato 
+$q_0$ dopo la lettura della parola $w=a_1 a_2 \cdots a_n\in A^*$, ovvero:
+\[
+\widehat T(q_0, w):=
+ T^* (q_0, w):=
+ \left\{
+ q \in Q \;\middle|\;
+ \exists\, p_0, \dots, p_n \in Q :\ 
+ p_0 = q_0,\ p_n = q,\ p_i \in T(p_{i-1}, a_i)\ \ \forall\, i = 1, \dots, n
+ \right\}
+\]
+
 \begin{rema}
     Un automa di questo tipo
 ci permette di effettuare transizioni multiple, 
@@ -146,7 +162,7 @@ che può essere rappresenato graficamente come
 \end{tikzpicture}
 \]
 Analizziamo ora il comportamento dell'automa su alcune parole
-(indichiamo con $\hat T(q_0, w)$ 
+(ricordiamo che con $\widehat T(q_0, w)$ indichiamo
 l'insieme degli stati raggiungibili partendo dallo stato 
 $q_0$ dopo la lettura della parola $w$):
 \begin{itemize}
@@ -261,7 +277,7 @@ w=1101
 contiene la sottostringa \(101\), ma l'automa si comporta nel modo seguente:
 \[
 \begin{aligned}
-\widehat{T}(q_0,\varepsilon)&=\{q_0\},\\
+\widehat{T}(q_0,\epsilon)&=\{q_0\},\\
 \widehat{T}(q_0,1)&=\{q_1\},\\
 \widehat{T}(q_0,11)&=T(q_1,1)=\emptyset,\\
 \widehat{T}(q_0,110)&=\bigcup_{q\in\emptyset}T(q,0)=\emptyset,\\
@@ -320,7 +336,7 @@ L'algoritmo associato ad un automa non-deterministico di alfabeto $A$ e insieme 
 \begin{itemize}
 \item la \textbf{funzione di ingresso} che associa ad un parola $w \in A^*$, la configurazione
 \[
-\varepsilon(w) = \left(w, 1, \bigcup_{k \geq 0} T^k(\{q_0\}, \epsilon)\right),
+\epsilon(w) = \left(w, 1, \bigcup_{k \geq 0} T^k(\{q_0\}, \epsilon)\right),
 \]
 
 \item la \textbf{funzione di transizione} $\tau : \mathrm{Conf}_{ND}^{A,Q} \to \mathrm{Conf}_{ND}^{A,Q}$ è data da
@@ -357,14 +373,14 @@ L'algoritmo associato ad un automa non-deterministico di alfabeto $A$ e insieme 
 \path (q0) edge [loop above] node {$1$} (q0)
       (q0) edge [loop left]  node {$0$} (q0)
       (q0) edge              node {$1$} (q1)
-      (q0) edge [bend left=30] node {$\varepsilon$} (q4)
-      (q1) edge              node {$\varepsilon$} (q3)
+      (q0) edge [bend left=30] node {$\epsilon$} (q4)
+      (q1) edge              node {$\epsilon$} (q3)
       (q1) edge              node {$1$} (q2)
       (q2) edge [bend left=20] node {$0$} (q0)
       (q2) edge              node[swap] {$0$} (q3)
       (q2) edge [loop below] node {$1$} (q2)
       (q3) edge [bend left=20]  node {$1$} (q4)
-      (q3) edge [bend right=20] node[swap] {$\varepsilon$} (q4);
+      (q3) edge [bend right=20] node[swap] {$\epsilon$} (q4);
 \end{tikzpicture}
 \]
 In questo caso,
@@ -587,33 +603,34 @@ e l'insieme degli stati finali accettanti è dato da $F := F''$.
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}[
-    ->, >=stealth', shorten >=1pt, auto,
-    every state/.style={circle, draw, minimum size=0.9cm, inner sep=1pt}
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
 ]
-% Automa T1
-\draw[-] (0,0) rectangle (4,2.4);
-\node at (2,2.75) {$\mathcal A_1$};
-\node at (2,-0.4) {$\omega_1$};
-\node[state] (q01) at (0,1.2) {$q_0'$};
-\node[state, accepting] (f1) at (4,1.7) {$f_1$};
-\node[state, accepting] (f2) at (4,0.7) {$f_2$};
+% Automa A1
+\draw[-, line width=2.5pt, rounded corners=3pt] (0,-1.3) rectangle (3.6,1.3);
+\node at (1.8,0) {$\mathcal{A}_1$};
+\node[state] (q0a) at (0,0)     {$q_0$};
+\node[state] (qia) at (3.6,0.8)  {$q_i$};
+\node[state] (qja) at (3.6,-0.8) {$q_j$};
 
-% Automa T2
-\draw[-] (7,0) rectangle (11,2.4);
-\node at (9,2.75) {$\mathcal A_2$};
-\node at (9,-0.4) {$\omega_2$};
-\node[state] (q02) at (7,1.2) {$q_0''$};
+% Automa A2
+\draw[-, line width=2.5pt, rounded corners=3pt] (6.2,-1.3) rectangle (9.8,1.3);
+\node at (8,0) {$\mathcal{A}_2$};
+\node[state] (q0b) at (6.2,0) {$q_0$};
+\node[state, accepting] (qib) at (9.8,0.8)  {$q_i$};
+\node[state, accepting] (qjb) at (9.8,-0.8) {$q_j$};
 
-% epsilon-mosse
-\path[red] (f1) edge [bend left=20]  node {$\varepsilon$} (q02)
-           (f2) edge [bend right=20] node[swap] {$\varepsilon$} (q02);
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.5)}]q0a.center) -- (q0a);
+
+% epsilon-mosse da A1 ad A2
+\draw[->] (qia) -- node[below left, pos=0.55] {$\varepsilon$} (q0b);
+\draw[->] (qja) -- node[above left, pos=0.55] {$\varepsilon$} (q0b);
 \end{tikzpicture}
-\caption{L'idea della dimostrazione per comporre in serie
-due automi e/' la seguente: 
-usiamo le $\varepsilon$-mosse per concatenare le 
-computazioni dei due automi du due parole arbitrarie 
-$\omega_1,\omega_2\in A^*$
-(nella figura abbiamo $F'=\{ f_1, f_2 \}$).}
+\caption{L'idea della dimostrazione consiste nel costruire un automa 
+usando le $\epsilon$-mosse per concatenare le 
+computazioni dei due automi.}
+\label{fig:concatenazione}
 \end{figure}
 \end{proof} 
 \end{prop}
@@ -712,6 +729,166 @@ decidibili per automi finiti deterministici.
 In che modo si può trasformare un automa finito 
 non-deterministico con $\epsilon$-mosse in un automa 
 finito deterministico?
+\\
+Per farlo, dovremmo definire una funzione di transizione $T'$ 
+della forma
+\[
+\begin{matrix}
+    T': 2^Q \times A  \to  2^Q 
+\end{matrix}
+\]
+Dal momento che $|Q|<|2^Q|$, e che in generale $|Q|$ può essere molto più piccolo di $|2^Q|$,
+la costruzione della mappa $T'$ del DFA può 
+richiedere di esplicitare un numero di stati molto più grande 
+di quello dell'automa $\epsilon$-NDFA di partenza.
+Per risolvere il problema, si restringe la funzione $T'$ 
+(definita come nella dimostrazione della proposizione precedente)
+all'insieme $Q' \times A$ dove
+\[
+Q':=
+\{
+    \widehat T(q_0,a) \, | \, a \in A^*
+\}
+\]
+Ovvero, 
+si considerano solo gli stati raggiungibili a partire dallo stato iniziale 
+$q_0$
+definendo come stato iniziale per il DFA lo stato
+\[
+S_0:=
+\bigcup_{k =0}^\infty T^k(\{ q_0\},\epsilon)
+\]
 \begin{exam}
-    
+    Consideriamo l'$\epsilon$-NDFA associato al seguente grafo etichettato:
+\[
+% nel preambolo: \usepackage{tikz} \usetikzlibrary{automata}
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=3.5cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+\node[state] (q0) {$q_0$};
+\node[state] (q1) [right of=q0] {$q_1$};
+\node[state] (q2) [right of=q1] {$q_2$};
+\node[state, accepting] (q3) [right of=q2] {$q_3$};
+
+\draw[->] (-1.2,0.8) -- (q0);
+
+\path (q0) edge [loop left]  node {$0$} (q0)
+      (q0) edge [loop below] node {$1$} (q0)
+      (q0) edge              node {$1$} (q1)
+      (q1) edge              node {$0$} (q2)
+      (q2) edge [bend left=25]  node {$\epsilon$} (q3)
+      (q2) edge [bend right=25] node[swap] {$1$} (q3)
+      (q3) edge [loop above] node {$0$} (q3)
+      (q3) edge [loop below] node {$1$} (q3);
+\end{tikzpicture}
+\]
+Questo automa ha come funzione di transizione la funzione
+\[
+\begin{matrix}
+    T: & Q \times (A \cup \{\epsilon\}) & \to & 2^Q \\
+    & (q_0, 0) & \mapsto & \{q_0\} \\
+    & (q_0, 1) & \mapsto & \{q_0, q_1\} \\
+    & (q_0, \epsilon) & \mapsto & \emptyset \\
+    & (q_1, 0) & \mapsto & \{q_2\} \\
+    & (q_1, 1) & \mapsto & \emptyset \\
+    & (q_1, \epsilon) & \mapsto & \emptyset \\
+    & (q_2, 0) & \mapsto & \emptyset \\
+    & (q_2, 1) & \mapsto & \{q_3\} \\
+    & (q_2, \epsilon) & \mapsto & \{q_3\} \\
+    & (q_3, 0) & \mapsto & \{q_3\} \\
+    & (q_3, 1) & \mapsto & \{q_3\} \\
+    & (q_3, \epsilon) & \mapsto & \emptyset \\
+\end{matrix}
+\]
+Vogliamo costruire un DFA che decida lo stesso insieme di parole dell'automa precedente.
+Dobbiamo quindi stabilire quindi l'insime degli stati $Q'$.
+Iniziamo osservando che
+\[
+S_0:=
+\bigcup_{k =0}^\infty T^k(\{ q_0\},\epsilon)
+=\{q_0\}
+\]
+visto che dallo stato iniziale non si possono fare $\epsilon$-mosse.
+Partendo quindi da $S_0$ possiamo arrivare nello stato
+$\{q_0,q_1\}$ leggendo $1$ oppure rimanere nello stato $\{q_0\}$ leggendo $0$.
+Facendo questo ragionamento per tutti gli stati raggiungibili a partire da $S_0$ otteniamo l'insieme degli stati del DFA:
+\begin{align*}
+Q'=
+\{
+    S_0 =\{ q_0\},
+    S_1 =\{ q_0, q_1\},
+    S_2 =\{ q_0, q_2,q_3\},
+    S_3 =\{ q_0,q_3\},
+    S_4 =\{ q_0,q_1,q_3\}
+\}
+\end{align*}
+Possiamo quindi ora scrivere (in forma tabellare) la restrizione 
+della funzione di transizione $T'$ all'insieme $Q' \times A$:
+\[
+\begin{array}{c|c|c}
+Q' \subseteq 2^Q \;\backslash\; A & 0 & 1 \\
+\hline
+S_0 = \{q_0\}           & S_0 & S_1 \\
+S_1 = \{q_0, q_1\}      & S_2 & S_1 \\
+S_2 = \{q_0, q_2, q_3\} & S_3 & S_4 \\
+S_3 = \{q_0, q_3\}      & S_3 & S_4 \\
+S_4 = \{q_0, q_1, q_3\} & S_2 & S_4 \\
+\end{array}
+\]
+Abbiamo a tutti gli effetti costruito 
+un DFA che decide lo stesso insieme di parole deciso
+dell'automa $\epsilon$-NDFA di partenza.
+Se a questo punto vogliamo rappresentare graficamente il DFA, 
+otteniamo il seguente grafo etichettato:
+\[
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=3.5cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+\node[state] (S0) {$S_0$};
+\node[state] (S1) [right of=S0] {$S_1$};
+\node[state, accepting] (S2) [right of=S1] {$S_2$};
+\node[state, accepting] (S3) [right of=S2] {$S_3$};
+\node[state, accepting] (S4) [below of=S3] {$S_4$};
+\draw[->] (-1.2,0.8) -- (S0);
+\path (S0) edge [loop below] node {$0$} (S0)
+      (S0) edge              node {$1$} (S1)
+      (S1) edge [loop below] node {$1$} (S1)
+      (S1) edge              node {$0$} (S2)
+      (S2) edge              node {$0$} (S3)
+      (S2) edge              node[swap] {$1$} (S4)
+      (S3) edge [loop above] node {$0$} (S3)
+      (S3) edge              node {$1$} (S4)
+      (S4) edge [bend left=20] node {$0$} (S2)
+      (S4) edge [loop right] node {$1$} (S4);
+\end{tikzpicture}
+\]
+Possiamo osservare che gli stati accettanti del DFA
+formano un pozzo per il grafo, ovvero una volta entrati in uno di questi stati non si può più uscire
+indipendentemente dalla lettera letta.
+Questo vuol dire che in realtà,
+l'automa puo assumere la forma di un DFA con un solo stato accettante,
+che è quello che si ottiene unendo tutti gli stati accettanti del DFA costruito
+in un unico stato accettante.
+Otteniamo quindi il seguente grafo etichettato:
+\[
+\begin{tikzpicture}[
+    ->, >=stealth', shorten >=1pt, auto, node distance=3.5cm,
+    every state/.style={circle, draw, minimum size=1cm}
+]
+\node[state] (S0) {$S_0$};
+\node[state] (S1) [right of=S0] {$S_1$};
+\node[state, accepting] (S2) [right of=S1] {$S_2$};
+
+\draw[->] (-1.2,0.8) -- (S0);
+
+\path (S0) edge [loop below] node {$0$} (S0)
+      (S0) edge              node {$1$} (S1)
+      (S1) edge [loop below] node {$1$} (S1)
+      (S1) edge              node {$0$} (S2)
+      (S2) edge [loop right] node {$1$} (S2)
+      (S2) edge [loop below] node {$0$} (S2);
+\end{tikzpicture}
+\]
 \end{exam}
