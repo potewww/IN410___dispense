@@ -186,4 +186,267 @@ T : Q \times E \to 2^Q,
 \]
 $q_0 \in Q$ è detto stato iniziale, $F \subset Q$ è detto insieme degli stati finali accettanti.
 \end{defi}
-Da finire ...
+L'idea alla base di questo nuovo tipo di automa è
+che si può etichettare le transizioni dell'automa
+non solo con le lettere dell'alfabeto ma con
+qualsiasi espressione costruita a partire dall'alfabeto.
+A questo punto, dovremmo però dare di nuovo le definizioni di
+algoritmo associato ad un automa generalizzato e di decidibilità.
+Usando però la proposizione sopra, possiamo fare ciò in modo furbo:
+\begin{rema}
+    \label{aut generalizzato a eps. NDFA}
+    Dato un automa generalizzato $A=(T,q_0,F)$ con insieme di stati $Q$,
+    gli si può associare un $\epsilon$-NDFA nel seguente modo.
+    Per ogni coppia $(q,e)$ tale che
+    $T(q,e)=p$,
+    il risultato precedente fornisce un DFA $A_e=(T^e, q_0^e, F^e)$
+    che decide l'iniseme regolare $\llbracket e \rrbracket$.
+    A questo punto, possiamo modificare l'automa $A$ in un $\epsilon$-NDFA della forma $A'=(T', q_0', F')$, 
+    eliminando tutte le definizioni del tipo
+    $T(q,e)=p$ e aggiungendo per ogni coppia $(q,e)$ come sopra:
+    \begin{enumerate}
+        \item una $\epsilon$-transizione
+        che collega $q$ a $q_0^e$, ovvero definendo $T'(q,\epsilon):=q_0$;
+
+        \item le transizioni interne di ogni $A_e$;
+        
+        \item una $\epsilon$-transizione
+        che collega ogni stato accettante di $A_e$ $q_i$ a $p$, ovvero definendo $T'(q_i,\epsilon):=p$ per ogni $q_i\in F^e$.
+    \end{enumerate}
+\end{rema}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+%%%%%%%%%%%%%%%%%%%% Automa di partenza %%%%%%%%%%%%%%%%%%%%
+% Stati
+\node[state] (q) at (3.6,0) {$q$};
+\node[state] (p) at (6.6,0) {$p$};
+
+% Transizione T(q,e) = p
+\draw[->] (q) -- node {$e$} (p);
+
+%%%%%%%%%%%%%%%%%%%% Freccia di trasformazione %%%%%%%%%%%%%%%%%%%%
+\draw[->, line width=1pt] (5.1,-1) -- node[right] {\textit{sostituzione}} (5.1,-2.6);
+
+%%%%%%%%%%%%%%%%%%%% Automa trasformato %%%%%%%%%%%%%%%%%%%%
+% Rettangolo di A_e
+\draw[-, line width=2.5pt, rounded corners=3pt] (2.4,-6.4) rectangle (7.4,-3.6);
+\node at (4.9,-5) {$\mathcal{A}_e$};
+
+% Stati
+\node[state] (qb)  at (0,-5)     {$q$};
+\node[state] (q0e) at (2.4,-5)   {$q_0^e$};
+\node[state] (qi)  at (7.4,-4.2) {$q_i$};
+\node[state] (qj)  at (7.4,-5.8) {$q_j$};
+\node[state] (pb)  at (10.2,-5)  {$p$};
+
+% epsilon-mossa di ingresso in A_e
+\draw[->] (qb) -- node {$\varepsilon$} (q0e);
+
+% epsilon-mosse di uscita dagli stati accettanti di A_e
+\draw[->] (qi) -- node[above, sloped] {$\varepsilon$} (pb);
+\draw[->] (qj) -- node[below, sloped] {$\varepsilon$} (pb);
+\end{tikzpicture}
+\caption{Un passo di sostituzione: la transizione $T(q,e)=p$ viene rimpiazzata dal DFA $\mathcal{A}_e$ che decide $\llbracket e \rrbracket$, collegato a $q$ e a $p$ tramite $\varepsilon$-transizioni.}
+\label{fig:sostituzione}
+\end{figure}
+\begin{defi}
+    Dato un automa generalizzato $A$, \textit{l'insieme $X \subset A^*$
+    deciso dall'automa generalizzato $A$} è l'insieme deciso dall'$\epsilon$-NDFA
+    che gli si può associare usando la procedura esposta nell'osservazione \ref{aut generalizzato a eps. NDFA}.
+\end{defi}
+Ora elenchiamo tre trasformazioni 
+che si possono effettuare su un automa generalizzato
+che non modicano l'insieme deciso dall'automa stesso.
+\begin{itemize}
+    \item Setup restituisce l'automa con l'aggiunta di uno stato iniziale $q_0^*$ e di un unico stato finale $q_F^*$ che non hanno archi entranti e su cui non saranno fatte agire le trasformazioni seguenti (Merge e Erase). Il nuovo automa avrà le stesse transizioni dell'automa dato con l'aggiunta di una $\epsilon$-transizione da $q_0^*$ a $q_0$ e di $\epsilon$-transizioni da ogni \textcolor{red}{Queste epsilon mosse non dovrebbero essere delle $\mathbb 1$-mosse visto che stiamo eticchettando con le espressioni.} stato finale $q \in F$ verso $q_F^*$:
+    \[
+    T'(q, e) := 
+    \begin{cases} 
+    q_0 & \text{se } q = q_0^* \text{ e } e = \epsilon \\ 
+    q_F^* & \text{se } q \in F \text{ e } e = \epsilon \\ 
+    T(q, e) & \text{altrimenti.} 
+    \end{cases}
+    \]
+
+    \begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+%%%%%%%%%%%%%%%%%%%% Automa di partenza %%%%%%%%%%%%%%%%%%%%
+% Rettangolo di A
+\draw[-, line width=2.5pt, rounded corners=3pt] (0,-1.4) rectangle (3,1.4);
+\node at (1.5,0) {$\mathcal{A}$};
+
+% Stati
+\node[state]            (q0)  at (0,0)    {$q_0$};
+\node[state, accepting] (qi)  at (3,0.8)  {$q_i$};
+\node[state, accepting] (qj)  at (3,-0.8) {$q_j$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+%%%%%%%%%%%%%%%%%%%% Freccia di trasformazione %%%%%%%%%%%%%%%%%%%%
+\draw[->, line width=1pt] (4.3,0) -- node[above] {\textit{Setup}} (6.1,0);
+
+%%%%%%%%%%%%%%%%%%%% Automa trasformato %%%%%%%%%%%%%%%%%%%%
+% Rettangolo di A
+\draw[-, line width=2.5pt, rounded corners=3pt] (8.6,-1.4) rectangle (11.6,1.4);
+\node at (10.1,0) {$\mathcal{A}$};
+
+% Stati
+\node[state]            (q0p) at (7,0)      {$q_0'$};
+\node[state]            (q0b) at (8.6,0)    {$q_0$};
+\node[state]            (qib) at (11.6,0.8) {$q_i$};
+\node[state]            (qjb) at (11.6,-0.8){$q_j$};
+\node[state, accepting] (qf)  at (13.8,0)   {$q_f$};
+
+% Freccia d'ingresso e epsilon-mossa iniziale
+\draw[->] ([shift={(-0.7,0.7)}]q0p.center) -- (q0p);
+\draw[->] (q0p) -- node {$\mathbb 1$} (q0b);
+
+% epsilon-mosse verso il nuovo stato finale
+\draw[->] (qib) -- node[above, sloped] {$\mathbb 1$} (qf);
+\draw[->] (qjb) -- node[below, sloped] {$\mathbb 1$} (qf);
+\end{tikzpicture}
+\caption{Trasformazione dell'automa $\mathcal{A}$ dopo Setup.}
+\label{fig:setup}
+\end{figure}
+
+    \item Merge restituisce l'automa in cui due transizioni parallele sono fuse in un'unica transizione: in pratica, poiché l'automa generalizzato è non deterministico è possibile avere due espressioni $e_1$ ed $e_2$ tali che $T(q_i, e_1) = s_1$ e $T(q_i, e_2) = s_2$ e $q_j \in s_1 \cap s_2$. Sono queste due transizioni, dette \textit{parallele} per la coppia di stati $(q_i, q_j)$, che possono essere fuse in un'unica transizione in corrispondenza della somma delle due espressioni regolari.
+    
+    Definiamo l'automa $(T', q_0, F)$ in cui le transizioni da $q_i$ a $q_j$ sono sostituite con un'unica transizione $T' := \text{Merge}(T, q_i, q_j)$:
+    \[
+    T'(q, e) = 
+    \begin{cases} 
+    T(q, e) & \text{se } q \neq q_i \text{ e } T(q, e) \neq q_j \\ 
+    \displaystyle \sum_{e \in E_{i,j}} e & \text{se } E_{i,j} := \{e \mid q = q_i \text{ e } T(q_i, e) = q_j\} 
+    \end{cases}
+    \]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+%%%%%%%%%%%%%%%%%%%% Automa di partenza %%%%%%%%%%%%%%%%%%%%
+% Stati
+\node[state] (qi)  at (0,0) {$q_i$};
+\node[state] (qj)  at (3,0) {$q_j$};
+
+% Transizioni parallele
+\draw[->] (qi) to[bend left=25]  node {$e_1$} (qj);
+\draw[->] (qi) to[bend right=25] node[below] {$e_2$} (qj);
+
+%%%%%%%%%%%%%%%%%%%% Freccia di trasformazione %%%%%%%%%%%%%%%%%%%%
+\draw[->, line width=1pt] (4.3,0) -- node[above] {\textit{Merge}} (6.1,0);
+
+%%%%%%%%%%%%%%%%%%%% Automa trasformato %%%%%%%%%%%%%%%%%%%%
+% Stati
+\node[state] (qib) at (7.4,0)  {$q_i$};
+\node[state] (qjb) at (10.9,0) {$q_j$};
+
+% Transizione unica
+\draw[->] (qib) -- node {$e_1 + e_2$} (qjb);
+\end{tikzpicture}
+\caption{Fusione di due transizioni parallele da $q_i$ a $q_j$ in un'unica transizione etichettata dalla somma delle espressioni regolari.}
+\label{fig:merge}
+\end{figure}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+%%%%%%%%%%%%%%%%%%%% Automa di partenza %%%%%%%%%%%%%%%%%%%%
+% Stato
+\node[state] (q) at (0,0) {$q$};
+
+% Loop paralleli (archi paralleli da q a q)
+\draw[->] (q) edge[loop above] node {$e_1$} (q);
+\draw[->] (q) edge[loop below] node {$e_2$} (q);
+
+%%%%%%%%%%%%%%%%%%%% Freccia di trasformazione %%%%%%%%%%%%%%%%%%%%
+\draw[->, line width=1pt] (2.0,0) -- node[above] {\textit{Merge}} (3.8,0);
+
+%%%%%%%%%%%%%%%%%%%% Automa trasformato %%%%%%%%%%%%%%%%%%%%
+% Stato
+\node[state] (qb) at (5.8,0) {$q$};
+
+% Loop unico
+\draw[->] (qb) edge[loop above] node {$e_1 + e_2$} (qb);
+\end{tikzpicture}
+\caption{Caso particolare del Merge con $q_i = q_j = q$: due cappi su $q$ sono transizioni parallele da $q$ a $q$, e vengono fusi in un unico cappio etichettato da $e_1 + e_2$.}
+\label{fig:merge-loop}
+\end{figure}
+
+    \item Erase Consideriamo un automa generalizzato $(T, q_0, F)$ senza transizioni parallele e introduciamo la seguente trasformazione che consiste nell'eliminare uno stato $\bar{q} \notin F \cup \{q_0\}$ preservando l'insieme che viene deciso dall'automa: il nuovo automa $(T', q_0, F)$ sarà dunque definito su $Q \setminus \{\bar{q}\}$ nel modo seguente: 
+    
+    se $T(q_i, e_i) = \bar{q}$, $T(\bar{q}, e_j) = q_j$ e $T(\bar{q}, e_k) = \bar{q}$ allora
+    \[
+    T'(q_i, e) = q_j \text{ dove } e = e_i e_k^* e_j
+    \]
+    
+    per tutte le altre transizioni che non coinvolgono $\bar{q}$ non si interviene e si definisce
+    \[
+    T'(q, e) = T(q, e).
+    \]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+%%%%%%%%%%%%%%%%%%%% Automa di partenza %%%%%%%%%%%%%%%%%%%%
+% Stati
+\node[state] (qi) at (0,0) {$q_i$};
+\node[state] (qb) at (2.5,0) {$\bar q$};
+\node[state] (qj) at (5,0) {$q_j$};
+
+% Transizioni
+\draw[->] (qi) -- node {$e_i$} (qb);
+\draw[->] (qb) -- node {$e_j$} (qj);
+\draw[->] (qb) edge[loop above] node {$e_k$} (qb);
+
+%%%%%%%%%%%%%%%%%%%% Freccia di trasformazione %%%%%%%%%%%%%%%%%%%%
+\draw[->, line width=1pt] (6.3,0) -- node[above] {\textit{Erase}} (8.1,0);
+
+%%%%%%%%%%%%%%%%%%%% Automa trasformato %%%%%%%%%%%%%%%%%%%%
+% Stati
+\node[state] (qib) at (9.4,0)  {$q_i$};
+\node[state] (qjb) at (13.4,0) {$q_j$};
+
+% Transizione unica
+\draw[->] (qib) -- node {$e_i\, e_k^{*}\, e_j$} (qjb);
+\end{tikzpicture}
+\caption{Eliminazione dello stato $\bar q$: il cammino $q_i \to \bar q \to q_j$ con cappio su $\bar q$ diventa un'unica transizione etichettata da $e_i e_k^* e_j$.}
+\label{fig:erase}
+\end{figure}
+\end{itemize}
+A questo punto
+possiamo mostrare il seguente risultato.
+\begin{prop}
+    Dato $X$ un isnieme regolare, 
+    esiste un'espressione regolare 
+    $e_X$ tale che
+    $\llbracket e_X \rrbracket = X$.
+    \begin{proof}
+        Consideriamo $A$ un DFA che decide $X$.
+        Consideriamo l'automa generalizzato $A'$ definito partendo da $A$
+        e considerando come etichette gli elementi formali di 
+        del linguaggio $E_A$ invece che le lettere di $A$.
+        A questo punto abbiamo un automa generalizzato e possiamo applicare l'operazione "Setup"
+        e poi le operazioni "Merge" e "Erase"
+        fino a quando non otteniamo un automa con solo due stati, $q_0^*$ e $q_F^*$
+        (quelli introdotti con l'operazione "Setup") e un solo arco tra i due stati etichettato 
+        con l'espressione $e$.
+        Usando che le operazioni sugli automi generalizzati definite prima non modificano l'insieme deciso,
+        otteniamo che $e_X=e$.
+    \end{proof}
+\end{prop}

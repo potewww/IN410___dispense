@@ -600,7 +600,9 @@ T''(q,a) & q \in Q_2,
 \end{cases}
 \]
 e l'insieme degli stati finali accettanti è dato da $F := F''$.
-\begin{figure}[ht]
+\end{proof} 
+\end{prop}
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
     >=stealth', shorten >=1pt, auto,
@@ -632,8 +634,6 @@ usando le $\epsilon$-mosse per concatenare le
 computazioni dei due automi.}
 \label{fig:concatenazione}
 \end{figure}
-\end{proof} 
-\end{prop}
 \begin{prop}
 \label{prop:19}
 Sia dato un insieme $X \subseteq A^*$ per un certo alfabeto finito $A$.
@@ -718,6 +718,10 @@ insieme.
 Ne segue che le tre nozioni di decidibilità coincidono.
 \end{proof}
 \end{prop}
+\begin{coro}
+Se $X$ è DFA decidibile,
+allora anche $X^*$ è DFA decidibile.    
+\end{coro}
 Da quanto appena visto
 otteniamo più del risultato vouluto, 
 infatti abbiamo mostrato che ogni automa 
