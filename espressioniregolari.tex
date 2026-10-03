@@ -262,7 +262,14 @@ Ora elenchiamo tre trasformazioni
 che si possono effettuare su un automa generalizzato
 che non modicano l'insieme deciso dall'automa stesso.
 \begin{itemize}
-    \item Setup restituisce l'automa con l'aggiunta di uno stato iniziale $q_0^*$ e di un unico stato finale $q_F^*$ che non hanno archi entranti e su cui non saranno fatte agire le trasformazioni seguenti (Merge e Erase). Il nuovo automa avrà le stesse transizioni dell'automa dato con l'aggiunta di una $\epsilon$-transizione da $q_0^*$ a $q_0$ e di $\epsilon$-transizioni da ogni \textcolor{red}{Queste epsilon mosse non dovrebbero essere delle $\mathbb 1$-mosse visto che stiamo eticchettando con le espressioni.} stato finale $q \in F$ verso $q_F^*$:
+    \item Setup restituisce l'automa con l'aggiunta 
+    di uno stato iniziale $q_0^*$ e di un unico stato 
+    finale $q_F^*$ che non hanno archi entranti e su cui non 
+    saranno fatte agire le trasformazioni seguenti (Merge e Erase). 
+    Il nuovo automa avrà le stesse transizioni dell'automa dato con 
+    l'aggiunta di una $\mathbb 1$-transizione da 
+    $q_0^*$ a $q_0$ e di $\mathbb 1$-transizioni da ogni 
+    stato finale $q \in F$ verso $q_F^*$:
     \[
     T'(q, e) := 
     \begin{cases} 
@@ -304,7 +311,7 @@ che non modicano l'insieme deciso dall'automa stesso.
 \node[state]            (q0b) at (8.6,0)    {$q_0$};
 \node[state]            (qib) at (11.6,0.8) {$q_i$};
 \node[state]            (qjb) at (11.6,-0.8){$q_j$};
-\node[state, accepting] (qf)  at (13.8,0)   {$q_f$};
+\node[state, accepting] (qf)  at (13.8,0)   {$q_F^*$};
 
 % Freccia d'ingresso e epsilon-mossa iniziale
 \draw[->] ([shift={(-0.7,0.7)}]q0p.center) -- (q0p);
@@ -552,8 +559,6 @@ qualsiasi sottoespressione:
 \end{itemize}
 Allora l'automa generalizzato associato ad $A'$ decide lo stesso insieme
 deciso dall'automa generalizzato associato ad $A$.
-\end{prop}
-
 \begin{proof}
 Per l'osservazione precedente, per ogni espressione $e$ si ha
 \[
@@ -575,6 +580,12 @@ interpretazioni delle loro etichette, gli automi
 risepttivamente di $A$ e di $A'$ decidono lo stesso
 insieme.
 \end{proof}
+\end{prop}
+
+Ripetendo le $3$ operazioni definite sopra,
+possiamo ottenere l'epressione regolare associata ad ogni insieme regolare. 
+Vediamo con un esempio come ottenere l'espressione regolare che decide un isnieme
+a partire da un automa che decide quell'insieme.
 \begin{exam}
 Vogliamo scrivere 
 l'espressione regolare che esprime l'insieme 
@@ -1059,3 +1070,32 @@ così il cappio su $q_1$ ha etichetta $\gamma$ e l'arco da $q_1$ a $q_F$ ha etic
 e \;=\; 1^*1\,\Bigl(01^*1\;+\;1^*0(0+1)^*1\;+\;1^*01^*\bigl(1+(1(0+1)^*1)\bigr)\Bigr)^{*}\,\bigl(\mathbb 1+1^*01^*\bigr).
 \]
 \end{exam}
+\begin{rema}
+Ovviamente, si può effettuare anche la procedura inversa:
+data un'espressione regolare $e$ si può costruire un DFA che decide
+l'insieme $\llbracket e \rrbracket$.
+Elenchiamo la strategia: data un'espressione regolare $e$:
+
+\begin{enumerate}
+    \item si costruisce il grafo generalizzato con due soli nodi,
+          $q_0^*$ e $q_F$, e un unico arco di etichetta $e$;
+    \item si scompongono le etichette in base alla loro struttura,
+          cioè si applicano Merge ed Erase al contrario:
+          \begin{itemize}
+              \item una somma $e_1+e_2$ diventa due archi paralleli di
+                    etichette $e_1$ ed $e_2$;
+              \item una concatenazione $e_1e_2$ introduce un nodo
+                    intermedio;
+              \item una stella $e^*$ introduce un nodo con un cappio di
+                    etichetta $e$, collegato con archi di etichetta
+                    $\mathbb 1$;
+          \end{itemize}
+          come già osservato, ogni passo non cambia l'insieme deciso;
+    \item quando tutte le etichette sono lettere o $\mathbb 1$ si ottiene
+          un automa generalizzato, che si trasforma in un
+          $\epsilon$-NDFA sostituendo le $\mathbb 1$-mosse con le
+          $\epsilon$-mosse;
+    \item l'$\epsilon$-NDFA si trasforma in un DFA con la costruzione
+          per sottoinsiemi.
+\end{enumerate}
+\end{rema}
