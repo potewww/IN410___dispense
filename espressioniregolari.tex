@@ -432,7 +432,7 @@ che non modicano l'insieme deciso dall'automa stesso.
 A questo punto
 possiamo mostrare il seguente risultato.
 \begin{prop}
-    Dato $X$ un isnieme regolare, 
+    Dato $X$ un insieme regolare, 
     esiste un'espressione regolare 
     $e_X$ tale che
     $\llbracket e_X \rrbracket = X$.
@@ -450,3 +450,612 @@ possiamo mostrare il seguente risultato.
         otteniamo che $e_X=e$.
     \end{proof}
 \end{prop}
+\begin{rema}
+    Consideriamo ora due espressioni, per esempio:
+    \[
+    e_1=\mathbb 1 \quad \text{e} \quad e_2=a
+    \]
+    che siano etichette di due archi di un grafo associato ad un automa 
+    come in figura:
+    \begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+%%%%%%%%%%%%%%%%%%%% Automa di partenza %%%%%%%%%%%%%%%%%%%%
+% Stati
+\node[state] (qi) at (0,0) {$q$};
+\node[state] (qb) at (2.5,0) {$\bar q$};
+\node[state] (qj) at (5,0) {$p$};
+
+% Transizioni
+\draw[->] (qi) -- node {$e_1$} (qb);
+\draw[->] (qb) -- node {$e_2$} (qj);
+
+\end{tikzpicture}
+\end{figure}
+\noindent
+Se si vuole fare l'operazione "Erase" 
+si ottiene il seguente grafo:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+
+\node[state] (qib) at (9.4,0)  {$q$};
+\node[state] (qjb) at (13.4,0) {$p$};
+
+% Transizione unica
+\draw[->] (qib) -- node {$\mathbb 1 a$} (qjb);
+\end{tikzpicture}
+\end{figure}
+\noindent
+Se ora vogliamo considerare l'interpretazione di questa espressione, otteniamo:
+\[
+\llbracket \mathbb 1 a \rrbracket
+=
+\llbracket \mathbb 1  \rrbracket
+\cdot
+\llbracket  a \rrbracket
+=
+\{\epsilon \} \cdot \{ a \}
+= \{ a\}
+=
+\llbracket a \rrbracket
+\]
+Questo vuol dire che, l'arco sopra può essere scritto come
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+
+\node[state] (qib) at (9.4,0)  {$q$};
+\node[state] (qjb) at (13.4,0) {$p$};
+
+% Transizione unica
+\draw[->] (qib) -- node {$ a$} (qjb);
+\end{tikzpicture}
+\end{figure}
+\noindent
+e questo cambio di etichetta 
+non modifica l'insieme deciso dall'automa.
+Vale il fatto analogo durante le operazioni di "Merge" per $\mathbb 0$, infatti
+\[
+\llbracket \mathbb 0 +a \rrbracket
+=
+\llbracket \mathbb 0  \rrbracket
++
+\llbracket  a \rrbracket
+=
+\emptyset  \cup \{ a \}
+= \{ a\}
+=
+\llbracket a \rrbracket
+\]
+\end{rema}
+Alla luce di questa osservazione, vale il seguente risultato:
+\begin{prop}
+Sia $A$ il grafo associato ad un automa 
+generalizzato e sia $A'$ il grafo ottenuto da $A$
+semplificando ogni etichetta secondo le seguenti regole, applicate a
+qualsiasi sottoespressione:
+\begin{itemize}
+    \item $\mathbb 1\, e \;\leadsto\; e$ \ e \ $e\, \mathbb 1 \;\leadsto\; e$
+          \quad ($\mathbb 1$ è l'elemento neutro della concatenazione);
+    \item $\mathbb 0 + e \;\leadsto\; e$ \ e \ $e + \mathbb 0 \;\leadsto\; e$
+          \quad ($\mathbb 0$ è l'elemento neutro della somma).
+\end{itemize}
+Allora l'automa generalizzato associato ad $A'$ decide lo stesso insieme
+deciso dall'automa generalizzato associato ad $A$.
+\end{prop}
+
+\begin{proof}
+Per l'osservazione precedente, per ogni espressione $e$ si ha
+\[
+\llbracket \mathbb 1 e \rrbracket
+= \llbracket e \mathbb 1 \rrbracket
+= \llbracket e \rrbracket,
+\qquad
+\llbracket \mathbb 0 + e \rrbracket
+= \llbracket e + \mathbb 0 \rrbracket
+= \llbracket e \rrbracket .
+\]
+Poiché $\llbracket \cdot \rrbracket$ è definita per induzione sulla
+struttura dell'espressione, sostituire una sottoespressione con
+un'altra che ha la stessa interpretazione non cambia l'interpretazione
+dell'espressione intera. Quindi ogni arco di $A'$ ha la stessa
+interpretazione dell'arco corrispondente di $A$. Dato che l'insieme
+deciso da un automa dipende dagli archi solo tramite le
+interpretazioni delle loro etichette, gli automi
+risepttivamente di $A$ e di $A'$ decidono lo stesso
+insieme.
+\end{proof}
+\begin{exam}
+Vogliamo scrivere 
+l'espressione regolare che esprime l'insieme 
+$X$ deciso dal seguente automa:
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (2.5,0)    {$q_0$};
+\node[state, accepting] (q1) at (5,0)      {$q_1$};
+\node[state]            (q2) at (7.5,0)    {$q_2$};
+\node[state, accepting] (q3) at (10,0)     {$q_3$};
+\node[state]            (q6) at (7.5,-2.6) {$q_6$};
+ 
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+ 
+% Transizioni
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$\varepsilon$} (q2);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q2) -- node {$0$} (q6);
+\draw[->] (q6) -- node {$1$} (q1);
+\draw[->] (q3) -- node {$1$} (q6);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+ 
+% Cappi su q_6 (due archi distinti)
+\path[->] (q6) edge[out=240,in=190,looseness=8] node[below left]  {$0$} (q6)
+              edge[out=350,in=300,looseness=8] node[below right] {$1$} (q6);
+ 
+% Arco di ritorno da q_3 a q_1
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+\end{tikzpicture}
+\caption{L'automa di partenza.}
+\label{fig:regex-0}
+\end{figure}
+ 
+\medskip
+\noindent Consideriamo lo stesso automa come automa generalizzato: ogni arco è etichettato da un'espressione regolare, quindi ogni $\varepsilon$ viene sostituito da $\mathbb 1$.
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (2.5,0)    {$q_0$};
+\node[state, accepting] (q1) at (5,0)      {$q_1$};
+\node[state]            (q2) at (7.5,0)    {$q_2$};
+\node[state, accepting] (q3) at (10,0)     {$q_3$};
+\node[state]            (q6) at (7.5,-2.6) {$q_6$};
+ 
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+ 
+% Transizioni
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$\mathbb 1$} (q2);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q2) -- node {$0$} (q6);
+\draw[->] (q6) -- node {$1$} (q1);
+\draw[->] (q3) -- node {$1$} (q6);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+ 
+% Cappi su q_6 (due archi distinti)
+\path[->] (q6) edge[out=240,in=190,looseness=8] node[below left]  {$0$} (q6)
+              edge[out=350,in=300,looseness=8] node[below right] {$1$} (q6);
+ 
+% Arco di ritorno da q_3 a q_1
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+\end{tikzpicture}
+\caption{L'automa di partenza visto come automa generalizzato.}
+\label{fig:regex-gen}
+\end{figure}
+Per ottenere l'espressione regolare
+associata all'automa useremo le operazioni
+definite sopra: "Setup", "Merge" e "Erase".
+Nei grafici seguenti,
+i nuovi archi
+verranno tracciati in grassetto.
+Eseguiamo un'operazione alla volta:
+\begin{enumerate}[label=Passo \arabic*.,leftmargin=*,itemsep=1em]
+ 
+\item Setup: aggiungiamo un nuovo stato iniziale $q_0^*$, collegato con un arco di etichetta $\mathbb 1$ al vecchio stato iniziale $q_0$, e un nuovo stato $q_F$, che diventa l'unico stato accettante e che è collegato con archi di etichetta $\mathbb 1$ ai vecchi stati accettanti ($q_1$ e $q_3$).
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)      {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)    {$q_0$};
+\node[state]            (q1)  at (5,0)      {$q_1$};
+\node[state]            (q2)  at (7.5,0)    {$q_2$};
+\node[state]            (q3)  at (10,0)     {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0)   {$q_F$};
+\node[state]            (q6)  at (7.5,-2.6) {$q_6$};
+ 
+% Freccia d'ingresso e nuove epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->, very thick] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->, very thick] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, very thick, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni dell'automa originale
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$\mathbb 1$} (q2);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q2) -- node {$0$} (q6);
+\draw[->] (q6) -- node {$1$} (q1);
+\draw[->] (q3) -- node {$1$} (q6);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\path[->] (q6) edge[out=240,in=190,looseness=8] node[below left]  {$0$} (q6)
+              edge[out=350,in=300,looseness=8] node[below right] {$1$} (q6);
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+\end{tikzpicture}
+\caption{Passo 1, aggiunta di $q_0^*$ e $q_F$.}
+\label{fig:regex-1}
+\end{figure}
+ 
+\item Merge: gli unici archi paralleli sono i due cappi su $q_6$, di etichette $0$ e $1$. Li fondiamo in un unico cappio di etichetta $0+1$.
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)      {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)    {$q_0$};
+\node[state]            (q1)  at (5,0)      {$q_1$};
+\node[state]            (q2)  at (7.5,0)    {$q_2$};
+\node[state]            (q3)  at (10,0)     {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0)   {$q_F$};
+\node[state]            (q6)  at (7.5,-2.6) {$q_6$};
+ 
+% Freccia d'ingresso e epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$\mathbb 1$} (q2);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q2) -- node {$0$} (q6);
+\draw[->] (q6) -- node {$1$} (q1);
+\draw[->] (q3) -- node {$1$} (q6);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+ 
+% Cappio fuso su q_6
+\path[->, very thick] (q6) edge[loop below] node {$0+1$} (q6);
+\end{tikzpicture}
+\caption{Passo 2, fusione dei due cappi su $q_6$.}
+\label{fig:regex-2}
+\end{figure}
+ 
+\item Erase di $q_2$: per eliminare $q_2$ contiamo gli archi. Entranti: $1$ (l'arco $\mathbb 1$ da $q_1$). Uscenti: $2$ (l'arco $0$ verso $q_3$ e l'arco $0$ verso $q_6$). Il cappio su $q_2$ ha etichetta $1$. Eliminiamo $q_2$ e aggiungiamo $1\cdot 2=2$ archi:
+\[
+q_1 \xrightarrow{\ \mathbb 1\,1^*\,0\,=\,1^*0\ } q_3,
+\qquad
+q_1 \xrightarrow{\ \mathbb 1\,1^*\,0\,=\,1^*0\ } q_6 .
+\]
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)      {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)    {$q_0$};
+\node[state]            (q1)  at (5,0)      {$q_1$};
+\node[state]            (q3)  at (10,0)     {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0)   {$q_F$};
+\node[state]            (q6)  at (7.5,-2.6) {$q_6$};
+ 
+% Freccia d'ingresso e epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q6) to[bend left=15] node {$1$} (q1);
+\draw[->] (q3) -- node {$1$} (q6);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\path[->] (q6) edge[loop below] node {$0+1$} (q6);
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+ 
+% Nuovi archi dovuti all'eliminazione di q_2
+\draw[->, very thick] (q1) -- node {$1^*0$} (q3);
+\draw[->, very thick] (q1) to[bend left=15] node {$1^*0$} (q6);
+\end{tikzpicture}
+\caption{Passo 3, eliminazione di $q_2$.}
+\label{fig:regex-3}
+\end{figure}
+ 
+\item Erase di $q_6$: non si sono formati nuovi archi paralleli, quindi ripetiamo Erase e cancelliamo $q_6$. Gli archi entranti sono $2$ (da $q_1$ con $1^*0$ e da $q_3$ con $1$), l'arco uscente è $1$ (verso $q_1$ con $1$) e il cappio su $q_6$ ha etichetta $0+1$. Dobbiamo quindi creare $2\cdot 1=2$ archi:
+\[
+q_3 \xrightarrow{\ 1\,(0+1)^*\,1\ } q_1,
+\qquad
+q_1 \xrightarrow{\ 1^*0\,(0+1)^*\,1\ } q_1 .
+\]
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)  {$q_0$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state]            (q3)  at (10,0)   {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+ 
+% Freccia d'ingresso e epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$1^*0$} (q3);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+ 
+% Nuovi archi dovuti all'eliminazione di q_6
+\draw[->, very thick] (q3) to[bend left=25] node {$1(0+1)^*1$} (q1);
+\path[->, very thick] (q1) edge[loop below] node {$1^*0(0+1)^*1$} (q1);
+\end{tikzpicture}
+\caption{Passo 4, eliminazione di $q_6$.}
+\label{fig:regex-4}
+\end{figure}
+ 
+\item Merge: ora ci sono due archi paralleli da $q_3$ a $q_1$, di etichette $1$ e $1(0+1)^*1$. Li fondiamo ottenendo l'arco di etichetta $1+(1(0+1)^*1)$.
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)  {$q_0$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state]            (q3)  at (10,0)   {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+ 
+% Freccia d'ingresso e epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$1^*0$} (q3);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\path[->] (q1) edge[loop below] node {$1^*0(0+1)^*1$} (q1);
+ 
+% Arco fuso da q_3 a q_1
+\draw[->, very thick, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1+(1(0+1)^*1)$} (q1.60 |- 0,1.9) -- (q1.60);
+\end{tikzpicture}
+\caption{Passo 5, fusione degli archi paralleli da $q_3$ a $q_1$.}
+\label{fig:regex-5}
+\end{figure}
+ 
+\item Erase di $q_0$: gli archi entranti in $q_0$ sono $2$ (l'arco $\mathbb 1$ da $q_0^*$ e l'arco $0$ da $q_1$), l'arco uscente è $1$ (verso $q_1$) e il cappio ha etichetta $1$. Dobbiamo quindi creare $2\cdot 1=2$ archi:
+\[
+q_0^* \xrightarrow{\ \mathbb 1\,1^*\,1\,=\,1^*1\ } q_1,
+\qquad
+q_1 \xrightarrow{\ 0\,1^*\,1\ } q_1 .
+\]
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state]            (q3)  at (10,0)   {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+ 
+% Freccia d'ingresso e epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\draw[->] (q1) -- node {$1^*0$} (q3);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1+(1(0+1)^*1)$} (q1.60 |- 0,1.9) -- (q1.60);
+ 
+% Cappio preesistente e nuovi archi dovuti all'eliminazione di q_0
+\path[->] (q1) edge[out=240,in=190,looseness=8] node[below left] {$1^*0(0+1)^*1$} (q1);
+\path[->, very thick] (q1) edge[out=350,in=300,looseness=8] node[below right] {$01^*1$} (q1);
+\draw[->, very thick] (q0s) -- node {$1^*1$} (q1);
+\end{tikzpicture}
+\caption{Passo 6, eliminazione di $q_0$.}
+\label{fig:regex-6}
+\end{figure}
+ 
+\item Merge: su $q_1$ ci sono due cappi, di etichette $1^*0(0+1)^*1$ e $01^*1$. Li fondiamo in un unico cappio di etichetta $01^*1+1^*0(0+1)^*1$.
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state]            (q3)  at (10,0)   {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+ 
+% Freccia d'ingresso e epsilon-mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\draw[->] (q0s) -- node {$1^*1$} (q1);
+\draw[->] (q1) -- node {$1^*0$} (q3);
+\path[->] (q3) edge[loop below] node {$1$} (q3);
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1+(1(0+1)^*1)$} (q1.60 |- 0,1.9) -- (q1.60);
+ 
+% Cappio fuso su q_1
+\path[->, very thick] (q1) edge[loop below] node {$01^*1+1^*0(0+1)^*1$} (q1);
+\end{tikzpicture}
+\caption{Passo 7, fusione dei due cappi su $q_1$.}
+\label{fig:regex-7}
+\end{figure}
+ 
+\item Erase di $q_3$: l'arco entrante in $q_3$ è $1$ (da $q_1$ con $1^*0$), il cappio ha etichetta $1$ e gli archi uscenti sono $2$ (verso $q_1$ con $1+(1(0+1)^*1)$ e verso $q_F$ con $\mathbb 1$). Creiamo quindi $1\cdot 2=2$ archi:
+\[
+q_1 \xrightarrow{\ 1^*0\,1^*\,(1+(1(0+1)^*1))\ } q_1,
+\qquad
+q_1 \xrightarrow{\ 1^*0\,1^*\,\mathbb 1\,=\,1^*01^*\ } q_F .
+\]
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+ 
+% Freccia d'ingresso e epsilon-mossa
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->, rounded corners=8pt]
+    (q1.120) -- (q1.120 |- 0,2.6) -- node {$\mathbb 1$} (qF.100 |- 0,2.6) -- (qF.100);
+ 
+% Transizioni
+\draw[->] (q0s) -- node {$1^*1$} (q1);
+\path[->] (q1) edge[out=240,in=190,looseness=8] node[below left] {$01^*1+1^*0(0+1)^*1$} (q1);
+ 
+% Nuovi archi dovuti all'eliminazione di q_3
+\path[->, very thick] (q1) edge[out=350,in=300,looseness=8] node[below right] {$1^*01^*(1+(1(0+1)^*1))$} (q1);
+\draw[->, very thick] (q1) -- node {$1^*01^*$} (qF);
+\end{tikzpicture}
+\caption{Passo 8, eliminazione di $q_3$.}
+\label{fig:regex-8}
+\end{figure}
+ 
+\item Merge: ora abbiamo due coppie di archi paralleli, i due cappi su $q_1$ e i due archi da $q_1$ a $q_F$. Fondiamo entrambe le coppie. In particolare, poniamo
+\[
+\gamma \;=\; 01^*1\;+\;1^*0(0+1)^*1\;+\;1^*01^*\bigl(1+(1(0+1)^*1)\bigr),
+\]
+così il cappio su $q_1$ ha etichetta $\gamma$ e l'arco da $q_1$ a $q_F$ ha etichetta $\mathbb 1+1^*01^*$.
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state, accepting] (qF)  at (10,0)   {$q_F$};
+ 
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+ 
+% Transizioni
+\draw[->] (q0s) -- node {$1^*1$} (q1);
+ 
+% Archi fusi
+\draw[->, very thick] (q1) -- node {$\mathbb 1+1^*01^*$} (qF);
+\path[->, very thick] (q1) edge[loop below] node {$\gamma$} (q1);
+\end{tikzpicture}
+\caption{Passo 9, fusione dei cappi su $q_1$ e degli archi da $q_1$ a $q_F$.}
+\label{fig:regex-9}
+\end{figure}
+ 
+\item Erase di $q_1$: ormai $q_1$ è l'ultimo nodo da cancellare. L'arco entrante è $1$ (da $q_0^*$ con $1^*1$), il cappio ha etichetta $\gamma$ e l'arco uscente è $1$ (verso $q_F$ con $\mathbb 1+1^*01^*$). Creiamo quindi un solo arco, di etichetta $1^*1\,\gamma^*\,(\mathbb 1+1^*01^*)$, che chiamiamo $e$.
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0) {$q_0^*$};
+\node[state, accepting] (qF)  at (4,0) {$q_F$};
+ 
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+ 
+% Unico arco rimasto
+\draw[->, very thick] (q0s) -- node {$e$} (qF);
+\end{tikzpicture}
+\caption{Passo 10, eliminazione di $q_1$. Rimangono solo $q_0^*$ e $q_F$.}
+\label{fig:regex-10}
+\end{figure}
+ 
+\end{enumerate}
+ 
+\medskip
+\noindent L'automa si riduce a $q_0^* \xrightarrow{\,e\,} q_F$. Poiché Merge ed Erase non cambiano l'insieme deciso, $X$ è descritto dall'espressione regolare
+\[
+e \;=\; 1^*1\,\Bigl(01^*1\;+\;1^*0(0+1)^*1\;+\;1^*01^*\bigl(1+(1(0+1)^*1)\bigr)\Bigr)^{*}\,\bigl(\mathbb 1+1^*01^*\bigr).
+\]
+\end{exam}

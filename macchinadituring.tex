@@ -14,9 +14,55 @@ Questa variante
 risulta interessante solo se a sua volta lo scorrimento automatico dei caratteri in lettura viene modificato per
 permettere alla macchina di riesaminare i caratteri che sono stati modificati nei passi di calcolo precedenti,
 altrimenti la modifica che permette di scrivere non avrebbe alcun impatto sul calcolo effettuato.
+\begin{exam}
+Consideriamo lgli insiemi
+\[
+X_0=
+\{
+0^n1^m \, | \, n,m \in \mathbb N
+\},
+\quad
+X_1=
+\{
+0^n1^n \, | \, n \in \mathbb N
+\} 
+\]
+Sebbene $X_0$ sia un insieme DFA-decidibile,
+$X_1$ non lo è.
+Infatti
+gli automi non sono in grando di "contare",
+quindi non si potrebbe contare il numero di occorenze di
+$1$ e $0$
+(forniremo una dimostrazione più avanti).
+\end{exam}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state, accepting] (q0) at (0,0)    {$q_0$};
+\node[state, accepting] (q1) at (3.5,0)  {$q_1$};
+\node[state]            (qp) at (1.75,-2.5) {$q_p$};
 
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
 
+% Transizioni
+\draw[->] (q0) -- node {$1$} (q1);
+\draw[->] (q1) -- node {$0$} (qp);
 
+% Cappi
+\path[->] (q0) edge[loop above] node {$0$}    (q0);
+\path[->] (q1) edge[loop above] node {$1$}    (q1);
+\path[->] (qp) edge[loop below] node {$0,1$}  (qp);
+\end{tikzpicture}
+\caption{DFA che decide il linguaggio $\{0^n1^m \mid n,m\in\mathbb N\}$.}
+\label{fig:dfa-0n1m}
+\end{figure}
+In questa sezione vogliamo introdurre un modello
+di calcolo più forte degli automi.
 \begin{defi} Una \emph{configurazione ad un nastro di alfabeto $A$ e insieme degli stati $Q$} è una tripla $(f,p,q)$, dove
 \begin{enumerate}
 \item il \textit{nastro} è una funzione $f : \mathbb{Z} \to A'$ dove $A' := A \cup \{\square\}$ (a volte indicato anche con $\tilde{A}$) e tale che $|f^{-1}(A)| < \infty$,
@@ -28,6 +74,7 @@ L'insieme delle configurazioni per un nastro di alfabeto $A$ e insieme degli sta
 \[
 Conf_1^{A,Q} := \{(f,p,q) \text{ che verificano i punti {(1)}, {(2)}, e {(3)}}\}
 \]
+
 \end{defi}
 Il criterio di arresto, che questa volta non è determinato dalla fine della lettura del nastro, deve essere
 specificato esplicitamente utilizzando un certo numero di stati terminali, che nella definizione sopra sono $q_F^0$ e $q_F^1$.
