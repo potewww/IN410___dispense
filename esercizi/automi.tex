@@ -1,0 +1,219 @@
+\begin{ex}\label{es:1}
+Fissiamo l'alfabeto binario $A=\{0,1\}$, dimostrare che l'insieme
+\[
+X = \{ w0 \mid w\in A^* \}
+\]
+è decidibile per automa a stati finiti.
+
+
+\begin{sol} Si richiede di mostrare un automa il cui algoritmo associato accetta le parole che terminano con uno zero. È dunque sufficiente memorizzare nello stato l'ultimo simbolo letto e alla fine della lettura della parola decidere in base allo stato: poniamo $Q=\{q_0,q_1\}$, e definiamo
+\[
+T(q,a) :=
+\begin{cases}
+q_0 & \text{se } a=0, \\
+q_1 & \text{se } a=1,
+\end{cases}
+\]
+prendiamo $q_0$ come stato iniziale e $F=\{q_0\}$ come insieme degli stati finali accettanti.
+.
+Sia
+\[
+X=\{w0\mid w\in A^*\}
+\]
+l'insieme delle parole sull'alfabeto binario che terminano con il simbolo \(0\).
+
+Costruiamo un automa finito che decide \(X\). Consideriamo l'insieme degli stati
+\[
+Q=\{q_0,q_1\},
+\]
+dove intuitivamente:
+\begin{itemize}
+    \item \(q_0\) rappresenta la situazione in cui l'ultimo simbolo letto è \(0\);
+    \item \(q_1\) rappresenta la situazione in cui l'ultimo simbolo letto è \(1\).
+\end{itemize}
+
+Definiamo la funzione di transizione
+\[
+T:Q\times A\to Q
+\]
+come
+\[
+T(q,a)=
+\begin{cases}
+q_0 & \text{se } a=0,\\
+q_1 & \text{se } a=1.
+\end{cases}
+\]
+
+Scegliamo come stato iniziale
+\[
+q_{\mathrm{init}}=q_0
+\]
+e come insieme degli stati accettanti
+\[
+F=\{q_0\}.
+\]
+
+Consideriamo ora l'algoritmo associato all'automa.
+Sia
+\[
+w=a_1a_2\cdots a_n\in A^*.
+\]
+La configurazione iniziale è
+\[
+\epsilon(w)=(w,1,q_0).
+\]
+
+Dopo \(k\) transizioni, per induzione su \(k\), la configurazione raggiunta è
+\[
+(w,k+1,q_k),
+\]
+dove
+\[
+q_k=
+\begin{cases}
+q_0 & \text{se } a_k=0,\\
+q_1 & \text{se } a_k=1.
+\end{cases}
+\]
+
+Infatti, ad ogni passo la funzione di transizione sostituisce lo stato corrente con lo stato corrispondente all'ultimo carattere letto.
+
+Dopo aver letto tutta la parola \(w\), la computazione termina nella configurazione
+\[
+(w,n+1,q_n).
+\]
+La funzione di uscita restituisce quindi
+\[
+\delta(w,n+1,q_n)=
+\begin{cases}
+1 & \text{se } q_n\in F,\\
+0 & \text{se } q_n\notin F.
+\end{cases}
+\]
+
+Poiché
+\[
+F=\{q_0\},
+\]
+si ha
+\[
+\delta(w,n+1,q_n)=
+\begin{cases}
+1 & \text{se l'ultimo simbolo di } w \text{ è }0,\\
+0 & \text{se l'ultimo simbolo di } w \text{ è }1.
+\end{cases}
+\]
+
+Quindi
+\[
+f_{\mathcal A}(w)=
+\begin{cases}
+1 & \text{se } w\in X,\\
+0 & \text{se } w\notin X.
+\end{cases}
+\]
+
+Pertanto
+\[
+f_{\mathcal A}=\mathbf 1_X
+\]
+e quindi l'algoritmo associato all'automa decide \(X\).
+
+Concludiamo che
+\[
+X=\{w0\mid w\in A^*\}
+\]
+è DFA-decidibile.
+\end{sol}
+\end{ex}
+
+\newpage
+
+\begin{ex}\label{es:3}
+Si consideri l'alfabeto $A=\{0,1\}$ e sia $B=\{1\}$ la restrizione all'insieme che contiene il solo simbolo $1$; si considerino l'insieme delle parole di alfabeto $A$ di lunghezza pari:
+\[
+X_1 = \{ w \in A^* \mid |w| = 2n,\ n\geq 0 \}
+\]
+e l'insieme delle parole di alfabeto $A$ che contengono un numero pari di $1$:
+\[
+X_2 = \{ w \in A^* \mid |w_{|B}| = 2k,\ k\geq 0 \}
+\]
+qui si è utilizzata la notazione $w_{|B}$ per indicare la parola $w$ 
+ristretta ai soli elementi di alfabeto $B$.
+Costruire l'automa che decide $X_1+X_2$.
+
+\begin{sol}
+Utilizzando il teorema 
+\ref{prop:8},
+basta esibire gli automi che decidono $X_1$ e $X_2$.
+L'automa che decide $X_1$ è quello dell'esempio 
+\ref{ex: parole lunghezze pari} (il grafo corrsipondente e' nella figura 
+\ref{figura esempio automa per parole pari}).
+Definiamo ora l'automa che decide $X_2$.
+Definiamo $Q_2=\{q_0, q_1 \}$ dove $q_0$ e/' sia stato iniziale che stato accettante, mentre $q_1$ e/' uno stato non accettante.
+E definiamo la funzione di transizione $T_2$ come segue:
+\[
+\begin{matrix}  
+T_2: & Q_2 \times A & \to  & Q_2
+\\
+& (q_0,0) & \mapsto & q_0\\
+& (q_0,1) & \mapsto & q_1\\
+& (q_1,0) & \mapsto & q_1\\
+& (q_1,1) & \mapsto & q_0   
+\end{matrix}
+\]
+In questo modo, l'automa che decide $X_2$ 
+accetta le parole che contengono un numero pari di $1$
+(si guardi il grafico dell'automa nella figura \ref{fig:parita}).
+A questo punto,
+utilizzando la costruzione 
+effettuata
+nella dimostrazione 
+del teorema \ref{prop:8}
+otteniamo che l'automache decide 
+$X_1 + X_2$
+e/' l'automa
+\[
+\begin{cases}
+    Q:= Q_1 \times Q_2,\\
+    q_0 := (q_0',q_0''),\\
+    F := (F_1 \times Q_2) \cup (Q_1 \times F_2),\\
+    T((q_1,q_2),a) = (T_1(q_1,a), T_2(q_2,a))
+\end{cases}
+\]
+dove con un apice indichiamo gli stati di dell'automa che decide 
+$X_1$ e con due apici gli stati dell'automa che decide $X_2$.
+Per completezza,
+presentiamo il grafo dell'automa che decide $X_1 + X_2$
+(che puo/' esssere disegnato a partire dall'automa appena definito
+oppure usando i grafi degli automi che decidono $X_1$ e $X_2$).
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, node distance=4cm, on grid, auto]
+   % Stati disposti a quadrato seguendo il ciclo delle transizioni
+   \node[state, initial, accepting] (q00) {$(q_0', q_0'')$};
+   \node[state, accepting]          (q10) [right=of q00] {$(q_1', q_0'')$};
+   \node[state, accepting]          (q01) [below=of q10] {$(q_0', q_1'')$};
+   \node[state]                     (q11) [left=of q01]  {$(q_1', q_1'')$};
+
+   % Transizioni senza intersezioni
+   \path[->]
+    % Bordo superiore (Transizioni con 0)
+    (q00) edge [bend left=15] node {0} (q10)
+    (q10) edge [bend left=15] node {0} (q00)
+    
+    % Bordo destro (Transizioni con 1)
+    (q10) edge [bend left=15] node {1} (q01)
+    (q01) edge [bend left=15] node {1} (q10)
+    
+    % Bordo inferiore (Transizioni con 0)
+    (q01) edge [bend left=15] node {0} (q11)
+    (q11) edge [bend left=15] node {0} (q01)
+    
+    % Bordo sinistro (Transizioni con 1)
+    (q11) edge [bend left=15] node {1} (q00)
+    (q00) edge [bend left=15] node {1} (q11);
+\end{tikzpicture}
+\end{center}
+\end{sol}
+\end{ex}

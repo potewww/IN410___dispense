@@ -1,3 +1,4 @@
+\subsection{Introduzione}
 \begin{rema}
 Nel linguaggio Wolfram non ci sono tipi: l'unico tipo è il tipo \textit{funzione}.
 Non c'è memoria, ma solo \textit{stati} (come per gli automi).
@@ -98,6 +99,56 @@ ordinato (in questo caso da $0$ a $1000$).
 L'output è la lista $\{h[0], h[1], \dots, h[1000]\}$.
 \end{rema}
 \begin{defi}
+Per estrarre elementi da una lista (o più in generale i rami dell'albero di un'espressione) si usa il comando \wolfram{Part}, comunemente abbreviato con le doppie parentesi quadre \wolfram{[[ ]]}. 
+Ad esempio, se \wolfram{lista = \{a, b, c\}}, il comando \wolfram{lista[[2]]} restituisce \wolfram{b}. 
+È possibile usarlo in modo annidato: \wolfram{matrice[[1, 2]]} estrae il secondo elemento della prima riga. In \wolfram{TM-lib.m}, \wolfram{automa[[1]]} estrae la tabella delle transizioni.
+\end{defi}
+
+\begin{defi}
+In Wolfram è possibile definire \textit{funzioni pure} (o anonime) senza assegnare loro un nome. Si utilizza il simbolo \wolfram{\#} per indicare l'argomento (o gli argomenti, es. \wolfram{\#1, \#2}) e il simbolo \wolfram{\&} alla fine per indicare la chiusura della funzione. Ad esempio:
+\[
+\wolfram{Map[\#^2 \&, \{1, 2, 3\}]} \quad\longmapsto\quad \{1, 4, 9\}.
+\]
+Questo costrutto è estremamente comune per applicare trasformazioni rapide all'interno di un \wolfram{Map}.
+\end{defi}
+
+\begin{defi}
+Oltre all'assegnazione globale 
+(\wolfram{=}), esistono le \textit{regole di trasformazione} locali, create con \wolfram{->} (\wolfram{Rule}). Per applicare una o più regole a un'espressione si usa l'operatore di sostituzione \wolfram{/.} (\wolfram{ReplaceAll}). Ad esempio:
+\[
+\wolfram{x^2 + y  /.  x -> 3} \quad\longmapsto\quad 9 + y.
+\]
+Negli automi, le singole transizioni sono modellate proprio come liste di regole del tipo \wolfram{\{stato, simbolo\} -> nuovo\_stato}.
+\end{defi}
+
+\begin{rema}
+Hai già visto che il comando \wolfram{Apply[f, espressione]} sostituisce la testa dell'espressione con \wolfram{f}. Esiste una forma sintattica abbreviata e molto diffusa per questa operazione, che usa il simbolo \wolfram{@@}. Pertanto:
+\[
+\wolfram{Apply[Plus, \{1, 2, 3\}]} \quad \text{è equivalente a} \quad \wolfram{Plus @@ \{1, 2, 3\}}.
+\]
+Nel codice della libreria, ad esempio, si usa \wolfram{Union @@ ...} per estrarre e unire in un unico insieme gli elementi di una lista di liste.
+\end{rema}
+\begin{defi}
+In Wolfram Language, il costrutto \wolfram{Module} viene utilizzato per definire variabili locali. La sintassi generale è:
+\[
+\wolfram{Module[\{var1, var2, \dots\}, corpo\_della\_funzione]}
+\]
+Questo ambiente garantisce che le variabili dichiarate nella lista iniziale (ad esempio \wolfram{var1}, \wolfram{var2}) abbiano visibilità solo all'interno del modulo, evitando che vadano a sovrascrivere o interferire con variabili globali omonime definite altrove nel kernel.
+\end{defi}
+
+\begin{rema}
+Il blocco \wolfram{Module} raggruppa più istruzioni separate da punto e virgola (\wolfram{;}) e restituisce come output il valore dell'ultima espressione valutata. Ad esempio:
+\begin{walfram}
+calcola[x_] := Module[{y, z},
+  y = x^2;
+  z = y + 1;
+  z * 2
+]
+\end{walfram}
+In questo caso, \wolfram{y} e \wolfram{z} sono variabili temporanee locali. L'output della chiamata \wolfram{calcola[3]} sarà il risultato dell'ultima operazione, ovvero \wolfram{20}.
+\end{rema}
+\subsection{Entropia}
+\begin{defi}
 Entropia \dots % da completare
 \end{defi}
 \begin{defi}
@@ -188,6 +239,7 @@ Calcoliamo \wolfram|Integrate[x^2 Sin[x], x]| e vediamo il risultato:
 \int x^2 \sin x \, dx = (2 - x^2)\cos x + 2x \sin x + C.
 \]
 \end{rema}
+\subsection{Libreria TM-lib}
 \begin{defi}
 Per implementare gli automi in Wolfram si usa il pacchetto \wolfram{TM-lib.ma}. Si procede in tre passi.
 \begin{enumerate}
@@ -218,6 +270,7 @@ La libreria implementa le seguenti funzioni.
 \begin{rema}
 Nelle firme delle funzioni il carattere \wolfram{_} indica un \emph{pattern}, cioè un parametro formale. Quando si chiama la funzione si scrive solo l'argomento, senza il trattino basso.
 \end{rema}
+\subsection{Automi}
 \begin{defi}
 Un automa si specifica con tre oggetti:
 \begin{itemize}
@@ -253,3 +306,16 @@ ManipulateComputation[mu, init]
 \begin{rema}
 Una volta definito \wolfram{automa}, lo si può inizializzare su una parola $w$ con \wolfram|InitAutomaton[automa, w]|, che restituisce la configurazione iniziale. Con \wolfram|DFA2TM[automa]| si ottiene la macchina di Turing equivalente, di cui si può visualizzare la computazione con \wolfram|ManipulateComputation| e il grafo con \wolfram|TuringMachineGraph|.
 \end{rema}
+\begin{rema}
+\textbf{Composizione di automi:}
+Per studiare sistemi complessi o l'intersezione di linguaggi regolari, la libreria mette a disposizione il prodotto cartesiano tramite le funzioni \wolfram{ProductTable[A1, A2]} e \wolfram{ProductFinalStates[A1, A2]}. 
+La prima genera le transizioni incrociate combinando gli stati con il comando \wolfram{Tuples}, mentre la seconda definisce gli stati finali dell'automa prodotto.
+\end{rema}
+
+\begin{defi}
+La funzione di visualizzazione interattiva
+\[
+\wolfram{ManipulateComputation[mu, init]}
+\]
+combina il motore di animazione di Wolfram (\wolfram{Manipulate}) con la generazione sequenziale delle configurazioni della macchina di Turing, permettendo di scorrere passo-passo l'intera computazione fino al limite di passi predefinito (\wolfram{maxsteps}).
+\end{defi}

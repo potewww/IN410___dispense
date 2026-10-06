@@ -1,38 +1,45 @@
-Per tutto il documento, la definizione di funzione sarà quella di funzione parziale. Pertanto, data una funzione $f: A \to B$, indicheremo con $dom(f)$ il dominio della funzione $f$. Inoltre, se $x \in A \setminus dom(f)$ (quindi $f$ non è definita in $x$), allora scriveremo che $f(x):=\bot$.
-Inoltre, qunado scriveremo \textit{alfabeto} intenderemo insieme.
-Useremo la notazione $f^0:=\mathrm{Id}_x$ per ogni funzione $f:X \to X$. 
+Per tutto il documento, la definizione di funzione sarà quella di funzione parziale. Pertanto, data una funzione $f: A \to B$, indicheremo con $\operatorname{dom}(f)$ il dominio della funzione $f$. Inoltre, se $x \in A \setminus \operatorname{dom}(f)$ (quindi $f$ non è definita in $x$), allora scriveremo che $f(x):=\bot$.
+
+Inoltre, quando scriveremo \textit{alfabeto} intenderemo un insieme.
+Useremo la notazione $f^0:=\mathrm{Id}_X$ per ogni funzione $f:X \to X$. 
+
+\subsection{Definizioni Preliminari}
+
 \begin{defi}[Funzione caratteristica]
 La funzione $\mathbf{1}_X$ è la \textit{funzione caratteristica} (o indicatrice) dell'insieme $X$, definita come
-\[
-\mathbf{1}_X(w) = \begin{cases} 1 & w \in X \\ 0 & w \notin X. \end{cases}
-\]
+\[\mathbf{1}_X(w) = \begin{cases} 1 & \text{se } w \in X \\ 0 & \text{se } w \notin X. \end{cases}\]
 \end{defi}
-
 
 \begin{defi}[Partizione]
+Sia $X$ un insieme. Una \emph{partizione} di $X$ è una famiglia $\{X_i\}_{i \in I}$ di sottoinsiemi di $X$ tali che:
+\begin{enumerate}
+    \item $X_i \neq \emptyset$ per ogni $i \in I$ (i sottoinsiemi non sono vuoti);
+    \item $X_i \cap X_j = \emptyset$ per ogni $i \neq j$ (i sottoinsiemi sono a due a due disgiunti);
+    \item $\bigcup_{i \in I} X_i = X$ (l'unione di tutti i sottoinsiemi ricopre l'intero insieme $X$).
+\end{enumerate}
 \end{defi}
 
-\begin{defi}[Grafo]
-    
+\subsection{Grafi e Matrici di Adiacenza}
+
+\begin{defi}[Grafo orientato]
+Un \emph{grafo orientato} (o diretto) è una coppia $G = (V, E)$, dove $V$ è un insieme i cui elementi sono detti \emph{vertici} (o nodi) ed $E \subseteq V \times V$ è una relazione binaria su $V$, i cui elementi sono detti \emph{archi} orientati. Un arco che punta da un vertice $u$ a un vertice $v$ è dunque rappresentato esplicitamente dalla coppia ordinata $(u, v)$.
 \end{defi}
 
-\begin{defi}[Matrice adiacenza]
-    
-
+\begin{defi}[Matrice di adiacenza]
+Sia $G = (V, E)$ un grafo orientato finito, con i vertici ordinati come $V = \{v_1, v_2, \dots, v_n\}$. La \emph{matrice di adiacenza} di $G$ è la matrice $M$ di dimensione $n \times n$ definita da:
+\[M_{i,j} = \begin{cases}  1 & \text{se } (v_i, v_j) \in E \\  0 & \text{se } (v_i, v_j) \notin E  \end{cases}\]
+per ogni indice $i,j \in \{1, \dots, n\}$.
 \end{defi}
 
 \begin{prop}
-    Se $M$ e/' matrice adiacenza per un grafo $G$, 
-    allora $M^k_{i,j}$ 
-    e/' il nummero di cammini di luynghezza $k$ che connettono $v_i$
-    e $v_j$.
+Se $M$ è la matrice di adiacenza per un grafo $G$, allora $(M^k)_{i,j}$ è il numero di cammini di lunghezza $k$ che connettono i vertici $v_i$ e $v_j$.
 \end{prop}
+
+\subsection{Grafi Etichettati}
 
 \begin{defi}[Grafo etichettato]\label{def:grafo-etichettato}
 Sia $A$ un insieme, detto \emph{alfabeto}. Un \emph{grafo etichettato} su $A$ è una terna
-\[
-G=(V,E,L),
-\]
+\[G=(V,E,L),\]
 dove $E \subset V \times A \times V$ e
 \begin{itemize}
     \item chiamando con $\pi_{1,3}$ la proiezione sulla prima e terza componente, $(V,\pi_{1,3}(E))$ è un grafo orientato;
@@ -40,180 +47,127 @@ dove $E \subset V \times A \times V$ e
 \end{itemize}
 \end{defi}
 
-\begin{prop}
-    Prop identica a quella dei grafi normali ma con i grafi eticehttati.
+\begin{prop}[Cammini sui grafi etichettati]
+Sia $G=(V,E,L)$ un grafo etichettato finito con $V = \{v_1, \dots, v_n\}$, e supponiamo di poter moltiplicare e sommare le etichette $A$ all'interno di un opportuno semianello con zero $0$. 
+Definiamo la matrice di adiacenza etichettata (o pesata) $M$ di dimensione $n \times n$ come:
+\[M_{i,j} = \begin{cases} L(v_i, a, v_j) & \text{se } (v_i, a, v_j) \in E \\ 0 & \text{altrimenti.} \end{cases}\]
+Allora, l'elemento $(M^k)_{i,j}$ della potenza $k$-esima della matrice $M$ rappresenta la \emph{somma} (nel semianello) dei pesi di tutti i cammini di lunghezza $k$ che connettono il vertice $v_i$ al vertice $v_j$. (Il peso di un singolo cammino è il prodotto delle etichette degli archi che lo compongono).
 \end{prop}
 
-
-
-\subsection{Semianelli e serie formali}
+\subsection{Semianelli e Serie Formali}
 \label{sec:semianelli-serie-formali}
 
 Per estendere ai grafi etichettati l'interpretazione combinatoria delle potenze successive della matrice di adiacenza, è necessario dotare l'insieme delle etichette di una struttura algebrica con somma e prodotto. Introduciamo qui, in modo autonomo, gli strumenti algebrici necessari: semianelli, matrici a coefficienti in un semianello, serie formali e algebre di Kleene.
 
 \begin{defi}[Semigruppo]\label{def:semigruppo}
 Un \emph{semigruppo} è una coppia $(S,\ast)$ dove $S$ è un insieme e
-\[
-\ast: S\times S \to S
-\]
+\[\ast: S\times S \to S\]
 è un'operazione binaria (cioè una funzione che ad ogni coppia ordinata $(x,y)\in S\times S$ associa un elemento $x\ast y\in S$) tale che valga la proprietà associativa:
-\[
-(x\ast y)\ast z = x\ast(y\ast z) \qquad \text{per ogni } x,y,z\in S.
-\]
+\[(x\ast y)\ast z = x\ast(y\ast z) \qquad \text{per ogni } x,y,z\in S.\]
 \end{defi}
 
-\begin{ex}
-$(\mathbb{N},+)$ è un semigruppo: la somma di due numeri naturali è un numero naturale ed è associativa. Anche $(\mathbb{N},\cdot)$ è un semigruppo. Un altro esempio è $(A^*,\,\cdot\,)$, l'insieme delle stringhe finite su un alfabeto $A$ con l'operazione di concatenazione, che è associativa ma non commutativa se $|A|>1$.
-\end{ex}
+\begin{exam}
+$(\mathbb{N},+)$ è un semigruppo: la somma di due numeri naturali è un numero naturale ed è associativa. Anche $(\mathbb{N},\cdot)$ è un semigruppo. Un altro esempio è $(A^*,\,\cdot\,)$, l'insieme delle stringhe finite su un alfabeto $A$ con l'operazione di concatenazione, che è associativa ma non commutativa se $\vert{}A\vert{}>1$.
+\end{exam}
 
 \begin{defi}[Semianello]\label{def:semianello}
 Un \emph{semianello} è una struttura algebrica
-\[
-(S,+,\cdot)
-\]
+\[(S,+,\cdot)\]
 dove $S$ è un insieme e
-\[
-+: S\times S \to S, \qquad \cdot: S\times S \to S
-\]
+\[+: S\times S \to S, \qquad \cdot: S\times S \to S\]
 sono due operazioni binarie su $S$, dette rispettivamente \emph{somma} e \emph{prodotto}, tali che:
 \begin{itemize}
     \item $(S,+)$ è un semigruppo (Definizione~\ref{def:semigruppo}), cioè $+$ è associativa;
     \item $(S,\cdot)$ è un semigruppo, cioè $\cdot$ è associativa;
     \item valgono le leggi di distribuzione tra somma e prodotto:
-    \[
-    x\cdot(y+z) = (x\cdot y) + (x\cdot z), \qquad (y+z)\cdot x = (y\cdot x) + (z\cdot x)
-    \]
+    \[x\cdot(y+z) = (x\cdot y) + (x\cdot z), \qquad (y+z)\cdot x = (y\cdot x) + (z\cdot x)\]
     per ogni $x,y,z\in S$.
 \end{itemize}
 \end{defi}
 
-\begin{comment}
-\begin{ex}
+\begin{rema}
 $(\mathbb{N},+,\cdot)$, con le usuali operazioni di somma e prodotto tra numeri naturali, è un semianello: non è un anello perché $(\mathbb{N},+)$ non ha elementi inversi (ad esempio non esiste $n\in\mathbb{N}$ tale che $2+n=0$).
 Un secondo esempio, centrale per quanto segue, è il \emph{semianello booleano} $\mathbb{B}=(\{0,1\},\vee,\wedge)$, dove $\vee$ è l'operazione di ``or'' logico (che gioca il ruolo della somma modulo $2$) e $\wedge$ è l'operazione di ``and'' logico (che gioca il ruolo del prodotto modulo $2$).
-\end{ex}
-\end{comment}
+\end{rema}
 
 \begin{defi}[Semianello additivamente commutativo, zero, identità]\label{def:semianello-comm}
 Sia $(S,+,\cdot)$ un semianello (Definizione~\ref{def:semianello}).
 \begin{itemize}
     \item $(S,+,\cdot)$ si dice \emph{additivamente commutativo} se
-    \[
-    x+y=y+x \qquad \text{per ogni } x,y\in S.
-    \]
+    \[x+y=y+x \qquad \text{per ogni } x,y\in S.\]
     \item Un elemento $0\in S$ si dice \emph{zero} di $(S,+,\cdot)$ se
-    \[
-    x+0=0+x=x \quad \text{e} \quad x\cdot 0 = 0\cdot x = 0 \qquad \text{per ogni } x\in S.
-    \]
+    \[x+0=0+x=x \quad \text{e} \quad x\cdot 0 = 0\cdot x = 0 \qquad \text{per ogni } x\in S.\]
     \item Un elemento $1\in S$ si dice \emph{identità} (o \emph{unità}) di $(S,+,\cdot)$ se
-    \[
-    x\cdot 1 = 1\cdot x = x \qquad \text{per ogni } x\in S.
-    \]
+    \[x\cdot 1 = 1\cdot x = x \qquad \text{per ogni } x\in S.\]
 \end{itemize}
 Si noti che, quando esistono, lo zero e l'identità di un semianello sono unici: se $0$ e $0'$ fossero entrambi zeri, si avrebbe $0=0+0'=0'$; analogamente per l'identità.
 \end{defi}
 
-
-\begin{comment}
-\begin{ex}
+\begin{rema}
 Nel semianello booleano $\mathbb{B}=(\{0,1\},\vee,\wedge)$ dell'esempio precedente, $0$ è lo zero (l'elemento neutro di $\vee$) e $1$ è l'identità (l'elemento neutro di $\wedge$): infatti $x\vee 0 = x$, $x\wedge 0 = 0$ e $x\wedge 1 = x$ per ogni $x\in\{0,1\}$. Il semianello $\mathbb{B}$ è inoltre additivamente commutativo, poiché $x\vee y = y\vee x$.
-\end{ex}
-\end{comment}
+\end{rema}
 
 \begin{defi}[Semianello idempotente]\label{def:semianello-idem}
 Un semianello $(S,+,\cdot)$ additivamente commutativo, con zero $0$ e identità $1$ (Definizione~\ref{def:semianello-comm}), si dice \emph{idempotente} se l'operazione di somma è idempotente, ossia
-\[
-x+x=x \qquad \text{per ogni } x\in S.
-\]
+\[x+x=x \qquad \text{per ogni } x\in S.\]
 \end{defi}
 
-
-\begin{comment}
-\begin{ex}
+\begin{rema}
 Il semianello booleano $\mathbb{B}=(\{0,1\},\vee,\wedge)$ è idempotente: $x\vee x = x$ per ogni $x\in\{0,1\}$ (ad esempio $1\vee 1=1$). Al contrario, $(\mathbb{N},+,\cdot)$ non è idempotente, dato che ad esempio $1+1=2\neq 1$.
-\end{ex}
-\end{comment}
+\end{rema}
 
+\subsection{Matrici su Semianelli}
 
 \begin{defi}[Matrici su un semianello]\label{def:Mn}
 Sia $S$ un insieme munito di struttura di semianello commutativo\footnote{Con \emph{commutativo}, quando non altrimenti specificato, si intende qui additivamente commutativo (Definizione~\ref{def:semianello-comm}).} con zero $0$ e identità $1$, e sia $n$ un intero positivo. Si definisce
-\[
-M_n(S) := \{ A : \{1,\dots,n\}\times\{1,\dots,n\} \to S \}
-\]
+\[M_n(S) := \{ A : \{1,\dots,n\}\times\{1,\dots,n\} \to S \}\]
 l'insieme di tutte le matrici $n\times n$ a coefficienti in $S$ (cioè le funzioni che ad ogni coppia di indici $(i,j)$ associano un elemento $A_{ij}\in S$), munito delle operazioni:
-\[
-(A+B)_{ij} := A_{ij}+B_{ij} \qquad \text{(somma elemento per elemento)},
-\]
-\[
-(A\cdot B)_{ij} := \sum_{k=1}^n A_{ik}\cdot B_{kj} \qquad \text{(prodotto righe per colonne)}.
-\]
+\[(A+B)_{ij} := A_{ij}+B_{ij} \qquad \text{(somma elemento per elemento)},\]
+\[(A\cdot B)_{ij} := \sum_{k=1}^n A_{ik}\cdot B_{kj} \qquad \text{(prodotto righe per colonne)}.\]
 \end{defi}
 
 Con tali operazioni $(M_n(S),+,\cdot)$ è a sua volta un semianello (le proprietà associative e distributive si verificano direttamente dalle corrispondenti proprietà in $S$), ed è in particolare un semigruppo additivamente commutativo se $S$ lo è. La matrice $0_n\in M_n(S)$ con tutti gli elementi uguali a $0$ è l'elemento neutro per l'operazione additiva, e la matrice identità
-\[
-I_n := \begin{pmatrix} 1 & 0 & \cdots & 0 \\ 0 & 1 & \cdots & 0 \\ \vdots & & \ddots & \vdots \\ 0 & 0 & \cdots & 1 \end{pmatrix} \in M_n(S)
-\]
+\[I_n := \begin{pmatrix} 1 & 0 & \cdots & 0 \\ 0 & 1 & \cdots & 0 \\ \vdots & & \ddots & \vdots \\ 0 & 0 & \cdots & 1 \end{pmatrix} \in M_n(S)\]
 è l'identità del semianello $M_n(S)$.
 
 Se $S$ contiene più di un elemento ed $n>1$, allora $M_n(S)$ non può essere moltiplicativamente commutativo (come nel caso classico delle matrici su un anello, è sufficiente esibire due matrici $A,B$ con $AB\neq BA$).
 
-
-\begin{comment}
-\begin{ex}
+\begin{rema}
 Per $n=2$ ed $S=\mathbb{B}$ il semianello booleano, si ha ad esempio
-\[
-A=\begin{pmatrix} 1 & 0 \\ 1 & 1\end{pmatrix}, \qquad B=\begin{pmatrix} 0 & 1 \\ 1 & 0\end{pmatrix} \quad \in M_2(\mathbb{B}),
-\]
+\[A=\begin{pmatrix} 1 & 0 \\ 1 & 1\end{pmatrix}, \qquad B=\begin{pmatrix} 0 & 1 \\ 1 & 0\end{pmatrix} \quad \in M_2(\mathbb{B}),\]
 con prodotto (righe per colonne, usando $\vee,\wedge$ al posto di $+,\cdot$)
-\[
-A\cdot B = \begin{pmatrix} (1\wedge 0)\vee(0\wedge 1) & (1\wedge 1)\vee(0\wedge 0) \\ (1\wedge 0)\vee(1\wedge 1) & (1\wedge 1)\vee(1\wedge 0)\end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 1\end{pmatrix}.
-\]
-\end{ex}
-\end{comment}
-
+\[A\cdot B = \begin{pmatrix} (1\wedge 0)\vee(0\wedge 1) & (1\wedge 1)\vee(0\wedge 0) \\ (1\wedge 0)\vee(1\wedge 1) & (1\wedge 1)\vee(1\wedge 0)\end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 1\end{pmatrix}.\]
+\end{rema}
 
 Per $A\in M_n(S)$ e $i,j\in\{1,\dots,n\}$, ricordiamo che $A_{ij}$ denota l'elemento di $A$ alla riga $i$-esima e alla colonna $j$-esima.
 
 \begin{defi}[Trasposta]\label{def:trasposta}
 La \emph{trasposta} di una matrice $A\in M_n(S)$ è la matrice $A^t\in M_n(S)$ definita da
-\[
-(A^t)_{ij} := A_{ji} \qquad \text{per ogni } i,j\in\{1,\dots,n\}.
-\]
+\[(A^t)_{ij} := A_{ji} \qquad \text{per ogni } i,j\in\{1,\dots,n\}.\]
 \end{defi}
 
 Per ogni coppia di matrici $A,B\in M_n(S)$ valgono le identità
-\[
-(A^t)^t=A, \qquad (A+B)^t=A^t+B^t, \qquad (AB)^t=B^tA^t.
-\]
+\[(A^t)^t=A, \qquad (A+B)^t=A^t+B^t, \qquad (AB)^t=B^tA^t.\]
 
+\subsection{Monoidi, Serie Formali e Algebre di Kleene}
 
 \begin{defi}[Monoide]\label{def:monoide}
 Un \emph{monoide} è una terna $(M,\cdot,1)$ dove $M$ è un insieme,
-\[
-\cdot: M\times M \to M
-\]
+\[\cdot: M\times M \to M\]
 è un'operazione binaria associativa (cioè $(M,\cdot)$ è un semigruppo, Definizione~\ref{def:semigruppo}), e $1\in M$ è un elemento tale che
-\[
-1\cdot m = m\cdot 1 = m \qquad \text{per ogni } m\in M.
-\]
+\[1\cdot m = m\cdot 1 = m \qquad \text{per ogni } m\in M.\]
 \end{defi}
 
 \begin{defi}[Serie formali]\label{def:serie-formali}
 Dato un monoide $(M,\cdot,1)$ (Definizione~\ref{def:monoide}) e un semianello $\mathbb{K}$, si consideri l'insieme delle \emph{serie formali} a coefficienti in $\mathbb{K}$ sul monoide $M$:
-\[
-\mathbb{K}[M] := \left\{ \sum_{m\in M} \alpha_m\, m \;\middle|\; \alpha_m\in\mathbb{K} \text{ per ogni } m\in M \right\},
-\]
+\[\mathbb{K}[M] := \left\{ \sum_{m\in M} \alpha_m\, m \;\middle\vert{}\; \alpha_m\in\mathbb{K} \text{ per ogni } m\in M \right\},\]
 cioè l'insieme delle funzioni $\alpha: M \to \mathbb{K}$, scritte formalmente come somme $\sum_{m\in M}\alpha_m m$ dove $\alpha_m:=\alpha(m)$.
 \end{defi}
 
 Su $\mathbb{K}[M]$ resta definita un'operazione di somma, elemento per elemento sui coefficienti,
-\[
-\sum_{m\in M}\alpha_m m \;+\; \sum_{m\in M}\beta_m m \;:=\; \sum_{m\in M}(\alpha_m+\beta_m)\, m,
-\]
+\[\sum_{m\in M}\alpha_m m \;+\; \sum_{m\in M}\beta_m m \;:=\; \sum_{m\in M}(\alpha_m+\beta_m)\, m,\]
 e un'operazione di prodotto (detta \emph{prodotto di convoluzione})
-\[
-\left(\sum_{m'\in M} \alpha_{m'}\, m'\right) \left(\sum_{m''\in M} \beta_{m''}\, m''\right) = \sum_{m\in M} \left( \sum_{\substack{m',m''\in M \\ m'm''=m}} \alpha_{m'}\beta_{m''} \right) m.
-\]
+\[\left(\sum_{m'\in M} \alpha_{m'}\, m'\right) \left(\sum_{m''\in M} \beta_{m''}\, m''\right) = \sum_{m\in M} \left( \sum_{\substack{m',m''\in M \\ m'm''=m}} \alpha_{m'}\beta_{m''} \right) m.\]
 
 Si noti che nella definizione di prodotto tra serie formali compaiono due nozioni distinte di prodotto:
 \begin{itemize}
@@ -222,13 +176,9 @@ Si noti che nella definizione di prodotto tra serie formali compaiono due nozion
 \end{itemize}
 Con queste due operazioni, $(\mathbb{K}[M],+,\cdot)$ è a sua volta un semianello.
 
-
-
 \begin{defi}[Ordine indotto da un semianello idempotente]\label{def:ordine}
 Sia $(S,+,\cdot)$ un semianello idempotente (Definizione~\ref{def:semianello-idem}). Si definisce su $S$ la relazione binaria $\leq\,\subseteq S\times S$ data da
-\[
-a\leq b \quad\text{se e solo se}\quad a+b=b.
-\]
+\[a\leq b \quad\text{se e solo se}\quad a+b=b.\]
 \end{defi}
 
 Si verifica facilmente che $\leq$ è un ordine parziale, ossia soddisfa:
@@ -237,8 +187,6 @@ Si verifica facilmente che $\leq$ è un ordine parziale, ossia soddisfa:
     \item \emph{antisimmetria}: se $a\leq b$ e $b\leq a$ allora $a=b$ (da $a+b=b$ e $b+a=a$, usando la commutatività additiva, si ottiene $a=b+a=a+b=b$);
     \item \emph{transitività}: se $a\leq b$ e $b\leq c$ allora $a\leq c$ (da $a+b=b$ e $b+c=c$ segue $a+c = a+(b+c)=(a+b)+c=b+c=c$).
 \end{itemize}
-
-
 
 \begin{defi}[Estremo superiore]\label{def:sup}
 Sia $(S,\leq)$ un insieme parzialmente ordinato (ad esempio quello indotto come in Definizione~\ref{def:ordine}) e sia $T\subseteq S$. Si dice che $y\in S$ è l'\emph{estremo superiore} di $T$, e si scrive $y=\sup T$, se e soltanto se:
@@ -249,14 +197,10 @@ Sia $(S,\leq)$ un insieme parzialmente ordinato (ad esempio quello indotto come 
 \end{defi}
 
 Per un insieme finito, l'estremo superiore è la somma degli elementi:
-\[
-\sup\{a_1,a_2\} = a_1+a_2, \qquad\qquad \sup\{a_1,\dots,a_n\} = a_1+\cdots+a_n.
-\]
+\[\sup\{a_1,a_2\} = a_1+a_2, \qquad\qquad \sup\{a_1,\dots,a_n\} = a_1+\cdots+a_n.\]
 (Questo segue induttivamente dalla definizione di $\leq$: $a_1\leq a_1+a_2$ poiché $a_1+(a_1+a_2)=(a_1+a_1)+a_2=a_1+a_2$ per idempotenza, e analogamente per $a_2$; la minimalità segue dalla definizione di $+$ come somma nel semianello.)
 
 Si noti che l'estremo superiore di un insieme infinito potrebbe non esistere in generale.
-
-
 
 \begin{defi}[Algebra di Kleene]\label{def:kleene}
 L'algebra delle serie formali $\mathbb{K}[M]$ (Definizione~\ref{def:serie-formali}) su un semianello idempotente $\mathbb{K}$ si dice \emph{algebra di Kleene} se ad ogni elemento $a\in\mathbb{K}$ è associato un elemento $a^*\in\mathbb{K}$, detto \emph{chiusura di Kleene} di $a$, tale che
@@ -272,4 +216,3 @@ per ogni $a,b,c\in\mathbb{K}$, con il $\sup$ preso rispetto all'ordine parziale 
 \end{defi}
 
 L'equazione~\eqref{eq:kleene-star} asserisce, in particolare, la proprietà di chiusura mediante l'operatore $*$: postula l'esistenza dell'estremo superiore per famiglie infinite della forma $\{a\,b^n\,c\}_{n\geq0}$, anche quando l'esistenza del sup non è garantita in generale per un semianello idempotente qualsiasi.
-
