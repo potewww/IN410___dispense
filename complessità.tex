@@ -42,25 +42,52 @@ T_{max}(n)
 :=
 \operatorname{max}_{w\in A^*, \,|w|\leq n}T_\mu(w)
 \]
+È anche possibile interessarsi al caso medio, allora si prenderebbe in considerazione non la funzione $T_{max}$
+ma una media su tutti i possibili input
+\[
+T_{avg} (n) :=
+\frac{\sum_{w\in A^N}T_\mu(w)}{|A^N|}
+\]
+dove $A^N=\{ w\in A^* \,  |  \, |w| \leq N\}$.
+\\ \\
 Si noti che la definizione di costo in tempo di una computazione associata ad una parola da una macchina
 di Turing si basa sulla lunghezza della computazione e pertanto si adatta a qualsiasi algoritmo formale (non
 necessariamente per una macchina di Turing). Viceversa, per quanto riguarda la nozione di costo in spazio
 la definizione è basata sulla specifica configurazione e pertanto non necessariamente è trasportabile nel caso
 di altri algoritmi formali.
 \begin{defi}
+    \label{def:tempo di arresto}
     Sia $\mu$ una macchina di Turing sull’alfabeto $A$ e con insieme di stati $Q$, e siano $T$, ed $S$ due
 funzioni
 $$T : \mathbb N \to \mathbb N,$$ $$S : \mathbb N \to \mathbb N.$$
 Si dice che $\mu$ si \textit{arresta in tempo T} (rispettivamente \textit{in spazio S}) se per ogni $w\in A^*$ di lunghezza al più
 uguale ad $n$ la macchina si arresta sull’input $w$ in tempo (risp. spazio) al più uguale a $T(n)$ (risp. $S(n)$).
-\end{defi}
-Infatti, quello che vorremmo è che
+In formule
 \[
 T_\mu(w)\leq T(n), \quad \forall w \text{ tale che } {|w|\leq n}
 \]
+\end{defi}
+\begin{rema}
+Vorremmo dare una forma più precisa alle funzioni $T$ che danno informazioni sul tempo e lo spazio di arresto di una data macchina di Turing.
+Consideriamo quindi una macchina di Turing $\mu$ che si arresta in tempo $T$ e due parole $a$ e $b$ tali che $|a| < |b|$. Abbiamo che l'insieme delle parole di lunghezza al più $|a|$ è un sottoinsieme delle parole di lunghezza al più $|b|$. Di conseguenza, il tempo (o lo spazio) limite richiesto per elaborare le prime non ha senso che superi il limite per le seconde; è naturale quindi imporre che $T(|a|) \leq T(|b|)$, restringendo così lo studio alle funzioni non decrescenti. 
+
+Inoltre, è sensato richiedere che la funzione $T(n)$ sia limitata inferiormente da $n$ per input sufficientemente grandi poiché,
+\textcolor{red}{QUELLO CHE SEGUE NON MI CONVINCE ... CHIEDI INFO}
+nel modello di macchina di Turing a nastro singolo, la stringa di input di lunghezza $n$ occupa intrinsecamente $n$ celle (vincolando lo spazio) e la macchina necessita fisiologicamente di almeno $n$ passi operativi per poterla scorrere e leggere per intero (vincolando il tempo). Valutare questa condizione solo "definitivamente" permette di assorbire eventuali costi costanti di avvio o inizializzazione della macchina, evitando che il comportamento anomalo su input banalmente corti ne comprometta l'appartenenza a una classe di complessità.
+\\
+Inoltre, è sensato richiedere che la funzione $T(n)$ sia limitata inferiormente da $n$ per input sufficientemente grandi poiché, per la stragrande maggioranza dei problemi non banali, un algoritmo necessita di esaminare l'intero input. Fissare il limite $T(n) \ge n$ stabilisce di fatto la classe lineare come "livello base" della gerarchia di complessità nel modello a nastro singolo. Valutare questa condizione solo "definitivamente" permette di assorbire eventuali costi costanti di avvio della macchina, evitando che il comportamento su input banalmente corti ne comprometta la classificazione asintotica.
+\end{rema}
+Hanno senso quindi le seguenti definizioni.
+\begin{defi}
+ Una funzione
+\[
+T : \mathbb N \to \mathbb N
+\]
+viene detta \textit{funzione di complessità} se è una funzione non decrescente e se $T(n) \geq  n$ definitivamente.
+\end{defi}
 \begin{defi}
 
-Siano $T$ e $S$ funzioni come nella definizione sopra.
+Siano $T$ ed $S$ funzioni di complessità.
 \begin{enumerate}
     \item La macchina $\mu$ di alfabeto $A$ \emph{decide l'insieme $X$ in tempo $T$} (risp. \emph{spazio $S$}) se $\mu$ decide $X$ e se esiste un intero $N$ tale che per ogni intero $n \geq N$ e per ogni parola $w \in A^*$ di lunghezza al più uguale a $n$ la macchina $\mu$ si ferma a partire da $w$ in tempo al più uguale a $T(n)$ (risp. spazio al più uguale ad $S(n)$).
 
@@ -70,22 +97,138 @@ Siano $T$ e $S$ funzioni come nella definizione sopra.
 Con abuso di notazione, spesso scriveremo $T(n)$ invece che $T$.
 \begin{rema}
     L'indice $1$ in basso utilizzato in questa notazione fa riferimento al fatto che nella macchina viene utilizzato un solo nastro.
- Con questa notazione si può notare che l'insieme $X$ degli interi divisibili per $9$ (come pure tutti gli insiemi decidibili per automa finito) appartengono alle classi $\mathrm{DTIME}_1^{\{0,1,\ldots,9\}}(n)$ e $\mathrm{DSPACE}_1^{\{0,1,\ldots,9\}}(n)$.
 \end{rema}
-È anche possibile interessarsi al caso medio, allora si prenderebbe in considerazione non la funzione $T_{max}$
-ma una media su tutti i possibili input
-\[
-T_{avg} (n) :=
-\frac{\sum_{w\in A^N}T_\mu(w)}{|A^N|}
-\]
-dove $A^N=\{ w\in A^* \,  |  \, |w| \leq N\}$.
-\begin{defi}
- Una funzione
-\[
-T : \mathbb N \to \mathbb N
-\]
-viene detta \textit{funzione di complessità} se è una funzione non decrescente e se $T(n) \geq  n$ definitivamente.
-\end{defi}
+
+
+
+\begin{exam}
+    Con questa notazione si può notare che l'insieme $X$ degli interi divisibili per $9$ appartengono alle classi $\mathrm{DTIME}_1^{\{0,1,\ldots,9\}}(n)$ e $\mathrm{DSPACE}_1^{\{0,1,\ldots,9\}}(n)$.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati q_0,...,q_8 su una circonferenza (q_0 in alto, senso orario)
+\foreach \k in {0,...,8} {
+    \node[state] (q\k) at ({90-40*\k}:3.4) {$q_{\k}$};
+}
+
+% Stati finali
+\node[state, accepting] (qF1) at (8,3.4) {$q_F^1$};
+\node[state]            (qF0) at (0,0)   {$q_F^0$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappi (cifre 0 e 9: il resto non cambia); il cappio di q_1 è girato
+% a destra per lasciare libera la freccia verso q_F^1
+\foreach \k/\a in {0/90, 1/5, 2/10, 3/-30, 4/-70, 5/-110, 6/-150, 7/170, 8/130} {
+    \path[->] (q\k) edge[loop, out={\a+30}, in={\a-30}, looseness=6]
+        node[align=center, font=\scriptsize] {$0/0,+1$\\$9/9,+1$} (q\k);
+}
+
+% Cifra 1: q_i -> q_{i+1 mod 9}
+\foreach \k/\n in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8,8/0} {
+    \draw[->] (q\k) -- node[font=\scriptsize] {$1/1,+1$} (q\n);
+}
+
+% Transizioni verso q_F^1 (accettazione)
+\draw[->] (q0.east) -- node {$\square/$} (qF1);
+
+% Transizioni verso q_F^0 (rifiuto), da q_1,...,q_8
+\foreach \k in {1,...,8} {
+    \draw[->] (q\k) -- node[pos=0.45, font=\scriptsize] {$\square/$} (qF0);
+}
+
+% Cifre 2,...,8: riassunte in una legenda
+\node[align=left, font=\small] at (8,-1)
+    {$q_i \xrightarrow{\,c/c,+1\,} q_{(i+c) \bmod 9}$\\[2pt]
+     per ogni $c \in \{2,\dots,8\}$};
+\end{tikzpicture}
+\caption{Macchina di Turing che decide la divisibilità per $9$. Gli stati $q_0,\dots,q_8$ memorizzano il resto modulo $9$ della somma delle cifre lette finora, con $q_0$ stato iniziale. Leggendo una cifra $c$ in $q_i$, la macchina la riscrive invariata, si sposta a destra e passa in $q_{(i+c) \bmod 9}$: i cappi corrispondono alle cifre $0$ e $9$, gli archi tra stati consecutivi alla cifra $1$, mentre le cifre $2,\dots,8$ sono riassunte nella legenda. Alla lettura del simbolo vuoto $\square$, la macchina accetta in $q_F^1$ se si trova in $q_0$ (resto $0$) e rifiuta in $q_F^0$ se si trova in uno degli stati $q_1,\dots,q_8$.}
+\label{fig:tm-div9}
+\end{figure}
+\end{exam}
+
+\begin{exam}
+    Anche ogni macchina di Turing associata ad un insieme
+    DFA-decidibile appartiene alla classe
+    $\mathrm{DTIME}_1^{A}(n)$, infatti un automa per decidere 
+    una parola di 
+    lunghezza $n$ 
+    la deve leggere tutta
+    e visto che la macchina associata
+    dovrà fermarsi appena letta
+    tutta la aprola in input,
+    farà esattamente
+    $n$ passi.
+\end{exam}
+
+\begin{rema}
+    Esistono comunque
+    dei limiti per questa definizione.
+    Fissiamo l'alfabeto $A=\{0,1\}$
+    e
+    consideriamo l'insieme
+    $X=\{ w \in A^* \, | \, x(1)=1 \}$.
+    Chiaramente, costruire una macchina di Turing che decida l'insieme $X$
+    è facile. Infatti, la
+    macchina in questione,
+    che indicheremo con $\mu$
+    leggerà la prima lettera di ogni parola
+    e poi passerà subito in uno degli stati finali.
+    Questa macchina,
+    indipendente dalla lunghezza della parola in input,
+    compierà solamente un'operazione. 
+    Quindi, vale che
+    \[
+    T_\mu(w)=1, \quad \forall w \in A^*
+    \]
+    Di conseguenza, definendo
+    \[
+    \begin{matrix}
+        T_1: & \mathbb N & \to & \mathbb N 
+        \\
+        & n & \mapsto & 1
+    \end{matrix}
+    \]
+    segunedo la definzione \ref{def:tempo di arresto},
+    possiamo dire che la macchina di
+    Turing $\mu$ si arresta in tempo
+    $T_1$.
+    Vorremmo a questo punto dire che
+    l'insieme $X$
+    appartenga alla classe di complessità
+    $\mathrm{DTIME}_1^A(T)$.
+    Essendo però $T_1$
+    la funzione costante $1$,
+    non potrà mai soddisfare la condizione
+    $T_1(n)\geq n$, e quindi
+    non sarà vera neanche definitivamente.
+    Di conseguenza,
+    la funzione $T_1$ non è
+    una funzione di complessità;
+    inoltre, seguendo questa definizione,
+    non ha proprio senso considerare
+    l'insieme $\mathrm{DTIME}_1^A(T_1)$.
+    Seguendo questa struttura,
+    il meglio che si può dire è che $X \in \mathrm{DTIME}_1^A(T_{n})$
+    dove
+    \[
+    \begin{matrix}
+        T_n: & \mathbb N & \to & \mathbb N 
+        \\
+        & n & \mapsto & n
+    \end{matrix}
+    \]
+    Questo ha senso poichè $T_n$ è 
+    effettivamente una funzione di complessità.
+\end{rema}
+
+
+
 \subsection{Look-up Table}
 Il lemma seguente mostra che il valore puntuale delle funzioni di complessità non corrisponde alla reale
 diﬀicoltà del problema, in quanto, data una macchina di Turing che decide un problema X con un certo
@@ -139,8 +282,67 @@ Dunque la macchina di Turing $\mu'$ è definita a partire dalla macchina $\mu$:
 Lo stato iniziale $q_0'$ di $\mu'$ coincide con lo stato associato alla parola vuota $q_\epsilon$ mentre lo stato $q_0$ di $\mu$ viene pensato come lo stato aggiuntivo $q_0^\mu$.
 Per ogni parola di lunghezza inferiore o uguale ad $N$ la computazione viene effettuata in modo simile alla computazione per automa finito, per le altre parole la macchina $\mu'$ compie una lettura ed un ritorno alla posizione iniziale che non altera l'input e dunque quando la macchina torna alla posizione iniziale e passa nello stato iniziale (di $\mu$) la computazione si svolge esattamente come per $\mu$.
 \end{proof}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.7, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.9cm, inner sep=1pt}
+]
+% Livello 0 (parola vuota, q_0' = q_epsilon)
+\node[state] (qe) at (0,0) {$q_\varepsilon$};
+
+% Livello 1
+\node[state] (q0) at (4,2.5)  {$q_0$};
+\node[state] (q1) at (4,-2.5) {$q_1$};
+
+% Livello N = 2
+\node[state] (q00) at (8,4.5)  {$q_{00}$};
+\node[state] (q01) at (8,1.5)  {$q_{01}$};
+\node[state] (q10) at (8,-1.5) {$q_{10}$};
+\node[state] (q11) at (8,-4.5) {$q_{11}$};
+
+% Stato di ritorno
+\node[state] (qR) at (13,0) {$q_R$};
+
+% Stati finali
+\node[state, accepting] (qF1) at (6,8.5)  {$q_F^1$};
+\node[state, accepting] (qF0) at (6,-8.5) {$q_F^0$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]qe.center) -- (qe);
+
+% Livello 0 -> 1
+\draw[->] (qe) -- node[sloped, above] {$0/0,+1$} (q0);
+\draw[->] (qe) -- node[sloped, below] {$1/1,+1$} (q1);
+
+% Livello 1 -> 2
+\draw[->] (q0) -- node[sloped, above, pos=0.45] {$0/0,+1$} (q00);
+\draw[->] (q0) -- node[sloped, below, pos=0.45] {$1/1,+1$} (q01);
+\draw[->] (q1) -- node[sloped, above, pos=0.45] {$0/0,+1$} (q10);
+\draw[->] (q1) -- node[sloped, below, pos=0.45] {$1/1,+1$} (q11);
+
+% Foglie -> q_R (input piu' lungo di N)
+\draw[->] (q00) -- node[sloped, above, pos=0.5] {$a\neq\square/a,+1$} (qR);
+\draw[->] (q01) -- (qR);
+\draw[->] (q10) -- (qR);
+\draw[->] (q11) -- (qR);
+
+% Parole accettate: epsilon, 0, 00, 01
+\draw[->] (qe)  to[bend left=35] node[pos=0.5, above, sloped] {$\square/\square,+1$} (qF1);
+\draw[->] (q0)  -- node[pos=0.6, above, sloped] {$\square/\square,+1$} (qF1);
+\draw[->] (q00) -- node[pos=0.55, above, sloped] {$\square/\square,+1$} (qF1);
+\draw[->] (q01) -- node[pos=0.85, above, sloped] {$\square/\square,+1$} (qF1);
+
+% Parole rifiutate: 1, 10, 11
+\draw[->] (q1)  -- node[pos=0.6, below, sloped] {$\square/\square,+1$} (qF0);
+\draw[->] (q10) -- node[pos=0.85, below, sloped] {$\square/\square,+1$} (qF0);
+\draw[->] (q11) -- node[pos=0.55, below, sloped] {$\square/\square,+1$} (qF0);
+\end{tikzpicture}
+\caption{Stati $q_w$ di $\mu'$ per $A=\{0,1\}$, $N=2$ e $X\cap A^{\le 2}=\{\varepsilon,0,00,01\}$: le parole in $X$ portano in $q_F^1$, le altre in $q_F^0$.}
+\label{fig:lookup-albero-finali}
+\end{figure}
 \end{lemm}
-\textcolor{red}{Aggiugni grafico su dimostrazione.}
 \begin{rema}
     Il nome "Look-up Table" nasce per il seguente motivo.
     La macchina che si costruisce 
@@ -161,19 +363,9 @@ Per ogni parola di lunghezza inferiore o uguale ad $N$ la computazione viene eff
     della macchina di Turing di partenza.
 \end{rema}
 
-\begin{rema} Il significato di questo lemma è che ha senso analizzare la complessità (dell'algoritmo di decisione associato), soltanto relativamente ad un insieme $X$ infinito, poiché nel caso di un $X$ finito si può sempre decidere il problema in un numero di passi finito, pari alla lunghezza della sua codifica sull'alfabeto (associando alla parola uno stato ``ad hoc'' e facendo una transizione accettante in base alla parola). Inoltre, poiché è possibile decidere il complementare di un insieme decidibile (invertendo nella tabella lo stato accettante $q_F^1$ e quello non accettante $q_F^0$), in pratica la questione della decidibilità si pone solo quando $X$ è infinito e co-infinito, mentre è banale quando l'insieme è finito oppure co-finito.
+\begin{rema} Il significato di questo lemma è che ha senso analizzare la complessità (dell'algoritmo di decisione associato), soltanto relativamente ad un insieme $X$ infinito, poiché nel caso di un $X$ finito si può sempre decidere il problema in un numero di passi finito, pari alla lunghezza della sua codifica sull'alfabeto (associando alla parola uno stato ``ad hoc'' e facendo una transizione accettante in base alla parola). Inoltre, poiché è possibile decidere il complementare di un insieme decidibile (invertendo nella tabella lo stato accettante $q_F^1$ e quello non accettante $q_F^0$), in pratica la questione della decidibilità si pone solo quando $X$ è infinito e co-infinito (complementare infinito), mentre è banale quando l'insieme è finito oppure co-finito (complementare finito).
 \end{rema}
 
-\begin{rema} Il modello di calcolo ``macchina di Turing'' è più potente del modello ``automa a stati finiti'', in quanto per ogni automa $(T, q_0, F)$ resta definita una macchina di Turing $\mu$ sullo stesso alfabeto e sullo stesso insieme di stati per cui la computazione dell'algoritmo associato alla macchina $\mu$ coincide con l'algoritmo associato all'automa, più precisamente è sufficiente prendere
-\[
-\mu(q,a) :=
-\begin{cases}
-(T(q,a), a, +1) & a \ne \square \\[4pt]
-(q_F^1, \square, +1) & \text{se } q \in F \\[4pt]
-(q_F^0, \square, +1) & \text{se } q \notin F
-\end{cases}
-\]Ogni macchina di Turing associata ad un automa finito si arresta in tempo e spazio $T(n) = n$.    
-\end{rema}
 \begin{prop}
 Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità le inclusioni seguenti sono sempre vere.
 

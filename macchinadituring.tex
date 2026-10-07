@@ -222,6 +222,18 @@ e
 \]
 \end{proof}
 \end{prop}
+\begin{rema} 
+    
+    Il modello di calcolo ``macchina di Turing'' è più potente del modello ``automa a stati finiti'', in quanto per ogni automa $(T, q_0, F)$ resta definita una macchina di Turing $\mu$ sullo stesso alfabeto e sullo stesso insieme di stati per cui la computazione dell'algoritmo associato alla macchina $\mu$ coincide con l'algoritmo associato all'automa, più precisamente è sufficiente prendere
+\[
+\mu(q,a) :=
+\begin{cases}
+(T(q,a), a, +1) & a \ne \square \\[4pt]
+(q_F^1, \square, +1) & \text{se } q \in F \\[4pt]
+(q_F^0, \square, +1) & \text{se } q \notin F
+\end{cases}
+\]
+\end{rema}
 \begin{rema}
     Come nel caso degli automi
     possiamo associare ad ogni macchina
@@ -236,7 +248,7 @@ e
 \begin{exam}
     Vogliamo mostrare che l'insieme
     \[
-    X = \{0^n1^n \, | \, n \in \mathbb \}
+    X = \{0^n1^n \, | \, n \in \mathbb N\}
     \]
     è decidibile secondo macchina di Turing.
     Questo si può fare
@@ -246,22 +258,20 @@ e
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    scale=0.85, transform shape,
+    scale=0.8, transform shape,
     >=stealth', shorten >=1pt, auto,
     every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
 ]
 % Stati della riga principale
-\node[state] (q0) at (0,0)  {$q_0$};
-\node[state] (q1) at (3,0)  {$q_1$};
-\node[state] (q2) at (6,0)  {$q_2$};
-\node[state] (q3) at (9,0)  {$q_3$};
-\node[state] (q5) at (12,0) {$q_5$};
-\node[state] (q4) at (15,0) {$q_4$};
-\node[state] (q6) at (18,0) {$q_6$};
+\node[state] (q0) at (0,0)    {$q_0$};
+\node[state] (q1) at (3,0)    {$q_1$};
+\node[state] (q2) at (6,0)    {$q_2$};
+\node[state] (q3) at (9,0)    {$q_3$};
+\node[state] (q4) at (12,0)   {$q_4$};
 
 % Stati finali
-\node[state, accepting] (qF0) at (10.5,3.8)  {$q_F^0$};
-\node[state, accepting] (qF1) at (10.8,-2.8) {$q_F^1$};
+\node[state, accepting] (qF0) at (7.5,3.8)  {$q_F^0$};
+\node[state, accepting] (qF1) at (0,-3)     {$q_F^1$};
 
 % Freccia d'ingresso
 \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
@@ -270,33 +280,28 @@ e
 \draw[->] (q0) -- node {$0/\square,+1$} (q1);
 \draw[->] (q1) -- node {$1/1,+1$} (q2);
 \draw[->] (q2) -- node {$\square/\square,-1$} (q3);
-\draw[->] (q3) to[bend right=15] node[swap] {$1/\square,-1$} (q5);
-\draw[->] (q5) to[bend left=15]  node {$1/1,-1$} (q4);
-\draw[->] (q4) -- node {$0/0,-1$} (q6);
+\draw[->] (q3) -- node {$1/\square,-1$} (q4);
 
 % Cappi
 \draw[->] (q1) to[loop above, looseness=8] node {$0/0,+1$} (q1);
 \draw[->] (q2) to[loop below, looseness=8] node {$1/1,+1$} (q2);
-\draw[->] (q4) to[loop below, looseness=8] node {$1/1,-1$} (q4);
-\draw[->] (q6) to[loop above, looseness=8] node {$0/0,-1$} (q6);
+\draw[->] (q4) to[loop above, looseness=8] node {$1/1,-1$} (q4);
+\draw[->] (q4) to[loop below, looseness=8] node {$0/0,-1$} (q4);
 
-% Transizioni verso q_F^0
-\draw[->] (q1) to[bend left=20]  node[pos=0.55, above] {$\square/$} (qF0);
-\draw[->] (q2) to[bend left=20]  node[pos=0.55, above] {$0/$}       (qF0);
-\draw[->] (q3) to[bend left=35]  node[pos=0.5,  left]  {$\square/$} (qF0);
-\draw[->] (q3) to[bend right=15] node[pos=0.6,  right] {$0/$}       (qF0);
-\draw[->] (q5) to[bend right=20] node[pos=0.5,  right] {$0/$}       (qF0);
-\draw[->] (q4) to[bend right=20] node[pos=0.5,  above] {$\square/$} (qF0);
-\draw[->] (q6) to[bend right=20] node[pos=0.5,  above] {$1/$}       (qF0);
+% Transizioni verso q_F^0 (rifiuto)
+\draw[->] (q0) to[bend left=30]  node[pos=0.4, above] {$1/$}       (qF0);
+\draw[->] (q1) to[bend left=20]  node[pos=0.5, above] {$\square/$} (qF0);
+\draw[->] (q2) to[bend left=20]  node[pos=0.5, above] {$0/$}       (qF0);
+\draw[->] (q3) to[bend left=25]  node[pos=0.5, left]  {$0/$}       (qF0);
+\draw[->] (q3) to[bend right=25] node[pos=0.5, right] {$\square/$} (qF0);
 
-% Transizioni verso q_F^1
-\draw[->] (q0) to[bend right=15] node[pos=0.5, above] {$\square/$} (qF1);
-\draw[->] (q5) to[bend left=10]  node[pos=0.5, right] {$\square/$} (qF1);
+% Transizione verso q_F^1 (accettazione)
+\draw[->] (q0) -- node[swap] {$\square/$} (qF1);
 
-% Ritorno da q_6 a q_0
-\draw[->] (q6) to[bend left=45] node[pos=0.5, below] {$\square/\square,+1$} (q0);
+% Ritorno da q_4 a q_0
+\draw[->] (q4) to[bend left=30] node[pos=0.5, below] {$\square/\square,+1$} (q0);
 \end{tikzpicture}
-\caption{Macchina di Turing che decide $X=\{0^n1^n \mid n\in\mathbb{N}\}$: accetta in $q_F^1$ e rifiuta in $q_F^0$.}
+\caption{Macchina di Turing che decide $X=\{0^n1^n \mid n\geq 0\}$.}
 \label{fig:turing-0n1n}
 \end{figure}
 \begin{rema}

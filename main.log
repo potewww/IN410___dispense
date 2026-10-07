@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  7 OCT 2026 13:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  7 OCT 2026 23:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1197,75 +1197,86 @@ l.169 S
 pdfTeX warning (ext4): destination with the same identifier (name{rema.9}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.226     C
-           ome nel caso degli automi
-pdfTeX warning (ext4): destination with the same identifier (name{exam.10}) has been already used, duplicate ignored
+l.227     I
+           l modello di calcolo ``macchina di Turing'' è più potente del m...
+pdfTeX warning (ext4): destination with the same identifier (name{exam.11}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.237     V
+l.249     V
            ogliamo mostrare che l'insieme
-Overfull \hbox (2.21457pt too wide) in paragraph at lines 298--299
- [][] 
- []
 
-
-pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.303 Q
-       uanto è veloce la macchina) (./complessità.tex
+[48]) (./complessità.tex
 pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.2     D
          ata una macchina di Turing $\mu$ di alfabeto $A$ e insieme degli st...
+Underfull \hbox (badness 10000) in paragraph at lines 50--59
 
-[48]
+ []
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.51     S
+l.60     S
           ia $\mu$ una macchina di Turing sull’alfabeto $A$ e con insieme ...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.63 S
-      iano $T$ e $S$ funzioni come nella definizione sopra.
 
 [49]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.4}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{rema.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.72     L
-          'indice $1$ in basso utilizzato in questa notazione fa riferimento...
+l.71 V
+      orremmo dare una forma più precisa alle funzioni $T$ che danno inform...
+pdfTeX warning (ext4): destination with the same identifier (name{defi.4}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.82  U
+       na funzione
 pdfTeX warning (ext4): destination with the same identifier (name{defi.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.83  U
-       na funzione
-Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input line 95.
-
+l.90 S
+      iano $T$ ed $S$ funzioni di complessità.
 
 [50]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.8}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{rema.6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.164 \begin{rema} I
-                    l significato di questo lemma è che ha senso analizzare...
-
-[51]
+l.99     L
+          'indice $1$ in basso utilizzato in questa notazione fa riferimento...
 pdfTeX warning (ext4): destination with the same identifier (name{rema.9}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.167 \begin{rema} I
-                    l modello di calcolo ``macchina di Turing'' è più pote...
-pdfTeX warning (ext4): destination with the same identifier (name{prop.10}) has been already used, duplicate ignored
+l.170     E
+           sistono comunque
+
+[51]
+Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input line 238.
+
+
+[52]
+
+[53]
+pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.178 S
+l.347     I
+           l nome "Look-up Table" nasce per il seguente motivo.
+pdfTeX warning (ext4): destination with the same identifier (name{rema.12}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.366 \begin{rema} I
+                    l significato di questo lemma è che ha senso analizzare...
+
+[54]
+pdfTeX warning (ext4): destination with the same identifier (name{prop.13}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.370 S
        ia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità le in...)
 
-[52] (./prerequisiti.tex
+[55] (./prerequisiti.tex
 pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1292,7 +1303,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{defi.6}) has b
 l.41 S
       ia $A$ un insieme, detto \emph{alfabeto}. Un \emph{grafo etichettato} ...
 
-[53]
+[56]
 pdfTeX warning (ext4): destination with the same identifier (name{defi.8}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1304,25 +1315,25 @@ pdfTeX warning (ext4): destination with the same identifier (name{defi.10}) has 
 l.74 U
       n \emph{semianello} è una struttura algebrica
 
-[54]
+[57]
 pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.89 $
       (\mathbb{N},+,\cdot)$, con le usuali operazioni di somma e prodotto tr...
 
-[55]
+[58]
 
-[56]
+[59]
 Overfull \hbox (31.63713pt too wide) in paragraph at lines 175--176
 []\OT1/cmr/m/n/12 il prodotto tra el-e-menti del monoide $\OML/cmm/m/it/12 m[]m[]$\OT1/cmr/m/n/12 , che ^^Re il prodotto del monoide $\OML/cmm/m/it/12 M$ \OT1/cmr/m/n/12 (Definizione [][]9.19[][]). 
  []
 
 
 
-[57])
+[60])
 
-[58] (./wolfram.tex
+[61] (./wolfram.tex
 pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1348,17 +1359,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{rema.6}) has b
                    \relax 
 l.43 N
       el secondo caso la valutazione avviene solo quando si chiama, ad esemp...
-pdfTeX warning (ext4): destination with the same identifier (name{rema.7}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.46 E
-      sempio di codice:
 \g__tcobox_out_iow=\write7
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[59]
+[62]
 pdfTeX warning (ext4): destination with the same identifier (name{rema.8}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1379,6 +1385,11 @@ pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has 
                    \relax 
 l.79 \wolfram{Plus}
                     fa la somma degli elementi, quindi
+pdfTeX warning (ext4): destination with the same identifier (name{rema.12}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.89 P
+      er eseguire più istruzioni in un certo ordine, le si separa con un ``...
 pdfTeX warning (ext4): destination with the same identifier (name{rema.13}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1393,7 +1404,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{defi.14}) has 
 l.102 P
        er estrarre elementi da una lista (o più in generale i rami dell'alb...
 
-[60]
+[63]
 pdfTeX warning (ext4): destination with the same identifier (name{defi.16}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1418,7 +1429,7 @@ Overfull \hbox (15.59825pt too wide) in paragraph at lines 148--149
 
 
 
-[61]
+[64]
 pdfTeX warning (ext4): destination with the same identifier (name{defi.20}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1446,7 +1457,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{defi.23}) has 
 l.168 D
        ate due variabili aleatorie $X\colon\Omega\to\mathcal{X}$ e $Y\colon\...
 
-[62]
+[65]
 Overfull \hbox (11.38565pt too wide) in paragraph at lines 198--199
 [][]\OT1/cmr/bx/n/12 Osservazione 10.27. []\OT1/cmr/m/n/12 L'entropia misura l'informazione me-dia, o equiv-a-len-te-mente l'incertezza,
  []
@@ -1459,7 +1470,7 @@ LaTeX Font Info:    Trying to load font information for U+bbm on input line 227.
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
 
-[63]
+[66]
 Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 []\OT1/cmr/m/n/12 Assegnare la di-rec-tory cor-rente, cio^^Re la cartella che con-tiene il pac-chetto: [][][][][][][][] 
  []
@@ -1473,7 +1484,7 @@ Overfull \hbox (0.35939pt too wide) in paragraph at lines 263--264
 
 
 
-[64]
+[67]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1481,20 +1492,20 @@ Overfull \hbox (0.35939pt too wide) in paragraph at lines 263--264
 
  (./main.listing)
 
-[65]
+[68]
 Overfull \hbox (23.26341pt too wide) in paragraph at lines 310--313
 [][]\OT1/cmr/bx/n/12 Osservazione 10.41. []Com-po-sizione di au-tomi: \OT1/cmr/m/n/12 Per stu-di-are sis-temi com-p-lessi o l'intersezione
  []
 
 )
 
-[66] (./esercizi/automi.tex
+[69] (./esercizi/automi.tex
 
-[67]
+[70]
 
-[68])
+[71])
 
-[69] (./main.aux)
+[72] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1503,18 +1514,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: CE971E3C433D588757C9ED445DF65436;4745.
  ) 
 Here is how much of TeX's memory you used:
- 35839 strings out of 473190
- 730709 string characters out of 5715800
- 1204234 words of memory out of 5000000
- 57974 multiletter control sequences out of 15000+600000
- 576372 words of font info for 109 fonts, out of 8000000 for 9000
+ 36040 strings out of 473190
+ 734639 string characters out of 5715800
+ 1204999 words of memory out of 5000000
+ 58163 multiletter control sequences out of 15000+600000
+ 576680 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1098b,1645s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (69 pages, 502900 bytes).
+Output written on main.pdf (72 pages, 516530 bytes).
 PDF statistics:
- 1115 PDF objects out of 1200 (max. 8388607)
- 954 compressed objects within 10 object streams
- 460 named destinations out of 1000 (max. 500000)
+ 1140 PDF objects out of 1200 (max. 8388607)
+ 976 compressed objects within 10 object streams
+ 472 named destinations out of 1000 (max. 500000)
  389 words of extra memory for PDF output out of 10000 (max. 10000000)
 
