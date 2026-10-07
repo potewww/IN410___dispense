@@ -166,7 +166,8 @@ In sintesi, $\mu$ è la ``regola locale'' (cosa fare dato stato+carattere letto)
 
 
 \begin{defi}
-Sia $X \subset A^*$, allora $X$ si dice \emph{decidibile tramite Macchina di Turing} (o \emph{Turing-decidibile}) se esiste $Q$ insieme finito di stati e una macchina di alfabeto $A$ e insieme degli stati $Q$ per cui l'algoritmo associato $\mathcal{A}_\mu$ decide l'insieme $X$.
+Sia $X \subset A^*$, allora $X$ si dice \emph{decidibile tramite Macchina di Turing} (o \emph{Turing-decidibile}) se esiste $Q$ insieme finito di stati e una macchina di Turing
+di alfabeto $A$ e insieme degli stati $Q$ per cui l'algoritmo associato $\mathcal{A}_\mu$ decide l'insieme $X$.
 
 \end{defi}
 
@@ -209,12 +210,111 @@ e
 \begin{cases}
 \mu(q,a)
 &
-\text{se }\mu(q,a)=(q',a',m)\text{ e }q'\neq q_{F}^{0},
+\text{se }\mu(q,a)=(q',a',m)
+\text{ e }q'\neq q_{F}^{0},
 \\[1ex]
 (q^{*},a,+1)
 &
 \text{altrimenti.}
+\\
+
 \end{cases}
 \]
 \end{proof}
 \end{prop}
+\begin{rema}
+    Come nel caso degli automi
+    possiamo associare ad ogni macchina
+    un grafo etichettato che 
+    ha come vertici gli stati 
+    e le etichette sono 
+    della forma
+    $a/b, m$ e indicano che
+    se si legge $a$ si sostituisce con $b$
+    e si incrementa il puntatore di $m$.
+\end{rema}
+\begin{exam}
+    Vogliamo mostrare che l'insieme
+    \[
+    X = \{0^n1^n \, | \, n \in \mathbb \}
+    \]
+    è decidibile secondo macchina di Turing.
+    Questo si può fare
+    mediante una serie di cancellazioni successive della coppia di caratteri costituita dallo zero più a destra
+    e dell’1 più a sinistra.
+\end{exam}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.85, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati della riga principale
+\node[state] (q0) at (0,0)  {$q_0$};
+\node[state] (q1) at (3,0)  {$q_1$};
+\node[state] (q2) at (6,0)  {$q_2$};
+\node[state] (q3) at (9,0)  {$q_3$};
+\node[state] (q5) at (12,0) {$q_5$};
+\node[state] (q4) at (15,0) {$q_4$};
+\node[state] (q6) at (18,0) {$q_6$};
+
+% Stati finali
+\node[state, accepting] (qF0) at (10.5,3.8)  {$q_F^0$};
+\node[state, accepting] (qF1) at (10.8,-2.8) {$q_F^1$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni lungo la riga principale
+\draw[->] (q0) -- node {$0/\square,+1$} (q1);
+\draw[->] (q1) -- node {$1/1,+1$} (q2);
+\draw[->] (q2) -- node {$\square/\square,-1$} (q3);
+\draw[->] (q3) to[bend right=15] node[swap] {$1/\square,-1$} (q5);
+\draw[->] (q5) to[bend left=15]  node {$1/1,-1$} (q4);
+\draw[->] (q4) -- node {$0/0,-1$} (q6);
+
+% Cappi
+\draw[->] (q1) to[loop above, looseness=8] node {$0/0,+1$} (q1);
+\draw[->] (q2) to[loop below, looseness=8] node {$1/1,+1$} (q2);
+\draw[->] (q4) to[loop below, looseness=8] node {$1/1,-1$} (q4);
+\draw[->] (q6) to[loop above, looseness=8] node {$0/0,-1$} (q6);
+
+% Transizioni verso q_F^0
+\draw[->] (q1) to[bend left=20]  node[pos=0.55, above] {$\square/$} (qF0);
+\draw[->] (q2) to[bend left=20]  node[pos=0.55, above] {$0/$}       (qF0);
+\draw[->] (q3) to[bend left=35]  node[pos=0.5,  left]  {$\square/$} (qF0);
+\draw[->] (q3) to[bend right=15] node[pos=0.6,  right] {$0/$}       (qF0);
+\draw[->] (q5) to[bend right=20] node[pos=0.5,  right] {$0/$}       (qF0);
+\draw[->] (q4) to[bend right=20] node[pos=0.5,  above] {$\square/$} (qF0);
+\draw[->] (q6) to[bend right=20] node[pos=0.5,  above] {$1/$}       (qF0);
+
+% Transizioni verso q_F^1
+\draw[->] (q0) to[bend right=15] node[pos=0.5, above] {$\square/$} (qF1);
+\draw[->] (q5) to[bend left=10]  node[pos=0.5, right] {$\square/$} (qF1);
+
+% Ritorno da q_6 a q_0
+\draw[->] (q6) to[bend left=45] node[pos=0.5, below] {$\square/\square,+1$} (q0);
+\end{tikzpicture}
+\caption{Macchina di Turing che decide $X=\{0^n1^n \mid n\in\mathbb{N}\}$: accetta in $q_F^1$ e rifiuta in $q_F^0$.}
+\label{fig:turing-0n1n}
+\end{figure}
+\begin{rema}
+Quanto è veloce la macchina 
+dell'esempio precedente?
+Per osservare il caso peggiore
+possiamo osservare il caso in cui la parola
+è lunga $2n$ con $n \in \mathbb N$.
+Il numero di passi per la computazione è
+\[
+\sum _{i =0}^n (4i +1)
+=
+4\sum_{i=0}^ni+n
+=
+4\frac{n(n+1)}{2}+n
+=
+2n(n+1)+n
+=
+2n^2+3n
+\]
+\end{rema}

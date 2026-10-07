@@ -12,19 +12,19 @@
 \contentsline {section}{\numberline {5}Automi non deterministici}{19}{section.5}%
 \contentsline {section}{\numberline {6}Espressioni regolari}{32}{section.6}%
 \contentsline {section}{\numberline {7}Macchin di Turing}{44}{section.7}%
-\contentsline {section}{\numberline {8}Teoria della complessità}{48}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Look-up Table}{49}{subsection.8.1}%
-\contentsline {section}{\numberline {9}Prerequisiti}{52}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Definizioni Preliminari}{52}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Grafi e Matrici di Adiacenza}{52}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Grafi Etichettati}{53}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Semianelli e Serie Formali}{53}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}Matrici su Semianelli}{55}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Monoidi, Serie Formali e Algebre di Kleene}{56}{subsection.9.6}%
-\contentsline {section}{\numberline {10}Wolfram}{58}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Introduzione}{58}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Entropia}{61}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Libreria TM-lib}{63}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Automi}{64}{subsection.10.4}%
-\contentsline {section}{\numberline {11}Esercizi}{66}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Automi}{66}{subsection.11.1}%
+\contentsline {section}{\numberline {8}Teoria della complessità}{49}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Look-up Table}{50}{subsection.8.1}%
+\contentsline {section}{\numberline {9}Prerequisiti}{53}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Definizioni Preliminari}{53}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Grafi e Matrici di Adiacenza}{53}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Grafi Etichettati}{54}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Semianelli e Serie Formali}{54}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Matrici su Semianelli}{56}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Monoidi, Serie Formali e Algebre di Kleene}{57}{subsection.9.6}%
+\contentsline {section}{\numberline {10}Wolfram}{59}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Introduzione}{59}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Entropia}{62}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Libreria TM-lib}{64}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Automi}{65}{subsection.10.4}%
+\contentsline {section}{\numberline {11}Esercizi}{67}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Automi}{67}{subsection.11.1}%

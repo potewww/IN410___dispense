@@ -27,7 +27,12 @@ p \, | \, (f,p,q) \in C
 \item  si dirà che $\mu$ si arresta in tempo $t$ (rispettivamente spazio $s$) sull’input $w$, se $C$ è la computazione di
 $\mu$ a partire dalla configurazione iniziale associata a $w$, $C$ raggiunge una configurazione terminale e il
 costo in tempo di $C$ è $t$ ( rispettivamente il costo in spazio è $s$); in questo caso si userà la notazione
-$T_\mu(w)$ (rispettivamente $S_\mu(w)$) per indicare il tempo di arresto $t$ (rispettivamente lo spazio di arresto
+$T_\mu(w):A^* \to \mathbb N$ chiamata
+\textit{funzione di tempo di arresto} 
+(rispettivamente $S_\mu(w)$
+$S_\mu(w):A^* \to \mathbb N$ chiamata
+\textit{funzione di spazio di arresto} 
+) per indicare il tempo di arresto $t$ (rispettivamente lo spazio di arresto
 $s$).
     \end{enumerate}
 \end{defi}
@@ -49,6 +54,10 @@ $$T : \mathbb N \to \mathbb N,$$ $$S : \mathbb N \to \mathbb N.$$
 Si dice che $\mu$ si \textit{arresta in tempo T} (rispettivamente \textit{in spazio S}) se per ogni $w\in A^*$ di lunghezza al più
 uguale ad $n$ la macchina si arresta sull’input $w$ in tempo (risp. spazio) al più uguale a $T(n)$ (risp. $S(n)$).
 \end{defi}
+Infatti, quello che vorremmo è che
+\[
+T_\mu(w)\leq T(n), \quad \forall w \text{ tale che } {|w|\leq n}
+\]
 \begin{defi}
 
 Siano $T$ e $S$ funzioni come nella definizione sopra.
@@ -63,7 +72,7 @@ Con abuso di notazione, spesso scriveremo $T(n)$ invece che $T$.
     L'indice $1$ in basso utilizzato in questa notazione fa riferimento al fatto che nella macchina viene utilizzato un solo nastro.
  Con questa notazione si può notare che l'insieme $X$ degli interi divisibili per $9$ (come pure tutti gli insiemi decidibili per automa finito) appartengono alle classi $\mathrm{DTIME}_1^{\{0,1,\ldots,9\}}(n)$ e $\mathrm{DSPACE}_1^{\{0,1,\ldots,9\}}(n)$.
 \end{rema}
-È anche possibile interessarsi al caso medio, allora si prenderebbe in considerazione non la funzione $T_max$
+È anche possibile interessarsi al caso medio, allora si prenderebbe in considerazione non la funzione $T_{max}$
 ma una media su tutti i possibili input
 \[
 T_{avg} (n) :=
@@ -110,7 +119,7 @@ Ed è quello che faremo nel caso delle parole di lunghezza inferiore uguale ad $
 
 Sia
 \[
-Q' = Q \cup \{q_w \mid w \in A^N\} \cup \{q_R\}
+Q' = (Q\setminus \{ q_0\}) \cup \{q_w \mid w \in A^N\} \cup \{q_R, q_0^\mu\}
 \]
 dove lo stato $q_R$ sarà utilizzato come lo stato utilizzato per il ritorno alla casella iniziale nel caso in cui l'input si trovi più lungo di $N$ simboli.
 
@@ -118,23 +127,43 @@ Dunque la macchina di Turing $\mu'$ è definita a partire dalla macchina $\mu$:
 \[
 \mu'(q,a) =
 \begin{cases}
-\mu(a,q) & \text{se } q \in Q, \\[4pt]
+\mu(a,q) & \text{se } q \in (Q\setminus\{q_0 \} )\cup \{q_0^\mu \}, \\[4pt]
 (q_{wa}, a, +1) & \text{se } q = q_w \text{ per qualche } w \in A(m) \text{ con } m \le N \text{ e } |wa| \le N, \\[4pt]
 (q_R, a, +1) & \text{se } q = q_w \text{ per qualche } w \in A(m) \text{ con } a \ne \square \text{ e } |w| = N, \\[4pt]
 (q_R, a, -1) & \text{se } q = q_R \text{ e } a \ne \square, \\[4pt]
-(q_0, a, +1) & \text{se } q = q_R \text{ e } a = \square, \\[4pt]
+(q_0^\mu, a, +1) & \text{se } q = q_R \text{ e } a = \square, \\[4pt]
 (q_F^1, a, +1) & \text{se } q = q_w \text{ per qualche } w \in A(m) \text{ con } m \le N,\ a = \square \text{ e } w \in X, \\[4pt]
 (q_F^0, a, +1) & \text{se } q = q_w \text{ per qualche } w \in A(m) \text{ con } m \le N,\ a = \square \text{ e } w \notin X;
 \end{cases}
 \]
-
-Lo stato iniziale $q_0'$ di $\mu'$ coincide con lo stato associato alla parola vuota $q_\epsilon$ mentre lo stato $q_0$ di $\mu$ deve essere considerato come uno stato generico di $\mu'$.
-
+Lo stato iniziale $q_0'$ di $\mu'$ coincide con lo stato associato alla parola vuota $q_\epsilon$ mentre lo stato $q_0$ di $\mu$ viene pensato come lo stato aggiuntivo $q_0^\mu$.
 Per ogni parola di lunghezza inferiore o uguale ad $N$ la computazione viene effettuata in modo simile alla computazione per automa finito, per le altre parole la macchina $\mu'$ compie una lettura ed un ritorno alla posizione iniziale che non altera l'input e dunque quando la macchina torna alla posizione iniziale e passa nello stato iniziale (di $\mu$) la computazione si svolge esattamente come per $\mu$.
 \end{proof}
 \end{lemm}
+\textcolor{red}{Aggiugni grafico su dimostrazione.}
+\begin{rema}
+    Il nome "Look-up Table" nasce per il seguente motivo.
+    La macchina che si costruisce 
+    nella dimostrazione
+    è la macchina di partenza ma che classifica
+    già la decidibilità delle parole
+    di lunghezza $N$.
+    Poprio come se la macchina,
+    alla prima lettura della parola, dovesse controllare in una "tavola"
+    se la parola c'è (allora è accettata) o meno (allora viene scartata).
+    Se la parola invece è più lunga di $N$,
+    una volta che vengono letti 
+    i primi
+    $N$ caratteri,
+    la macchina capisce che ci sono altri caratteri e allora,
+    facendo altri $N$
+    passi, torna all'inizio della parola e comincia ad analizzare la parola usando la strategia
+    della macchina di Turing di partenza.
+\end{rema}
+
 \begin{rema} Il significato di questo lemma è che ha senso analizzare la complessità (dell'algoritmo di decisione associato), soltanto relativamente ad un insieme $X$ infinito, poiché nel caso di un $X$ finito si può sempre decidere il problema in un numero di passi finito, pari alla lunghezza della sua codifica sull'alfabeto (associando alla parola uno stato ``ad hoc'' e facendo una transizione accettante in base alla parola). Inoltre, poiché è possibile decidere il complementare di un insieme decidibile (invertendo nella tabella lo stato accettante $q_F^1$ e quello non accettante $q_F^0$), in pratica la questione della decidibilità si pone solo quando $X$ è infinito e co-infinito, mentre è banale quando l'insieme è finito oppure co-finito.
 \end{rema}
+
 \begin{rema} Il modello di calcolo ``macchina di Turing'' è più potente del modello ``automa a stati finiti'', in quanto per ogni automa $(T, q_0, F)$ resta definita una macchina di Turing $\mu$ sullo stesso alfabeto e sullo stesso insieme di stati per cui la computazione dell'algoritmo associato alla macchina $\mu$ coincide con l'algoritmo associato all'automa, più precisamente è sufficiente prendere
 \[
 \mu(q,a) :=
