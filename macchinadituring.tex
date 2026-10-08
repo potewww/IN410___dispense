@@ -1,3 +1,4 @@
+\subsection{Configurazione e algoritmo associato}
 Alla luce di quanto fatto prima, sembrerebbe naturale chiamare algoritmica qualsiasi procedura costruita a partire da un
 automa finito.
 In particolare è chiaro che una tale procedura può essere descritta in un linguaggio di
@@ -164,7 +165,7 @@ Vediamo ora l'avvio e l'arresto del calcolo.
 In sintesi, $\mu$ è la ``regola locale'' (cosa fare dato stato+carattere letto); $\tau$ applica questa regola a una configurazione globale producendone la successiva; $\epsilon$ dice come tradurre l'input iniziale in una configurazione; l'iterazione di $\tau$ a partire da $\epsilon(w)$, fino a un eventuale stato terminale, è \emph{l'esecuzione dell'algoritmo} $\mathcal{A}_\mu$ sull'input $w$.
 \end{rema}
 
-
+\subsection{Decidibilità per macchina di Turing}
 \begin{defi}
 Sia $X \subset A^*$, allora $X$ si dice \emph{decidibile tramite Macchina di Turing} (o \emph{Turing-decidibile}) se esiste $Q$ insieme finito di stati e una macchina di Turing
 di alfabeto $A$ e insieme degli stati $Q$ per cui l'algoritmo associato $\mathcal{A}_\mu$ decide l'insieme $X$.
@@ -259,7 +260,7 @@ e
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    scale=0.8, transform shape,
+    scale=1, transform shape,
     >=stealth', shorten >=1pt, auto,
     every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
 ]

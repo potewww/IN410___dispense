@@ -1,3 +1,4 @@
+\subsection{Sintassi ed interpretazione}
 Avendo individuato i costrutti rispetto ai quali l’insieme di tutti gli insiemi regolari resta invariato (concatenazione, unione e operatore * di Kleene), si può formalizzare una grammatica data dalla rappresentazione
 simbolica di alcuni insiemi regolari di base.
 \begin{defi}
@@ -174,6 +175,7 @@ con insiemi DFA-decidibili: si veda la figura
 \caption{Costruzione dell'automa che decide $X_1 + X_2$ a partire da quelli che decidono $X_1$ e $X_2$.}
 \label{fig:somma}
 \end{figure}
+\subsection{Automi non deterministici generalizzati}
 Quello che invece vorremmo mostrare ora è che vale anche l'implicazione inversa della proposizione precedente. Per farlo introdurremo una nuova versione di automa.
 \begin{defi}
 Un \textit{automa a stati finiti non-deterministico generalizzato} di alfabeto $A$ e insieme degli stati $Q$ è una tripla:
@@ -436,6 +438,7 @@ che non modicano l'insieme deciso dall'automa stesso.
 \label{fig:erase}
 \end{figure}
 \end{itemize}
+\subsection{Da automa ad espressione regolare (e viceversa)}
 A questo punto
 possiamo mostrare il seguente risultato.
 \begin{prop}

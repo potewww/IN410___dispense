@@ -1,32 +1,41 @@
-\babel@toc {english}{}\relax 
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
 \contentsline {section}{\numberline {1}Introduzione}{2}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Alfabeti e parole}{2}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Algoritmo e decidibilita'}{3}{subsection.1.2}%
-\contentsline {section}{\numberline {2}Automi a stati finiti}{5}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Definizione di automa a stati finiti.}{5}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Definizione di algoritmo associato ad un automa}{5}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Rappresentazione grafica degli automi}{8}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Automi come grafi}{8}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Matrici di adiacenza per grafi di automi finiti}{9}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Linguaggi regolari}{16}{section.4}%
-\contentsline {section}{\numberline {5}Automi non deterministici}{19}{section.5}%
-\contentsline {section}{\numberline {6}Espressioni regolari}{32}{section.6}%
-\contentsline {section}{\numberline {7}Macchin di Turing}{44}{section.7}%
-\contentsline {section}{\numberline {8}Teoria della complessità}{49}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Classi di complessità}{49}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Look-up Table}{53}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Relazioni tra le classi DTIME e DSPACE}{56}{subsection.8.3}%
-\contentsline {section}{\numberline {9}Prerequisiti}{58}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Definizioni Preliminari}{58}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Grafi e Matrici di Adiacenza}{58}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Grafi Etichettati}{59}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Semianelli e Serie Formali}{59}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}Matrici su Semianelli}{61}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Monoidi, Serie Formali e Algebre di Kleene}{62}{subsection.9.6}%
-\contentsline {section}{\numberline {10}Wolfram}{64}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Introduzione}{64}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Entropia}{67}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Libreria TM-lib}{69}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Automi}{70}{subsection.10.4}%
-\contentsline {section}{\numberline {11}Esercizi}{72}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Automi}{72}{subsection.11.1}%
+\contentsline {section}{\numberline {2}Automi a stati finiti}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Definizione di automa a stati finiti.}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Definizione di algoritmo associato ad un automa}{6}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Rappresentazione grafica degli automi}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Automi come grafi}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Matrici di adiacenza per grafi di automi finiti}{10}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Linguaggi regolari}{18}{section.4}%
+\contentsline {section}{\numberline {5}Automi non deterministici}{20}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Automi NDFA}{20}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Automi $\epsilon $-NDFA}{24}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Chiusura per concatenazione e star di Kleene}{28}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Espressioni regolari}{33}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Sintassi ed interpretazione}{33}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Automi non deterministici generalizzati}{35}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Da automa ad espressione regolare (e viceversa)}{37}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Macchina di Turing}{45}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Configurazione e algoritmo associato}{45}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Decidibilità per macchina di Turing}{48}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Teoria della complessità}{51}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Classi di complessità}{51}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Look-up Table}{55}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Relazioni tra le classi DTIME e DSPACE}{58}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Prerequisiti}{60}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Definizioni Preliminari}{60}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Grafi e Matrici di Adiacenza}{60}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Grafi Etichettati}{61}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Semianelli e Serie Formali}{61}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Matrici su Semianelli}{63}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Monoidi, Serie Formali e Algebre di Kleene}{64}{subsection.9.6}%
+\contentsline {section}{\numberline {10}Wolfram}{66}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Introduzione}{66}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Entropia}{69}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Libreria TM-lib}{71}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Automi}{72}{subsection.10.4}%
+\contentsline {section}{\numberline {11}Esercizi}{74}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Automi}{74}{subsection.11.1}%

@@ -1,3 +1,6 @@
+
+
+\subsection{Automi NDFA}
 Il concetto di computazione non deterministica viene introdotto per modellare la possibilità di effettuare
 transizioni multiple (in questo caso il non determinismo modella una sorta di computazione parallela) oppure
 la possibiltà di scegliere tra più possibili evoluzioni della computazione.
@@ -289,6 +292,8 @@ Poiché la computazione termina con l'insieme vuoto, la parola \(1101\) viene ri
 L'errore consiste nel fatto che l'automa è costretto a scegliere il \emph{primo} simbolo \(1\) come possibile inizio della sottostringa \(101\). 
 Nell'automa non deterministico originale, invece, il ramo che rimane nello stato \(q_0\) permette di ignorare il primo \(1\) e di scegliere il secondo \(1\) come inizio della sottostringa, accettando così correttamente la parola.
 \end{exam}
+
+\subsection{Automi $\epsilon$-NDFA}
 In vista, dell'obiettivo di mostrare che l'insieme 
 $X_1 \cdot X_2$ 
 ottenuto a partire da due insiemi 
@@ -574,6 +579,8 @@ la parola $10$ è rifiutata.
 
 \end{exam}
 
+\subsection{Chiusura per 
+concatenazione e star di Kleene}
 A questo punto possiamo mostrare che la 
 concatenazione di due insiemi decidibili per automa finito 
 non-deterministico è anch'essa decidibile per
