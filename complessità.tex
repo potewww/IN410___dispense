@@ -1,3 +1,6 @@
+
+
+\subsection{Classi di complessità}
 \begin{defi}
     Data una macchina di Turing $\mu$ di alfabeto $A$ e insieme degli stati $Q$
     \[
@@ -64,7 +67,9 @@ Si dice che $\mu$ si \textit{arresta in tempo T} (rispettivamente \textit{in spa
 uguale ad $n$ la macchina si arresta sull’input $w$ in tempo (risp. spazio) al più uguale a $T(n)$ (risp. $S(n)$).
 In formule
 \[
-T_\mu(w)\leq T(n), \quad \forall w \text{ tale che } {|w|\leq n}
+T_\mu(w)\leq T(n) \, 
+(\text{risp. }S_\mu(w)\leq S(n)),
+ \quad \forall w \text{ tale che } {|w|\leq n}
 \]
 \end{defi}
 \begin{rema}
@@ -89,9 +94,11 @@ viene detta \textit{funzione di complessità} se è una funzione non decrescente
 
 Siano $T$ ed $S$ funzioni di complessità.
 \begin{enumerate}
-    \item La macchina $\mu$ di alfabeto $A$ \emph{decide l'insieme $X$ in tempo $T$} (risp. \emph{spazio $S$}) se $\mu$ decide $X$ e se esiste un intero $N$ tale che per ogni intero $n \geq N$ e per ogni parola $w \in A^*$ di lunghezza al più uguale a $n$ la macchina $\mu$ si ferma a partire da $w$ in tempo al più uguale a $T(n)$ (risp. spazio al più uguale ad $S(n)$).
+    \item La macchina $\mu$ di alfabeto $A$ e insiemi di stati $Q$ \emph{decide l'insieme $X$ in tempo $T$} (risp. \emph{spazio $S$}) se $\mu$ decide $X$ e se esiste un intero $N$ tale che per ogni intero $n \geq N$ e per ogni parola $w \in A^*$ di lunghezza al più uguale a $n$ la macchina $\mu$ si ferma a partire da $w$ in tempo al più uguale a $T(n)$ (risp. spazio al più uguale ad $S(n)$).
 
-\item  La \textit{classe di complessità} $\mathrm{DTIME}_1^A(T)$ (risp. $\mathrm{DSPACE}_1^A(S)$) è l'insieme che contiene gli insiemi $X \subset A^*$ per i quali esiste almeno una macchina di Turing di alfabeto $A$ che decide $X$ in tempo $T$ (risp. in spazio $S$).
+\item  La \textit{classe di complessità} $\mathrm{DTIME}_1^{A,Q}(T)$ (risp. $\mathrm{DSPACE}_1^{A,Q}(S)$) è l'insieme che contiene gli insiemi $X \subset A^*$ per i quali esiste almeno una macchina di Turing di alfabeto $A$ che decide $X$ in tempo $T$ (risp. in spazio $S$).
+Quando non abbiamo interesse a specificare l'insieme degli stati scriveremo solo
+$\mathrm{DTIME}_1^{A}(T)$ e $\mathrm{DSPACE}_1^{A}(S)$.
 \end{enumerate}
 \end{defi}
 Con abuso di notazione, spesso scriveremo $T(n)$ invece che $T$.
@@ -227,6 +234,57 @@ Con abuso di notazione, spesso scriveremo $T(n)$ invece che $T$.
     effettivamente una funzione di complessità.
 \end{rema}
 
+\begin{exam}
+Calcoliamo a quale classe di complessita 
+$\mathrm{DTIME}_1^{A}$
+appartiene
+l'insieme $X=\{ 0^n1^n \, | \, n \in \mathbb N\}$ dell'esempio \ref{macchina turing 0n1n}.
+Per farlo usiamo la macchina di Turing esibita nell'esempio (vedi figura \ref{fig:turing-0n1n}).
+Se la parola appartiene ad $X$ sarà del tipo
+$w = 0^p 1^p$ per $p$ tale che $n = 2p$, e pertanto con $4p + 1$ passi di computazione si finisce per aver eliminato una
+coppia di caratteri. 
+Questo perchè:
+\begin{itemize}
+    \item si fa $1$ passo per leggere il primo ``$0$", sostituirlo con un blank e spostarsi a destra;
+    
+    \item si fanno $2p$ passi: $2p-1$ per scorrere tutti i restanti caratteri utili verso destra, più $1$ passo per leggere il blank di fine stringa e riposizionarsi a sinistra sull'ultimo ``$1$";
+
+    \item si fa $1$ passo per leggere l'ultimo ``$1$", sostituirlo con un blank e spostarsi a sinistra;
+    
+    \item si fanno $2p-1$ passi: $2p-2$ per scorrere a ritroso i caratteri centrali rimasti, più $1$ passo per leggere il blank iniziale e riposizionarsi a destra sul nuovo primo ``$0$".
+\end{itemize}
+Quindi, si effettuano
+\[1 + 2p + 1 + (2p - 2) + 1 = 4p + 1\]
+passi per eliminare un ``$1$" e uno ``$0$" partendo da una stringa lunga $2p$.
+Di conseguenza, alla seconda iterazione serviranno $4(p-1) + 1$
+e così via, fino a quando la stringa è lunga $2$ e si compiono quindi $4(p-(p-1))+1$ passi. 
+Pertanto il tempo di arresto $t_n$ per una parola di lunghezza $n = 2p$ sarà
+\begin{align*}
+t_n &= \sum_{i=0}^{p-1} (4(p-i) + 1) 
+= 4 \left( \sum_{i=0}^{p-1} (p-i) \right) + \sum_{i=0}^{p-1} 1 
+\\&=
+4 \left( \sum_{i=0}^{p-1} p -\sum_{i=0}^{p-1} i \right) + p
+=
+4 \left( p^2 - \frac{p(p-1)}{2}\right) + p
+\\&=
+4 \left( \frac{2p^2 - p^2 + p}{2}\right) + p
+\\&=
+2 \left( p^2 + p \right) + p
+\\& =2p^2 + 3p
+\end{align*}
+ovvero
+\[t_n = \frac{n^2}{2} + \frac{3}{2}n.\]
+Ovviamente se la parola non è accettata, allora il tempo di arresto sarà minore o uguale a $t_n$.
+Trattiamo anche il caso in cui la parola ha lunghezza dispari, ovvero quando la parola ha lunghezza $2p+1$. Il caso peggiore da considerare è quello in cui la parola ha una forma del tipo $0^p 1^{p+1}$. 
+In questo caso, usando lo stesso conto di prima, la parola viene analizzata e scartata in un tempo strettamente minore di $t_{2p+2}$.
+Di conseguenza, definendo la funzione di complessità seguente
+\[\begin{matrix}     t: & \mathbb N & \to & \mathbb N     \\     & n & \mapsto &     \begin{cases}         t_{n} & \text{se } n=2p         \\         t_{n+1} & \text{se } n=2p+1     \end{cases} \end{matrix}\]
+che corrisponde a
+\[\begin{matrix}     t: & \mathbb N & \to & \mathbb N     \\     & n & \mapsto &     \begin{cases}         \frac{n^2}{2} + \frac{3}{2}n & \text{se } n \text{ è pari}         \\         \frac{(n+1)^2}{2} + \frac{3}{2}(n+1)  & \text{se } n \text{ è dispari}     \end{cases} 
+\end{matrix}
+\]
+abbiamo che $X \in \mathrm{DTIME}_1^{A}(t)$.
+\end{exam}
 
 
 \subsection{Look-up Table}
@@ -366,23 +424,53 @@ Per ogni parola di lunghezza inferiore o uguale ad $N$ la computazione viene eff
 \begin{rema} Il significato di questo lemma è che ha senso analizzare la complessità (dell'algoritmo di decisione associato), soltanto relativamente ad un insieme $X$ infinito, poiché nel caso di un $X$ finito si può sempre decidere il problema in un numero di passi finito, pari alla lunghezza della sua codifica sull'alfabeto (associando alla parola uno stato ``ad hoc'' e facendo una transizione accettante in base alla parola). Inoltre, poiché è possibile decidere il complementare di un insieme decidibile (invertendo nella tabella lo stato accettante $q_F^1$ e quello non accettante $q_F^0$), in pratica la questione della decidibilità si pone solo quando $X$ è infinito e co-infinito (complementare infinito), mentre è banale quando l'insieme è finito oppure co-finito (complementare finito).
 \end{rema}
 
+\subsection{Relazioni tra le classi DTIME e DSPACE}
+
 \begin{prop}
-Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità le inclusioni seguenti sono sempre vere.
-
+Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità; le inclusioni seguenti sono sempre vere:
 \[
-\mathrm{DTIME}_1^A(T) \subset \mathrm{DSPACE}_1^A(T) \subset \bigcup_{\epsilon > 0} \mathrm{DTIME}_1^A(2^{\epsilon T}).
+\mathrm{DTIME}_1^{A,Q}(T) \subset \mathrm{DSPACE}_1^{A,Q}(T) \subset \bigcup_{\epsilon > 0} \mathrm{DTIME}_1^{A,Q}(2^{\epsilon T}).
 \]
-
-\begin{proof}
-
-    Fissato l'alfabeto $A = \{0,1\}$, sia $X \in \mathrm{DTIME}_1^A(T)$. Poiché ad ogni passo di computazione è accessibile una sola posizione allora la massima posizione raggiungibile in $T(n)$ passi di computazione non può essere maggiore di $T(n)$.
-
-Sia ora $\mu$ una macchina di Turing di alfabeto $A$ ed insieme degli stati $Q$, e sia $k = |A|$ e $d = |Q|$.
-
-Per ogni intero $s$ esistono $(2s+1)k^{2s+1}d$ configurazioni distinte tali che coinvolgono durante la computazione soltanto le posizioni di indice compreso tra $1-s$ e $1+s$. Ora se il costo in spazio della computazione di $\mu$ a partire da una parola di input $w$ è maggiorato da $s$ (con $s$ più grande della lunghezza $|w|$) allora tutte le configurazioni coinvolgono posizioni di indice compreso tra $1-s$ e $1+s$. Quindi se la lunghezza della computazione fosse e solo se maggiore di $(2s+1)k^{2s+1}d$ si avrebbe necessariamente una configurazione ripetuta e perciò l'insieme delle configurazioni di $\mu$ a partire da $w$ sarebbe periodico, si avrebbe non terminazione, contraddicendo il fatto che nel caso peggiore la computazione termina in un tempo finito (dalla definizione di decidibilità). Quindi il tempo di arresto è certamente maggiorato da $(2s+1)k^{2s+1}d$ che per una costante $c$ abbastanza grande indipendente da $s$ si ha che il tempo di arresto è maggiorato da $2^{cs}$.
-\end{proof}
 \end{prop}
 
-
-
-    
+\begin{proof}
+    Fissato l'alfabeto $A$, sia $X \in \mathrm{DTIME}_1^A(T)$. Poiché ad ogni passo di computazione la testina può spostarsi di al massimo una cella, la massima distanza raggiungibile a partire dalla posizione iniziale in $T(n)$ passi non può essere maggiore di $T(n)$. Di conseguenza, lo spazio utilizzato è banalmente limitato da $T(n)$, provando la prima inclusione.
+    \\
+    Dimostriamo ora la seconda inclusione. Sia $\mu$ una macchina di Turing di alfabeto $A$ e insieme degli stati $Q$, che decide un insieme in spazio $s = T(n)$. Poniamo $k = |A|$ e $d = |Q|$.
+    Una configurazione completa della macchina di Turing è univocamente determinata da tre elementi:
+    \begin{enumerate}
+        \item {la posizione della testina:} muovendosi al massimo di uno spazio $s$ a destra o a sinistra rispetto all'origine, 
+        la testina può visitare
+        al massimo $2s+1$ posizioni, le cella inziale corrisponendente a $0$ e $s$ caselle a destra oppure $s$ a sinistra.
+        \item {Il contenuto del nastro:}
+        da quanto detto sopra, le celle potenzialmente modificate sono al massimo $2s+1$. 
+        Ognuna di esse può contenere uno dei $k$ simboli dell'alfabeto, per un totale di $k^{2s+1}$ combinazioni possibili.
+        \item {Lo stato interno:} La macchina, ad ogni passo, può trovarsi in uno qualsiasi dei $d$ stati.
+    \end{enumerate}
+    Il numero massimo di configurazioni distinte possibili durante la computazione è dato dal prodotto di queste scelte:
+    \[
+    N_{\text{config}} = (2s+1) \cdot k^{2s+1} \cdot d
+    \]
+    Inoltre,
+    se la macchina computasse per un numero di passi strettamente maggiore di $N_{\text{config}}$, per il principio dei cassetti visiterebbe necessariamente almeno due volte la stessa identica configurazione. 
+    Essendo $\mu$ deterministica, questo implicherebbe l'ingresso in un ciclo infinito. 
+    Tuttavia, poiché $\mu$ decide un insieme, essa per definizione si arresta sempre
+    (sia nei casi accettanti sia nei casi non).
+    Si deduce quindi che il tempo di arresto $t$ è limitato dal numero di configurazioni:
+    \[
+    t \leq (2s+1) \cdot k^{2s+1} \cdot d
+    \]
+    Passando in base $2$, possiamo riscrivere il limite superiore come:
+    \[
+    t \leq 2^{\log_2(2s+1) + (2s+1)\log_2(k) + \log_2(d)}
+    \]
+    Poiché $\log_2(2s+1)$ cresce molto più lentamente di $s$, e i termini associati a $k$ e $d$ sono costanti dipendenti dalla macchina, per un $s$ sufficientemente grande l'intero esponente cresce asintoticamente in modo lineare rispetto a $s$. Esisterà quindi certamente una costante $c > 0$ tale per cui l'esponente sia maggiorato da $c \cdot s$.
+    Da cui si ottiene:
+    \[
+    t \leq 2^{cs}
+    \]
+    Sostituendo $s = T$ e ricordando che $\mu$ è arbitraria, si conclude che la classe spaziale è contenuta nell'unione delle classi temporali delimitate da $2^{cT}$, ovvero $2^{\epsilon T}$ per un opportuno $\epsilon > 0$.
+    Quindi, dato un $X \in \mathrm{DSPACE}_1^{A,Q}(T)$
+    dovrà esistere un $\epsilon \in \mathbb N$ tale che $X \in  \mathrm{DTIME}_1^{A,Q}(2^{\epsilon T})$.
+    Da cui segue la tesi.
+\end{proof}

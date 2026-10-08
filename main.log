@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  7 OCT 2026 23:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  8 OCT 2026 11:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -779,9 +779,8 @@ Library (tcolorbox): 'tcbposter.code.tex' version '6.4.1'
 ))
 \c@theo=\count349
 \c@ex=\count350
-)
 \c@sol=\count351
- (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count352
 \l__pdf_internal_box=\box109
@@ -916,39 +915,14 @@ Package hyperref Info: bookmark level for unknown prop defaults to 0 on input li
 
 
 [4]) (./automi_finiti.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.4 S
-     iano $A$ e $Q$ insiemi finiti, un \textit{automa finito deterministico}...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.19 U
-      na configurazione per automa a stati finiti di alfabeto $A$ e insieme ...
 
 [5]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.34 L
-      'algoritmo associato ad un automa di alfabeto $A$ e insieme degli stat...
-pdfTeX warning (ext4): destination with the same identifier (name{rema.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.71     L
-          'idea dietro la definizione precedente e/'
 Package hyperref Info: bookmark level for unknown exam defaults to 0 on input line 84.
 
 
 [6{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 
 [7]) (./rappresentazione grafica degli automi.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.14 D
-      ato un automa $(T,q_0,F)$ definito su un alafabeto $A$ e insieme di st...
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -983,18 +957,8 @@ Overfull \hbox (2.99716pt too wide) detected at line 630
 [14]
 
 [15]) (./linguaggi_regolari.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.8     S
-         ia $A$ un alfabeto e $X_1$ e $X_2$ due inisemi di parole su $A$, ov...
 
 [16]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.119     L
-           a proposizione precedente
 Overfull \hbox (1.08423pt too wide) in paragraph at lines 119--124
 [][]\OT1/cmr/bx/n/12 Osservazione 4.4. []\OT1/cmr/m/n/12 La propo-sizione prece-dente ri-mane vera an-che se si con-sid-era l'operazione
  []
@@ -1004,21 +968,6 @@ Overfull \hbox (1.08423pt too wide) in paragraph at lines 119--124
 [17]
 
 [18] (./automi_non_deterministici.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.11 S
-      iano $A$ e $Q$ insiemi finiti. Un \emph{automa finito non-deterministico}
-pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.25 U
-      na configurazione per un automa finito non-deterministico di alfabeto ...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.43 L
-      'algoritmo associato ad un automa finito non-deterministico di alfabet...
 Overfull \hbox (4.79523pt too wide) in paragraph at lines 43--44
 [][]\OT1/cmr/bx/n/12 Definizione 5.3 \OT1/cmr/m/n/12 (Al-go-ritmo as-so-ci-ato ad un Au-toma Finito Non-de-ter-min-is-tico)\OT1/cmr/bx/n/12 . []\OT1/cmr/m/n/12 L'algoritmo
  []
@@ -1031,27 +980,12 @@ Overfull \hbox (42.8481pt too wide) detected at line 105
  []
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{rema.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.108     U
-           n automa di questo tipo
-pdfTeX warning (ext4): destination with the same identifier (name{exam.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.123  C
-        onsideriamo $A=\{0,1\}$, $Q=\{ q_0,q_1,q_2,q_3\}$ e definiamo il seg...
 
 [20]
 
 [21]
 
 [22]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.7}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.304 S
-       iano $A$ e $Q$ insiemi finiti, un automa finito non-deterministico co...
 
 [23]
 
@@ -1072,28 +1006,8 @@ Package hyperref Info: bookmark level for unknown coro defaults to 0 on input li
 [30])
 
 [31] (./espressioniregolari.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.4     F
-         issiamo un alfabeto $A$. L'insieme $\mathcal E$ (anche indicato con...
-pdfTeX warning (ext4): destination with the same identifier (name{exam.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.20     A
-          lcune espressioni regolari sull’alfabeto $A= {0,1}$ sono:
-pdfTeX warning (ext4): destination with the same identifier (name{defi.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.37 P
-      er ogni espressione regolare $e\in E$, di alfabeto $A$, definiamo un'i...
 
 [32]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.91     C
-          hiaramente, riprendendo la precedente osservazione, con $\llbracke...
 Underfull \hbox (badness 10000) in paragraph at lines 112--112
 []\OT1/cmr/m/n/10.95 (a) |NDFA che de-cide
  []
@@ -1109,34 +1023,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 125--125
  []
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{defi.7}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.179 U
-       n \textit{automa a stati finiti non-deterministico generalizzato} di ...
 
 [33]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.8}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.198     D
-           ato un automa generalizzato $A=(T,q_0,F)$ con insieme di stati $Q$,
-pdfTeX warning (ext4): destination with the same identifier (name{defi.9}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.257     D
-           ato un automa generalizzato $A$, \textit{l'insieme $X \subset A^*$
 
 [34]
 
 [35]
 
 [36]
-pdfTeX warning (ext4): destination with the same identifier (name{prop.12}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.550 S
-       ia $A$ il grafo associato ad un automa
 Overfull \hbox (3.30812pt too wide) in paragraph at lines 572--582
 \OT1/cmr/m/n/12 sione con un'altra che ha la stessa in-ter-pre-tazione non cam-bia l'interpretazione dell'espressione
  []
@@ -1161,265 +1055,69 @@ Overfull \hbox (30.5201pt too wide) in paragraph at lines 1074--1078
 [42])
 
 [43] (./macchinadituring.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.66 \begin{defi} U
-                   na \emph{configurazione ad un nastro di alfabeto $A$ e in...
 
 [44]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.85      D
-           ato un alfabeto $A$ e un insieme finito di stati $Q$, la \emph{ma...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.115 S
-       ia $\mu$ una macchina di Turing di alfabeto $A$ e insieme degli stati...
 
 [45]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.142 D
-       ata una configurazione $(f,p,q) \in Conf_1^{A,Q}$ (nastro, posizione ...
 
 [46]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.7}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.169 S
-       ia $X \subset A^*$, allora $X$ si dice \emph{decidibile tramite Macch...
 
-[47]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.9}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.227     I
-           l modello di calcolo ``macchina di Turing'' è più potente del m...
-pdfTeX warning (ext4): destination with the same identifier (name{exam.11}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.249     V
-           ogliamo mostrare che l'insieme
+[47]) (./complessità.tex
 
-[48]) (./complessità.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.2     D
-         ata una macchina di Turing $\mu$ di alfabeto $A$ e insieme degli st...
-Underfull \hbox (badness 10000) in paragraph at lines 50--59
+[48]
+Underfull \hbox (badness 10000) in paragraph at lines 53--62
 
  []
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.60     S
-          ia $\mu$ una macchina di Turing sull’alfabeto $A$ e con insieme ...
 
 [49]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.71 V
-      orremmo dare una forma più precisa alle funzioni $T$ che danno inform...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.82  U
-       na funzione
-pdfTeX warning (ext4): destination with the same identifier (name{defi.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.90 S
-      iano $T$ ed $S$ funzioni di complessità.
 
 [50]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.99     L
-          'indice $1$ in basso utilizzato in questa notazione fa riferimento...
-pdfTeX warning (ext4): destination with the same identifier (name{rema.9}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.170     E
-           sistono comunque
 
 [51]
-Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input line 238.
-
 
 [52]
+Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input line 296.
+
 
 [53]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.347     I
-           l nome "Look-up Table" nasce per il seguente motivo.
-pdfTeX warning (ext4): destination with the same identifier (name{rema.12}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.366 \begin{rema} I
-                    l significato di questo lemma è che ha senso analizzare...
 
 [54]
-pdfTeX warning (ext4): destination with the same identifier (name{prop.13}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.370 S
-       ia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità le in...)
 
-[55] (./prerequisiti.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.9 L
-     a funzione $\mathbf{1}_X$ è la \textit{funzione caratteristica} (o ind...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.14 S
-      ia $X$ un insieme. Una \emph{partizione} di $X$ è una famiglia $\{X_i...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.25 U
-      n \emph{grafo orientato} (o diretto) è una coppia $G = (V, E)$, dove ...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.29 S
-      ia $G = (V, E)$ un grafo orientato finito, con i vertici ordinati come...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.41 S
-      ia $A$ un insieme, detto \emph{alfabeto}. Un \emph{grafo etichettato} ...
+[55]
 
-[56]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.8}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.63 U
-      n \emph{semigruppo} è una coppia $(S,\ast)$ dove $S$ è un insieme e
-pdfTeX warning (ext4): destination with the same identifier (name{defi.10}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.74 U
-      n \emph{semianello} è una struttura algebrica
+[56])
 
-[57]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.89 $
-      (\mathbb{N},+,\cdot)$, con le usuali operazioni di somma e prodotto tr...
+[57] (./prerequisiti.tex
 
 [58]
 
 [59]
+
+[60]
+
+[61]
 Overfull \hbox (31.63713pt too wide) in paragraph at lines 175--176
 []\OT1/cmr/m/n/12 il prodotto tra el-e-menti del monoide $\OML/cmm/m/it/12 m[]m[]$\OT1/cmr/m/n/12 , che ^^Re il prodotto del monoide $\OML/cmm/m/it/12 M$ \OT1/cmr/m/n/12 (Definizione [][]9.19[][]). 
  []
 
 
 
-[60])
+[62])
 
-[61] (./wolfram.tex
-pdfTeX warning (ext4): destination with the same identifier (name{defi.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.8 U
-     na \textit{espressione} è un oggetto della forma
-pdfTeX warning (ext4): destination with the same identifier (name{defi.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.15 D
-      ata una funzione $f$ e un'espressione $E[E_1,\dots,E_n]$, si può cost...
-pdfTeX warning (ext4): destination with the same identifier (name{rema.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.22 A
-      d esempio,
-pdfTeX warning (ext4): destination with the same identifier (name{defi.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.30 C
-      i sono due modi per introdurre regole nel kernel.
-pdfTeX warning (ext4): destination with the same identifier (name{rema.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.43 N
-      el secondo caso la valutazione avviene solo quando si chiama, ad esemp...
+[63] (./wolfram.tex
 \g__tcobox_out_iow=\write7
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[62]
-pdfTeX warning (ext4): destination with the same identifier (name{rema.8}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.60 P
-      er vedere le regole definite su un simbolo $f$ basta digitare
-pdfTeX warning (ext4): destination with the same identifier (name{defi.9}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.66 C
-      on \wolfram|List[1,2,3]| (o \wolfram|{1,2,3}|) si crea l'insieme ordin...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.10}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.69 I
-      l comando
-pdfTeX warning (ext4): destination with the same identifier (name{rema.11}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.79 \wolfram{Plus}
-                    fa la somma degli elementi, quindi
-pdfTeX warning (ext4): destination with the same identifier (name{rema.12}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.89 P
-      er eseguire più istruzioni in un certo ordine, le si separa con un ``...
-pdfTeX warning (ext4): destination with the same identifier (name{rema.13}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.92 E
-      sempio di codice:
+[64]
 \openout7 = `main.listing'.
 
  (./main.listing)
-pdfTeX warning (ext4): destination with the same identifier (name{defi.14}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.102 P
-       er estrarre elementi da una lista (o più in generale i rami dell'alb...
 
-[63]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.16}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.116 O
-       ltre all'assegnazione globale
-pdfTeX warning (ext4): destination with the same identifier (name{rema.17}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.125 H
-       ai già visto che il comando \wolfram{Apply[f, espressione]} sostitui...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.18}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.132 I
-       n Wolfram Language, il costrutto \wolfram{Module} viene utilizzato pe...
+[65]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1429,35 +1127,15 @@ Overfull \hbox (15.59825pt too wide) in paragraph at lines 148--149
 
 
 
-[64]
-pdfTeX warning (ext4): destination with the same identifier (name{defi.20}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.152 E
-       ntropia \dots % da completare
-pdfTeX warning (ext4): destination with the same identifier (name{defi.21}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.155 S
-       ia $(\Omega,\mathcal{F},\mathbb{P})$ uno spazio di probabilità e sia...
+[66]
 Overfull \hbox (13.0079pt too wide) in paragraph at lines 155--156
 [][]\OT1/cmr/bx/n/12 Definizione 10.21. []\OT1/cmr/m/n/12 Sia $(
 \OML/cmm/m/it/12 ; \OMS/cmsy/m/n/12 F\OML/cmm/m/it/12 ; \U/bbold/m/n/12 P\OT1/cmr/m/n/12 )$ uno spazio di prob-a-bilit^^Ra e sia $\OMS/cmsy/m/n/12 X$ \OT1/cmr/m/n/12 un in-sieme finito (l'alfabeto),
  []
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{defi.22}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.161 I
-       l \textit{contenuto informativo} (grezzo) di un esito $x\in\mathcal{X...
-pdfTeX warning (ext4): destination with the same identifier (name{defi.23}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.168 D
-       ate due variabili aleatorie $X\colon\Omega\to\mathcal{X}$ e $Y\colon\...
 
-[65]
+[67]
 Overfull \hbox (11.38565pt too wide) in paragraph at lines 198--199
 [][]\OT1/cmr/bx/n/12 Osservazione 10.27. []\OT1/cmr/m/n/12 L'entropia misura l'informazione me-dia, o equiv-a-len-te-mente l'incertezza,
  []
@@ -1470,7 +1148,7 @@ LaTeX Font Info:    Trying to load font information for U+bbm on input line 227.
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
 
-[66]
+[68]
 Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 []\OT1/cmr/m/n/12 Assegnare la di-rec-tory cor-rente, cio^^Re la cartella che con-tiene il pac-chetto: [][][][][][][][] 
  []
@@ -1484,7 +1162,7 @@ Overfull \hbox (0.35939pt too wide) in paragraph at lines 263--264
 
 
 
-[67]
+[69]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1492,40 +1170,40 @@ Overfull \hbox (0.35939pt too wide) in paragraph at lines 263--264
 
  (./main.listing)
 
-[68]
+[70]
 Overfull \hbox (23.26341pt too wide) in paragraph at lines 310--313
 [][]\OT1/cmr/bx/n/12 Osservazione 10.41. []Com-po-sizione di au-tomi: \OT1/cmr/m/n/12 Per stu-di-are sis-temi com-p-lessi o l'intersezione
  []
 
 )
 
-[69] (./esercizi/automi.tex
+[71] (./esercizi/automi.tex
 
-[70]
+[72]
 
-[71])
+[73])
 
-[72] (./main.aux)
+[74] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: CE971E3C433D588757C9ED445DF65436;4745.
+(rerunfilecheck)             Checksum: B985916AE1BABAB8BA37ABDE3650C7CA;5183.
  ) 
 Here is how much of TeX's memory you used:
- 36040 strings out of 473190
- 734639 string characters out of 5715800
- 1204999 words of memory out of 5000000
- 58163 multiletter control sequences out of 15000+600000
+ 36115 strings out of 473190
+ 735497 string characters out of 5715800
+ 1205152 words of memory out of 5000000
+ 58166 multiletter control sequences out of 15000+600000
  576680 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 103i,18n,108p,1098b,1645s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 103i,18n,108p,938b,1645s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (72 pages, 516530 bytes).
+Output written on main.pdf (74 pages, 524755 bytes).
 PDF statistics:
- 1140 PDF objects out of 1200 (max. 8388607)
- 976 compressed objects within 10 object streams
- 472 named destinations out of 1000 (max. 500000)
- 389 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1245 PDF objects out of 1440 (max. 8388607)
+ 1078 compressed objects within 11 object streams
+ 544 named destinations out of 1000 (max. 500000)
+ 405 words of extra memory for PDF output out of 10000 (max. 10000000)
 

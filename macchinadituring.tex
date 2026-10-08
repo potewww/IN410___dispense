@@ -246,6 +246,7 @@ e
     e si incrementa il puntatore di $m$.
 \end{rema}
 \begin{exam}
+    \label{macchina turing 0n1n}
     Vogliamo mostrare che l'insieme
     \[
     X = \{0^n1^n \, | \, n \in \mathbb N\}
@@ -304,22 +305,4 @@ e
 \caption{Macchina di Turing che decide $X=\{0^n1^n \mid n\geq 0\}$.}
 \label{fig:turing-0n1n}
 \end{figure}
-\begin{rema}
-Quanto è veloce la macchina 
-dell'esempio precedente?
-Per osservare il caso peggiore
-possiamo osservare il caso in cui la parola
-è lunga $2n$ con $n \in \mathbb N$.
-Il numero di passi per la computazione è
-\[
-\sum _{i =0}^n (4i +1)
-=
-4\sum_{i=0}^ni+n
-=
-4\frac{n(n+1)}{2}+n
-=
-2n(n+1)+n
-=
-2n^2+3n
-\]
-\end{rema}
+

@@ -67,3 +67,12 @@
 \newtheorem{coro}[theo]{Corollario}
 \newtheorem{ex}{Esercizio}
 \newtheorem{sol}{Soluzione esercizio}
+
+\makeatletter
+\AtBeginDocument{%
+  \def\theHtheo{\thesection.\arabic{theo}}%
+  \@for\@tempa:=defi,lemm,rema,prop,exam,coro\do{%
+    \expandafter\def\csname theH\@tempa\endcsname{\thesection.\arabic{theo}}%
+  }%
+}
+\makeatother
