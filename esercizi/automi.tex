@@ -217,3 +217,313 @@ oppure usando i grafi degli automi che decidono $X_1$ e $X_2$).
 \end{center}
 \end{sol}
 \end{ex}
+
+\newpage
+
+\begin{ex}
+Dato l'automa a stati finiti 
+deterministico $\mathcal{A}$ in 
+Figura~\ref{fig:es23-dfa}:
+\begin{enumerate}
+    \item calcolare l'espressione regolare associata all'automa $\mathcal{A}$;
+    \item a partire dall'espressione regolare trovata al punto precedente, fornire un automa non-deterministico equivalente ad $\mathcal{A}$.
+\end{enumerate}
+\end{ex}
+\begin{sol}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (2,0)    {$q_1$};
+\node[state, accepting] (q2) at (4,0)    {$q_2$};
+\node[state]            (q3) at (6,0)    {$q_3$};
+\node[state, accepting] (q4) at (8,0)    {$q_4$};
+\node[state]            (q5) at (10,0)   {$q_5$};
+\node[state]            (q7) at (7,-2.2) {$q_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni lungo la riga principale
+\draw[->] (q0) to[bend left=25] node {$0$} (q1);
+\draw[->] (q1) to[bend left=25] node {$1$} (q0);
+\draw[->] (q1) -- node {$0$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q3) -- node {$1$} (q4);
+\draw[->] (q4) -- node {$0$} (q5);
+
+% Archi di ritorno / salto
+\draw[->] (q2) to[bend left=30]  node {$1$} (q4);
+\draw[->] (q5) to[bend right=35] node[above] {$0$} (q2);
+\draw[->] (q5) to[bend right=45] node[above] {$1$} (q1);
+
+% Cappi
+\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+\draw[->] (q7) to[loop below, looseness=8] node {$0,1$} (q7);
+
+% Verso lo stato pozzo
+\draw[->] (q3) -- node[swap] {$0$} (q7);
+\draw[->] (q4) -- node {$1$} (q7);
+\end{tikzpicture}
+\caption{L'automa $\mathcal{A}$ dell'Esercizio 23.}
+\label{fig:es23-dfa}
+\end{figure}
+
+\medskip
+\noindent 
+Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nell'ordine, $q_0, q_1, q_7, q_3, q_5, q_4$ (e infine $q_2$).
+
+\begin{enumerate}
+    \item (Setup e Merge) Aggiungiamo un nuovo stato iniziale $q_0^*$ con una $\mathbb 1$-mossa verso $q_0$ e un nuovo stato finale $q_F^*$ con una $\mathbb 1$-mossa da ciascuno degli stati finali $q_2$ e $q_4$; gli stati $q_2$, $q_4$ non sono più finali. Le due etichette del cappio su $q_7$ vengono unite in $0+1$.
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.7, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (qs) at (0,0)   {$q_0^*$};
+    \node[state]            (q0) at (2,0)   {$q_0$};
+    \node[state]            (q1) at (4,0)   {$q_1$};
+    \node[state]            (q2) at (6,0)   {$q_2$};
+    \node[state]            (q3) at (8,0)   {$q_3$};
+    \node[state]            (q4) at (10,0)  {$q_4$};
+    \node[state]            (q5) at (12,0)  {$q_5$};
+    \node[state]            (q7) at (8,-2.2) {$q_7$};
+    \node[state, accepting] (qF) at (8,-5)  {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
+    \draw[->] (qs) -- node {$\mathbb 1$} (q0);
+    \draw[->] (q0) to[bend left=25] node {$0$} (q1);
+    \draw[->] (q1) to[bend left=25] node {$1$} (q0);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q2) to[bend left=30]  node {$1$} (q4);
+    \draw[->] (q5) to[bend right=35] node[above] {$0$} (q2);
+    \draw[->] (q5) to[bend right=45] node[above] {$1$} (q1);
+    \draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+    \draw[->] (q7) to[loop right, looseness=8] node {$0+1$} (q7);
+    \draw[->] (q3) -- node[swap] {$0$} (q7);
+    \draw[->] (q4) -- node[swap] {$1$} (q7);
+    \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
+    \draw[->] (q4) -- node {$\mathbb 1$} (qF);
+    \end{tikzpicture}
+    \caption{Automa generalizzato associato ad $\mathcal{A}$.}
+    \label{fig:es23-gen}
+    \end{figure}
+
+    \item (Erase $q_0$) I cammini $q_0^* \to q_0 \to q_1$ e $q_1 \to q_0 \to q_1$ diventano rispettivamente $\mathbb 1\,1^*\,0 = 1^*0$ e $1\,1^*\,0$ (cappio su $q_1$).
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.7, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (qs) at (0,0)   {$q_0^*$};
+    \node[state]            (q1) at (4,0)   {$q_1$};
+    \node[state]            (q2) at (6,0)   {$q_2$};
+    \node[state]            (q3) at (8,0)   {$q_3$};
+    \node[state]            (q4) at (10,0)  {$q_4$};
+    \node[state]            (q5) at (12,0)  {$q_5$};
+    \node[state]            (q7) at (8,-2.2) {$q_7$};
+    \node[state, accepting] (qF) at (8,-5)  {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
+    \draw[->] (qs) -- node {$1^*0$} (q1);
+    \draw[->] (q1) to[loop below, looseness=8] node {$11^*0$} (q1);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q2) to[bend left=30]  node {$1$} (q4);
+    \draw[->] (q5) to[bend right=35] node[above] {$0$} (q2);
+    \draw[->] (q5) to[bend right=45] node[above] {$1$} (q1);
+    \draw[->] (q7) to[loop right, looseness=8] node {$0+1$} (q7);
+    \draw[->] (q3) -- node[swap] {$0$} (q7);
+    \draw[->] (q4) -- node[swap] {$1$} (q7);
+    \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
+    \draw[->] (q4) -- node {$\mathbb 1$} (qF);
+    \end{tikzpicture}
+    \caption{Dopo l'eliminazione di $q_0$.}
+    \label{fig:es23-e0}
+    \end{figure}
+
+    \item (Erase $q_1$) I cammini $q_0^* \to q_1 \to q_2$ e $q_5 \to q_1 \to q_2$ (con cappio su $q_1$) diventano $1^*0(11^*0)^*0$ e $1(11^*0)^*0$. Quest'ultima va unita all'arco $q_5 \xrightarrow{0} q_2$ già presente: $1(11^*0)^*0+0$.
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.7, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (qs) at (0,0)   {$q_0^*$};
+    \node[state]            (q2) at (6,0)   {$q_2$};
+    \node[state]            (q3) at (8,0)   {$q_3$};
+    \node[state]            (q4) at (10,0)  {$q_4$};
+    \node[state]            (q5) at (12,0)  {$q_5$};
+    \node[state]            (q7) at (8,-2.2) {$q_7$};
+    \node[state, accepting] (qF) at (8,-5)  {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
+    \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q2) to[bend left=30]  node {$1$} (q4);
+    \draw[->] (q5) to[bend right=35] node[above] {$1(11^*0)^*0+0$} (q2);
+    \draw[->] (q7) to[loop right, looseness=8] node {$0+1$} (q7);
+    \draw[->] (q3) -- node[swap] {$0$} (q7);
+    \draw[->] (q4) -- node[swap] {$1$} (q7);
+    \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
+    \draw[->] (q4) -- node {$\mathbb 1$} (qF);
+    \end{tikzpicture}
+    \caption{Dopo l'eliminazione di $q_1$.}
+    \label{fig:es23-e1}
+    \end{figure}
+
+    \item (Erase $q_7$ e $q_3$) Lo stato $q_7$ è un pozzo (non raggiunge $q_F^*$), quindi si elimina senza modificare altri archi. Eliminando $q_3$ si ottiene un secondo arco $q_2 \xrightarrow{01} q_4$, che va unito a quello già presente: $1+01$.
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.7, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (qs) at (0,0)   {$q_0^*$};
+    \node[state]            (q2) at (4,0)   {$q_2$};
+    \node[state]            (q4) at (8,0)   {$q_4$};
+    \node[state]            (q5) at (12,0)  {$q_5$};
+    \node[state, accepting] (qF) at (6,-3)  {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
+    \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
+    \draw[->] (q2) -- node {$1+01$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q5) to[bend right=35] node[above] {$1(11^*0)^*0+0$} (q2);
+    \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
+    \draw[->] (q4) -- node {$\mathbb 1$} (qF);
+    \end{tikzpicture}
+    \caption{Dopo l'eliminazione di $q_7$ e $q_3$.}
+    \label{fig:es23-e3}
+    \end{figure}
+
+    \item (Erase $q_5$) Il cammino $q_4 \xrightarrow{0} q_5 \to q_2$ diventa $q_4 \xrightarrow{\,0(1(11^*0)^*0+0)\,} q_2$.
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.7, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (qs) at (0,0)   {$q_0^*$};
+    \node[state]            (q2) at (4,0)   {$q_2$};
+    \node[state]            (q4) at (8,0)   {$q_4$};
+    \node[state, accepting] (qF) at (6,-3)  {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
+    \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
+    \draw[->] (q2) -- node {$1+01$} (q4);
+    \draw[->] (q4) to[bend right=60] node[above] {$0(1(11^*0)^*0+0)$} (q2);
+    \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
+    \draw[->] (q4) -- node {$\mathbb 1$} (qF);
+    \end{tikzpicture}
+    \caption{Dopo l'eliminazione di $q_5$.}
+    \label{fig:es23-e5}
+    \end{figure}
+
+    \item (Erase $q_4$) Il cammino $q_2 \to q_4 \to q_2$ diventa un cappio su $q_2$, mentre $q_2 \to q_F^*$ raccoglie $\mathbb 1 + (1+01)\mathbb 1$.
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.7, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (qs) at (0,0)   {$q_0^*$};
+    \node[state]            (q2) at (5,0)   {$q_2$};
+    \node[state, accepting] (qF) at (5,-3)  {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
+    \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
+    \draw[->] (q2) to[loop above, looseness=8] node {$(1+01)\,0\,(1(11^*0)^*0+0)$} (q2);
+    \draw[->] (q2) -- node {$\mathbb 1+1+01$} (qF);
+    \end{tikzpicture}
+    \caption{Dopo l'eliminazione di $q_4$.}
+    \label{fig:es23-e4}
+    \end{figure}
+
+    \item (Erase $q_2$) Eliminando $q_2$ otteniamo un unico arco $q_0^* \to q_F^*$, la cui etichetta è l'espressione cercata:
+    \[
+        r = 1^*0(11^*0)^*0\Big[(1+01)\,0\,\big(1(11^*0)^*0+0\big)\Big]^*(\mathbb 1+1+01).
+    \]
+\end{enumerate}
+
+\medskip
+Affrontiamo il punto 2.
+Costruiamo un NFA per $r = S\,L^*\,T$, con $S = 1^*0(11^*0)^*0$, $L = (1+01)\,0\,(1(11^*0)^*0+0)$ e $T = \mathbb 1+1+01$. Lo stato $t_0$ (fine di $S$) è il nodo del ciclo $L^*$ ed è finale perché $T$ contiene $\mathbb 1$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.75, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Parte S
+\node[state]            (s0) at (0,0)    {$s_0$};
+\node[state]            (s1) at (3,0)    {$s_1$};
+\node[state]            (s2) at (3,2.4)  {$s_2$};
+% Nodo del ciclo L^* e coda T
+\node[state, accepting] (t0) at (6,0)    {$t_0$};
+\node[state]            (x)  at (7.5,-2.2) {$x$};
+\node[state, accepting] (f)  at (6,-4)   {$f$};
+% Parte L
+\node[state]            (v0) at (9,0)    {$v_0$};
+\node[state]            (y)  at (12,0)   {$y$};
+\node[state]            (h)  at (15,0)   {$h$};
+\node[state]            (k)  at (15,2.4) {$k$};
+
+\draw[->] ([shift={(-0.7,0.7)}]s0.center) -- (s0);
+
+% S = 1^*0(11^*0)^*0
+\draw[->] (s0) to[loop below, looseness=8] node {$1$} (s0);
+\draw[->] (s0) -- node {$0$} (s1);
+\draw[->] (s1) to[bend left=25] node {$1$} (s2);
+\draw[->] (s2) to[bend left=25] node {$0$} (s1);
+\draw[->] (s2) to[loop above, looseness=8] node {$1$} (s2);
+\draw[->] (s1) -- node {$0$} (t0);
+
+% T = eps + 1 + 01   (t_0 e' finale)  e  inizio di L = (1+01)...
+\draw[->] (t0) -- node[swap] {$1$} (f);
+\draw[->] (t0) -- node {$0$} (x);
+\draw[->] (x)  -- node[swap] {$1$} (f);
+\draw[->] (x)  -- node {$1$} (v0);
+\draw[->] (t0) -- node {$1$} (v0);
+
+% L = (1+01) 0 (1(11^*0)^*0 + 0)
+\draw[->] (v0) -- node {$0$} (y);
+\draw[->] (y)  to[bend right=40] node[above] {$0$} (t0);
+\draw[->] (y)  -- node {$1$} (h);
+\draw[->] (h)  to[bend left=25] node {$1$} (k);
+\draw[->] (k)  to[bend left=25] node {$0$} (h);
+\draw[->] (k)  to[loop above, looseness=8] node {$1$} (k);
+\draw[->] (h)  to[bend left=30] node[below] {$0$} (t0);
+\end{tikzpicture}
+\caption{NFA equivalente ad $\mathcal{A}$, costruito a partire da $r$.}
+\label{fig:es23-nfa}
+\end{figure}
+\end{sol}
