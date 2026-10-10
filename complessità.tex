@@ -480,121 +480,107 @@ Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità; le inclusioni 
 
 
 \subsection{Pumping lemma}
-Diamo ora l'enunciato del Pumping Lemma che fornisce una condizione necessaria soddisfatta da ogni insieme decidibile in tempo lineare per macchina di Turing. Mostrare che la condizione è soddisfatta non permette di dedurre che un insieme appartiene alla classe di complessità lineare. D'altra parte permette di collocare ogni insieme che non la soddisfa al di fuori di essa.
+In questa sezione, vogliamo dare l'enunciato del Pumping Lemma che fornisce una condizione necessaria soddisfatta da ogni insieme decidibile in tempo lineare per macchina di Turing. Mostrare che la condizione è soddisfatta non permette di dedurre che un insieme appartiene alla classe di complessità lineare. D'altra parte permette di collocare ogni insieme che non la soddisfa al di fuori di essa.
+\\ \\
+Prima di dare l'enunciato,
+diamo una definizione e mostriamo un lemma
+tecnico cruciale per la dimostrazione
+del Pumping lemma.
+\begin{defi}[Sequenza degli stati di passaggio]\label{defi:sequenza-passaggio}
+Sia $\mu$ una macchina di Turing con insieme di stati $Q$, la cui testina parte dalla prima cella del nastro, e sia
+\[
+(c) = (c_0, c_1, \dots, c_T), \qquad c_i = (f_i, p_i, q_i),
+\]
+la computazione di $\mu$ su una parola $w \in A^*$ con $|w| = n$, dove $f_i$ è il contenuto del nastro, $p_i$ la posizione della testina e $q_i \in Q$ lo stato all'istante $i$.
 
-L'enunciato è un po' involuto, e bisogna fare attenzione ai quantificatori (esiste-per ogni-esiste-per ogni):
-\begin{lemm}[Pumping Lemma]
-Supponiamo che $X \in \text{DTIME}^{A,Q}_1(k n)$, allora esiste $P > 0$ tale che per ogni $w \in X$ se $|w| = n \ge P$ esiste una fattorizzazione di $w = uxv$ con $u, x, v \in A^*$ e $|x| > 0$ e $|ux| \le P$ per cui per ogni $m \ge 0$, $u x^m v \in X$.
+Fissata una cella $p \ge 1$, diciamo che l'istante $i$ (con $0 \le i < T$) è un \emph{passaggio sulla cella $p$} se la testina attraversa il bordo tra la cella $p$ e la cella $p+1$ nel passaggio da $c_i$ a $c_{i+1}$, ovvero se
+\[
+(p_i, p_{i+1}) = (p, p+1) \quad \text{oppure} \quad (p_i, p_{i+1}) = (p+1, p).
+\]
+Siano $i_1 < i_2 < \dots < i_r$ gli istanti di passaggio sulla cella $p$. La \emph{sequenza degli stati di passaggio} di $(c)$ nella cella $p$ è
+\[
+S_w(p) := (q_{i_1+1}, q_{i_2+1}, \dots, q_{i_r+1}) \in Q^*,
+\]
+dove $q_{i_s+1}$ è lo stato in cui si trova la macchina subito dopo l'$s$-esimo passaggio. La sua lunghezza $|S_w(p)| = r$ è il \emph{numero di passaggi} nella cella $p$.
+\end{defi}
+
+\begin{lemm}[Ripetizione delle sequenze di passaggio]\label{lemm:ripetizione}
+Sia $\mu$ una macchina di Turing con insieme di stati $Q$, $d = |Q| \ge 2$, e sia $k \ge 1$ un intero. Sia $w \in A^*$ con $|w| = n$ tale che la computazione di $\mu$ su $w$ abbia lunghezza al più $kn$ e che
+\[
+n \ge (k+1)\,d^{k+1}.
+\]
+Allora esistono due posizioni $1 \le p_1 < p_2 \le n$ tali che
+\[
+S_w(p_1) = S_w(p_2).
+\]
 \begin{proof}
-Per ipotesi sappiamo che esiste una macchina $\mu$ e un intero $N$ tale che per ogni $n \ge N$, la computazione 
-\[ 
-(c) = (c_0, c_1, \dots, c_T), 
-\]
-di $\mu$ a partire da una parola $w \in A^*$ con 
-$|w| = n$ ha una lunghezza maggiorata da 
-$kn$ ($T$ esiste sempre finito, per la definizione della classe di 
-complessità $\text{DTIME}$).
-Fissiamo anche $d = |Q|$.
-Inoltre abbiamo che ogni configurazione è 
-$c_i = (f_i, p_i, q_i)$ e quindi, 
-fissata una posizione $p$ sul nastro, abbiamo una sequenza di stati:
-\[ 
-S_w(p) := (q_{i_1}, q_{i_2}, \dots) \quad \text{con } q_{i_s} \in Q 
-\]
-dove $q_{i_s}$ è ottenuta dalle configurazioni $c_i$ in funzione della posizione sul nastro occupata dall'input $w$ ($1 \le p \le n$), secondo lo schema seguente:
-\[ 
-c_{i_s} = (f_{i_s}, p, q_{i_s}) \quad \text{e} \quad c_{i_s+1} = (f_{i_s+1}, p+1, q_{i_s+1}) 
-\]
-oppure
-\[ 
-c_{i_s} = (f_{i_s}, p+1, q_{i_s}) \quad \text{e} \quad c_{i_s+1} = (f_{i_s+1}, p, q_{i_s+1}), 
-\]
-ovvero quando si ha un passaggio sulla casella $p$.
-Chiameremo $S_w(p)$ la {sequenza degli stati di passaggio} della computazione $(c)$ nella cella $p$ e supponiamo per assurdo che la computazione abbia sempre sequenze di passaggio distinte.
+Supponiamo per assurdo che le sequenze $S_w(1), \dots, S_w(n)$ siano a due a due distinte.
 \\
-Classifichiamo ora le celle in posizione da $1$ a $n$ 
-in base al numero di passaggi effettuati in quella cella 
-durante la computazione: sia $N_i$ la cardinalità dell'insieme di celle su cui si effettuano $i$ passaggi:
-\[ 
-N_i = |\{p \mid 1 \le p \le n, |S_w(p)| = i\}|. 
+Sia $N_i$ il numero di celle $p$ con $1 \le p \le n$ in cui si effettuano esattamente $i$ passaggi:
+\[
+N_i = |\{p \mid 1 \le p \le n,\ |S_w(p)| = i\}|,
+\qquad n = \sum_{i=0}^{\infty} N_i.
 \]
-Ovviamente dalla definizione avremo che:
-\[ 
-n = \sum_{i=0}^{\infty} N_i. 
+Il prodotto $iN_i$ conta i passi di computazione che attraversano il bordo di una cella con esattamente $i$ passaggi. Sommando su tutti gli $i$ si ottiene il numero totale di attraversamenti nelle celle $1,\dots,n$, che non supera la lunghezza della computazione, cioè $kn$:
+\[
+\sum_{i=0}^{\infty} iN_i \le kn.
 \]
-Notiamo che il prodotto $i N_i$ quantifica i passi di computazione avvenuti esclusivamente nelle celle con una sequenza di passaggio di lunghezza $i$. Se sommiamo questo termine per ogni $i \ge 0$, calcoliamo il totale dei passi eseguiti nelle posizioni di input da $1$ a $n$. Tale somma deve necessariamente essere minore o uguale alla lunghezza dell'intera computazione, la quale è maggiorata per ipotesi da $kn$. Ne consegue che:
-\[ 
-\sum_{i=0}^{\infty} i N_i \le kn. 
-\]
-Considerando poi solo le celle con un numero di passaggi strettamente superiore a $k$, avremo l'ovvia maggiorazione:
-\[ 
-\sum_{i=k+1}^{\infty} i N_i \le \sum_{i=0}^{\infty} i N_i; 
-\]
-minorando poi il numero di passaggi con $(k+1)$ otteniamo la disuguaglianza:
-\begin{equation} \label{eq:minorazione_k}
-(k+1) \sum_{i=k+1}^{\infty} N_i \le 
- \sum_{i=k+1}^{\infty} iN_i 
-\le
-\sum_{i=0}^{\infty} i N_i \le kn
+Minorando $i$ con $k+1$ sulle celle con più di $k$ passaggi si ottiene
+\begin{equation}\label{eq:minorazione_k}
+(k+1)\sum_{i=k+1}^{\infty} N_i \le \sum_{i=k+1}^{\infty} iN_i \le \sum_{i=0}^{\infty} iN_i \le kn.
 \end{equation}
-Supponiamo ora per assurdo
-che tutte le sequenze di passaggio siano distinte
-e consideriamo 
-il numero di celle in cui si hanno al più $k$ passaggi. Queste devono essere in numero inferiore a $d^{k+1}$ se il numero di stati è $d$ (infatti $d^i$ è il numero di possibili sequenze di passaggio distinte di lunghezza $i$, e la loro somma per le lunghezze $i$ che vanno da $1$ a $k$ è $\sum_{i=1}^k d^i \le d^{k+1}$).
-Quindi, se classifichiamo le $n$ posizioni 
-dell'input tra quelle che hanno sequenze di lunghezza inferiore a $k+1$ (sia $N^-$ il numero di queste posizioni) e quelle che hanno sequenze di passaggio di lunghezza maggiore o uguale a $k+1$ (sia $N^+$ il numero di queste posizioni), sappiamo che $N^- < d^{k+1}$. Da questo discende che $N^+ = n - N^- > n - d^{k+1}$; poiché per definizione $N^+ = \sum_{i=k+1}^{\infty} N_i$ abbiamo che:
-\begin{equation} \label{eq:maggiorazione_n}
-\sum_{i=k+1}^{\infty} N_i > n - d^{k+1}.
+Siano $N^-$ il numero di celle con al più $k$ passaggi e $N^+ = \sum_{i=k+1}^{\infty} N_i$ il numero delle altre. Per l'ipotesi di assurdo le celle contate da $N^-$ hanno sequenze a due a due distinte, di lunghezza $0,1,\dots,k$. Poiché ci sono $d^i$ sequenze di lunghezza $i$ e $d \ge 2$,
+\[
+N^- \le \sum_{i=0}^{k} d^i = \frac{d^{k+1}-1}{d-1} \le d^{k+1}-1 < d^{k+1}.
+\]
+Quindi
+\begin{equation}\label{eq:maggiorazione_n}
+\sum_{i=k+1}^{\infty} N_i = N^+ = n - N^- > n - d^{k+1}.
 \end{equation}
-Mettendo insieme la disuguaglianza \eqref{eq:minorazione_k} con la \eqref{eq:maggiorazione_n} otteniamo:
-\[ 
-n - d^{k+1} < \sum_{i=k+1}^{\infty} N_i \le \frac{kn}{k+1}, 
+Combinando la \eqref{eq:minorazione_k} con la \eqref{eq:maggiorazione_n} otteniamo
+\[
+n - d^{k+1} < \frac{kn}{k+1},
 \]
-quindi
-\[ 
-(n - d^{k+1})(k+1) < kn 
+cioè $(k+1)(n - d^{k+1}) < kn$, ovvero
+\[
+n < (k+1)\,d^{k+1},
 \]
-e dunque
-\[ 
-n(k+1) - kn < (k+1)d^{k+1} 
-\]
-e infine
-\[ 
-n < (k+1)d^{k+1}. 
-\]
-Quindi,
-scegliendo una parola $w$
-di lunghezza $n$ tale che 
-$n > (k+1)d^{k+1}$,
-contraddiciamo l'ipotesi (di assurdo),
-e quindi esistono almeno due sequenze di passaggio uguali.
-
-Supponiamo allora che $\mu$ accetti una parola $w$ per la quale le posizioni $p_1$ e $p_2$ (con $p_1 < p_2$) hanno le stesse sequenze di passaggio. Indichiamo con $u$ la sottoparola di $w$ formata dalle prime $p_1$ celle, con $x$ la parola formata dalle posizioni da $p_1+1$ fino a $p_2$, e con $v$ quella formata dalle posizioni da $p_2+1$ fino ad $n$. Abbiamo così fattorizzato $w = uxv$.
-
-Per la parola $uxxv$ la macchina $\mu$ avrà una computazione:
-\[ 
-(c'_i) = (c'_0, c'_1, \dots, c'_m, \dots) 
-\]
-tale che le sequenze di passaggio soddisfano:
-\[ 
-S_{uxxv}(p) = 
-\begin{cases} 
-S_{uxv}(p) & \text{se } p \le p_1 \\ 
-S_{uxv}(p - p_2 + p_1) & \text{se } p \ge p_2.
-\end{cases} 
-\]
-
-Da quest'ultima relazione si deduce che, associando allo stato presente nelle sequenze di passaggio anche il simbolo sul nastro $f_i(p_i)$, qualora la sequenza di passaggio coincida anche con il carattere sul nastro, si ha una ripetizione delle transizioni effettuate da quel momento in poi.
-
-Più precisamente, supponiamo che a partire da $uxv$ la computazione entri per la prima volta nel segmento di parola $x$ (che coinvolge le celle con indici che vanno da $p_1+1$ a $p_2$) provenendo da sinistra. Dopo un certo numero di transizioni si uscirà dalla zona $x$ passando per la cella $p_2$; ma per ipotesi, la prima volta che si transita per $p_2$ si effettuerà la stessa transizione compiuta in $p_1$, e dunque nel caso della parola di input $uxxv$ si ripeteranno gli stessi passi di transizione avvenuti nella fase precedente.
-
-Quando finalmente si uscirà dalla seconda zona $x$, la macchina effettuerà le stesse transizioni fatte nell'attraversamento della prima occorrenza di $x$. Analogamente, si otterrà un comportamento simile per il caso in cui si tornerà nell'ultima casella della seconda occorrenza di $x$.
-
-Comunque, alla fine della computazione, lo stato terminale raggiunto dalla computazione che parte dalla parola $uxv$ sarà lo stesso di quella con input $uxxv$. Inoltre, l'argomento è immediatamente applicabile alle parole con un numero arbitrario $m$ di ripetizioni della sottoparola $x$, ovvero $ux^mv$.
-
-Per costruzione $x$ non è la parola vuota ($|x| > 0$) e si può supporre che $|ux| \le \sup(N, (k+1)d^{k+1})$ considerando la prima ripetizione possibile di sequenze di passaggio, che nel caso peggiore dovrà accadere quando si raggiunge una lunghezza $n > (k+1)d^{k+1}$.
+in contraddizione con l'ipotesi $n \ge (k+1)d^{k+1}$. Dunque l'ipotesi di assurdo è falsa e due posizioni $p_1 < p_2$ hanno la stessa sequenza di passaggio.
 \end{proof}
 \end{lemm}
+Siamo ora pronti per la dimostrazione del lemma.
+\begin{lemm}[Pumping Lemma]\label{lemm:pumping}
+Supponiamo che $X \in \text{DTIME}^{A,Q}_1(kn)$. Allora esiste $P > 0$ tale che per ogni $w \in X$ con $|w| = n \ge P$ esiste una fattorizzazione $w = uxv$ con $u, x, v \in A^*$ e $|x| > 0$ per cui, per ogni $m \ge 0$,
+\[
+u x^m v \in X.
+\]
+\begin{proof}
+Per ipotesi esistono una macchina $\mu$ con insieme di stati $Q$ che decide $X$ e un intero $N$ tali che, per ogni $n \ge N$ e ogni $w \in A^*$ con $|w| = n$, la computazione di $\mu$ su $w$ ha lunghezza al più $kn$. Sia $d = |Q|$ (che si può supporre $\ge 2$, aggiungendo se serve uno stato inutilizzato) e poniamo
+\[
+P := \max\bigl((k+1)d^{k+1},\, N\bigr).
+\]
+Sia $w \in X$ con $|w| = n \ge P$. Allora $n \ge N$, quindi la computazione di $\mu$ su $w$ ha lunghezza al più $kn$, e $n \ge (k+1)d^{k+1}$. Sono esattamente le ipotesi del Lemma~\ref{lemm:ripetizione}, che fornisce due posizioni $1 \le p_1 < p_2 \le n$ tali che
+\[
+S := S_w(p_1) = S_w(p_2).
+\]
+Siano $u$ la parola formata dalle prime $p_1$ celle, $x$ quella formata dalle celle da $p_1+1$ a $p_2$, e $v$ quella formata dalle celle da $p_2+1$ a $n$. Allora $w = uxv$ e $|x| = p_2 - p_1 > 0$. 
+Sia $r = |S|$ e siano $s_1, \dots, s_r$ gli stati di $S$, nell'ordine. Mostriamo che $ux^mv \in X$ per ogni $m \ge 0$, distinguendo i casi.
+\begin{enumerate}
+\item[$m = 1$:] È la parola $w = uxv$, che appartiene a $X$ per ipotesi.
+
+\item[$m = 2$:] Più precisamente, supponiamo che a partire da $uxv$ la computazione entri per la prima volta nel segmento di parola $x$ (che coinvolge le celle con indici che vanno da $p_1+1$ a $p_2$) provenendo da sinistra: lo fa attraversando il bordo $p_1$, nello stato $s_1$. Dopo un certo numero di transizioni la testina uscirà dalla zona $x$ tornando a sinistra attraverso $p_1$ oppure attraversando $p_2$; finché non attraversa $p_2$ per la prima volta, ogni uscita e rientro attraverso $p_1$ avviene come in $uxv$. Per ipotesi la prima volta che si attraversa $p_2$ lo si fa nello stato $s_1$, lo stesso con cui si era entrati in $x$ la prima volta da $p_1$. Dunque, nel caso della parola di input $uxxv$, la macchina entra nella seconda copia di $x$ nello stato $s_1$ e ripete gli stessi passi di transizione avvenuti nel passaggio precedente.
+
+Quando finalmente si uscirà dalla seconda zona $x$ ed entrerà nel fattore $v$ (dato che la testina non può saltare celle, per passare da $u$ a $v$ deve attraversare sia $p_1$ sia $p_2$; inoltre, poiché $S_w(p_1) = S_w(p_2)$, il $j$-esimo passaggio avviene nella stessa direzione e nello stesso stato $s_j$ su entrambi i bordi), lo farà nello stato $s_1$, cioè lo stesso con cui entrava in $v$ durante la computazione su $uxv$, e la macchina effettuerà le stesse transizioni fatte nell'attraversamento di $v$ in quella computazione. Analogamente si otterrà un comportamento identico quando la testina tornerà indietro: ogni volta che da $v$ rientra nella seconda copia di $x$ lo fa nello stato $s_j$ con cui rientrava in $x$ da destra durante la computazione su $uxv$; ogni volta che dalla seconda copia di $x$ esce verso sinistra, entra nella prima copia nello stato $s_j$ con cui da $x$ si rientrava in $u$; e così via. In ogni attraversamento di ciascuno dei bordi $p_1$ e $p_2$ ciascuna parte riceve dall'altra gli stessi stati, nello stesso ordine, di quelli che riceveva in $uxv$, perché le due sequenze di passaggio coincidono.
+
+Comunque, alla fine della computazione, lo stato terminale raggiunto dalla computazione che parte dalla parola $uxv$ sarà lo stesso di quella con input $uxxv$. Infatti i passaggi sul bordo alternano da sinistra a destra e da destra a sinistra, a partire da quello verso destra: se $r$ è pari la testina termina a sinistra del bordo $p_1$, dove il comportamento è quello di $uxv$ a sinistra di $p_1$; se $r$ è dispari termina a destra del bordo $p_2$, dove il comportamento è quello di $uxv$ a destra di $p_2$. In entrambi i casi la macchina si ferma nello stesso stato che in $uxv$, e dunque $uxxv \in X$.
+\item[$m \ge 3$:] L'argomento del caso $m = 2$ è immediatamente applicabile alle parole con un numero arbitrario di ripetizioni della sottoparola $x$: ogni copia aggiuntiva di $x$ viene attraversata con gli stessi stati, e la sequenza di passaggio su ciascun bordo tra due copie consecutive e sul bordo che segue $u$ resta $S$. Lo stato terminale si determina con lo stesso ragionamento sulla parità di $r$, quindi $ux^mv \in X$.
+
+\item[$m = 0$:] Si ottiene $uv$ omettendo il segmento $x$. Il bordo tra $u$ e $v$ viene attraversato con gli stati $s_1, \dots, s_r$, che sono tanto quelli ricevuti da $u$ al bordo $p_1$ quanto quelli ricevuti da $v$ al bordo $p_2$. Dunque $u$ e $v$ si comportano come in $uxv$, e per il ragionamento sulla parità di $r$ lo stato terminale è ancora quello di $uxv$. Quindi $uv \in X$.
+\end{enumerate}
+Questo prova l'affermazione, e dunque $ux^mv \in X$ per ogni $m \ge 0$.
+\end{proof}
+\end{lemm}
+
 \begin{rema}
     Il Pumping lemma è molto utile per mostrare che un insieme non è decidibile in tempo lineare (basta considerare la proposizione contronominale dell'enunciato).
     In particolare, visto che ogni insieme DFA-decidibile appartiene alla classe di complessità lineare, il lemma permette di mostrare che un insieme non è DFA-decidibile.
