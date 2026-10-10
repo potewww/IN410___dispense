@@ -299,7 +299,7 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
     \node[state, accepting] (qF) at (8,-5)  {$q_F^*$};
 
     \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
-    \draw[->] (qs) -- node {$\mathbb 1$} (q0);
+    \draw[->, very thick] (qs) -- node {$\mathbb 1$} (q0);
     \draw[->] (q0) to[bend left=25] node {$0$} (q1);
     \draw[->] (q1) to[bend left=25] node {$1$} (q0);
     \draw[->] (q1) -- node {$0$} (q2);
@@ -310,11 +310,11 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
     \draw[->] (q5) to[bend right=35] node[above] {$0$} (q2);
     \draw[->] (q5) to[bend right=45] node[above] {$1$} (q1);
     \draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
-    \draw[->] (q7) to[loop right, looseness=8] node {$0+1$} (q7);
+    \draw[->, very thick] (q7) to[loop right, looseness=8] node {$0+1$} (q7);
     \draw[->] (q3) -- node[swap] {$0$} (q7);
     \draw[->] (q4) -- node[swap] {$1$} (q7);
-    \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
-    \draw[->] (q4) -- node {$\mathbb 1$} (qF);
+    \draw[->, very thick] (q2) -- node[swap] {$\mathbb 1$} (qF);
+    \draw[->, very thick] (q4) -- node {$\mathbb 1$} (qF);
     \end{tikzpicture}
     \caption{Automa generalizzato associato ad $\mathcal{A}$.}
     \label{fig:es23-gen}
@@ -339,8 +339,8 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
     \node[state, accepting] (qF) at (8,-5)  {$q_F^*$};
 
     \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
-    \draw[->] (qs) -- node {$1^*0$} (q1);
-    \draw[->] (q1) to[loop below, looseness=8] node {$11^*0$} (q1);
+    \draw[->, very thick] (qs) -- node {$1^*0$} (q1);
+    \draw[->, very thick] (q1) to[loop below, looseness=8] node {$11^*0$} (q1);
     \draw[->] (q1) -- node {$0$} (q2);
     \draw[->] (q2) -- node {$0$} (q3);
     \draw[->] (q3) -- node {$1$} (q4);
@@ -376,12 +376,12 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
     \node[state, accepting] (qF) at (8,-5)  {$q_F^*$};
 
     \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
-    \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
+    \draw[->, very thick] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
     \draw[->] (q2) -- node {$0$} (q3);
     \draw[->] (q3) -- node {$1$} (q4);
     \draw[->] (q4) -- node {$0$} (q5);
     \draw[->] (q2) to[bend left=30]  node {$1$} (q4);
-    \draw[->] (q5) to[bend right=35] node[above] {$1(11^*0)^*0+0$} (q2);
+    \draw[->, very thick] (q5) to[bend right=35] node[above] {$1(11^*0)^*0+0$} (q2);
     \draw[->] (q7) to[loop right, looseness=8] node {$0+1$} (q7);
     \draw[->] (q3) -- node[swap] {$0$} (q7);
     \draw[->] (q4) -- node[swap] {$1$} (q7);
@@ -409,7 +409,7 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
 
     \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
     \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
-    \draw[->] (q2) -- node {$1+01$} (q4);
+    \draw[->, very thick] (q2) -- node {$1+01$} (q4);
     \draw[->] (q4) -- node {$0$} (q5);
     \draw[->] (q5) to[bend right=35] node[above] {$1(11^*0)^*0+0$} (q2);
     \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
@@ -436,7 +436,7 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
     \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
     \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
     \draw[->] (q2) -- node {$1+01$} (q4);
-    \draw[->] (q4) to[bend right=60] node[above] {$0(1(11^*0)^*0+0)$} (q2);
+    \draw[->, very thick] (q4) to[bend right=60] node[above] {$0(1(11^*0)^*0+0)$} (q2);
     \draw[->] (q2) -- node[swap] {$\mathbb 1$} (qF);
     \draw[->] (q4) -- node {$\mathbb 1$} (qF);
     \end{tikzpicture}
@@ -459,8 +459,8 @@ Usiamo l'algoritmo di eliminazione degli stati. Gli stati da eliminare sono, nel
 
     \draw[->] ([shift={(-0.7,0.7)}]qs.center) -- (qs);
     \draw[->] (qs) -- node {$1^*0(11^*0)^*0$} (q2);
-    \draw[->] (q2) to[loop above, looseness=8] node {$(1+01)\,0\,(1(11^*0)^*0+0)$} (q2);
-    \draw[->] (q2) -- node {$\mathbb 1+1+01$} (qF);
+    \draw[->, very thick] (q2) to[loop above, looseness=8] node {$(1+01)\,0\,(1(11^*0)^*0+0)$} (q2);
+    \draw[->, very thick] (q2) -- node {$\mathbb 1+1+01$} (qF);
     \end{tikzpicture}
     \caption{Dopo l'eliminazione di $q_4$.}
     \label{fig:es23-e4}

@@ -284,6 +284,9 @@ che corrisponde a
 \end{matrix}
 \]
 abbiamo che $X \in \mathrm{DTIME}_1^{A}(t)$.
+Mostreremo anche che $X$ non appartiene a nessuna classe
+di complessità lineare
+(vedi proposizione \ref{0n1n non compl lineare}).
 \end{exam}
 
 
@@ -474,3 +477,157 @@ Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità; le inclusioni 
     dovrà esistere un $\epsilon \in \mathbb N$ tale che $X \in  \mathrm{DTIME}_1^{A,Q}(2^{\epsilon T})$.
     Da cui segue la tesi.
 \end{proof}
+
+
+\subsection{Pumping lemma}
+Diamo ora l'enunciato del Pumping Lemma che fornisce una condizione necessaria soddisfatta da ogni insieme decidibile in tempo lineare per macchina di Turing. Mostrare che la condizione è soddisfatta non permette di dedurre che un insieme appartiene alla classe di complessità lineare. D'altra parte permette di collocare ogni insieme che non la soddisfa al di fuori di essa.
+
+L'enunciato è un po' involuto, e bisogna fare attenzione ai quantificatori (esiste-per ogni-esiste-per ogni):
+\begin{lemm}[Pumping Lemma]
+Supponiamo che $X \in \text{DTIME}^{A,Q}_1(k n)$, allora esiste $P > 0$ tale che per ogni $w \in X$ se $|w| = n \ge P$ esiste una fattorizzazione di $w = uxv$ con $u, x, v \in A^*$ e $|x| > 0$ e $|ux| \le P$ per cui per ogni $m \ge 0$, $u x^m v \in X$.
+\begin{proof}
+Per ipotesi sappiamo che esiste una macchina $\mu$ e un intero $N$ tale che per ogni $n \ge N$, la computazione 
+\[ 
+(c) = (c_0, c_1, \dots, c_T), 
+\]
+di $\mu$ a partire da una parola $w \in A^*$ con 
+$|w| = n$ ha una lunghezza maggiorata da 
+$kn$ ($T$ esiste sempre finito, per la definizione della classe di 
+complessità $\text{DTIME}$).
+Fissiamo anche $d = |Q|$.
+Inoltre abbiamo che ogni configurazione è 
+$c_i = (f_i, p_i, q_i)$ e quindi, 
+fissata una posizione $p$ sul nastro, abbiamo una sequenza di stati:
+\[ 
+S_w(p) := (q_{i_1}, q_{i_2}, \dots) \quad \text{con } q_{i_s} \in Q 
+\]
+dove $q_{i_s}$ è ottenuta dalle configurazioni $c_i$ in funzione della posizione sul nastro occupata dall'input $w$ ($1 \le p \le n$), secondo lo schema seguente:
+\[ 
+c_{i_s} = (f_{i_s}, p, q_{i_s}) \quad \text{e} \quad c_{i_s+1} = (f_{i_s+1}, p+1, q_{i_s+1}) 
+\]
+oppure
+\[ 
+c_{i_s} = (f_{i_s}, p+1, q_{i_s}) \quad \text{e} \quad c_{i_s+1} = (f_{i_s+1}, p, q_{i_s+1}), 
+\]
+ovvero quando si ha un passaggio sulla casella $p$.
+Chiameremo $S_w(p)$ la {sequenza degli stati di passaggio} della computazione $(c)$ nella cella $p$ e supponiamo per assurdo che la computazione abbia sempre sequenze di passaggio distinte.
+\\
+Classifichiamo ora le celle in posizione da $1$ a $n$ 
+in base al numero di passaggi effettuati in quella cella 
+durante la computazione: sia $N_i$ la cardinalità dell'insieme di celle su cui si effettuano $i$ passaggi:
+\[ 
+N_i = |\{p \mid 1 \le p \le n, |S_w(p)| = i\}|. 
+\]
+Ovviamente dalla definizione avremo che:
+\[ 
+n = \sum_{i=0}^{\infty} N_i. 
+\]
+Notiamo che il prodotto $i N_i$ quantifica i passi di computazione avvenuti esclusivamente nelle celle con una sequenza di passaggio di lunghezza $i$. Se sommiamo questo termine per ogni $i \ge 0$, calcoliamo il totale dei passi eseguiti nelle posizioni di input da $1$ a $n$. Tale somma deve necessariamente essere minore o uguale alla lunghezza dell'intera computazione, la quale è maggiorata per ipotesi da $kn$. Ne consegue che:
+\[ 
+\sum_{i=0}^{\infty} i N_i \le kn. 
+\]
+Considerando poi solo le celle con un numero di passaggi strettamente superiore a $k$, avremo l'ovvia maggiorazione:
+\[ 
+\sum_{i=k+1}^{\infty} i N_i \le \sum_{i=0}^{\infty} i N_i; 
+\]
+minorando poi il numero di passaggi con $(k+1)$ otteniamo la disuguaglianza:
+\begin{equation} \label{eq:minorazione_k}
+(k+1) \sum_{i=k+1}^{\infty} N_i \le 
+ \sum_{i=k+1}^{\infty} iN_i 
+\le
+\sum_{i=0}^{\infty} i N_i \le kn
+\end{equation}
+Supponiamo ora per assurdo
+che tutte le sequenze di passaggio siano distinte
+e consideriamo 
+il numero di celle in cui si hanno al più $k$ passaggi. Queste devono essere in numero inferiore a $d^{k+1}$ se il numero di stati è $d$ (infatti $d^i$ è il numero di possibili sequenze di passaggio distinte di lunghezza $i$, e la loro somma per le lunghezze $i$ che vanno da $1$ a $k$ è $\sum_{i=1}^k d^i \le d^{k+1}$).
+Quindi, se classifichiamo le $n$ posizioni 
+dell'input tra quelle che hanno sequenze di lunghezza inferiore a $k+1$ (sia $N^-$ il numero di queste posizioni) e quelle che hanno sequenze di passaggio di lunghezza maggiore o uguale a $k+1$ (sia $N^+$ il numero di queste posizioni), sappiamo che $N^- < d^{k+1}$. Da questo discende che $N^+ = n - N^- > n - d^{k+1}$; poiché per definizione $N^+ = \sum_{i=k+1}^{\infty} N_i$ abbiamo che:
+\begin{equation} \label{eq:maggiorazione_n}
+\sum_{i=k+1}^{\infty} N_i > n - d^{k+1}.
+\end{equation}
+Mettendo insieme la disuguaglianza \eqref{eq:minorazione_k} con la \eqref{eq:maggiorazione_n} otteniamo:
+\[ 
+n - d^{k+1} < \sum_{i=k+1}^{\infty} N_i \le \frac{kn}{k+1}, 
+\]
+quindi
+\[ 
+(n - d^{k+1})(k+1) < kn 
+\]
+e dunque
+\[ 
+n(k+1) - kn < (k+1)d^{k+1} 
+\]
+e infine
+\[ 
+n < (k+1)d^{k+1}. 
+\]
+Quindi,
+scegliendo una parola $w$
+di lunghezza $n$ tale che 
+$n > (k+1)d^{k+1}$,
+contraddiciamo l'ipotesi (di assurdo),
+e quindi esistono almeno due sequenze di passaggio uguali.
+
+Supponiamo allora che $\mu$ accetti una parola $w$ per la quale le posizioni $p_1$ e $p_2$ (con $p_1 < p_2$) hanno le stesse sequenze di passaggio. Indichiamo con $u$ la sottoparola di $w$ formata dalle prime $p_1$ celle, con $x$ la parola formata dalle posizioni da $p_1+1$ fino a $p_2$, e con $v$ quella formata dalle posizioni da $p_2+1$ fino ad $n$. Abbiamo così fattorizzato $w = uxv$.
+
+Per la parola $uxxv$ la macchina $\mu$ avrà una computazione:
+\[ 
+(c'_i) = (c'_0, c'_1, \dots, c'_m, \dots) 
+\]
+tale che le sequenze di passaggio soddisfano:
+\[ 
+S_{uxxv}(p) = 
+\begin{cases} 
+S_{uxv}(p) & \text{se } p \le p_1 \\ 
+S_{uxv}(p - p_2 + p_1) & \text{se } p \ge p_2.
+\end{cases} 
+\]
+
+Da quest'ultima relazione si deduce che, associando allo stato presente nelle sequenze di passaggio anche il simbolo sul nastro $f_i(p_i)$, qualora la sequenza di passaggio coincida anche con il carattere sul nastro, si ha una ripetizione delle transizioni effettuate da quel momento in poi.
+
+Più precisamente, supponiamo che a partire da $uxv$ la computazione entri per la prima volta nel segmento di parola $x$ (che coinvolge le celle con indici che vanno da $p_1+1$ a $p_2$) provenendo da sinistra. Dopo un certo numero di transizioni si uscirà dalla zona $x$ passando per la cella $p_2$; ma per ipotesi, la prima volta che si transita per $p_2$ si effettuerà la stessa transizione compiuta in $p_1$, e dunque nel caso della parola di input $uxxv$ si ripeteranno gli stessi passi di transizione avvenuti nella fase precedente.
+
+Quando finalmente si uscirà dalla seconda zona $x$, la macchina effettuerà le stesse transizioni fatte nell'attraversamento della prima occorrenza di $x$. Analogamente, si otterrà un comportamento simile per il caso in cui si tornerà nell'ultima casella della seconda occorrenza di $x$.
+
+Comunque, alla fine della computazione, lo stato terminale raggiunto dalla computazione che parte dalla parola $uxv$ sarà lo stesso di quella con input $uxxv$. Inoltre, l'argomento è immediatamente applicabile alle parole con un numero arbitrario $m$ di ripetizioni della sottoparola $x$, ovvero $ux^mv$.
+
+Per costruzione $x$ non è la parola vuota ($|x| > 0$) e si può supporre che $|ux| \le \sup(N, (k+1)d^{k+1})$ considerando la prima ripetizione possibile di sequenze di passaggio, che nel caso peggiore dovrà accadere quando si raggiunge una lunghezza $n > (k+1)d^{k+1}$.
+\end{proof}
+\end{lemm}
+\begin{rema}
+    Il Pumping lemma è molto utile per mostrare che un insieme non è decidibile in tempo lineare (basta considerare la proposizione contronominale dell'enunciato).
+    In particolare, visto che ogni insieme DFA-decidibile appartiene alla classe di complessità lineare, il lemma permette di mostrare che un insieme non è DFA-decidibile.
+\end{rema}
+Finalmente possiamo dimostrare che l'iniseme 
+$X=\{ 0^n1^n \, | \, n \in \mathbb N\}$
+non è DFA-decidibile.
+\begin{prop}
+\label{0n1n non compl lineare}
+Per ogni costante positiva $c$ l'insieme $X=\{ 0^n1^n \, | \, n \in \mathbb N\}$
+non appartiene alla classe di complessità $\text{DTIME}_1^{\{0,1\}}(cn)$.
+\begin{proof}
+Per il pumping-lemma, se esistesse una fattorizzazione $uxv = 0\dots 01\dots 1$, si dovrebbe avere che la parola $uxxv \in X$, ma questo non è possibile in quanto abbiamo solo tre possibilità per scegliere $x$:
+\begin{itemize}
+    \item $x = 0\dots 0$, questo caso non è possibile poiché $uxxv$ non apparterrebbe a $X$ avendo aumentato il numero di zero ma non quello di $1$;
+    \item $x = 1\dots 1$ analogo all'argomento precedente applicato al numero di $1$;
+    \item $x = 0\dots 01\dots 1$ in questo caso la parola $xx$ alternerebbe una serie di $0$ con una di $1$ e questo non è possibile in $X$.
+\end{itemize}
+\end{proof}
+\end{prop}
+
+    \begin{coro}
+L'inclusione
+$$
+\text{DTIME}_1^A(n) \subset \text{DTIME}_1^A(n^2)
+$$
+è un'inclusione stretta.
+\begin{proof}
+    L'insieme 
+    $X=\{ 0^n1^n \, | \, n \in \mathbb N\}$
+    appartiene a $\text{DTIME}_1^A(n^2)$ ma non a 
+    $\text{DTIME}_1^A(n)$.
+    Quindi l'inclusione è stretta.
+\end{proof}
+\end{coro}
+Da questo risultato possiamo dedurre che la gerarchia di classi di complessità che abbiamo introdotto non è banale, in quanto le due classi non coincidono.

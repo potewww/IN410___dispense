@@ -438,6 +438,28 @@ che non modicano l'insieme deciso dall'automa stesso.
 \label{fig:erase}
 \end{figure}
 \end{itemize}
+
+\begin{rema}
+    L'operazione ``Erase'' può essere applicata
+    nel caso in cui non c'è nessun arco della forma $e_j$.
+    Questo è il caso in cui
+    esiste uno stato pozzo non accettante 
+    nel grafo
+    (se non consideriamo
+    $q_j$ nella figura \ref{fig:erase}, allora
+    lo stato pozzo è $\overline{q}$).
+    In questo caso, seguendo la regola
+    otteniamo la semplice rimozione dello
+    stato pozzo
+    e di tutti gli archi che arrivano a lui.
+    Questa operazione è lecita,
+    infatti quando un automa arriva in uno stato pozzo,
+    questo non potrà mai uscirne, e nel caso 
+    in cui lo stato non è accettante,
+    abbiamo che una parola che raggiunge
+    quello stato non sarà mai accettata.
+\end{rema}
+
 \subsection{Da automa ad espressione regolare (e viceversa)}
 A questo punto
 possiamo mostrare il seguente risultato.
