@@ -1,0 +1,101 @@
+\begin{ex}
+Dare la macchina di Turing che complementa una sequenza binaria e si riposiziona all'inizio della parola.
+\end{ex}
+
+\begin{sol}
+La macchina di turing è la seguente
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)  {$q_0$};
+\node[state]            (q1) at (5,0)  {$q_1$};
+\node[state, accepting] (qF) at (10,0) {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappi
+\draw[->] (q0) to[loop above, looseness=8] node {$0/1,+1$} (q0);
+\draw[->] (q0) to[loop below, looseness=8] node {$1/0,+1$} (q0);
+\draw[->] (q1) to[loop above, looseness=8] node {$0/0,-1$} (q1);
+\draw[->] (q1) to[loop below, looseness=8] node {$1/1,-1$} (q1);
+
+% Transizioni
+\draw[->] (q0) -- node {$\square/\square,-1$} (q1);
+\draw[->] (q1) -- node {$\square/\square,+1$} (qF);
+\end{tikzpicture}
+\]
+forniamo anche il codice in Wolfram Matematica
+\begin{walfram}
+turing = {{
+ {q0, 0} -> {q0, 1, +1},
+ {q0, 1} -> {q0, 0, +1},
+ {q0, B} -> {q1, B, -1},
+ {q1, 0} -> {q1, 0, -1},
+ {q1, 1} -> {q1, 1, -1},
+ {q1, B} -> {qF, B, +1}
+ }, q0, {qF}}
+\end{walfram}
+\end{sol}
+
+\begin{ex}
+Come l'esercizio precedente, con l'unica differenza che la computazione termina solo con la parola vuota e in caso contrario, dopo essere tornata alla posizione iniziale, ripete il ciclo.
+\end{ex}
+\begin{sol}
+La macchina di turing è la seguente
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati della riga principale
+\node[state] (q0) at (0,0)  {$q_0$};
+\node[state] (q1) at (5,0)  {$q_1$};
+\node[state] (qR) at (10,0) {$q_R$};
+
+% Stato finale
+\node[state, accepting] (qF) at (0,-3.5) {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni da q_0 a q_1 (complemento del primo simbolo)
+\draw[->] (q0) to[bend left=20]  node {$1/0,+1$} (q1);
+\draw[->] (q0) to[bend right=20] node[swap] {$0/1,+1$} (q1);
+
+% Parola vuota: accettazione
+\draw[->] (q0) -- node[swap] {$\square/\square,+1$} (qF);
+
+% Cappi
+\draw[->] (q1) to[loop above, looseness=8] node {$1/0,+1$} (q1);
+\draw[->] (q1) to[loop below, looseness=8] node {$0/1,+1$} (q1);
+\draw[->] (qR) to[loop above, looseness=8] node {$0/0,-1$} (qR);
+\draw[->] (qR) to[loop below, looseness=8] node {$1/1,-1$} (qR);
+
+% Fine parola: ritorno verso sinistra
+\draw[->] (q1) -- node {$\square/\square,-1$} (qR);
+
+% Ritorno a q_0 (ripete il ciclo)
+\draw[->] (qR) to[bend left=35] node[below] {$\square/\square,+1$} (q0);
+\end{tikzpicture}
+\]
+forniamo anche il codice in Wolfram Matematica
+\begin{walfram}
+mu = {{
+ {q0,  0} -> {q1, 1, +1},
+ {q0,  1} -> {q1, 0, +1},
+ {q0, -1} -> {qF, -1, +1},
+ {q1,  0} -> {q1, 1, +1},
+ {q1,  1} -> {q1, 0, +1},
+ {q1, -1} -> {qR, -1, -1},
+ {qR,  0} -> {qR, 0, -1},
+ {qR,  1} -> {qR, 1, -1},
+ {qR, -1} -> {q0, -1, +1}
+ }, q0, {qF}}
+\end{walfram}
+\end{sol}

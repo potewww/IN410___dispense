@@ -1,6 +1,11 @@
-init = InitAutomaton[
-    automa2, {0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1}
-    ] ;
-mu = DFA2TM[automa2] ;
-TuringMachineGraph[mu]
-ManipulateComputation[mu, init]
+mu = {{
+ {q0,  0} -> {q1, 1, +1},
+ {q0,  1} -> {q1, 0, +1},
+ {q0, -1} -> {qF, -1, +1},
+ {q1,  0} -> {q1, 1, +1},
+ {q1,  1} -> {q1, 0, +1},
+ {q1, -1} -> {qR, -1, -1},
+ {qR,  0} -> {qR, 0, -1},
+ {qR,  1} -> {qR, 1, -1},
+ {qR, -1} -> {q0, -1, +1}
+ }, q0, {qF}}
