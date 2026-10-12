@@ -40,4 +40,4 @@
 \contentsline {subsection}{\numberline {10.4}Automi}{75}{subsection.10.4}%
 \contentsline {section}{\numberline {11}Esercizi}{77}{section.11}%
 \contentsline {subsection}{\numberline {11.1}Automi}{77}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Macchine di Turing}{84}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.2}Macchine di Turing}{88}{subsection.11.2}%

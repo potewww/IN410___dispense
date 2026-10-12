@@ -75,12 +75,14 @@ T_\mu(w)\leq T(n) \,
 \begin{rema}
 Vorremmo dare una forma più precisa alle funzioni $T$ che danno informazioni sul tempo e lo spazio di arresto di una data macchina di Turing.
 Consideriamo quindi una macchina di Turing $\mu$ che si arresta in tempo $T$ e due parole $a$ e $b$ tali che $|a| < |b|$. Abbiamo che l'insieme delle parole di lunghezza al più $|a|$ è un sottoinsieme delle parole di lunghezza al più $|b|$. Di conseguenza, il tempo (o lo spazio) limite richiesto per elaborare le prime non ha senso che superi il limite per le seconde; è naturale quindi imporre che $T(|a|) \leq T(|b|)$, restringendo così lo studio alle funzioni non decrescenti. 
-
-Inoltre, è sensato richiedere che la funzione $T(n)$ sia limitata inferiormente da $n$ per input sufficientemente grandi poiché,
-\textcolor{red}{QUELLO CHE SEGUE NON MI CONVINCE ... CHIEDI INFO}
-nel modello di macchina di Turing a nastro singolo, la stringa di input di lunghezza $n$ occupa intrinsecamente $n$ celle (vincolando lo spazio) e la macchina necessita fisiologicamente di almeno $n$ passi operativi per poterla scorrere e leggere per intero (vincolando il tempo). Valutare questa condizione solo "definitivamente" permette di assorbire eventuali costi costanti di avvio o inizializzazione della macchina, evitando che il comportamento anomalo su input banalmente corti ne comprometta l'appartenenza a una classe di complessità.
-\\
-Inoltre, è sensato richiedere che la funzione $T(n)$ sia limitata inferiormente da $n$ per input sufficientemente grandi poiché, per la stragrande maggioranza dei problemi non banali, un algoritmo necessita di esaminare l'intero input. Fissare il limite $T(n) \ge n$ stabilisce di fatto la classe lineare come "livello base" della gerarchia di complessità nel modello a nastro singolo. Valutare questa condizione solo "definitivamente" permette di assorbire eventuali costi costanti di avvio della macchina, evitando che il comportamento su input banalmente corti ne comprometta la classificazione asintotica.
+Inoltre, mostreremo più avanti che
+fissato un intero $N$,
+allora 
+la computazione si arresta in tempo al più $N$
+a partire da una qualsiasi parola di 
+di lunghezza al più $N$.
+Di conseguenza, chiederemo anche che $T(n)\geq n$
+definitivamente.
 \end{rema}
 Hanno senso quindi le seguenti definizioni.
 \begin{defi}

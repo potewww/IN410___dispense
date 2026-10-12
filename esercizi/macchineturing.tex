@@ -99,3 +99,90 @@ mu = {{
  }, q0, {qF}}
 \end{walfram}
 \end{sol}
+
+\newpage
+
+\begin{ex}
+    Dimostrare:
+
+\begin{enumerate}
+    \item Se $X$ Turing decidibile allora $A^* \setminus X$ è Turing decidibile;
+    \item Se $X \in \mathrm{DTIME}(T(n))$ allora $A^* \setminus X \in \mathrm{DTIME}(T(n))$.
+\end{enumerate}
+\end{ex}
+\begin{sol}
+    \
+    \begin{enumerate}
+        \item Se $\mu$ è una macchina di Turing
+        che decide $X$, allora possiamo modificarla e creare
+        una macchina di Turing $\mu_1$ che è uguale a quella di partenza
+        invertendo solamente gli stati $q_F^0$ con $q_F^1$.
+        Definiamo quindi
+        \[
+        \begin{matrix}
+            \mu_1 : & Q \times \tilde A 
+            & \to & Q' \times \tilde A \times \{-1,1 \}
+             \\ & 
+            (q,a)
+            &
+            \mapsto 
+            &
+            \begin{cases}
+                (p,b,m), & \text{se } \mu(q,a)=(p,b,m) \text{ e } p\neq q_F^0,q_F^1
+                \\
+                (q^1_F,b,m), & \text{se } \mu(q,a)=(p,b,m) \text{ e } p= q_F^0
+                \\
+                (q^0_F,b,m), & \text{se } \mu(q,a)=(p,b,m) \text{ e } p= q_F^1
+            \end{cases}
+        \end{matrix}
+        \]
+        Questa chiaramente decide $A^*\setminus X$.
+        \item La macchina di turing $\mu_1$ costruita
+        nel punto precedente fa esattamente lo stesso numero di passi
+        che compie una macchina $\mu$.
+        Di conseguenza, se
+        una macchina
+        $\mu$ decide $X$ in tempo $T$, allora $\mu'$
+        decide $A^*\setminus X$ in tempo $T$.
+    \end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+    Dimostrare:
+
+\begin{enumerate}
+    \item Se $X$ e $Y$ sono Turing decidibili allora $X \cap Y$ è Turing decidibile;
+    \item Se $X \in \mathrm{DTIME}(T_1(n))$ e
+    $Y \in \mathrm{DTIME}(T_2(n))$
+    allora $X \cap Y \in \mathrm{DTIME}(\operatorname{min}(T_1(n),T_2(n)))$.
+\end{enumerate}
+\end{ex}
+\begin{sol}
+    \
+    \begin{enumerate}
+        \item Siano $\mu_X$ e $\mu_Y$ due macchina di Turing
+        che decidono rispettivamente $X$ e $Y$.
+        Creiamo la macchina di Turing seguente:
+         \[
+        \begin{matrix}
+            \overline{\mu_X} : & Q \times \tilde A 
+            & \to & Q' \times \tilde A \times \{-1,1 \}
+             \\ & 
+            (q,a)
+            &
+            \mapsto 
+            &
+            \begin{cases}
+                (p,b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p\neq q_F^1
+                \\
+                (q^1_F,b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p= q_F^1
+                \\
+                (q^0_F,b,m), & \text{se } \mu(q,a)=(p,b,m) \text{ e } p= q_F^1
+            \end{cases}
+        \end{matrix}
+        \]
+    \end{enumerate}
+\end{sol}
+

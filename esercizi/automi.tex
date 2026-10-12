@@ -4,8 +4,7 @@ Fissiamo l'alfabeto binario $A=\{0,1\}$, dimostrare che l'insieme
 X = \{ w0 \mid w\in A^* \}
 \]
 è decidibile per automa a stati finiti.
-
-
+\end{ex}
 \begin{sol} Si richiede di mostrare un automa il cui algoritmo associato accetta le parole che terminano con uno zero. È dunque sufficiente memorizzare nello stato l'ultimo simbolo letto e alla fine della lettura della parola decidere in base allo stato: poniamo $Q=\{q_0,q_1\}$, e definiamo
 \[
 T(q,a) :=
@@ -126,8 +125,6 @@ X=\{w0\mid w\in A^*\}
 \]
 è DFA-decidibile.
 \end{sol}
-\end{ex}
-
 \newpage
 
 \begin{ex}\label{es:3}
@@ -142,7 +139,7 @@ X_2 = \{ w \in A^* \mid |w_{|B}| = 2k,\ k\geq 0 \}
 qui si è utilizzata la notazione $w_{|B}$ per indicare la parola $w$ 
 ristretta ai soli elementi di alfabeto $B$.
 Costruire l'automa che decide $X_1+X_2$.
-
+\end{ex}
 \begin{sol}
 Utilizzando il teorema 
 \ref{prop:8},
@@ -216,7 +213,6 @@ oppure usando i grafi degli automi che decidono $X_1$ e $X_2$).
 \end{tikzpicture}
 \end{center}
 \end{sol}
-\end{ex}
 
 \newpage
 
@@ -526,4 +522,291 @@ Costruiamo un NFA per $r = S\,L^*\,T$, con $S = 1^*0(11^*0)^*0$, $L = (1+01)\,0\
 \caption{NFA equivalente ad $\mathcal{A}$, costruito a partire da $r$.}
 \label{fig:es23-nfa}
 \end{figure}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Dato il seguente automa non-deterministico:
+
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)       {$q_0$};
+\node[state]            (q1) at (2.5,0)     {$q_1$};
+\node[state, accepting] (q2) at (5,0)       {$q_2$};
+\node[state]            (q3) at (7.5,0)     {$q_3$};
+\node[state, accepting] (q4) at (10,0)      {$q_4$};
+\node[state]            (q5) at (12.5,0)    {$q_5$};
+\node[state]            (q7) at (8.75,-2.8) {$q_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni lungo la riga principale
+\draw[->] (q0) to[bend left=20] node {$0$} (q1);
+\draw[->] (q1) to[bend left=20] node {$1$} (q0);
+\draw[->] (q1) -- node {$\varepsilon$} (q2);
+\draw[->] (q2) -- node {$\varepsilon$} (q3);
+\draw[->] (q3) -- node {$0$} (q4);
+\draw[->] (q4) -- node {$0$} (q5);
+
+% Cappi
+\path[->] (q0) edge[loop below, looseness=8] node {$1$} (q0);
+\path[->] (q2) edge[loop below, looseness=8] node {$1$} (q2);
+\path[->] (q7) edge[out=240,in=190,looseness=8] node[below left]  {$0$} (q7)
+               edge[out=350,in=300,looseness=8] node[below right] {$1$} (q7);
+
+% Transizioni verso q_7 e ritorno verso q_2
+\draw[->] (q3) -- node[swap] {$0$} (q7);
+\draw[->] (q4) -- node {$1$} (q7);
+\draw[->] (q7) -- node[swap] {$1$} (q2);
+
+% Archi di ritorno (sopra la riga principale)
+\draw[->, rounded corners=8pt]
+    (q3.110) -- (q3.110 |- 0,1.9) -- node[swap] {$1$} (q1.60 |- 0,1.9) -- (q1.60);
+\draw[->, rounded corners=8pt]
+    (q5.100) -- (q5.100 |- 0,2.7) -- node[swap] {$1$} (q2.40 |- 0,2.7) -- (q2.40);
+\draw[->, rounded corners=8pt]
+    (q5.80) -- (q5.80 |- 0,3.5) -- node[swap] {$1$} (q1.120 |- 0,3.5) -- (q1.120);
+\end{tikzpicture}
+\]
+fornire un automa deterministico equivalente (ovvero, che riconosce lo stesso insieme).
+\end{ex}
+
+\begin{sol}
+Costruiamo l'automa 
+deterministico con la costruzione 
+per sottoinsiemi
+\[
+T\colon Q'\times A\to Q',\qquad Q'\subseteq 2^{Q},
+\]
+Lo stato iniziale è $S_0=\{q_0\}$. 
+Uno stato è finale se contiene
+$q_2$ oppure $q_4$. 
+Calcolando la tabella
+si ottengono $11$ stati:
+\begin{center}
+\begin{tabular}{l|l|c|c}
+ & $S$ & $0$ & $1$ \\ \hline
+$S_0$    & $\{q_0\}$                  & $S_1$    & $S_0$    \\
+$S_1$    & $\{q_1,q_2,q_3\}$          & $S_2$    & $S_3$    \\
+$S_2$    & $\{q_4,q_7\}$              & $S_4$    & $S_5$    \\
+$S_3$    & $\{q_0,q_1,q_2,q_3\}$      & $S_6$    & $S_3$    \\
+$S_4$    & $\{q_5,q_7\}$              & $S_7$    & $S_8$    \\
+$S_5$    & $\{q_2,q_3,q_7\}$          & $S_2$    & $S_8$    \\
+$S_6$    & $\{q_1,q_2,q_3,q_4,q_7\}$  & $S_9$    & $S_{10}$ \\
+$S_7$    & $\{q_7\}$                  & $S_7$    & $S_5$    \\
+$S_8$    & $\{q_1,q_2,q_3,q_7\}$      & $S_2$    & $S_{10}$ \\
+$S_9$    & $\{q_4,q_5,q_7\}$          & $S_4$    & $S_8$    \\
+$S_{10}$ & $\{q_0,q_1,q_2,q_3,q_7\}$  & $S_6$    & $S_{10}$ \\
+\end{tabular}
+\end{center}
+Gli stati finali sono 
+$S_1,S_2,S_3,S_5,S_6,S_8,S_9,S_{10}$; gli unici non finali sono 
+$S_0,S_4,S_7$. 
+L'automa deterministico è il seguente:
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Riga alta
+\node[state]            (S0)  at (0,0)   {$S_0$};
+\node[state, accepting] (S1)  at (3,0)   {$S_1$};
+\node[state, accepting] (S3)  at (6,0)   {$S_3$};
+\node[state, accepting] (S6)  at (9,0)   {$S_6$};
+\node[state, accepting] (S10) at (12,0)  {$S_{10}$};
+% Riga centrale
+\node[state, accepting] (S2)  at (3,-3)  {$S_2$};
+\node[state, accepting] (S5)  at (6,-3)  {$S_5$};
+\node[state, accepting] (S8)  at (9,-3)  {$S_8$};
+\node[state, accepting] (S9)  at (12,-3) {$S_9$};
+% Riga bassa
+\node[state]            (S7)  at (3,-6)  {$S_7$};
+\node[state]            (S4)  at (6,-6)  {$S_4$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]S0.center) -- (S0);
+
+% Riga alta
+\path[->] (S0) edge[loop below, looseness=8] node {$1$} (S0);
+\draw[->] (S0) -- node {$0$} (S1);
+\draw[->] (S1) -- node {$1$} (S3);
+\path[->] (S3) edge[loop above, looseness=8] node {$1$} (S3);
+\draw[->] (S3) -- node {$0$} (S6);
+\draw[->] (S6) to[bend left=20] node {$1$} (S10);
+\draw[->] (S10) to[bend left=20] node {$0$} (S6);
+\path[->] (S10) edge[loop above, looseness=8] node {$1$} (S10);
+
+% Discese verso la riga centrale
+\draw[->] (S1) -- node[swap] {$0$} (S2);
+\draw[->] (S6) -- node[pos=0.6] {$0$} (S9);
+\draw[->] (S10) -- node[pos=0.7, swap] {$1$} (S8);
+
+% Riga centrale
+\draw[->] (S2) to[bend left=20] node {$1$} (S5);
+\draw[->] (S5) to[bend left=20] node {$0$} (S2);
+\draw[->] (S5) -- node {$1$} (S8);
+\draw[->] (S9) -- node {$1$} (S8);
+\draw[->] (S8) to[bend left=25] node[pos=0.5, below] {$0$} (S2);
+
+% Riga bassa
+\path[->] (S7) edge[loop left, looseness=8] node {$0$} (S7);
+\draw[->] (S4) -- node {$0$} (S7);
+\draw[->] (S2) -- node[pos=0.25, swap] {$0$} (S4);
+\draw[->] (S7) -- node[pos=0.25] {$1$} (S5);
+\draw[->] (S4) -- node {$1$} (S8);
+\draw[->] (S9) -- node {$0$} (S4);
+\end{tikzpicture}
+\]
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $n\in\mathbb N$, $A=\{0,1\}$ e definiamo
+\[
+X_n := \{ w\in A^* \mid w = w'1w'',\ |w''| = n-1 \}
+\]
+(parole che hanno $1$ in posizione $|w|-n$).
+\begin{enumerate}
+    \item Mostrare che per ogni $n$, $X_n$ è decidibile da un NDFA con $n+1$ stati (fornire l'automa).
+    \item Fissato $n=3$, determinare un automa deterministico che decide $X_3$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+    \item L'automa che decide $X_n$ è il seguente
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)  {$q_0$};
+\node[state]            (q1) at (3,0)  {$q_1$};
+\node[state]            (q2) at (6,0)  {$q_2$};
+\node                   (d)  at (8.5,0) {$\cdots$};
+\node[state, accepting] (qn) at (11,0) {$q_n$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappio su q_0
+\path[->] (q0) edge[loop above] node {$0,1$} (q0);
+
+% Transizioni
+\draw[->] (q0) -- node {$1$} (q1);
+\draw[->] (q1) -- node {$0,1$} (q2);
+\draw[-]  (q2) -- node {$0,1$} (d);
+\draw[->] (d)  -- node {$0,1$} (qn);
+\end{tikzpicture}
+\]
+
+\item  Per $n=3$ l'NDFA è il seguente.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0) {$q_0$};
+\node[state]            (q1) at (3,0) {$q_1$};
+\node[state]            (q2) at (6,0) {$q_2$};
+\node[state, accepting] (q3) at (9,0) {$q_3$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappio su q_0
+\path[->] (q0) edge[loop above] node {$0,1$} (q0);
+
+% Transizioni
+\draw[->] (q0) -- node {$1$}   (q1);
+\draw[->] (q1) -- node {$0,1$} (q2);
+\draw[->] (q2) -- node {$0,1$} (q3);
+\end{tikzpicture}
+\]
+Applichiamo la costruzione per sottoinsiemi. Poniamo
+\begin{align*}
+S_0&=\{q_0\}, & S_1&=\{q_0,q_1\}, & S_2&=\{q_0,q_2\}, & S_3&=\{q_0,q_1,q_2\},\\
+S_4&=\{q_0,q_3\}, & S_5&=\{q_0,q_1,q_3\}, & S_6&=\{q_0,q_2,q_3\}, & S_7&=\{q_0,q_1,q_2,q_3\}.
+\end{align*}
+La funzione di transizione è
+\begin{center}
+\begin{tabular}{c|c|c}
+$Q'\backslash A$ & $0$ & $1$ \\ \hline
+$S_0=\{q_0\}$             & $S_0$ & $S_1$ \\
+$S_1=\{q_0,q_1\}$         & $S_2$ & $S_3$ \\
+$S_2=\{q_0,q_2\}$         & $S_4$ & $S_5$ \\
+$S_3=\{q_0,q_1,q_2\}$     & $S_6$ & $S_7$ \\
+$S_4=\{q_0,q_3\}$         & $S_0$ & $S_1$ \\
+$S_5=\{q_0,q_1,q_3\}$     & $S_2$ & $S_3$ \\
+$S_6=\{q_0,q_2,q_3\}$     & $S_4$ & $S_5$ \\
+$S_7=\{q_0,q_1,q_2,q_3\}$ & $S_6$ & $S_7$ \\
+\end{tabular}
+\end{center}
+Lo stato iniziale è $S_0$ e gli stati finali sono quelli che contengono $q_3$, cioè $S_4,S_5,S_6,S_7$.
+Il grafo asscoiato è il seguente:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (s0) at (0,0)    {$S_0$};
+\node[state]            (s1) at (3,0)    {$S_1$};
+\node[state]            (s2) at (6,0)    {$S_2$};
+\node[state, accepting] (s4) at (9,0)    {$S_4$};
+\node[state]            (s3) at (3,-2.5) {$S_3$};
+\node[state, accepting] (s5) at (6,-2.5) {$S_5$};
+\node[state, accepting] (s6) at (0,-5)   {$S_6$};
+\node[state, accepting] (s7) at (3,-5)   {$S_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]s0.center) -- (s0);
+
+% Cappi
+\path[->] (s0) edge[loop below] node {$0$} (s0);
+\path[->] (s7) edge[loop right] node {$1$} (s7);
+
+% Riga superiore
+\draw[->] (s0) -- node {$1$} (s1);
+\draw[->] (s1) -- node {$0$} (s2);
+\draw[->] (s2) -- node {$0$} (s4);
+
+% Discese
+\draw[->] (s1) -- node {$1$} (s3);
+\draw[->] (s2) to[bend left=15] node {$1$} (s5);
+\draw[->] (s5) to[bend left=15] node {$0$} (s2);
+\draw[->] (s5) -- node {$1$} (s3);
+\draw[->] (s3) -- node[swap] {$0$} (s6);
+\draw[->] (s3) -- node {$1$} (s7);
+\draw[->] (s7) -- node {$0$} (s6);
+
+% Ritorni da s_4 verso s_0 e s_1
+\draw[->, rounded corners=8pt]
+    (s4.80) -- (s4.80 |- 0,2.4) -- (s0.100 |- 0,2.4) -- (s0.100);
+\node at (4.5,2.7) {$0$};
+\draw[->, rounded corners=8pt]
+    (s4.110) -- (s4.110 |- 0,1.7) -- (s1.80 |- 0,1.7) -- (s1.80);
+\node at (6.5,1.95) {$1$};
+
+% Da s_6 verso s_4 (0) e s_5 (1)
+\draw[->, rounded corners=8pt]
+    (s6.south) -- (s6.south |- 0,-6.3) -- (10.2,-6.3) -- (10.2,0) -- (s4.0);
+\node at (10.6,-3) {$0$};
+\draw[->, rounded corners=8pt]
+    (s6.-60) -- (s6.-60 |- 0,-5.8) -- (7.2,-5.8) -- (7.2,-2.5) -- (s5.0);
+\node at (7.6,-4) {$1$};
+\end{tikzpicture}
+\]
+\end{enumerate}
 \end{sol}
