@@ -112,8 +112,7 @@ mu = {{
     \item Se $X \in \mathrm{DTIME}(T(n))$ allora $A^* \setminus X \in \mathrm{DTIME}(T(n))$.
 \end{enumerate}
 \end{ex}
-\begin{sol}
-    \
+\begin{sol}\
     \begin{enumerate}
         \item Se $\mu$ è una macchina di Turing
         che decide $X$, allora possiamo modificarla e creare
@@ -162,7 +161,8 @@ mu = {{
 \end{enumerate}
 \end{ex}
 \begin{sol}
-    \
+    
+    \ \textcolor{red}{DA FARE}
     \begin{enumerate}
         \item Siano $\mu_X$ e $\mu_Y$ due macchina di Turing
         che decidono rispettivamente $X$ e $Y$.
@@ -188,3 +188,272 @@ mu = {{
     \end{enumerate}
 \end{sol}
 
+\newpage
+
+\begin{ex}
+Data una parola $w_1$, fornire la macchina
+di Turing che scrive $w_1w_1$.
+\end{ex}
+
+\begin{sol}
+\[
+\begin{tikzpicture}[
+    scale=0.7, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stato iniziale
+\node[state] (q0) at (0,0) {$q_0$};
+
+% Riga superiore (simbolo 1)
+\node[state] (qW1)   at (3.8,2.6)  {$q_{W_1}$};
+\node[state] (qR1)   at (7.8,2.6)  {$q_{R_1}$};
+\node[state] (qR1p)  at (11.8,2.6) {$q'_{R_1}$};
+\node[state] (qR1pp) at (15.8,2.6) {$q''_{R_1}$};
+
+% Riga inferiore (simbolo 0)
+\node[state] (qW0)   at (3.8,-2.6)  {$q_{W_0}$};
+\node[state] (qR0)   at (7.8,-2.6)  {$q_{R_0}$};
+\node[state] (qR0p)  at (11.8,-2.6) {$q'_{R_0}$};
+\node[state] (qR0pp) at (15.8,-2.6) {$q''_{R_0}$};
+
+% Stati finali di pulizia
+\node[state] (p0)  at (11,-7)    {$p_0$};
+\node[state] (pw0) at (6.5,-7)   {$p'_{W_0}$};
+\node[state] (pw1) at (7.5,-9.5) {$p'_{W_1}$};
+\node[state, accepting] (qF) at (11,-10.5) {$q_F'$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Uscite da q_0
+\draw[->] (q0) -- node[sloped, above] {$1/\square,+1$} (qW1);
+\draw[->] (q0) -- node[sloped, below] {$0/\square,+1$} (qW0);
+
+% Riga superiore: transizioni
+\draw[->] (qW1)  -- node {$\square/\square,+1$} (qR1);
+\draw[->] (qR1)  -- node {$\square/1,-1$}       (qR1p);
+\draw[->] (qR1p) -- node {$\square/\square,-1$} (qR1pp);
+
+% Riga superiore: cappi
+\path[->] (qW1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qW1)
+                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qW1);
+\path[->] (qR1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qR1)
+                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qR1);
+\path[->] (qR1p) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1p)
+                 edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1p);
+\path[->] (qR1pp) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1pp)
+                  edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1pp);
+
+% Riga inferiore: transizioni
+\draw[->] (qW0)  -- node[swap] {$\square/\square,+1$} (qR0);
+\draw[->] (qR0)  -- node[swap] {$\square/0,-1$}       (qR0p);
+\draw[->] (qR0p) -- node[swap] {$\square/\square,-1$} (qR0pp);
+
+% Riga inferiore: cappi
+\path[->] (qW0) edge[out=255,in=205,looseness=9] node[below left]  {$1/1,+1$} (qW0)
+                edge[out=285,in=335,looseness=9] node[below right] {$0/0,+1$} (qW0);
+\path[->] (qR0) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,+1$} (qR0)
+                edge[out=285,in=335,looseness=9] node[below right] {$1/1,+1$} (qR0);
+\path[->] (qR0p) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0p)
+                 edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0p);
+\path[->] (qR0pp) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0pp)
+                  edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0pp);
+
+% Ritorni a q_0
+\draw[->, rounded corners=8pt]
+    (qR1pp.north) -- (qR1pp.north |- 0,5.0) -- node[above] {$\square/1,+1$} (q0.north |- 0,5.0) -- (q0.north);
+\draw[->, rounded corners=8pt]
+    (qR0pp.south) -- (qR0pp.south |- 0,-5.0) -- node[below] {$\square/0,+1$} (q0.south |- 0,-5.0) -- (q0.south);
+
+% Da q_0 a p_0
+\draw[->, rounded corners=8pt] (q0.0) -- (18,0) -- (18,-7) -- (p0.0);
+
+% Fase finale
+\draw[->] (p0) -- node[above] {$0/\square,-1$} (pw0);
+\draw[->] (p0) -- node[sloped, below] {$1/\square,-1$} (pw1);
+\draw[->] (p0) -- node[right] {$\square/\square,+1$} (qF);
+\draw[->, rounded corners=8pt]
+    (pw0.west) -- node[pos=0.3, above] {$\square/0,+1$} (-1.0,-7) -- (-1.0,-2.0) -- (q0.245);
+\draw[->, rounded corners=8pt]
+    (pw1.west) -- node[pos=0.3, above] {$\square/1,+1$} (-2.2,-9.5) -- (-2.2,-1.2) -- (q0.200);
+\end{tikzpicture}
+\]
+\end{sol}
+
+\newpage
+
+\begin{ex}
+    \label{ex: comlemento seq binaria}
+Data una parola $w_1$ 
+fornire la macchina
+di Turing che scrive
+$w_1w_2$ con $w_2$ il complementare di $w_1$.
+\end{ex}
+\begin{sol}
+\[
+\begin{tikzpicture}[
+    scale=0.7, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stato iniziale
+\node[state] (q0) at (0,0) {$q_0$};
+
+% Riga superiore
+\node[state] (qW1)   at (3.8,2.6)  {$q_{W_1}$};
+\node[state] (qR1)   at (7.8,2.6)  {$q_{R_1}$};
+\node[state] (qR1p)  at (11.8,2.6) {$q'_{R_1}$};
+\node[state] (qR1pp) at (15.8,2.6) {$q''_{R_1}$};
+
+% Riga inferiore
+\node[state] (qW0)   at (3.8,-2.6)  {$q_{W_0}$};
+\node[state] (qR0)   at (7.8,-2.6)  {$q_{R_0}$};
+\node[state] (qR0p)  at (11.8,-2.6) {$q'_{R_0}$};
+\node[state] (qR0pp) at (15.8,-2.6) {$q''_{R_0}$};
+
+% Stati finali di pulizia
+\node[state] (p0)  at (11,-7)    {$p_0$};
+\node[state] (pw0) at (6.5,-7)   {$p'_{W_0}$};
+\node[state] (pw1) at (7.5,-9.5) {$p'_{W_1}$};
+\node[state, accepting] (qF) at (11,-10.5) {$q_F'$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Uscite da q_0 (modificate)
+\draw[->, very thick] (q0) -- node[sloped, above] {$0/\square,+1$} (qW1);
+\draw[->, very thick] (q0) -- node[sloped, below] {$1/\square,+1$} (qW0);
+
+% Riga superiore: transizioni
+\draw[->] (qW1)  -- node {$\square/\square,+1$} (qR1);
+\draw[->] (qR1)  -- node {$\square/1,-1$}       (qR1p);
+\draw[->] (qR1p) -- node {$\square/\square,-1$} (qR1pp);
+
+% Riga superiore: cappi
+\path[->] (qW1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qW1)
+                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qW1);
+\path[->] (qR1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qR1)
+                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qR1);
+\path[->] (qR1p) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1p)
+                 edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1p);
+\path[->] (qR1pp) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1pp)
+                  edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1pp);
+
+% Riga inferiore: transizioni
+\draw[->] (qW0)  -- node[swap] {$\square/\square,+1$} (qR0);
+\draw[->] (qR0)  -- node[swap] {$\square/0,-1$}       (qR0p);
+\draw[->] (qR0p) -- node[swap] {$\square/\square,-1$} (qR0pp);
+
+% Riga inferiore: cappi
+\path[->] (qW0) edge[out=255,in=205,looseness=9] node[below left]  {$1/1,+1$} (qW0)
+                edge[out=285,in=335,looseness=9] node[below right] {$0/0,+1$} (qW0);
+\path[->] (qR0) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,+1$} (qR0)
+                edge[out=285,in=335,looseness=9] node[below right] {$1/1,+1$} (qR0);
+\path[->] (qR0p) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0p)
+                 edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0p);
+\path[->] (qR0pp) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0pp)
+                  edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0pp);
+
+% Ritorni a q_0 (modificati)
+\draw[->, very thick, rounded corners=8pt]
+    (qR1pp.north) -- (qR1pp.north |- 0,5.0) -- node[above] {$\square/0,+1$} (q0.north |- 0,5.0) -- (q0.north);
+\draw[->, very thick, rounded corners=8pt]
+    (qR0pp.south) -- (qR0pp.south |- 0,-5.0) -- node[below] {$\square/1,+1$} (q0.south |- 0,-5.0) -- (q0.south);
+
+% Da q_0 a p_0
+\draw[->, rounded corners=8pt] (q0.0) -- (18,0) -- (18,-7) -- (p0.0);
+
+% Fase finale
+\draw[->] (p0) -- node[above] {$0/\square,-1$} (pw0);
+\draw[->] (p0) -- node[sloped, below] {$1/\square,-1$} (pw1);
+\draw[->] (p0) -- node[right] {$\square/\square,+1$} (qF);
+\draw[->, rounded corners=8pt]
+    (pw0.west) -- node[pos=0.3, above] {$\square/0,+1$} (-1.0,-7) -- (-1.0,-2.0) -- (q0.245);
+\draw[->, rounded corners=8pt]
+    (pw1.west) -- node[pos=0.3, above] {$\square/1,+1$} (-2.2,-9.5) -- (-2.2,-1.2) -- (q0.200);
+\end{tikzpicture}
+\]
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Costruire la macchina di Turing che costruisce la sequenza
+costruita nel modo induttivo nel seguente modo:
+$w=*_{i=1}^\infty
+w_i
+$
+dove
+$w_1=0$, e $w_i=(w_1 \dots w_{i-1})^c$,
+dove $a^c$ è la sequenza complementare di $a$.
+Ovvero la sequenza:
+\[
+01101001100101101001011001101001\cdots
+\]
+\end{ex}
+
+\begin{sol}
+Sia $M$ la macchina dell'esercizio \ref{ex: comlemento seq binaria}:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Rettangolo di M
+\draw[-, line width=2.5pt, rounded corners=3pt] (6,-1.4) rectangle (11,1.4);
+\node at (8.5,0) {$M$};
+
+% Stati
+\node[state] (q0p) at (0,0)  {$q_0'$};
+\node[state] (q1p) at (3,0)  {$q_1'$};
+\node[state] (q0)  at (6,0)  {$q_0$};
+\node[state] (qf)  at (11,0) {$q_f$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0p.center) -- (q0p);
+
+% Transizioni iniziali
+\draw[->] (q0p) -- node {$\square/0,+1$}  (q1p);
+\draw[->] (q1p) -- node {$\square/\square,-1$} (q0);
+
+% Ritorno da q_f a q_0
+\draw[->, rounded corners=8pt]
+    (qf.0) -- (12.2,0) -- (12.2,-2.4) -- (q0.south |- 0,-2.4) -- (q0.south);
+\node at (13.5,-1.2) {$\square/\square,+1$};
+\end{tikzpicture}
+\]
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Macchina che scrive il successore in binario.
+\end{ex}
+
+\begin{sol}
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0)  at (0,0)  {$q_0$};
+\node[state]            (q1)  at (3,0)  {$q_1$};
+\node[state]            (qR)  at (8,0)  {$q_{R\square}$};
+\node[state, accepting] (qF)  at (12,0) {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni
+\draw[->] (q0) -- node {$\square/\square,-1$} (q1);
+\path[->] (q1) edge[loop above, looseness=8] node {$1/0,-1$} (q1);
+\draw[->] (q1) -- node {$0/1,+1$} (qR);
+\draw[->] (q1) to[bend right=40] node[swap] {$\square/1,+1$} (qR);
+\path[->] (qR) edge[loop above, looseness=8] node {$0/0,+1$} (qR);
+\path[->] (qR) edge[loop below, looseness=8] node {$1/1,+1$} (qR);
+\draw[->] (qR) -- node {$\square/\square,+1$} (qF);
+\end{tikzpicture}
+\]
+\end{sol}

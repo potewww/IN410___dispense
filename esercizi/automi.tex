@@ -810,3 +810,302 @@ Il grafo asscoiato è il seguente:
 \]
 \end{enumerate}
 \end{sol}
+
+\newpage
+
+\begin{ex}
+    \label{ex: fix n, automa decide w con 1 in posizione |w|-n}
+Sia $n \in \mathbb{N}$, $A = \{0,1\}$ e definiamo
+\[
+    X_n := \{ w \in A^* \mid w = w'1w'',\ |w''| = n-1 \}
+\]
+(parole che hanno $1$ in posizione $|w|-n$).
+\begin{enumerate}
+    \item Mostrare che per ogni $n$, $X_n$ è NDFA decidibile, da un automa con $n+1$ stati (fornire l'automa).
+    \item Fissato $n=3$, determinare un automa deterministico che decide $X_3$.
+\end{enumerate}
+\end{ex}
+\begin{sol}\
+    \begin{enumerate}
+        \item L'automa che decide $X_n$ è:
+    % ---------- 1) NFA generale con n+1 stati ----------
+\[
+    \begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0)   at (0,0)    {$q_0$};
+\node[state]            (q1)   at (2.5,0)  {$q_1$};
+\node[state]            (q2)   at (5,0)    {$q_2$};
+\node                   (dots) at (7,0)    {$\cdots$};
+\node[state]            (qn1)  at (9,0)    {$q_{n-1}$};
+\node[state, accepting] (qn)   at (11.5,0) {$q_n$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappi di q_0
+\draw[->] (q0) to[loop above, looseness=8] node {$0$} (q0);
+\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+
+% Transizioni
+\draw[->] (q0)   -- node {$1$}   (q1);
+\draw[->] (q1)   -- node {$0,1$} (q2);
+\draw[->] (q2)   -- node {$0,1$} (dots);
+\draw[->] (dots) -- node {$0,1$} (qn1);
+\draw[->] (qn1)  -- node {$0,1$} (qn);
+\end{tikzpicture}
+\]
+\item per $n=3$, l'NDFA è
+% ---------- 2) NFA per n = 3 ----------
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0) {$q_0$};
+\node[state]            (q1) at (3,0) {$q_1$};
+\node[state]            (q2) at (6,0) {$q_2$};
+\node[state, accepting] (q3) at (9,0) {$q_3$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappi di q_0
+\draw[->] (q0) to[loop above, looseness=8] node {$0$} (q0);
+\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+
+% Transizioni
+\draw[->] (q0) -- node {$1$}   (q1);
+\draw[->] (q1) -- node {$0,1$} (q2);
+\draw[->] (q2) -- node {$0,1$} (q3);
+\end{tikzpicture}
+\]
+Costruiamo il DFA tramite la costruizione
+dei sottoinsiemi.
+La tabella del nuovo automa è:
+\[
+\begin{tabular}{c|c|c}
+    $Q \backslash A$ & $0$ & $1$ \\
+    \hline
+    $S_0=\{q_0\}$             & $S_0$ & $S_1$ \\
+    $S_1=\{q_0,q_1\}$         & $S_2$ & $S_3$ \\
+    $S_2=\{q_0,q_2\}$         & $S_4$ & $S_5$ \\
+    $S_3=\{q_0,q_1,q_2\}$     & $S_6$ & $S_7$ \\
+    $S_4=\{q_0,q_3\}$         & $S_0$ & $S_1$ \\
+    $S_5=\{q_0,q_1,q_3\}$     & $S_2$ & $S_3$ \\
+    $S_6=\{q_0,q_2,q_3\}$     & $S_4$ & $S_5$ \\
+    $S_7=\{q_0,q_1,q_2,q_3\}$ & $S_6$ & $S_7$ \\
+\end{tabular}
+\]
+Il grafo del DFA ottenuto è:
+% ---------- 3) DFA ottenuto per costruzione dei sottoinsiemi (n = 3) ----------
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati (S_i = sottoinsieme di {q_0,...,q_3}; finali = quelli che contengono q_3)
+\node[state]            (s0) at (0,0)   {$S_0$};
+\node[state]            (s1) at (3,0)   {$S_1$};
+\node[state]            (s2) at (6,0)   {$S_2$};
+\node[state, accepting] (s4) at (9,0)   {$S_4$};
+\node[state]            (s3) at (3,-2.5) {$S_3$};
+\node[state, accepting] (s5) at (6,-2.5) {$S_5$};
+\node[state, accepting] (s6) at (3,-5)   {$S_6$};
+\node[state, accepting] (s7) at (6,-5)   {$S_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]s0.center) -- (s0);
+
+% Riga superiore
+\draw[->] (s0) to[loop below, looseness=8] node {$0$} (s0);
+\draw[->] (s0) -- node {$1$} (s1);
+\draw[->] (s1) -- node {$0$} (s2);
+\draw[->] (s2) -- node {$0$} (s4);
+
+% Ritorni da S_4 (archi superiori)
+\draw[->, rounded corners=8pt]
+    (s4.110) -- (s4.110 |- 0,1.7) -- node {$1$} (s1.70 |- 0,1.7) -- (s1.70);
+\draw[->, rounded corners=8pt]
+    (s4.60) -- (s4.60 |- 0,2.4) -- node {$0$} (s0.100 |- 0,2.4) -- (s0.100);
+
+% Discesa verso la seconda riga
+\draw[->] (s1) -- node[swap] {$1$} (s3);
+\draw[->] (s2) to[bend left=15] node {$1$} (s5);
+\draw[->] (s5) to[bend left=15] node {$0$} (s2);
+\draw[->] (s5) -- node {$1$} (s3);
+
+% Terza riga
+\draw[->] (s3) -- node[swap] {$0$} (s6);
+\draw[->] (s3) -- node[pos=0.25] {$1$} (s7);
+\draw[->] (s6) -- node[pos=0.25, swap] {$1$} (s5);
+\draw[->] (s7) -- node[swap] {$0$} (s6);
+\draw[->] (s7) to[loop right, looseness=8] node {$1$} (s7);
+
+% Ritorno da S_6 a S_4 (arco esterno)
+\draw[->, rounded corners=8pt]
+    (s6.south) -- (3,-6.2) -- node[below] {$0$} (10.2,-6.2) -- (10.2,0) -- (s4.east);
+\end{tikzpicture}
+\]
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $X_3$ come nell'esercizio \ref{ex: fix n, automa decide w con 1 in posizione |w|-n},
+\begin{enumerate}
+    \item dare l'espressione regolare $\mathsf{e}_3$ tale che $[\![\mathsf{e}_3]\!]=X_3$,
+    \item generalizzare ad una famiglia di espressioni regolari $\mathsf{e}_n$ tale che $[\![\mathsf{e}_n]\!]=X_n$,
+\end{enumerate}
+(la doppia parentesi quadra indica l'interpretazione insiemistica delle espressioni regolari).
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+\item Per calcolare $\mathsf{e}_3$ usiamo l'automa che decide $X_3$ e lo trasformiamo in un'espressione regolare.
+
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)  {$q_0$};
+\node[state]            (q1) at (3,0)  {$q_1$};
+\node[state]            (q2) at (6,0)  {$q_2$};
+\node[state, accepting] (q3) at (9,0)  {$q_3$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Cappi di q_0
+\path[->] (q0) edge[loop above] node {$0$} (q0);
+\path[->] (q0) edge[loop below] node {$1$} (q0);
+
+% Transizioni
+\draw[->] (q0) -- node {$1$} (q1);
+\draw[->] (q1) to[bend left=20]  node {$0$} (q2);
+\draw[->] (q1) to[bend right=20] node[swap] {$1$} (q2);
+\draw[->] (q2) to[bend left=20]  node {$0$} (q3);
+\draw[->] (q2) to[bend right=20] node[swap] {$1$} (q3);
+\end{tikzpicture}
+\]
+
+Passo 1, aggiunta di $q_0^*$ e $q_F$:
+
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)  {$q_0$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state]            (q2)  at (7.5,0)  {$q_2$};
+\node[state]            (q3)  at (10,0)   {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+
+% Freccia d'ingresso e nuove mosse
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->, very thick] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->, very thick] (q3) -- node {$\mathbb 1$} (qF);
+
+% Cappi di q_0
+\path[->] (q0) edge[loop above] node {$0$} (q0);
+\path[->] (q0) edge[loop below] node {$1$} (q0);
+
+% Transizioni dell'automa originale
+\draw[->] (q0) -- node {$1$} (q1);
+\draw[->] (q1) to[bend left=20]  node {$0$} (q2);
+\draw[->] (q1) to[bend right=20] node[swap] {$1$} (q2);
+\draw[->] (q2) to[bend left=20]  node {$0$} (q3);
+\draw[->] (q2) to[bend right=20] node[swap] {$1$} (q3);
+\end{tikzpicture}
+\]
+
+Passo 2, unione degli archi paralleli:
+
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)  {$q_0$};
+\node[state]            (q1)  at (5,0)    {$q_1$};
+\node[state]            (q2)  at (7.5,0)  {$q_2$};
+\node[state]            (q3)  at (10,0)   {$q_3$};
+\node[state, accepting] (qF)  at (12.5,0) {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\mathbb 1$} (q0);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+
+% Transizioni con archi paralleli unificati
+\path[->, very thick] (q0) edge[loop above] node {$0+1$} (q0);
+\draw[->] (q0) -- node {$1$} (q1);
+\draw[->, very thick] (q1) -- node {$0+1$} (q2);
+\draw[->, very thick] (q2) -- node {$0+1$} (q3);
+\end{tikzpicture}
+\]
+
+Passo 3, eliminazione di $q_0$ e $q_2$:
+
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q1)  at (4,0)    {$q_1$};
+\node[state]            (q3)  at (9,0)    {$q_3$};
+\node[state, accepting] (qF)  at (12,0)   {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+
+% Eliminazione di q_0 e q_2
+\draw[->, very thick] (q0s) -- node {$\mathbb 1(0+1)^*1=(0+1)^*1$} (q1);
+\draw[->, very thick] (q1)  -- node {$(0+1)(0+1)$} (q3);
+\draw[->] (q3) -- node {$\mathbb 1$} (qF);
+\end{tikzpicture}
+\]
+
+Passo 4, eliminazione di $q_1$ e $q_3$:
+
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0s) at (0,0)  {$q_0^*$};
+\node[state, accepting] (qF)  at (10,0) {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+
+% Eliminazione di q_1 e q_3
+\draw[->, very thick] (q0s) -- node {$(0+1)^*1(0+1)(0+1)\mathbb 1=(0+1)^*1(0+1)(0+1)$} (qF);
+\end{tikzpicture}
+\]
+
+Quindi
+\[
+    \mathsf{e}_3=(0+1)^*\,1\,(0+1)(0+1).
+\]
+
+\item $X_n$ è l'insieme delle parole il cui $n$-esimo simbolo da destra è $1$, e si ha
+\[
+    \mathsf{e}_n=(0+1)^*\,1\,(0+1)^{n-1}.
+\]
+\end{enumerate}
+\end{sol}
