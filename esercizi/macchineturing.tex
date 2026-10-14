@@ -162,14 +162,14 @@ mu = {{
 \end{ex}
 \begin{sol}
     
-    \ \textcolor{red}{DA FARE}
+    \ 
     \begin{enumerate}
         \item Siano $\mu_X$ e $\mu_Y$ due macchina di Turing
         che decidono rispettivamente $X$ e $Y$.
         Creiamo la macchina di Turing seguente:
          \[
         \begin{matrix}
-            \overline{\mu_X} : & Q \times \tilde A 
+            \overline{\mu} : & Q \times \tilde A 
             & \to & Q' \times \tilde A \times \{-1,1 \}
              \\ & 
             (q,a)
@@ -179,10 +179,10 @@ mu = {{
             \begin{cases}
                 (p,b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p\neq q_F^1
                 \\
-                (q^1_F,b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p= q_F^1
+                (q^1_{F_X},b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p= q_F^1
                 \\
-                (q^0_F,b,m), & \text{se } \mu(q,a)=(p,b,m) \text{ e } p= q_F^1
-            \end{cases}
+                (q^0_{F_Y},b,m)
+               \end{cases}
         \end{matrix}
         \]
     \end{enumerate}
@@ -235,30 +235,30 @@ di Turing che scrive $w_1w_1$.
 \draw[->] (qR1)  -- node {$\square/1,-1$}       (qR1p);
 \draw[->] (qR1p) -- node {$\square/\square,-1$} (qR1pp);
 
-% Riga superiore: cappi
-\path[->] (qW1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qW1)
-                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qW1);
-\path[->] (qR1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qR1)
-                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qR1);
-\path[->] (qR1p) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1p)
-                 edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1p);
-\path[->] (qR1pp) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1pp)
-                  edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1pp);
+% Riga superiore: cappi (uno sopra, uno sotto)
+\path[->] (qW1) edge[loop above, looseness=8] node[above] {$0/0,+1$} (qW1)
+                edge[loop below, looseness=8] node[below] {$1/1,+1$} (qW1);
+\path[->] (qR1) edge[loop above, looseness=8] node[above] {$0/0,+1$} (qR1)
+                edge[loop below, looseness=8] node[below] {$1/1,+1$} (qR1);
+\path[->] (qR1p) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR1p)
+                 edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR1p);
+\path[->] (qR1pp) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR1pp)
+                  edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR1pp);
 
 % Riga inferiore: transizioni
 \draw[->] (qW0)  -- node[swap] {$\square/\square,+1$} (qR0);
 \draw[->] (qR0)  -- node[swap] {$\square/0,-1$}       (qR0p);
 \draw[->] (qR0p) -- node[swap] {$\square/\square,-1$} (qR0pp);
 
-% Riga inferiore: cappi
-\path[->] (qW0) edge[out=255,in=205,looseness=9] node[below left]  {$1/1,+1$} (qW0)
-                edge[out=285,in=335,looseness=9] node[below right] {$0/0,+1$} (qW0);
-\path[->] (qR0) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,+1$} (qR0)
-                edge[out=285,in=335,looseness=9] node[below right] {$1/1,+1$} (qR0);
-\path[->] (qR0p) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0p)
-                 edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0p);
-\path[->] (qR0pp) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0pp)
-                  edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0pp);
+% Riga inferiore: cappi (uno sopra, uno sotto)
+\path[->] (qW0) edge[loop above, looseness=8] node[above] {$1/1,+1$} (qW0)
+                edge[loop below, looseness=8] node[below] {$0/0,+1$} (qW0);
+\path[->] (qR0) edge[loop above, looseness=8] node[above] {$0/0,+1$} (qR0)
+                edge[loop below, looseness=8] node[below] {$1/1,+1$} (qR0);
+\path[->] (qR0p) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR0p)
+                 edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR0p);
+\path[->] (qR0pp) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR0pp)
+                  edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR0pp);
 
 % Ritorni a q_0
 \draw[->, rounded corners=8pt]
@@ -330,30 +330,30 @@ $w_1w_2$ con $w_2$ il complementare di $w_1$.
 \draw[->] (qR1)  -- node {$\square/1,-1$}       (qR1p);
 \draw[->] (qR1p) -- node {$\square/\square,-1$} (qR1pp);
 
-% Riga superiore: cappi
-\path[->] (qW1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qW1)
-                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qW1);
-\path[->] (qR1) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,+1$} (qR1)
-                edge[out=75,in=25,looseness=9]   node[above right] {$1/1,+1$} (qR1);
-\path[->] (qR1p) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1p)
-                 edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1p);
-\path[->] (qR1pp) edge[out=105,in=155,looseness=9] node[above left]  {$0/0,-1$} (qR1pp)
-                  edge[out=75,in=25,looseness=9]   node[above right] {$1/1,-1$} (qR1pp);
+% Riga superiore: cappi (uno sopra, uno sotto)
+\path[->] (qW1) edge[loop above, looseness=8] node[above] {$0/0,+1$} (qW1)
+                edge[loop below, looseness=8] node[below] {$1/1,+1$} (qW1);
+\path[->] (qR1) edge[loop above, looseness=8] node[above] {$0/0,+1$} (qR1)
+                edge[loop below, looseness=8] node[below] {$1/1,+1$} (qR1);
+\path[->] (qR1p) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR1p)
+                 edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR1p);
+\path[->] (qR1pp) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR1pp)
+                  edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR1pp);
 
 % Riga inferiore: transizioni
 \draw[->] (qW0)  -- node[swap] {$\square/\square,+1$} (qR0);
 \draw[->] (qR0)  -- node[swap] {$\square/0,-1$}       (qR0p);
 \draw[->] (qR0p) -- node[swap] {$\square/\square,-1$} (qR0pp);
 
-% Riga inferiore: cappi
-\path[->] (qW0) edge[out=255,in=205,looseness=9] node[below left]  {$1/1,+1$} (qW0)
-                edge[out=285,in=335,looseness=9] node[below right] {$0/0,+1$} (qW0);
-\path[->] (qR0) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,+1$} (qR0)
-                edge[out=285,in=335,looseness=9] node[below right] {$1/1,+1$} (qR0);
-\path[->] (qR0p) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0p)
-                 edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0p);
-\path[->] (qR0pp) edge[out=255,in=205,looseness=9] node[below left]  {$0/0,-1$} (qR0pp)
-                  edge[out=285,in=335,looseness=9] node[below right] {$1/1,-1$} (qR0pp);
+% Riga inferiore: cappi (uno sopra, uno sotto)
+\path[->] (qW0) edge[loop above, looseness=8] node[above] {$1/1,+1$} (qW0)
+                edge[loop below, looseness=8] node[below] {$0/0,+1$} (qW0);
+\path[->] (qR0) edge[loop above, looseness=8] node[above] {$0/0,+1$} (qR0)
+                edge[loop below, looseness=8] node[below] {$1/1,+1$} (qR0);
+\path[->] (qR0p) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR0p)
+                 edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR0p);
+\path[->] (qR0pp) edge[loop above, looseness=8] node[above] {$0/0,-1$} (qR0pp)
+                  edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR0pp);
 
 % Ritorni a q_0 (modificati)
 \draw[->, very thick, rounded corners=8pt]

@@ -438,7 +438,10 @@ Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità; le inclusioni 
 \]
 \end{prop}
 
-\begin{proof}
+\begin{proof}Visto che le definizioni delle
+    due classi di complessità sono tutte "definitive"
+    (ovvero, si richiede la condizione da un certo valore in poi)
+    possiamo evitare di scegliere il valore da cui partire e discutere dirattemnte il caso "definitivo".
     Fissato l'alfabeto $A$, sia $X \in \mathrm{DTIME}_1^A(T)$. Poiché ad ogni passo di computazione la testina può spostarsi di al massimo una cella, la massima distanza raggiungibile a partire dalla posizione iniziale in $T(n)$ passi non può essere maggiore di $T(n)$. Di conseguenza, lo spazio utilizzato è banalmente limitato da $T(n)$, provando la prima inclusione.
     \\
     Dimostriamo ora la seconda inclusione. Sia $\mu$ una macchina di Turing di alfabeto $A$ e insieme degli stati $Q$, che decide un insieme in spazio $s = T(n)$. Poniamo $k = |A|$ e $d = |Q|$.
