@@ -26,18 +26,21 @@
 \contentsline {subsection}{\numberline {8.2}Look-up Table}{55}{subsection.8.2}%
 \contentsline {subsection}{\numberline {8.3}Relazioni tra le classi DTIME e DSPACE}{58}{subsection.8.3}%
 \contentsline {subsection}{\numberline {8.4}Pumping lemma}{59}{subsection.8.4}%
-\contentsline {section}{\numberline {9}Prerequisiti}{63}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Definizioni Preliminari}{63}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Grafi e Matrici di Adiacenza}{63}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Grafi Etichettati}{64}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Semianelli e Serie Formali}{64}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}Matrici su Semianelli}{66}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Monoidi, Serie Formali e Algebre di Kleene}{67}{subsection.9.6}%
-\contentsline {section}{\numberline {10}Wolfram}{69}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Introduzione}{69}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Entropia}{72}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Libreria TM-lib}{74}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Automi}{75}{subsection.10.4}%
-\contentsline {section}{\numberline {11}Esercizi}{77}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Automi}{77}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Macchine di Turing}{92}{subsection.11.2}%
+\contentsline {section}{\numberline {9}Macchine a seminastro e multinastro}{63}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Simulazione di algoritmi}{63}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Macchine a seminastro}{64}{subsection.9.2}%
+\contentsline {section}{\numberline {10}Prerequisiti}{68}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Definizioni Preliminari}{68}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Grafi e Matrici di Adiacenza}{68}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Grafi Etichettati}{69}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Semianelli e Serie Formali}{69}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Matrici su Semianelli}{71}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}Monoidi, Serie Formali e Algebre di Kleene}{72}{subsection.10.6}%
+\contentsline {section}{\numberline {11}Wolfram}{74}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Introduzione}{74}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Entropia}{77}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Libreria TM-lib}{79}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Automi}{80}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Esercizi}{82}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Automi}{82}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Macchine di Turing}{97}{subsection.12.2}%

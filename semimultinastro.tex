@@ -1,0 +1,228 @@
+   
+\subsection{Simulazione di algoritmi}
+
+In questa sottosezione,
+vogliamo fornire
+degli strumenti per poter mostrare
+l'equivalenza di diversi modelli di calcolo
+(ovvero, per mostrare che decidono gli stessi insiemi).
+Per fare questo, introduciamo la nozione di simulazione. 
+Una simulazione si ha quando è possibile 
+trovare un modo in cui ad ogni 
+computazione effettuata con l'algoritmo 
+per un certo modello di calcolo si 
+possa associare la computazione, 
+non necessariamente attraverso lo 
+stesso numero di passi, 
+svolta dall'altro sistema.
+
+\begin{defi}
+Siano $\mathcal{A}_1=(Conf_1,\varepsilon_1,\tau_1,\delta_1)$ e $\mathcal{A}_2=(Conf_2,\varepsilon_2,\tau_2,\delta_2)$ due algoritmi con lo stesso alfabeto di ingresso $A$ e stesso alfabeto di uscita $B$.
+Una \emph{simulazione} di $\mathcal{A}_1$ tramite $\mathcal{A}_2$ è una funzione iniettiva
+\[
+\varphi : Conf_1 \to Conf_2
+\]
+tale che per ogni parola $w\in A^*$ si abbia
+\[
+\tau_2^{k_0}(\varepsilon_2(w))=\varphi(\varepsilon_1(w)) \quad\text{per qualche } k_0,
+\]
+inoltre, per ogni passo della computazione $i$, si deve avere
+\[
+\tau_2^{k_i}(\varphi(c_i))=\varphi(\tau_1(c_i)) \quad\text{per qualche } k_i,
+\]
+e per ogni configurazione terminale $c_t$ (ovvero $c_t$ nel dominio di $\delta_1$)
+\[
+\delta_2(\tau_2^{k_t}(\varphi(c_t)))=\delta_1(c_t) \quad\text{per qualche } k_t.
+\]
+\end{defi}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto
+]
+% Intestazioni
+\node at (0,0.8)  {$\mathcal{A}_1$};
+\node at (4,0.8)  {$\mathcal{A}_2$};
+
+% Configurazioni di A_1
+\node (c0) at (0,0)    {$c_0$};
+\node (c1) at (0,-0.9) {$c_1$};
+\node (c2) at (0,-1.8) {$c_2$};
+\node (c3) at (0,-2.7) {$c_3$};
+
+% Configurazioni di A_2
+\node (d0) at (4,0)      {$c_0'$};
+\node (p0) at (4,-0.9)   {$\varphi(c_0)$};
+\node (pt) at (4,-1.8)   {$\varphi(c_t)$};
+\node (pd) at (4,-2.25)  {$\vdots$};
+\node (p3) at (4,-2.7)   {$\varphi(c_3)$};
+
+% Testa di simulazione e passi intermedi
+\draw[-] (d0) -- (p0);
+\draw[-] (p0) -- (pt);
+
+% Immagini tramite la simulazione
+\draw[->] (c0) to[bend left=15] (d0);
+\draw[->] (c2) to[bend left=15] (pt);
+\draw[->] (c3) to[bend right=15] (p3);
+\end{tikzpicture}
+\caption{Schema di una simulazione di $\mathcal{A}_1$ tramite $\mathcal{A}_2$.}
+\label{fig:simulazione}
+\end{figure}
+
+\begin{rema}
+Significato di $k_i$: se $\mathcal{A}_2$ è l'algoritmo che simula $\mathcal{A}_1$ allora è possibile che, mentre in $\mathcal{A}_1$ si effettui una transizione dalla configurazione $c_i$ alla configurazione successiva $c_{i+1}$, in $\mathcal{A}_2$ siano necessarie $k_i$ transizioni per passare dalla configurazione immagine di $c_i$ all'immagine di $c_{i+1}$.
+\end{rema}
+
+\begin{defi}
+Si definisce la \emph{testa di simulazione}, la computazione che $\mathcal{A}_2$ deve fare partendo dalla configurazione iniziale associata ad una parola $\varepsilon_2(w)$ per arrivare alla configurazione immagine della configurazione iniziale dell'algoritmo che viene simulato associata alla stessa parola $w$: $\varphi(\varepsilon_1(w))$.
+
+In modo analogo si definisce la \emph{coda di simulazione}, come quella computazione che $\mathcal{A}_2$ deve fare partendo dalla immagine della configurazione terminale per l'algoritmo $\mathcal{A}_1$, per arrivare ad una configurazione terminale per l'algoritmo $\mathcal{A}_2$.
+\end{defi}
+
+\begin{lemm}\label{simulazione e decidibilità}
+Se esiste la simulazione di un algoritmo $\mathcal{A}_1$ per mezzo di un algoritmo $\mathcal{A}_2$ e se $\mathcal{A}_1$ decide l'insieme $X$ allora anche $\mathcal{A}_2$ decide $X$.
+\begin{proof}
+Segue dalla definizione.
+\end{proof}
+\end{lemm}
+
+
+
+
+\subsection{Macchine a seminastro}
+Superata la limitazione costituita, come nel caso degli automi finiti, dal fatto di avere a disposizione durante la computazione esclusivamente lo spazio occupato dai caratteri della parola da decidere, abbiamo ottenuto una famiglia di algoritmi più potenti che certamente escono dalla classe di complessità lineare $\mathrm{DSPACE}_1^A(n)$. Avendo aggiunto al modello la possibilità di gestire una memoria potenzialmente infinita vediamo che variando leggermente la definizione di macchina alcune proprietà appaiono più evidenti, ad esempio consideriamo ora il caso di una macchina di Turing in cui il nastro è infinito solo in una direzione, ed andiamo a considerare se a questa modifica al modello di calcolo corrisponde un diverso insieme di problemi decidibili.
+\\ \\
+Una macchina di Turing a seminastro è un modello più debole della macchina di Turing in quanto il nastro è indicizzato solo per interi positivi. Nella cella del nastro di indice $0$ poniamo un simbolo particolare ($||$), detto \emph{respingente}, in modo tale che ogni transizione corrispondente alla lettura sul nastro di tale simbolo, prevede lo spostamento della testina alla cella di indice successivo. In questo modo la cella di indice $0$ non potrà mai essere superata verso gli indici negativi e la computazione si svolgerà forzatamente sul nastro con indici non negativi.
+
+\begin{defi}
+Lo spazio delle configurazioni a seminastro di alfabeto $A$ e insieme degli stati $Q$ è l'insieme delle triple
+\[
+Conf_{1/2}^{A,Q}=\{(f,p,q) \text{ dove } f:\mathbb{Z}\to A\cup\{\square,||\},\ p\in\mathbb{Z} \text{ e } q\in Q\}
+\]
+dove
+\[
+f(k)=\begin{cases}
+\square & \text{se } k<0\\
+|| & \text{se } k=0.
+\end{cases}
+\]
+(per $k>0$ la funzione $f$ è arbitraria).
+Denotiamo con $Conf_{1/2}^{A,Q}$ l'insieme delle configurazioni per le macchine a seminastro.
+\end{defi}
+
+Le configurazioni delle macchine a seminastro sono in tutto analoghe a quelle delle macchine di Turing ad un nastro e pertanto possono essere rappresentate graficamente in modo analogo:
+
+\begin{defi}
+Una macchina di Turing a seminastro $\mu$ di alfabeto $A$ e insieme degli stati $Q$ è una macchina di Turing di alfabeto $A_s:=A\cup\{||\}$ e insieme degli stati $Q$
+\[
+\mu : Q\times A_s' \to Q\times A_s'\times\{-1,+1\}
+\]
+tale che per ogni stato $q\in Q$ abbiamo
+\[
+\mu(q,||)=(q',||,+1) \qquad \text{dove } q'\in Q.
+\]
+\end{defi}
+
+L'algoritmo formale associato ad una macchina a seminastro è quello dato per la macchina di Turing, con la sola differenza della funzione di input, che associa ad una parola di input $w\in A^*$ la configurazione $(f,1,q_0)\in Conf_{1/2}^A$ dove
+\[
+f(p)=\begin{cases}
+\square & p<0 \text{ oppure } p>|w|,\\
+|| & p=0,\\
+w(p) & 1\leq p\leq |w|.
+\end{cases}
+\]
+
+In modo diretto, abbiamo che qualsiasi algoritmo associato ad una macchina a seminastro è un algoritmo associato ad una macchina di Turing standard modificata in modo tale che a partire dalla configurazione iniziale la computazione inizia aggiungendo il carattere speciale $||$ a sinistra della parola di input e poi prosegue la computazione utilizzando la tabella della macchina a seminastro.
+In questo caso, la funzione di simulazione è l'identità.
+\begin{prop}
+    Un insieme decidibile per una 
+    macchina di Tuing a seminastro è decidibile
+    anche per una macchina di Turing.
+    \begin{proof}
+        Segue dal lemma
+        \ref{simulazione e decidibilità}.
+    \end{proof}
+\end{prop}
+Anche l'implicazione
+dall'altro lato è vera.
+
+\begin{rema}
+La macchina a seminastro è davvero più debole di quella intesa (a nastro bi-infinito)?
+\end{rema}
+
+\begin{prop}\label{prop:nastro-seminastro}
+Data una macchina di Turing $\mu$ esiste una macchina di Turing a seminastro $\mu'$ e una funzione di simulazione $\varphi : Conf_1^A \to Conf_{1/2}^A$ in modo che l'algoritmo associato a $\mu'$ simuli l'algoritmo associato a $\mu$.
+\end{prop}
+
+\begin{proof}
+Poiché
+\[
+\mu : Q\times A' \to Q'\times A'\times\{+1,-1\}
+\]
+allora le sue configurazioni sono del tipo $(f,p,q)$ con $p\in\mathbb{Z}$ e $f:\mathbb{Z}\to A'$. Le configurazioni di un algoritmo associato ad una macchina a seminastro sono del tipo $(f_{1/2},p,q)$ con $f:\mathbb{Z}\to A_s'$ e $f_{1/2}(p)=\square$ se $p<0$.
+
+Dobbiamo, per prima cosa, costruire una biiezione $\psi:\mathbb{Z}\to\mathbb{Z}^+$ da utilizzare nella definizione della funzione di simulazione:
+\[
+\psi(p)=\begin{cases}
+2p+1 & \text{se } p\geq 0,\\
+-2p & \text{se } p<0.
+\end{cases}
+\]
+
+Consideriamo come insieme degli stati per la macchina $\mu'$ a semi-nastro
+\[
+Q_{\mu'}=Q\times\{-1,+1\}\cup Q\times\{-1,+1\}^2\cup Q_0
+\]
+gli stati $(q,\epsilon)\in Q\times\{-1,+1\}$ servono ad interpretare le configurazioni che si trovano nello stato $q$ nella macchina $\mu$ quando la posizione corrente $p$ è nel seminastro di segno $\epsilon$, gli stati $(q,\epsilon,m)\in Q\times\{-1,+1\}^2$ servono ad interpretare il passo di simulazione intermedio in cui si trova la macchina $\mu'$ quando deve effettuare una transizione allo stato $q'$ trovandosi nel seminastro di segno $\epsilon$ e dovendo $\mu$ effettuare uno spostamento della direzione $m$.
+
+\begin{rema}
+Gli stati della forma $(q,\epsilon,m)$ sono gli stati in cui la macchina si trova quando sta attraversando una casella per raggiungere la casella successiva (quella corrispondente a $\psi(p+m)$).
+\end{rema}
+
+Poniamo $\varphi(f,p,q)=(f',p',q')$ dove $f'(k)=f(\psi^{-1}(k))$, $p'=\psi(p)$ e
+\[
+q'=\begin{cases}
+(q,+1) & \text{se } p\geq 0,\\
+(q,-1) & \text{se } p<0
+\end{cases}.
+\]
+
+Quindi se $\mu(q,a)=(q',a',m)$ ( con $m\in\{-1,+1\}$ possibile spostamento ) allora, per $q\in Q_{\mu'}$ si hanno i seguenti casi
+\[
+\mu'(q,a)=\begin{cases}
+((q',\epsilon,m),a',\epsilon m) & \text{se } q=(q_\mu,\epsilon),\ a\neq|| \text{ e } \mu(q_\mu,a)=(q'a',m)\\
+((q_\mu,\epsilon),a,\epsilon m) & \text{se } q=(q_\mu,\epsilon,m),\ a\neq||\\
+((q_\mu,-\epsilon,m),||,+1) & \text{se } q=(q_\mu,\epsilon,m),\ a=||\\
+((q_\mu,-\epsilon),||,+1) & \text{se } q=(q_\mu,\epsilon),\ a=||
+\end{cases}
+\]
+la componente $\epsilon$ serve per ``cambiare segno'' allo spostamento, ad esempio quando la testina di $\mu$ deve passare dalla cella $0$ alla cella $-1$ allora $\epsilon=-1$ mentre in $\mu'$ lo spostamento deve essere positivo.
+
+Resta da costruire quella parte della macchina di Turing che a partire dalla configurazione per la macchina a seminastro associata alla parola in ingresso $w$ computa l'immagine attraverso la funzione di simulazione della configurazione iniziale per la macchina ad un nastro (testa di simulazione). Tale macchina definita sull'insieme di stati $Q_0$ (con $12$ elementi) è riportata in Figura~\ref{fig:testa-simulazione}.
+\end{proof}
+
+Notiamo che sul piano qualitativo le macchine di Turing ad un nastro e quelle a semi-nastro sono equivalenti, ma c'è un aspetto quantitativo che le distingue:
+
+\begin{lemm}
+Con le notazioni della Proposizione~\ref{prop:nastro-seminastro}, per ogni $w\in A^*$ se poniamo $t$ (risp.\ $s$) pari al costo in tempo (risp.\ in spazio) $T_\mu(w)$ (risp.\ $S_\mu(w)$) allora $T_{\mu'}(w)\leq 3t+4n^2$ (risp.\ $2s+2n+1$).
+\end{lemm}
+
+\begin{proof}
+Ogni passo della computazione di $\mu$ è simulato da $2$ oppure $3$ passi di calcolo di $\mu'$. Quanto all'inizializzazione, la trasformazione di una parola di lunghezza $n$ in una di lunghezza $2n$ inserendo dei blank tra un simbolo e il successivo necessita di $2n$ passi di computazione per inserire il primo blank, $2(n-1)$ per il secondo, $2(n-2)$ per il terzo e così via, ovvero $\sum_{i=1}^{n}2i=n^2+n$, $2n$ passi per riportare il puntatore all'inizio della parola, e ancora $2$ per vedere la fine della parola spiazzata (bisogna incontrare un doppio blank) dunque in totale $n^2+3n+3$ che possiamo maggiorare con $7n^2$.
+\end{proof}
+
+j
+
+\begin{prop}[Corollario]
+Per ogni $S$ e $T$ funzioni di complessità si ha:
+\[
+\mathrm{DTIME}_{1/2}^A(T(n))\subset \mathrm{DTIME}_1^A(T(n))\subset \mathrm{DTIME}_{1/2}^A(3T(n)+7n^2)
+\]
+\[
+\mathrm{DSPACE}_{1/2}^A(S(n))\subset \mathrm{DSPACE}_1^A(S(n))\subset \mathrm{DTIME}_{1/2}^A(2S(n)+2n+1)
+\]
+\end{prop}
+
+Si noti come la costante $7$ nella formula più sopra non abbia molto significato: da una parte per la definizione asintotica delle classi di complessità, questa costante può essere sostituita con una qualsiasi altra costante di valore maggiore di $1$ poiché il termine quadratico proveniente dalla maggiorazione di $n^2+3n+3$. Si vedrà più avanti che sono questioni inessenziali.

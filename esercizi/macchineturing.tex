@@ -155,9 +155,9 @@ mu = {{
 
 \begin{enumerate}
     \item Se $X$ e $Y$ sono Turing decidibili allora $X \cap Y$ è Turing decidibile;
-    \item Se $X \in \mathrm{DTIME}(T_1(n))$ e
+    \item Se $X \in \mathrm{DTIME}_2 (T_1(n))$ e
     $Y \in \mathrm{DTIME}(T_2(n))$
-    allora $X \cap Y \in \mathrm{DTIME}(\operatorname{min}(T_1(n),T_2(n)))$.
+    allora $X \cap Y \in \mathrm{DTIME}(\operatorname{max}(T_1(n),T_2(n)))$.
 \end{enumerate}
 \end{ex}
 \begin{sol}
@@ -177,6 +177,8 @@ mu = {{
             \mapsto 
             &
             \begin{cases}
+                \alpha(q,a), & \text{se } q=q_0
+                \\
                 (p,b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p\neq q_F^1
                 \\
                 (q^1_{F_X},b,m), & \text{se } \mu_X(q,a)=(p,b,m) \text{ e } p= q_F^1
@@ -322,8 +324,8 @@ $w_1w_2$ con $w_2$ il complementare di $w_1$.
 \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
 
 % Uscite da q_0 (modificate)
-\draw[->, very thick] (q0) -- node[sloped, above] {$0/\square,+1$} (qW1);
-\draw[->, very thick] (q0) -- node[sloped, below] {$1/\square,+1$} (qW0);
+\draw[->] (q0) -- node[sloped, above] {$0/\square,+1$} (qW1);
+\draw[->] (q0) -- node[sloped, below] {$1/\square,+1$} (qW0);
 
 % Riga superiore: transizioni
 \draw[->] (qW1)  -- node {$\square/\square,+1$} (qR1);
@@ -356,9 +358,9 @@ $w_1w_2$ con $w_2$ il complementare di $w_1$.
                   edge[loop below, looseness=8] node[below] {$1/1,-1$} (qR0pp);
 
 % Ritorni a q_0 (modificati)
-\draw[->, very thick, rounded corners=8pt]
+\draw[->, rounded corners=8pt]
     (qR1pp.north) -- (qR1pp.north |- 0,5.0) -- node[above] {$\square/0,+1$} (q0.north |- 0,5.0) -- (q0.north);
-\draw[->, very thick, rounded corners=8pt]
+\draw[->, rounded corners=8pt]
     (qR0pp.south) -- (qR0pp.south |- 0,-5.0) -- node[below] {$\square/1,+1$} (q0.south |- 0,-5.0) -- (q0.south);
 
 % Da q_0 a p_0
@@ -428,7 +430,8 @@ Sia $M$ la macchina dell'esercizio \ref{ex: comlemento seq binaria}:
 \newpage
 
 \begin{ex}
-Macchina che scrive il successore in binario.
+Macchina che scrive il successore in binario
+e si posiziona alla fine della parola 
 \end{ex}
 
 \begin{sol}
@@ -446,6 +449,10 @@ Macchina che scrive il successore in binario.
 % Freccia d'ingresso
 \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
 
+% Ciclo iniziale: scorre la parola fino al primo blank (nuovo)
+\path[->] (q0) edge[loop above, looseness=8] node {$0/0,+1$} (q0);
+\path[->] (q0) edge[loop below, looseness=8] node {$1/1,+1$} (q0);
+
 % Transizioni
 \draw[->] (q0) -- node {$\square/\square,-1$} (q1);
 \path[->] (q1) edge[loop above, looseness=8] node {$1/0,-1$} (q1);
@@ -453,7 +460,7 @@ Macchina che scrive il successore in binario.
 \draw[->] (q1) to[bend right=40] node[swap] {$\square/1,+1$} (qR);
 \path[->] (qR) edge[loop above, looseness=8] node {$0/0,+1$} (qR);
 \path[->] (qR) edge[loop below, looseness=8] node {$1/1,+1$} (qR);
-\draw[->] (qR) -- node {$\square/\square,+1$} (qF);
+\draw[->] (qR) -- node {$\square/\square,-1$} (qF);
 \end{tikzpicture}
 \]
 \end{sol}
