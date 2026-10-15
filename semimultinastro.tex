@@ -105,10 +105,10 @@ dove
 \[
 f(k)=\begin{cases}
 \square & \text{se } k<0\\
-|| & \text{se } k=0.
+|| & \text{se } k=0
 \end{cases}
 \]
-(per $k>0$ la funzione $f$ è arbitraria).
+(per $k>0$ la funzione $f$ è definita perlomeno definta e non si hanno restrizioni).
 Denotiamo con $Conf_{1/2}^{A,Q}$ l'insieme delle configurazioni per le macchine a seminastro.
 \end{defi}
 
@@ -146,15 +146,10 @@ In questo caso, la funzione di simulazione è l'identità.
     \end{proof}
 \end{prop}
 Anche l'implicazione
-dall'altro lato è vera.
-
-\begin{rema}
-La macchina a seminastro è davvero più debole di quella intesa (a nastro bi-infinito)?
-\end{rema}
+dall'altro lato è vera. Infatti abbiamo la seguente proposizione.
 
 \begin{prop}\label{prop:nastro-seminastro}
 Data una macchina di Turing $\mu$ esiste una macchina di Turing a seminastro $\mu'$ e una funzione di simulazione $\varphi : Conf_1^A \to Conf_{1/2}^A$ in modo che l'algoritmo associato a $\mu'$ simuli l'algoritmo associato a $\mu$.
-\end{prop}
 
 \begin{proof}
 Poiché
@@ -176,11 +171,7 @@ Consideriamo come insieme degli stati per la macchina $\mu'$ a semi-nastro
 Q_{\mu'}=Q\times\{-1,+1\}\cup Q\times\{-1,+1\}^2\cup Q_0
 \]
 gli stati $(q,\epsilon)\in Q\times\{-1,+1\}$ servono ad interpretare le configurazioni che si trovano nello stato $q$ nella macchina $\mu$ quando la posizione corrente $p$ è nel seminastro di segno $\epsilon$, gli stati $(q,\epsilon,m)\in Q\times\{-1,+1\}^2$ servono ad interpretare il passo di simulazione intermedio in cui si trova la macchina $\mu'$ quando deve effettuare una transizione allo stato $q'$ trovandosi nel seminastro di segno $\epsilon$ e dovendo $\mu$ effettuare uno spostamento della direzione $m$.
-
-\begin{rema}
 Gli stati della forma $(q,\epsilon,m)$ sono gli stati in cui la macchina si trova quando sta attraversando una casella per raggiungere la casella successiva (quella corrispondente a $\psi(p+m)$).
-\end{rema}
-
 Poniamo $\varphi(f,p,q)=(f',p',q')$ dove $f'(k)=f(\psi^{-1}(k))$, $p'=\psi(p)$ e
 \[
 q'=\begin{cases}
@@ -188,7 +179,6 @@ q'=\begin{cases}
 (q,-1) & \text{se } p<0
 \end{cases}.
 \]
-
 Quindi se $\mu(q,a)=(q',a',m)$ ( con $m\in\{-1,+1\}$ possibile spostamento ) allora, per $q\in Q_{\mu'}$ si hanno i seguenti casi
 \[
 \mu'(q,a)=\begin{cases}
@@ -200,22 +190,112 @@ Quindi se $\mu(q,a)=(q',a',m)$ ( con $m\in\{-1,+1\}$ possibile spostamento ) all
 \]
 la componente $\epsilon$ serve per ``cambiare segno'' allo spostamento, ad esempio quando la testina di $\mu$ deve passare dalla cella $0$ alla cella $-1$ allora $\epsilon=-1$ mentre in $\mu'$ lo spostamento deve essere positivo.
 
-Resta da costruire quella parte della macchina di Turing che a partire dalla configurazione per la macchina a seminastro associata alla parola in ingresso $w$ computa l'immagine attraverso la funzione di simulazione della configurazione iniziale per la macchina ad un nastro (testa di simulazione). Tale macchina definita sull'insieme di stati $Q_0$ (con $12$ elementi) è riportata in Figura~\ref{fig:testa-simulazione}.
+Resta da costruire quella parte della macchina di Turing che a partire dalla configurazione per la macchina a seminastro associata alla parola in ingresso $w$ computa l'immagine attraverso la funzione di simulazione della configurazione iniziale per la macchina ad un nastro (testa di simulazione). Tale macchina definita sull'insieme di stati $Q_0$ (con $12$ elementi) è riportata in Figura~\ref{fig:turing-seminastro-init}.
 \end{proof}
+\end{prop}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state] (q0)  at (0,0)      {$q_0$};
+\node[state] (q1)  at (3.5,0)    {$q_1$};
+\node[state] (q11) at (7,2.2)    {$q_{11}$};
+\node[state] (q10) at (7,-2.2)   {$q_{10}$};
+\node[state] (qC1) at (11,2.2)   {$q_{C1}$};
+\node[state] (qC0) at (11,-2.2)  {$q_{C0}$};
+\node[state] (qR)  at (15,0)     {$q_R$};
+
+% Stati di uscita
+\node[state]            (qR0) at (0,-4.2)  {$q_{R0}$};
+\node[state, accepting] (qF)  at (4,-4.2)  {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Scansione dei simboli gia' separati
+\draw[->] (q0) to[bend left=25] node[align=center] {$0/0,+1$\\$1/1,+1$} (q1);
+\draw[->] (q1) to[bend left=25] node[align=center] {$\square/\square,+1$} (q0);
+
+% Inserimento di un blank prima del simbolo letto in q_1
+\draw[->] (q1) -- node[pos=0.4, above left] {$1/\square,+1$} (q11);
+\draw[->] (q1) -- node[pos=0.4, below left] {$0/\square,+1$} (q10);
+
+% Trasporto del simbolo: da q_11 e q_10
+\draw[->] (q11) -- node[pos=0.5, above]        {$1/1,+1$} (qC1);
+\draw[->] (q11) -- node[pos=0.2, swap]         {$0/1,+1$} (qC0);
+\draw[->] (q10) -- node[pos=0.5, below]        {$0/0,+1$} (qC0);
+\draw[->] (q10) -- node[pos=0.2]               {$1/0,+1$} (qC1);
+
+% Trasporto del simbolo: tra q_C1 e q_C0
+\path[->] (qC1) edge[loop above, looseness=6] node {$1/1,+1$} (qC1);
+\path[->] (qC0) edge[loop below, looseness=6] node {$0/0,+1$} (qC0);
+\draw[->] (qC1) to[bend left=20] node {$0/1,+1$} (qC0);
+\draw[->] (qC0) to[bend left=20] node {$1/0,+1$} (qC1);
+
+% Fine parola: si scrive il simbolo trasportato e si torna indietro
+\draw[->, rounded corners=8pt]
+    (q11.80) -- (q11.80 |- 0,5) -- node {$\square/1,-1$} (qR.115 |- 0,5) -- (qR.115);
+\draw[->, rounded corners=8pt]
+    (q10.280) -- (q10.280 |- 0,-5) -- node[swap] {$\square/0,-1$} (qR.245 |- 0,-5) -- (qR.245);
+\draw[->] (qC1) -- node[pos=0.5, above right] {$\square/1,-1$} (qR);
+\draw[->] (qC0) -- node[pos=0.5, below right] {$\square/0,-1$} (qR);
+
+% Ritorno al respingente
+\path[->] (qR) edge[loop right, looseness=8] node[align=center] {$0/0,-1$\\$1/1,-1$\\$\square/\square,-1$} (qR);
+\draw[->, rounded corners=8pt]
+    (qR.65) -- (qR.65 |- 0,6.4) -- node {$\|/\|,+1$} (q0.90 |- 0,6.4) -- (q0.90);
+
+% Parola finita: ritorno al respingente e fine
+\draw[->] (q0) -- node[swap] {$\square/\square,-1$} (qR0);
+\path[->] (qR0) edge[loop left, looseness=8] node[align=center] {$0/0,-1$\\$1/1,-1$\\$\square/\square,-1$} (qR0);
+\draw[->] (qR0) -- node {$\|/\|,+1$} (qF);
+\end{tikzpicture}
+\caption{Macchina di Turing a seminastro che trasforma la configurazione iniziale nell'immagine della configurazione iniziale della macchina a nastro singolo. A ogni passata inserisce un blank tra due simboli consecutivi: $q_0$ e $q_1$ scorrono le coppie già separate, $q_{10}$, $q_{11}$, $q_{C0}$ e $q_{C1}$ spostano di una cella a destra il resto della parola trasportando un simbolo, e $q_R$ riporta la testina al respingente. Quando $q_0$ trova un blank al posto di un simbolo, $q_{R0}$ riporta la testina sulla cella $1$ e la macchina termina in $q_F$.}
+\label{fig:turing-seminastro-init}
+\end{figure}
+
+\begin{coro}
+Se $X$ a decidibile per macchina di Turing
+allora è decidibile anche per 
+macchina di Turing a seminastro.
+\begin{proof}
+    La tesi è conseguenza 
+    della proposizione
+    \ref{prop:nastro-seminastro} 
+    e del lemma
+    \ref{simulazione e decidibilità}.
+\end{proof}
+\end{coro}
 
 Notiamo che sul piano qualitativo le macchine di Turing ad un nastro e quelle a semi-nastro sono equivalenti, ma c'è un aspetto quantitativo che le distingue:
 
 \begin{lemm}
-Con le notazioni della Proposizione~\ref{prop:nastro-seminastro}, per ogni $w\in A^*$ se poniamo $t$ (risp.\ $s$) pari al costo in tempo (risp.\ in spazio) $T_\mu(w)$ (risp.\ $S_\mu(w)$) allora $T_{\mu'}(w)\leq 3t+4n^2$ (risp.\ $2s+2n+1$).
+Con le notazioni della Proposizione~\ref{prop:nastro-seminastro}, per ogni $w\in A^*$ con $n=|w|\geq 1$, se poniamo $t$ (risp.\ $s$) pari al costo in tempo (risp.\ in spazio) $T_\mu(w)$ (risp.\ $S_\mu(w)$), allora
+\[
+T_{\mu'}(w)\leq 3t+7n^2
+\qquad\text{(risp.\ } S_{\mu'}(w)\leq 2s+2n+1\text{)}.
+\]
+
+\begin{proof}\
+\begin{itemize}
+    \item[Tempo:]
+ Ogni passo della computazione di $\mu$ è simulato da $2$ oppure $3$ passi di calcolo di $\mu'$ (tre quando la testina attraversa il respingente e bisogna cambiare il segno dello spostamento), quindi la simulazione costa al più $3t$ passi.
+
+Quanto all'inizializzazione, la trasformazione di una parola di lunghezza $n$ in una di lunghezza $2n$, inserendo dei blank tra un simbolo e il successivo, necessita di $2n$ passi per inserire il primo blank, $2(n-1)$ per il secondo, $2(n-2)$ per il terzo e così via, ovvero $\sum_{i=1}^{n}2i=n^2+n$ passi. Servono poi $2n$ passi per riportare la testina all'inizio della parola e ancora $2$ per vedere la fine della parola spaziata (bisogna incontrare un doppio blank). In totale si hanno $n^2+3n+2\leq 7n^2$ passi, dove l'ultima disuguaglianza vale perché $n\geq1$.
+
+\item[Spazio:]Le celle visitate da $\mu$ hanno indici in un intervallo $[-a,b]$ con $a+b+1\leq s$, e $\psi$ le manda nelle celle di indice al più $2\max(a,b)+1\leq 2s+1$. Alla simulazione si aggiunge lo spazio usato in fase di inizializzazione, in cui la parola occupa $2n$ celle, per un totale di al più $2s+2n+1$.
+\end{itemize}
+\end{proof}
 \end{lemm}
 
-\begin{proof}
-Ogni passo della computazione di $\mu$ è simulato da $2$ oppure $3$ passi di calcolo di $\mu'$. Quanto all'inizializzazione, la trasformazione di una parola di lunghezza $n$ in una di lunghezza $2n$ inserendo dei blank tra un simbolo e il successivo necessita di $2n$ passi di computazione per inserire il primo blank, $2(n-1)$ per il secondo, $2(n-2)$ per il terzo e così via, ovvero $\sum_{i=1}^{n}2i=n^2+n$, $2n$ passi per riportare il puntatore all'inizio della parola, e ancora $2$ per vedere la fine della parola spiazzata (bisogna incontrare un doppio blank) dunque in totale $n^2+3n+3$ che possiamo maggiorare con $7n^2$.
-\end{proof}
 
-j
 
-\begin{prop}[Corollario]
+\begin{coro}
 Per ogni $S$ e $T$ funzioni di complessità si ha:
 \[
 \mathrm{DTIME}_{1/2}^A(T(n))\subset \mathrm{DTIME}_1^A(T(n))\subset \mathrm{DTIME}_{1/2}^A(3T(n)+7n^2)
@@ -223,6 +303,170 @@ Per ogni $S$ e $T$ funzioni di complessità si ha:
 \[
 \mathrm{DSPACE}_{1/2}^A(S(n))\subset \mathrm{DSPACE}_1^A(S(n))\subset \mathrm{DTIME}_{1/2}^A(2S(n)+2n+1)
 \]
-\end{prop}
+\begin{proof}
+    La tesi è conseguenza di quanto detto in questo paragrafo.
+\end{proof}
+\end{coro}
 
-Si noti come la costante $7$ nella formula più sopra non abbia molto significato: da una parte per la definizione asintotica delle classi di complessità, questa costante può essere sostituita con una qualsiasi altra costante di valore maggiore di $1$ poiché il termine quadratico proveniente dalla maggiorazione di $n^2+3n+3$. Si vedrà più avanti che sono questioni inessenziali.
+Si noti come la costante $7$ nella 
+formula più sopra non abbia molto 
+significato: 
+infatti, per la definizione 
+asintotica delle classi di complessità, 
+questa costante può essere sostituita 
+con una qualsiasi altra costante di 
+valore maggiore strettamente di $1$ 
+poiché è il termine quadratico 
+proveniente dalla maggiorazione di 
+$n^2+3n+3$.
+
+
+\subsection{Macchine multinastro}
+
+La definizione di macchina di Turing 
+può essere estesa a una più versatile: in luogo di una funzione $f\colon \mathbb{Z}\to A'$ si può definire una funzione che a ogni coordinata associa una $k$-upla di simboli dell'alfabeto,
+\[
+f\colon \mathbb{Z}\to A'^k,
+\]
+che funziona come un array di nastri e che quindi va in direzione opposta rispetto alla restrizione applicata nelle macchine a seminastro: al modello generale con un nastro indicizzato dai numeri interi si sostituisce un seminastro indicizzato con i numeri naturali.
+
+Introduciamo allora una generalizzazione della macchina di Turing che utilizzi più nastri. L'idea fisica è chiara: si ha una configurazione che utilizza $k$ nastri (essendo $k$ un numero fissato) e su ogni nastro soltanto una cella è accessibile. Ogni transizione avviene tenendo conto dello stato corrente, anche qui preso in un insieme finito, e dei $k$ caratteri accessibili sull'array di nastri. La risposta consiste nei $k$ caratteri da scrivere alla posizione corrente su ciascun nastro, negli spostamenti da effettuare su ciascun nastro (considereremo il caso più generale, in cui gli spostamenti non debbano essere paralleli) e infine nel nuovo stato in cui si troverà la macchina. Con questa definizione la formalizzazione è immediata:
+
+\begin{defi}
+Una \emph{configurazione a $k$ nastri} di alfabeto $A$ e insieme degli stati $Q$ è una $(2k+1)$-pla
+\[
+(f_1,\dots,f_k,p_1,\dots,p_k,q),
+\]
+dove
+\begin{enumerate}
+    \item ognuno dei nastri è una funzione $f_i\colon \mathbb{Z}\to A'$, dove $A' := A\cup\{\square\}$, per $i=1,\dots,k$;
+    \item $p_i\in\mathbb{Z}$ per ogni $1\leq i\leq k$;
+    \item $q\in Q'$, dove $Q' := Q\cup\{q_F^0,q_F^1\}$, essendo $q_F^0$ e $q_F^1$ due stati che non appartengono a $Q$.
+\end{enumerate}
+\end{defi}
+
+Una macchina di Turing per $k$ nastri potrebbe essere rappresentata come $2k+1$ tabelle a $k+1$ argomenti. È chiaro che una tale tabella è abbastanza illeggibile non appena il valore di $k$ è maggiore di $1$. Infatti le macchine di Turing multinastro, ancor più di quelle a un nastro, sono strumenti teorici non concepiti per essere utilizzati in pratica.
+
+L'insieme delle configurazioni sarà denotato con
+\[
+\mathrm{Conf}_k^{A,Q}=\{((f_1,\dots,f_k),(p_1,\dots,p_k),q)\ \text{che verificano i punti 1)--3)}\}.
+\]
+
+\begin{defi}\label{def:multinastro}
+Dato un alfabeto $A$ e un insieme finito di stati $Q$, una \emph{macchina di Turing a $k$ nastri} di alfabeto $A$ e insieme degli stati $Q$ è un'applicazione
+\[
+\mu\colon Q\times A'^k\to Q'\times A'^k\times\{-1,0,+1\}^k,
+\]
+dove $A' := A\cup\{\square\}$ e $Q' := Q\cup\{q_F^0,q_F^1\}$.
+\end{defi}
+
+\begin{rema}
+    Nella definizione~\ref{def:multinastro} si dà la possibilità a una delle varie testine di non muoversi.
+    Si può mostrare che, obbligando le macchine a multinastro a muovere la testina di ogni nastro ad ogni passo della computazione, la classe degli insiemi decisi non cambierebbe (e la classe di complessità rimarrebbe la stessa a meno di un fattore costante).
+    Scegliamo quindi per semplicità la definizione precedente.
+\end{rema}
+
+In modo simile alle versioni precedenti bisogna associare a una macchina $\mu$ un algoritmo formale in grado di eseguire la computazione descritta dalla macchina. Per prima cosa, lo spazio delle configurazioni per una macchina a $k$ nastri di alfabeto $A$ e spazio degli stati $Q$ è l'insieme $\mathrm{Conf}_k^{A,Q}$ appena definito. L'algoritmo formale $\mathcal{A}_\mu$ è dato dalla tripla $(\omega,\varepsilon,\delta)$, le cui tre funzioni sono le seguenti.
+\begin{enumerate}
+    \item La \emph{funzione di input} $\omega\colon A^*\to\mathrm{Conf}_k^{A,Q}$ associa a una parola $w$ di alfabeto $A$ la configurazione
+    \[
+    \omega(w)=((f_1,\dots,f_k),(1,\dots,1),q_0),
+    \]
+    dove la prima funzione nastro è definita come al solito come il nastro
+    \[
+    f_j(p)=\begin{cases}
+        w(p) & \text{se } 1\leq p\leq |w| \text{ e } j=1,\\
+        \square & \text{altrimenti}
+    \end{cases}
+    \]
+    (quindi tutte le componenti $j\neq 1$ hanno il nastro riempito con il simbolo blank: $f_j(p)=\square$ per ogni posizione $p$).
+    \item La \emph{funzione di transizione}
+    \[
+    \varepsilon\colon \mathrm{Conf}_k^{A,Q}\to\mathrm{Conf}_k^{A,Q}
+    \]
+    è definita come
+    \[
+    \varepsilon\bigl(((f_1,\dots,f_k),(p_1,\dots,p_k),q)\bigr)=((f'_1,\dots,f'_k),(p'_1,\dots,p'_k),q')
+    \]
+    quando si ha
+    \[
+    \mu\bigl(q,(f_1(p_1),\dots,f_k(p_k))\bigr)=(q',(a_1,\dots,a_k),(m_1,\dots,m_k))
+    \]
+    e, per ogni $1\leq i\leq k$,
+    \begin{itemize}
+        \item $f'_i(p)=\begin{cases} f_i(p) & \text{se } p\neq p_i,\\ a_i & \text{se } p=p_i,\end{cases}$
+        \item $p'_i=p_i+m_i$.
+    \end{itemize}
+    \item La \emph{funzione di uscita}
+    \[
+    \delta\colon \mathrm{Conf}_k^{A,Q}\to\{0,1\}
+    \]
+    associa a una configurazione terminale data un output binario in accordo con lo stato finale:
+    \[
+    \delta((f_1,\dots,f_k),(p_1,\dots,p_k),q)=\begin{cases}
+        0 & \text{se } q=q_F^0,\\
+        1 & \text{se } q=q_F^1.
+    \end{cases}
+    \]
+\end{enumerate}
+
+
+
+
+\begin{exam}
+Analizziamo se vi sono cambiamenti, con il passaggio alle macchine multinastro, nella decidibilità del problema $X=\{0^p1^p\mid p\geq 0\}$.
+A partire da una parola $w\in\{0,1\}^*$, il calcolo della macchina in Figura~\ref{fig:turing-2nastri} consiste nel leggere da sinistra a destra i simboli di $w$. Supponiamo che $w$ si scriva come $0^i1^jw'$ con $w'$ che non inizia per $1$, la qual cosa si può sempre fare in una e una sola maniera.
+A partire dallo stato iniziale $q_0$, la macchina scriverà $0$ sul secondo nastro per $i$ volte, restando nello stato iniziale $q_0$. Quindi, al primo carattere $1$ incontrato sul primo nastro, lo stato diventa $q_1$ e rimane tale fino a quando vengono letti degli $1$ sul primo nastro. Allo stesso tempo, a ogni transizione viene cancellato uno $0$ sul secondo nastro, ripercorrendo la sequenza di $0$ che è stata scritta mentre veniva letta la sequenza di zero sul primo nastro.
+Se a un certo punto sul primo nastro c'è un carattere e sul secondo si trova un blank, cioè se abbiamo $j>i$ o $w'\neq\varepsilon$, la parola $w$ viene rifiutata. Allo stesso modo, se c'è un blank sul primo nastro mentre rimane almeno uno $0$ sul secondo, ovvero si ha $i<j$, la parola viene rifiutata. La parola è accettata solo se la lettura del suo ultimo simbolo coincide con la cancellazione dell'ultimo $0$ sul secondo nastro, ovvero solo se $i=j$ e $w'$ è la parola vuota.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state] (q0) at (0,0)  {$q_0$};
+\node[state] (q1) at (7,0)  {$q_1$};
+\node[state] (q2) at (0,-4) {$q_2$};
+
+% Stati finali
+\node[state, accepting] (qF1) at (7,-4)   {$q_F^1$};
+\node[state, accepting] (qF0) at (13,-2)  {$q_F^0$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Lettura degli zeri: si copiano sul secondo nastro
+\path[->] (q0) edge[loop above, looseness=8] node {$(0,\square)/(0,0),(+1,+1)$} (q0);
+
+% Primo uno: la testina del secondo nastro torna sull'ultimo zero scritto
+\draw[->] (q0) -- node {$(1,\square)/(1,\square),(0,-1)$} (q1);
+
+% Lettura degli uni: si cancellano gli zeri
+\path[->] (q1) edge[loop above, looseness=8] node {$(1,0)/(1,\square),(+1,-1)$} (q1);
+
+% Parola priva di uno: controllo sul secondo nastro
+\draw[->] (q0) -- node[left] {$(\square,\square)/(\square,\square),(0,-1)$} (q2);
+
+% Accettazione
+\draw[->] (q1) -- node[left] {$(\square,\square)/$} (qF1);
+\draw[->] (q2) -- node {$(\square,\square)/$} (qF1);
+
+% Rifiuto
+\draw[->] (q1) -- node[pos=0.5, above right, align=center]
+    {$(1,\square)/,\ (\square,0)/$\\$(0,\square)/,\ (0,0)/$} (qF0);
+\draw[->] (q2) to[bend right=30] node[swap] {$(\square,0)/$} (qF0);
+\end{tikzpicture}
+\caption{Macchina di Turing a $2$ nastri che decide l'insieme $X=\{0^p1^p\mid p\geq 0\}$ in tempo lineare.}
+\label{fig:turing-2nastri}
+\end{figure}
+\end{exam}
+L'algoritmo dell'esempio 
+precedente decide quindi 
+l'insieme $X=\{0^p1^p\mid p\geq 0\}$. Introducendo la notazione per le classi di complessità per macchine di Turing multinastro, analoga a quella introdotta per le macchine mononastro, risulta chiaro dalla discussione precedente che la decisione per una parola binaria di lunghezza $n$ viene presa entro $n+1$ passi di computazione, e dunque si può enunciare che:
+
+\begin{lemm}
+Dato l'insieme $X=\{0^p1^p\mid p\geq 0\}$, allora $X\in\mathrm{DTIME}_2^{\{0,1\}}(n)$.
+\end{lemm}
