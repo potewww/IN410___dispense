@@ -607,7 +607,7 @@ il nastro e la posizione degli asterischi.
 % Colonna sinistra: un passo di M_k
 \node (c)  at (0,3.2)  {$c = (f,p,q)$};
 \node (c1) at (0,-4.2) {$c' = (f',p',q')$};
-\draw[->] (c) -- node[swap] {$\vdash$} (c1);
+\draw[->] (c) -- node[swap] {} (c1);
 
 % Colonna destra: i passi corrispondenti di M_1
 \node (d0) at (8,3.2)  {$\varphi(c) = (\bar f,\bar p,q)$};
@@ -639,11 +639,12 @@ il nastro e la posizione degli asterischi.
 \]
 
 Per stimare il costo osserviamo che, su un input di lunghezza $n$ (con $T(n)\geq n$),
-dopo $t \leq T(n)$ passi ciascun nastro di $\mu_k$ occupa al più $T(n)+1$ celle, quindi il
-nastro di $\mu_1$ ne occupa al più $2k\,(T(n)+1)$. Andata e ritorno percorrono al più questo
-tratto una volta ciascuno, perciò un passo di $M_k$ viene simulato in al più
-$2\cdot 2k\,(T(n)+1) = 2k\,(2T(n)+2)$ passi di $M_1$.
-
+dopo $t \leq T(n)$ passi ciascun nastro di $M_k$ occupa al più $T(n)+1$ celle, quindi il
+nastro di $M_1$ ne occupa al più $2k\,(T(n)+1)$. Poiché a ogni passo la testina di $M_1$
+si sposta al più di una cella, un'andata o un ritorno su questa porzione richiedono al più
+$2k\,(T(n)+1)$ passi ciascuno. Perciò un passo di $M_k$ viene simulato in al più
+$2\cdot 2k\,(T(n)+1) = 2k\,(2T(n)+2)$ passi di $M_1$, a meno di una costante che dipende
+solo da $k$ (lo spostamento degli asterischi e il riposizionamento finale).
 \medskip
 Vale
 \[
