@@ -470,3 +470,409 @@ l'insieme $X=\{0^p1^p\mid p\geq 0\}$. Introducendo la notazione per le classi di
 \begin{lemm}
 Dato l'insieme $X=\{0^p1^p\mid p\geq 0\}$, allora $X\in\mathrm{DTIME}_2^{\{0,1\}}(n)$.
 \end{lemm}
+
+Vorremmo ora mostrare che il modello a multinastro decide
+gli stessi insiemi del modello a nastro singolo.
+Per farlo, forniremo una funzione di simulazione $\phi$
+e una nuova macchina a nastro singolo $\mu_1$ partendo da una a più nastri.
+L'insieme degli stati per la macchina 
+$\mu_1$ sarà un isnieme della forma 
+$Q_1:=Q \sqcup (R \times Q)$,
+dove l'insieme $\overline{Q}$ sarà descritto più avanti.
+Cominciamo con la funzione di simulazione, questa sarà della forma
+\[
+  \varphi\colon {Conf}^{A,Q}_k \longrightarrow {Conf}^{A,Q_1}_1,
+  \qquad
+  \big((f_1,\dots,f_k),(p_1,\dots,p_k),q\big) \longmapsto (f,p,q),
+\]
+Visto che sullo stato $q$, l'immagine rimane $q$
+stesso, dobbiamo solo 
+specificare che forma hanno 
+$f$ (la configurazione del nastro 
+singolo) e $p$ (la posizione del 
+puntatore sul nastro singolo).
+La configurazione $f$ del nastro singolo è la concatenazione delle colonne (numerate a
+partire da $0$, così come le celle)dove ogni elemento viene separato da un altro con un simbolo $\square$ o $*$: la colonna $j$ occupa le celle da $2kj$ a
+$2kj+2k-1$ e ha la forma
+\[
+  m_1\, f_1(j)\; m_2\, f_2(j)\; \cdots\; m_k\, f_k(j),
+\]
+dove $m_i = *$ se la testina del nastro $i$ si trova sulla cella $j$ (cioè $p_i=j$) e
+$m_i = \square$ altrimenti. In modo formale, per ogni $j \in \mathbb{N}$ e
+$i \in \{1,\dots,k\}$,
+\[
+  f\big(2kj+2(i-1)\big) =
+  \begin{cases}
+    * & \text{se } p_i = j,\\
+    \square & \text{altrimenti,}
+  \end{cases}
+  \qquad
+  f\big(2kj+2i-1\big) = f_i(j).
+\]
+La testina del nastro singolo va posta nella prima cella della colonna più piccola tra
+quelle in cui si trova una testina. Posto
+\[
+  p_{\min} := \min\{p_1,\dots,p_k\},
+\]
+si ha dunque
+\[
+  p = 2k\,p_{\min}.
+\]
+
+\begin{rema}
+Gli asterischi occupano sempre posizioni pari: per questo si può usare un simbolo fissato
+di $A$ senza bisogno di ingrandire l'alfabeto, visto che nelle posizioni pari ci saranno solamante $\square$ oppure il simbolo fissato.
+\end{rema}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Nastro 1
+\foreach \i in {0,...,3} \draw (\i,0) rectangle (\i+1,0.7);
+\draw[->] (1.5,-0.7) -- (1.5,-0.05);
+\node at (1.5,-0.95) {$p_1$};
+
+% Nastro 2
+\foreach \i in {0,...,3} \draw (\i,-2.2) rectangle (\i+1,-1.5);
+\draw[->] (3.5,-2.9) -- (3.5,-2.25);
+\node at (3.5,-3.15) {$p_2$};
+\end{tikzpicture}
+\caption{Due nastri con le testine in posizioni diverse.}
+\label{fig:testine-diverse}
+\end{figure}
+la testina del nastro singolo andrà nella prima cella della colonna più piccola,
+tra quelle in cui si trova una testina.
+
+
+\medskip
+Ora costruiamo la macchina $\mu_1$ a partire dalla funzione di transizione della macchina
+a $k$ nastri $\mu$
+\[
+  \mu\colon Q \times A^k \longrightarrow Q \times A^k \times \{-1,0,1\}^k .
+\]
+Gli stati di $\mu_1$ saranno
+\[
+  Q_1 := Q \,\sqcup\, (R \times Q),
+  \qquad R = \{R_i\}_{i\in I}, \quad |I| < \infty,
+\]
+dove gli $R_i$ sono stati ausiliari che permettono a $\mu_1$ di eseguire un passo di $\mu$: in uno
+stato $(R_i, q)$ la macchina $\mu_1$ ricorda lo stato $q$ di $\mu$ da cui è partita la
+simulazione del passo. Un passo di $\mu$ viene simulato da $\mu_1$ come segue:
+\begin{enumerate}
+  \item \emph{Andata.} Si parte con la testina in $p = 2k\,p_{\min}$, ricordando nello
+        stato il valore $q \in Q$ di $M_k$. Si scorre il nastro verso destra e, ogni volta
+        che si trova un $*$, si legge la lettera marcata (nella cella successiva),
+        memorizzandola nello stato. Raggiunto l'ultimo asterisco si è memorizzata la
+        $k$-upla $(a_1,\dots,a_k)$.
+  \item \emph{Calcolo.} Si calcola
+        \[
+          \mu(q, a_1,\dots,a_k) = (q',\, b_1,\dots,b_k,\, s_1,\dots,s_k)
+          \in Q \times A^k \times \{-1,0,1\}^k ,
+        \]
+        che è un'informazione finita e quindi può essere ricordata dallo stato.
+  \item \emph{Ritorno.} Si scorre il nastro verso sinistra. Ogni volta che si trova un
+        $*$ si sostituisce la lettera marcata con il corrispondente $b_i$ e, se
+        $s_i \neq 0$, si sposta l'asterisco di $2k\,s_i$ celle: lo si cancella
+        (scrivendo $\square$) e lo si riscrive nella nuova posizione. Se $s_i=-1$ la
+        testina si trova poi già sul nuovo asterisco e riprende da lì verso sinistra;
+        se $s_i=+1$ si torna indietro di $2k$ celle e si prosegue verso sinistra.
+  \item Finiti gli asterischi, la testina si trova sul nuovo $p_{\min}$, cioè nella prima
+        cella della colonna più a sinistra tra quelle contenenti un asterisco, e si entra
+        nello stato $q' \in Q$.
+\end{enumerate}
+In termini di configurazioni, 
+se $c = (f,p,q)$ e $c' = (f',p',q')$ 
+sono configurazioni di
+$\mu$ con consecutive, allora 
+$\mu_1$ passa da $\varphi(c)$ a $\varphi(c')$ attraversando
+un numero finito di configurazioni intermedie, nelle quali lo stato è della forma
+$(R_h, q)$. Qui $R_h$ codifica l'informazione finita che $M_1$ deve ricordare durante il
+passo: la fase (andata o ritorno), le lettere lette finora e, dopo il calcolo, la
+$(k+k+1)$-upla $(q',b_1,\dots,b_k,s_1,\dots,s_k)$ ottenuta da $\mu$. Durante l'andata il
+nastro resta invariato e si muove solo la testina; durante il ritorno vengono modificati
+il nastro e la posizione degli asterischi.
+\[
+\begin{tikzpicture}[
+    scale=0.85, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Intestazioni
+\node at (0,4.4) {${Conf}^{A,Q}_k$};
+\node at (8,4.4) {${Conf}^{A,Q_1}_1$};
+
+% Colonna sinistra: un passo di M_k
+\node (c)  at (0,3.2)  {$c = (f,p,q)$};
+\node (c1) at (0,-4.2) {$c' = (f',p',q')$};
+\draw[->] (c) -- node[swap] {$\vdash$} (c1);
+
+% Colonna destra: i passi corrispondenti di M_1
+\node (d0) at (8,3.2)  {$\varphi(c) = (\bar f,\bar p,q)$};
+\node (d1) at (8,1.8)  {$(\bar f,r_1,(R_1,q))$};
+\node (d2) at (8,0.7)  {$\vdots$};
+\node (d3) at (8,-0.4) {$(\bar f,r_m,(R_m,q))$};
+\node (d4) at (8,-1.8) {$(g_1,r_{m+1},(R_{m+1},q))$};
+\node (d5) at (8,-2.9) {$\vdots$};
+\node (d6) at (8,-4.2) {$\varphi(c') = (\bar f',\bar p',q')$};
+
+% Corrispondenza tramite phi
+\draw[->] (c)  -- node {$\varphi$} (d0);
+\draw[->] (c1) -- node[swap] {$\varphi$} (d6);
+
+% Passi di M_1
+\draw[->] (d0) -- (d1);
+\draw[->] (d1) -- (d2);
+\draw[->] (d2) -- (d3);
+\draw[->] (d3) -- (d4);
+\draw[->] (d4) -- (d5);
+\draw[->] (d5) -- (d6);
+
+% Fasi
+\draw[|-|] (11.2,1.8) -- (11.2,-0.4);
+\node[anchor=west] at (11.4,0.7) {andata};
+\draw[|-|] (11.2,-1.8) -- (11.2,-4.2);
+\node[anchor=west] at (11.4,-3) {ritorno};
+\end{tikzpicture}
+\]
+
+Per stimare il costo osserviamo che, su un input di lunghezza $n$ (con $T(n)\geq n$),
+dopo $t \leq T(n)$ passi ciascun nastro di $\mu_k$ occupa al più $T(n)+1$ celle, quindi il
+nastro di $\mu_1$ ne occupa al più $2k\,(T(n)+1)$. Andata e ritorno percorrono al più questo
+tratto una volta ciascuno, perciò un passo di $M_k$ viene simulato in al più
+$2\cdot 2k\,(T(n)+1) = 2k\,(2T(n)+2)$ passi di $M_1$.
+
+\medskip
+Vale
+\[
+  \mathrm{DTIME}^A_k\big(T(n)\big) \subseteq
+  \mathrm{DTIME}^A_1\Big(2k\,\big(2T(n)+2\big)\,T(n) + c(k)\,n^2\Big),
+\]
+dove $c(k)\,n^2$ è il costo della codifica iniziale dell'input.
+\subsection{cambiamenti di alfabeto}
+\noindent\textbf{Cambiamenti di alfabeto}
+\medskip
+
+\begin{lemm}
+Supponiamo che $A \subseteq B$ e che $T(n)$ sia una funzione di complessità.
+Allora la classe
+\[
+  \mathrm{DTIME}^A(T(n)) \subseteq \mathrm{DTIME}^B(T(n)).
+\]
+\end{lemm}
+
+\begin{proof}
+Basta prendere una macchina di Turing $\mu$ che decide $X \in \mathrm{DTIME}^B(T(n))$,
+con $X \subseteq A^*$, e proiettarla sull'alfabeto $A$, nel senso che si definisce una
+macchina $\mu'$ che coincide con $\mu$ sulle coppie $(q,c)$ solo se il carattere letto
+$c$ è in $A$:
+\[
+  \mu'(q,c) =
+  \begin{cases}
+    \mu(q,c) & \text{se } c \in A,\\
+    (q_F^0,\, c,\, +1) & \text{se } c \in B \text{ e } c \notin A.
+  \end{cases}
+\]
+\end{proof}
+
+D'altra parte ci si può chiedere se passando da un alfabeto più ampio $B$ ad uno con
+meno simboli $A$ si perda in qualche modo capacità computazionale, o se come è ovvio
+si perde solo in efficienza.
+
+Una prima osservazione è che il problema $Y \subseteq B^*$ deve essere codificato in un
+problema $X \subseteq A^*$. La codifica $\omega$ si ottiene come omomorfismo iniettivo di
+monoidi (essendo l'insieme delle parole su un alfabeto un monoide libero) e quindi se
+per ogni $b \in B$, $\omega(b) = w_b \in A^*$ estendiamo $\omega$ alle parole tramite le
+proprietà:
+\[
+  \omega(\varepsilon_B) = \varepsilon_A
+  \qquad\text{e}\qquad
+  \omega(w_1 w_2) = \omega(w_1)\,\omega(w_2).
+\]
+Associamo ad una codifica di alfabeto $\omega$ un intero $d(\omega)$ che fornisce la
+lunghezza massima della parola associata ad un elemento di $B$:
+\[
+  d(\omega) := \max_{b \in B} |\omega(b)|.
+\]
+
+\begin{exam}
+Ad esempio $B = \{1,2,3\}$ ed $A = \{0,1\}$ allora definiamo $\omega\colon B \to A^*$
+come $\omega(1) = 00$, $\omega(2) = 01$ e $\omega(3) = 10$ così tramite l'estensione
+$\omega\colon B^* \to A^*$ si ottiene $\omega(11213) = 0000010010$.
+\end{exam}
+
+\begin{lemm}\label{lem:codifica-blocchi}
+Data una codifica $\omega\colon B^* \to A^*$ se $d = d(\omega)$ e se $Y \subseteq B^*$ è
+tale che
+\[
+  Y \in \mathrm{DTIME}^B_k(T(n))
+\]
+per un'opportuna funzione di complessità $T$, allora
+\[
+  \omega(Y) \in \mathrm{DTIME}^A_k\big(3d\,T(\lfloor n/d \rfloor)\big).
+\]
+\end{lemm}
+
+\begin{proof}
+Assumendo il numero dei nastri $k=1$, l'adattamento a qualsiasi numero è immediato.
+Supponiamo che $\mu$ sia una macchina di Turing di alfabeto $B$ che decide $Y$. Si tratta
+di costruire a partire da $\mu$ una macchina $\mu'$ di alfabeto $A$ che ancora decide
+l'insieme $\omega(Y)$.
+
+L'idea è che ogni carattere di $B$ sia codificato da $d$ caratteri di $A$, quindi la nuova
+macchina, per poter simulare $\mu$, deve elaborare i caratteri in blocchi di $d$. Questo è
+lo stesso schema per la simulazione di $d$ nastri su uno solo, ma qui nel caso semplificato
+dal fatto che le testine sui nastri fanno sempre gli stessi movimenti.
+
+Per effettuare una transizione, la nuova macchina deve prima tenere conto dei $d$ caratteri
+che costituiscono un blocco. Questa volta non occorre cercarli lungo tutto il nastro, ma
+solo leggerli nelle caselle immediatamente vicine. Formalmente, possiamo introdurre la
+codifica $\psi$ delle configurazioni (a un nastro) di alfabeto $B$ e insieme degli stati $Q$
+(insieme di stati di $\mu$) nelle configurazioni di alfabeto $A$ definita come:
+\[
+  \psi(f,p,q) := (f', dp, q)
+  \quad\text{dove}\quad
+  f'(dk)\,f'(dk+1)\cdots f'(dk+d-1) = \omega(f(k)),
+\]
+quindi in modo tale che le $d$ posizioni a partire da $dk$ per qualche $k$ contengano la
+parola $\omega(f(k))$ di lunghezza $d$ che codifica il carattere $f(k)$.
+
+Le istruzioni di $\mu'$ sono quindi definite per garantire la simulazione delle transizioni
+effettuate da $\mu$. Si inizia leggendo $d$ caratteri verso destra (i caratteri letti
+vengono via via memorizzati nello stato), si procede poi a sostituire i $d$ caratteri letti
+con i $d$ caratteri che codificano il nuovo carattere di alfabeto $B$ scritto dalla macchina
+$\mu$ (quindi $d$ movimenti a sinistra), e infine bisogna posizionare il puntatore per la
+transizione seguente effettuando una transizione di $d$ posizioni a sinistra o a destra.
+È quindi chiaro che ogni transizione effettuata da $\mu$ sarà correttamente simulata da
+$3d$ transizioni della nuova macchina. Poiché non è stata richiesta la suriettività di
+$\omega$, la tabella $\mu'$ sia costruita in modo che, se un blocco di caratteri non è
+l'immagine di un carattere di $B'$, la macchina passa allo stato di rifiuto. Notiamo inoltre
+che non c'è niente da fare nella fase di inizializzazione, poiché si tratta di decidere
+$\omega(Y)$ e non $Y$, dunque la parola in ingresso sarà direttamente scritta come sequenza
+di blocchi di $d$ caratteri di alfabeto $A$. Si noti che il calcolo a partire da una parola
+di lunghezza $n$ simula il calcolo di $\mu$ a partire da una parola di lunghezza
+$\lfloor n/d \rfloor$, che termina in al massimo $T(\lfloor n/d \rfloor)$ passi, e quindi con
+una simulazione di al più $3d\,T(\lfloor n/d \rfloor)$ passi la macchina $\mu'$ deciderà in
+modo simile a quanto farebbe la macchina $\mu$.
+\end{proof}
+
+Un ulteriore lemma utile per provare la proposizione è il seguente, che fornisce una stima
+in termini di complessità temporale del costo che bisogna pagare per simulare la
+computazione di una macchina su un alfabeto $B$ utilizzando una macchina definita su un
+alfabeto $A \subseteq B$.
+
+\begin{lemm}\label{lem:alfabeto-ampio}
+Sia $A \subseteq B$ con
+\begin{equation}\label{eq:alfabeti}
+  |B| + 1 \leq (|A|+1)^d
+\end{equation}
+allora per ogni funzione di complessità $T\colon \mathbb{N} \to \mathbb{N}$
+\[
+  2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(4d\,T(\lfloor n/d \rfloor)\big)
+  \qquad \text{se } k \geq 2
+\]
+e più precisamente
+\[
+  2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(3d\,T(\lfloor n/d \rfloor) + 2n^2\big)
+  \qquad \text{se } k \geq 1.
+\]
+\end{lemm}
+
+\begin{proof}
+Sia $X$ un sottoinsieme di $A^*$ che appartiene a $\mathrm{DTIME}^B_k(T(n))$.
+Fissiamo una codifica iniettiva di $B'$ in $A'^d$. Possiamo ad esempio supporre che, per
+qualsiasi carattere $a \in A'$, $\omega(a)$ sia il blocco di $d$ ripetizioni di $a$.
+Supponiamo che $\mu$ sia una macchina di Turing a $k$ nastri di alfabeto $B$ che decide
+l'insieme $X$ in tempo $T(n)$. Per il Lemma~\ref{lem:codifica-blocchi}, esiste una macchina
+$\mu'$ a $k$ nastri di alfabeto $A$ che decide l'insieme $\omega(X)$ in tempo $3d\,T(n)$.
+
+Supponiamo che $\mu''$ sia una macchina di alfabeto $B$ che a partire dalla configurazione
+iniziale associata alla parola $w \in A^*$, porta a una configurazione che, a meno della
+sostituzione dello stato iniziale con uno stato terminale, è la configurazione iniziale
+associata alla parola $\omega(w)$. Quindi la macchina ottenuta mediante concatenazione di
+$\mu'$ e $\mu''$, vale a dire ottenuta riunendo le due tabelle e sostituendo ovunque nella
+seconda lo stato iniziale con lo stato accettante del primo, decide l'insieme $X$.
+
+L'esistenza della macchina $\mu''$ qui sopra è semplice: con le ipotesi su $\omega$, la
+trasformazione da fare consiste nel copiare la parola ripetendo ogni carattere per $d$
+volte. Se ci sono almeno due nastri, la trasformazione di una parola di lunghezza $n$ può
+essere eseguita in $2dn$ passi: ($dn$ passi per leggere da sinistra a destra gli $n$
+caratteri e trasferirli, ripetendoli, sul secondo nastro, quindi nella fase successiva
+riportare i puntatori alle caselle di partenza). Se abbiamo solo un nastro, sappiamo già che
+sarà necessario procedere carattere dopo carattere, con la ripetizione del primo carattere
+che richiede $d + 2n$ passi, quelle del secondo $d + 2(n-1)$ e così via, fino ad arrivare
+all'ultimo carattere che richiederà $d$ passi. Quindi in tutto avremo $n^2 + (d+1)n$ passi,
+ai quali resta da aggiungere il ritorno del puntatore alla posizione iniziale, ovvero ancora
+$dn$ passi. Per $n$ abbastanza grande, il costo totale è maggiorato da $2n^2$.
+\end{proof}
+
+Si ricordi che con la notazione $2^{A^*}$ stiamo indicando l'insieme delle parti di $A^*$,
+ovvero tutti i possibili insiemi di parole di alfabeto $A$; allora, quando scriviamo
+\[
+  2^{A^*} \cap \mathrm{DTIME}^B_k(T(n))
+\]
+stiamo indicando gli insiemi $X \subseteq A^*$ decidibili da una macchina di Turing di
+alfabeto $B$, e quindi le parole di $X$ sono di alfabeto $A$ ma la macchina può utilizzare
+durante la computazione anche i simboli aggiuntivi che sono in $B$, che pertanto talvolta
+viene detto \emph{alfabeto di lavoro}.
+
+Come vedremo, la possibilità di utilizzare simboli aggiuntivi (cambiando l'alfabeto di
+lavoro di una macchina) permetterà di accelerarne la computazione. Così come nel valutare
+la complessità non teniamo conto del numero di stati utilizzati, così non sembra utile
+restringere l'alfabeto utilizzato durante la computazione all'alfabeto del problema:
+
+\begin{defi}
+Siano $T$ ed $S$ due funzioni di complessità ed $A$ un alfabeto qualunque. Un insieme
+$X \subseteq A^*$ si dice appartenere alla classe $\mathrm{DTIME}(T(n))$ (rispettivamente
+$\mathrm{DSPACE}(S(n))$) se esiste un alfabeto $B$ con $A \subseteq B$ tale che
+\[
+  X \in \mathrm{DTIME}^B(T(n))
+  \qquad\text{(rispettivamente } X \in \mathrm{DSPACE}^B(S(n))\text{).}
+\]
+\end{defi}
+
+Grazie al lemma precedente è possibile mettere in relazione le classi di complessità appena
+definite con quelle cui siamo abituati:
+
+\begin{prop}
+Se l'insieme $X \subseteq A^*$ e $X \in \mathrm{DTIME}(T(n))$ allora esiste $c > 0$ tale
+che $X \in \mathrm{DTIME}^A(c\,T(n))$. Esiste inoltre un'ulteriore costante $c_1 > 0$ tale
+che $X \in \mathrm{DTIME}^A_1(c_1\,T^2(n))$.
+\end{prop}
+
+\begin{proof}
+Per definizione $X \in \mathrm{DTIME}(T(n))$ implica l'esistenza di $B$ tale che
+$X \in \mathrm{DTIME}^B_k(T(n))$. Possiamo supporre $k > 1$, altrimenti si può indebolire
+immergendo la macchina mononastro in una a $2$ nastri. Per il
+Lemma~\ref{lem:alfabeto-ampio}
+\[
+  X \in \mathrm{DTIME}^A_k\big(4d\,T(\lfloor n/d \rfloor)\big)
+\]
+dove $d$ è preso in modo tale che $|B|+1$ è al più $(|A|+1)^d$. Un tale intero $d$ esiste
+perché necessariamente $|A|+1 \geq 2$. Poiché la funzione $T$ è non decrescente
+$T(\lfloor n/d \rfloor) \leq T(n)$ e dunque $X \in \mathrm{DTIME}^A(4d\,T(n))$.
+
+La tesi nel caso ad un nastro deriva immediatamente applicando il Corollario~??.
+\end{proof}
+
+\medskip
+\noindent\textbf{Teorema di speed-up}
+\medskip
+
+I risultati precedenti mostrano che quando si estende l'alfabeto si può passare alla peggio
+da una complessità $T(n)$ a una complessità $c\,T(n)$ per una qualche costante $c$.
+Andiamo ora a mostrare che partendo da un insieme $X$ decidibile in tempo $T(n)$ e da una
+costante $c$ qualsiasi si può, cambiando l'alfabeto, costruire una nuova macchina che decide
+lo stesso insieme in tempo $c\,T(n)$. Dunque possiamo vedere una corrispondenza
+bidirezionale tra i cambi di complessità del tipo $T(n) \mapsto c\,T(n)$ e i cambi di
+alfabeto.
+
+\begin{theo}
+Sia $T$ una funzione di complessità tale che $n$ sia trascurabile rispetto a $T(n)$.
+Allora per ogni costante $c > 0$ si ha che
+\[
+  \mathrm{DTIME}(T(n)) = \mathrm{DTIME}(c\,T(n)).
+\]
+\end{theo}
