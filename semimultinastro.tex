@@ -719,15 +719,20 @@ Otteniamo quindi che
 \]
 
 \subsection{cambiamenti di alfabeto}
-
+In questa sezione, vogliamo studiare
+le cosneguenze relativo al cambiamento dell'alfabeto:
+la classe di insiemi decisi rimane invariata? come cambiano le classi di complessità?
+\begin{defi}
+    Definiamo
+     $\mathrm{DTIME}^{A,Q}(T(n)):=\cup_{k=1}^\infty\mathrm{DTIME}^{A,Q}_k(T(n))$.
+\end{defi}
+Se aumentiamo l'alfabeto di riferiemnto, chiaramente non abbiamo grosse modifche:
 \begin{lemm}
 Supponiamo che $A \subseteq B$ e che $T(n)$ sia una funzione di complessità.
 Allora la classe
 \[
   \mathrm{DTIME}^A(T(n)) \subseteq \mathrm{DTIME}^B(T(n)).
 \]
-\end{lemm}
-
 \begin{proof}
 Basta prendere una macchina di Turing $\mu$ che decide $X \in \mathrm{DTIME}^B(T(n))$,
 con $X \subseteq A^*$, e proiettarla sull'alfabeto $A$, nel senso che si definisce una
@@ -741,9 +746,15 @@ $c$ è in $A$:
   \end{cases}
 \]
 \end{proof}
-
-D'altra parte ci si può chiedere se passando da un alfabeto più ampio $B$ ad uno con
-meno simboli $A$ si perda in qualche modo capacità computazionale, o se come è ovvio
+\end{lemm}
+D'altra parte ci si può chiedere 
+se, 
+passando da un alfabeto più ampio $B$
+ ad uno con
+meno simboli $A$, si 
+perda in qualche modo 
+capacità computazionale, 
+o se come è ovvio
 si perde solo in efficienza.
 
 Una prima osservazione è che il problema $Y \subseteq B^*$ deve essere codificato in un
@@ -756,6 +767,7 @@ proprietà:
   \qquad\text{e}\qquad
   \omega(w_1 w_2) = \omega(w_1)\,\omega(w_2).
 \]
+[AGGIUNGI SU APPENDICE IL FATTO DELLE MAPPE SUFFIX FREE SUI GENERATORI]
 Associamo ad una codifica di alfabeto $\omega$ un intero $d(\omega)$ che fornisce la
 lunghezza massima della parola associata ad un elemento di $B$:
 \[
@@ -767,7 +779,8 @@ Ad esempio $B = \{1,2,3\}$ ed $A = \{0,1\}$ allora definiamo $\omega\colon B \to
 come $\omega(1) = 00$, $\omega(2) = 01$ e $\omega(3) = 10$ così tramite l'estensione
 $\omega\colon B^* \to A^*$ si ottiene $\omega(11213) = 0000010010$.
 \end{exam}
-
+Con codifica indicheremo quindi un omomorfismo iniettivo
+tra monoidi. 
 \begin{lemm}\label{lem:codifica-blocchi}
 Data una codifica $\omega\colon B^* \to A^*$ se $d = d(\omega)$ e se $Y \subseteq B^*$ è
 tale che
@@ -776,10 +789,8 @@ tale che
 \]
 per un'opportuna funzione di complessità $T$, allora
 \[
-  \omega(Y) \in \mathrm{DTIME}^A_k\big(3d\,T(\lfloor n/d \rfloor)\big).
+  \omega(Y) \in \mathrm{DTIME}^A_k\big(3d\,T(\lceil n/d \rceil)\big).
 \]
-\end{lemm}
-
 \begin{proof}
 Assumendo il numero dei nastri $k=1$, l'adattamento a qualsiasi numero è immediato.
 Supponiamo che $\mu$ sia una macchina di Turing di alfabeto $B$ che decide $Y$. Si tratta
@@ -792,36 +803,58 @@ lo stesso schema per la simulazione di $d$ nastri su uno solo, ma qui nel caso s
 dal fatto che le testine sui nastri fanno sempre gli stessi movimenti.
 
 Per effettuare una transizione, la nuova macchina deve prima tenere conto dei $d$ caratteri
-che costituiscono un blocco. Questa volta non occorre cercarli lungo tutto il nastro, ma
+che costituiscono un blocco. 
+Questa volta non occorre cercarli lungo tutto il nastro, ma
 solo leggerli nelle caselle immediatamente vicine. Formalmente, possiamo introdurre la
 codifica $\psi$ delle configurazioni (a un nastro) di alfabeto $B$ e insieme degli stati $Q$
 (insieme di stati di $\mu$) nelle configurazioni di alfabeto $A$ definita come:
 \[
   \psi(f,p,q) := (f', dp, q)
   \quad\text{dove}\quad
-  f'(dk)\,f'(dk+1)\cdots f'(dk+d-1) = \omega(f(k)),
+  f'(dk)\,f'(dk+1)\cdots f'(dk+d-1) = \omega(f(k)), \, \forall k \in \mathbb Z
 \]
 quindi in modo tale che le $d$ posizioni a partire da $dk$ per qualche $k$ contengano la
 parola $\omega(f(k))$ di lunghezza $d$ che codifica il carattere $f(k)$.
 
 Le istruzioni di $\mu'$ sono quindi definite per garantire la simulazione delle transizioni
-effettuate da $\mu$. Si inizia leggendo $d$ caratteri verso destra (i caratteri letti
-vengono via via memorizzati nello stato), si procede poi a sostituire i $d$ caratteri letti
-con i $d$ caratteri che codificano il nuovo carattere di alfabeto $B$ scritto dalla macchina
-$\mu$ (quindi $d$ movimenti a sinistra), e infine bisogna posizionare il puntatore per la
-transizione seguente effettuando una transizione di $d$ posizioni a sinistra o a destra.
-È quindi chiaro che ogni transizione effettuata da $\mu$ sarà correttamente simulata da
-$3d$ transizioni della nuova macchina. Poiché non è stata richiesta la suriettività di
-$\omega$, la tabella $\mu'$ sia costruita in modo che, se un blocco di caratteri non è
-l'immagine di un carattere di $B'$, la macchina passa allo stato di rifiuto. Notiamo inoltre
+effettuate da $\mu$. 
+Si inizia leggendo $d$ caratteri verso destra 
+(i caratteri letti
+vengono via via memorizzati nello stato), 
+si procede poi a sostituire i 
+$d$ caratteri letti
+con i $d$ caratteri che 
+codificano il nuovo carattere di alfabeto $B$ scritto dalla macchina
+$\mu$ 
+(quindi $d$ movimenti a sinistra), 
+e infine bisogna posizionare il 
+puntatore per la
+transizione seguente effettuando 
+una transizione di $d$ posizioni a 
+sinistra o a destra.
+È quindi chiaro che ogni 
+transizione effettuata da 
+$\mu$ sarà correttamente simulata da
+$3d$ transizioni della nuova macchina. 
+Poiché non è stata richiesta la 
+suriettività di
+$\omega$, la tabella 
+$\mu'$ è costruita in modo che, 
+se un blocco di caratteri non è
+l'immagine di un carattere di 
+$B'$, la macchina passa allo stato di rifiuto. Notiamo inoltre
 che non c'è niente da fare nella fase di inizializzazione, poiché si tratta di decidere
 $\omega(Y)$ e non $Y$, dunque la parola in ingresso sarà direttamente scritta come sequenza
 di blocchi di $d$ caratteri di alfabeto $A$. Si noti che il calcolo a partire da una parola
 di lunghezza $n$ simula il calcolo di $\mu$ a partire da una parola di lunghezza
-$\lfloor n/d \rfloor$, che termina in al massimo $T(\lfloor n/d \rfloor)$ passi, e quindi con
-una simulazione di al più $3d\,T(\lfloor n/d \rfloor)$ passi la macchina $\mu'$ deciderà in
+$\lceil n/d \rceil$,
+che termina in al massimo $T(\lceil n/d \rceil)$ passi, e quindi con
+una simulazione di al più $3d\,T(\lceil n/d \rceil)$ passi la macchina $\mu'$ deciderà in
 modo simile a quanto farebbe la macchina $\mu$.
 \end{proof}
+\end{lemm}
+
+
 
 Un ulteriore lemma utile per provare la proposizione è il seguente, che fornisce una stima
 in termini di complessità temporale del costo che bisogna pagare per simulare la
