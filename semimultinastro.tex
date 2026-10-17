@@ -713,10 +713,24 @@ richiedono quindi
 Infine la testina deve tornare in cella $1$, per al più $2kn$ passi. Il costo della
 codifica è dunque al più $n^2 + (4k-1)\,n \leq 4k\,n^2$ per $n \geq 1$.
 Otteniamo quindi che
-\[
-  \mathrm{DTIME}^A_k\big(T(n)\big) \subseteq
-  \mathrm{DTIME}^A_1\Big(\big(2k\,(2T(n)+2) + 4k(k+3)\big)\,T(n) + 4k\,n^2\Big).
-\]
+\begin{equation}\label{rel:complessita-piu-nastri-un-nastro}
+\begin{aligned}
+  \mathrm{DTIME}^A_k\big(T(n)\big) &\subseteq
+  \mathrm{DTIME}^A_1\Big(\big(2k\,(2T(n)+2) + 4k(k+3)\big)\,T(n) + 4k\,n^2\Big) \\
+  &\subseteq
+  \mathrm{DTIME}^A_1\big(4k(k+6)\,T^2(n)\big).
+\end{aligned}
+\end{equation}
+visto che vale le seguenti relazioni
+\begin{align*}
+  \big(2k\,(2T(n)+2) + 4k(k+3)\big)\,T(n) + 4k\,n^2
+  &= 4k\,T^2(n) + 4k(k+4)\,T(n) + 4k\,n^2 \\
+  &\leq 4k\,T^2(n) + 4k(k+4)\,T^2(n) + 4k\,T^2(n) \\
+  &= 4k(k+6)\,T^2(n),
+\end{align*}
+(abbiamo usato $n\leq T(n)$ dalla definizione di funzione di complessità, e $T(n)\leq T^2(n)$
+visto che $T(n)$,
+sempre dalla definziione di funzione di complesità, deve essere non decrescente).
 
 \subsection{cambiamenti di alfabeto}
 In questa sezione, vogliamo studiare
@@ -756,7 +770,7 @@ perda in qualche modo
 capacità computazionale, 
 o se come è ovvio
 si perde solo in efficienza.
-
+\\
 Una prima osservazione è che il problema $Y \subseteq B^*$ deve essere codificato in un
 problema $X \subseteq A^*$. La codifica $\omega$ si ottiene come omomorfismo iniettivo di
 monoidi (essendo l'insieme delle parole su un alfabeto un monoide libero) e quindi se
@@ -767,7 +781,6 @@ proprietà:
   \qquad\text{e}\qquad
   \omega(w_1 w_2) = \omega(w_1)\,\omega(w_2).
 \]
-[AGGIUNGI SU APPENDICE IL FATTO DELLE MAPPE SUFFIX FREE SUI GENERATORI]
 Associamo ad una codifica di alfabeto $\omega$ un intero $d(\omega)$ che fornisce la
 lunghezza massima della parola associata ad un elemento di $B$:
 \[
@@ -779,10 +792,22 @@ Ad esempio $B = \{1,2,3\}$ ed $A = \{0,1\}$ allora definiamo $\omega\colon B \to
 come $\omega(1) = 00$, $\omega(2) = 01$ e $\omega(3) = 10$ così tramite l'estensione
 $\omega\colon B^* \to A^*$ si ottiene $\omega(11213) = 0000010010$.
 \end{exam}
-Con codifica indicheremo quindi un omomorfismo iniettivo
-tra monoidi. 
+Con \emph{codifica} indicheremo un omomorfismo iniettivo tra monoidi liberi.
+Potremo considerare sia codifiche della forma
+\[
+  \omega\colon B^* \to A^*,
+\]
+sia codifiche della forma
+\[
+  \omega\colon B'^* \to A'^*,
+\]
+dove $B'=B \sqcup \{\square\}$ e $A'=A \sqcup \{\square\}$. Quest'ultimo caso serve,
+ad esempio, quando vogliamo scrivere un blank su un nastro usando più celle (come
+faremo nella dimostrazione del lemma~\ref{lem:alfabeto-ampio}): in tal caso
+$\omega(\square)$ sarà una parola di soli blank (cfr.\ la sezione~\ref{subsubsection: monoidi} per approfondimenti sulla costruzione di
+codifiche a partire da funzioni sui generatori).
 \begin{lemm}\label{lem:codifica-blocchi}
-Data una codifica $\omega\colon B^* \to A^*$ se $d = d(\omega)$ e se $Y \subseteq B^*$ è
+Data una codifica $\omega\colon B^* \to A^*$, se $ d(\omega)=|\omega (b)|$ per ogni $b \in B$ e se $Y \subseteq B^*$ è
 tale che
 \[
   Y \in \mathrm{DTIME}^B_k(T(n))
@@ -791,17 +816,16 @@ per un'opportuna funzione di complessità $T$, allora
 \[
   \omega(Y) \in \mathrm{DTIME}^A_k\big(3d\,T(\lceil n/d \rceil)\big).
 \]
-\begin{proof}
+\begin{proof}Fissiamo $d = d(\omega)$.
 Assumendo il numero dei nastri $k=1$, l'adattamento a qualsiasi numero è immediato.
 Supponiamo che $\mu$ sia una macchina di Turing di alfabeto $B$ che decide $Y$. Si tratta
 di costruire a partire da $\mu$ una macchina $\mu'$ di alfabeto $A$ che ancora decide
 l'insieme $\omega(Y)$.
-
+\\
 L'idea è che ogni carattere di $B$ sia codificato da $d$ caratteri di $A$, quindi la nuova
 macchina, per poter simulare $\mu$, deve elaborare i caratteri in blocchi di $d$. Questo è
 lo stesso schema per la simulazione di $d$ nastri su uno solo, ma qui nel caso semplificato
 dal fatto che le testine sui nastri fanno sempre gli stessi movimenti.
-
 Per effettuare una transizione, la nuova macchina deve prima tenere conto dei $d$ caratteri
 che costituiscono un blocco. 
 Questa volta non occorre cercarli lungo tutto il nastro, ma
@@ -815,7 +839,7 @@ codifica $\psi$ delle configurazioni (a un nastro) di alfabeto $B$ e insieme deg
 \]
 quindi in modo tale che le $d$ posizioni a partire da $dk$ per qualche $k$ contengano la
 parola $\omega(f(k))$ di lunghezza $d$ che codifica il carattere $f(k)$.
-
+\\
 Le istruzioni di $\mu'$ sono quindi definite per garantire la simulazione delle transizioni
 effettuate da $\mu$. 
 Si inizia leggendo $d$ caratteri verso destra 
@@ -842,7 +866,9 @@ $\omega$, la tabella
 $\mu'$ è costruita in modo che, 
 se un blocco di caratteri non è
 l'immagine di un carattere di 
-$B'$, la macchina passa allo stato di rifiuto. Notiamo inoltre
+$B'$, la macchina passa allo stato di rifiuto. 
+Per quanto riguarda la fase di inizializzazione, bisgona gestire
+Notiamo inoltre
 che non c'è niente da fare nella fase di inizializzazione, poiché si tratta di decidere
 $\omega(Y)$ e non $Y$, dunque la parola in ingresso sarà direttamente scritta come sequenza
 di blocchi di $d$ caratteri di alfabeto $A$. Si noti che il calcolo a partire da una parola
@@ -853,59 +879,139 @@ una simulazione di al più $3d\,T(\lceil n/d \rceil)$ passi la macchina $\mu'$ d
 modo simile a quanto farebbe la macchina $\mu$.
 \end{proof}
 \end{lemm}
-
-
-
-Un ulteriore lemma utile per provare la proposizione è il seguente, che fornisce una stima
+\begin{rema}\label{rem:codifica-blocchi}
+Il lemma~\ref{lem:codifica-blocchi} vale anche per codifiche
+$\omega\colon B'^*\to A'^*$ con $|\omega(b)|=d$ per ogni $b\in B'$ e
+$\omega(\square)=\square^d$, purché $\omega(Y)\subseteq A^*$.
+Infatti, nella dimostrazione la codifica agisce sulle celle dei nastri, che
+contengono anche il blank, quindi si usa comunque l'estensione
+$\omega(\square)=\square^d$ (compatibile con l'iniettività, perché $\square^d$ non
+è immagine di nessuna lettera di $B$). Di $\omega$ servono solo tre fatti:
+ogni lettera è codificata da un blocco di lunghezza $d$; una cella vuota di $\mu$
+corrisponde a $d$ celle vuote di $\mu'$, così che $\psi$ sia ben definita su
+$\mathbb Z$ e mandi la configurazione iniziale su $w$ in quella su $\omega(w)$;
+l'input $\omega(w)$ di $\mu'$ è una parola di $A^*$. I blank interni ai blocchi
+sono solo contenuto delle celle durante la simulazione e non compaiono
+nell'input. La macchina $\mu'$ può leggerli e scriverli, perché il blank è
+sempre un simbolo di nastro, e rifiuta i blocchi che non sono immagine di una
+lettera. La dimostrazione resta quindi invariata.
+\end{rema}
+Ci servirà un ulteriore lemma, il quale fornisce una stima
 in termini di complessità temporale del costo che bisogna pagare per simulare la
 computazione di una macchina su un alfabeto $B$ utilizzando una macchina definita su un
 alfabeto $A \subseteq B$.
 
+
 \begin{lemm}\label{lem:alfabeto-ampio}
 Sia $A \subseteq B$ con
 \begin{equation}\label{eq:alfabeti}
-  |B| + 1 \leq (|A|+1)^d
+  |B| + 1 \leq (|A|+1)^d.
 \end{equation}
-allora per ogni funzione di complessità $T\colon \mathbb{N} \to \mathbb{N}$
+Allora, per ogni funzione di complessità $T\colon \mathbb{N} \to \mathbb{N}$,
 \[
-  2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(4d\,T(\lfloor n/d \rfloor)\big)
-  \qquad \text{se } k \geq 2
+2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(3d\,T(n) + 2n^2\big)
+\qquad \text{se } k \geq 1,
 \]
-e più precisamente
+e, se $k \geq 2$ e $T(n) \geq 3n$ per ogni $n$,
 \[
-  2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(3d\,T(\lfloor n/d \rfloor) + 2n^2\big)
-  \qquad \text{se } k \geq 1.
+2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(4d\,T(n)\big).
 \]
-\end{lemm}
-
 \begin{proof}
-Sia $X$ un sottoinsieme di $A^*$ che appartiene a $\mathrm{DTIME}^B_k(T(n))$.
-Fissiamo una codifica iniettiva di $B'$ in $A'^d$. Possiamo ad esempio supporre che, per
-qualsiasi carattere $a \in A'$, $\omega(a)$ sia il blocco di $d$ ripetizioni di $a$.
-Supponiamo che $\mu$ sia una macchina di Turing a $k$ nastri di alfabeto $B$ che decide
-l'insieme $X$ in tempo $T(n)$. Per il Lemma~\ref{lem:codifica-blocchi}, esiste una macchina
-$\mu'$ a $k$ nastri di alfabeto $A$ che decide l'insieme $\omega(X)$ in tempo $3d\,T(n)$.
-
-Supponiamo che $\mu''$ sia una macchina di alfabeto $B$ che a partire dalla configurazione
-iniziale associata alla parola $w \in A^*$, porta a una configurazione che, a meno della
-sostituzione dello stato iniziale con uno stato terminale, è la configurazione iniziale
-associata alla parola $\omega(w)$. Quindi la macchina ottenuta mediante concatenazione di
-$\mu'$ e $\mu''$, vale a dire ottenuta riunendo le due tabelle e sostituendo ovunque nella
-seconda lo stato iniziale con lo stato accettante del primo, decide l'insieme $X$.
-
-L'esistenza della macchina $\mu''$ qui sopra è semplice: con le ipotesi su $\omega$, la
-trasformazione da fare consiste nel copiare la parola ripetendo ogni carattere per $d$
-volte. Se ci sono almeno due nastri, la trasformazione di una parola di lunghezza $n$ può
-essere eseguita in $2dn$ passi: ($dn$ passi per leggere da sinistra a destra gli $n$
-caratteri e trasferirli, ripetendoli, sul secondo nastro, quindi nella fase successiva
-riportare i puntatori alle caselle di partenza). Se abbiamo solo un nastro, sappiamo già che
-sarà necessario procedere carattere dopo carattere, con la ripetizione del primo carattere
-che richiede $d + 2n$ passi, quelle del secondo $d + 2(n-1)$ e così via, fino ad arrivare
-all'ultimo carattere che richiederà $d$ passi. Quindi in tutto avremo $n^2 + (d+1)n$ passi,
-ai quali resta da aggiungere il ritorno del puntatore alla posizione iniziale, ovvero ancora
-$dn$ passi. Per $n$ abbastanza grande, il costo totale è maggiorato da $2n^2$.
+Sia $\square$ il carattere blank, che non appartiene né ad $A$ né a $B$, e
+poniamo $A'=A\cup\{\square\}$ e $B'=B\cup\{\square\}$. Indichiamo con
+\[
+  P=\{u\in A'^{*} : |u|=d\}
+\]
+l'insieme delle parole di lunghezza $d$ su $A'$; esso ha $(|A|+1)^d$ elementi.
+Per ogni $c\in A'$ sia $\hat c\in P$ la parola formata da $d$ copie di $c$.
+Le parole $\hat c$, al variare di $c\in A'$, sono a due a due distinte.
+La condizione~\eqref{eq:alfabeti} dà
+\[
+  |B\setminus A| \;=\; |B|-|A| \;\leq\; (|A|+1)^d-1-|A| \;=\; |P\setminus\{\hat c: c\in A'\}|.
+\]
+Possiamo quindi scegliere una funzione iniettiva
+\[
+  \omega\colon B'\to A'^{*}
+\]
+tale che
+\begin{itemize}
+  \item $\omega(c)=\hat c$ per ogni $c\in A$ e $\omega(\square)=\hat\square$;
+  \item $\omega$ manda $B\setminus A$ in modo iniettivo in
+  $P\setminus\{\hat c: c\in A'\}$.
+\end{itemize}
+Per costruzione $|\omega(b)|=d$ per ogni $b\in B'$, e $\omega$ è iniettiva
+perché le immagini sono a due a due distinte.
+\\
+Indichiamo ancora con $\omega\colon B'^{*}\to A'^{*}$ l'unico omomorfismo di
+monoidi che la estende, cioè $\omega(b_1\cdots b_n)=\omega(b_1)\cdots\omega(b_n)$.
+Poiché tutte le immagini delle lettere hanno la stessa lunghezza $d$, $\omega$ è
+iniettiva su $B'^{*}$ (la decodifica si fa leggendo blocchi di $d$ caratteri) e
+$|\omega(w)|=d\,|w|$. Inoltre, essendo $\omega(c)=\hat c\in A^{*}$ per $c\in A$,
+si ha $\omega(A^{*})\subseteq A^{*}$: sugli input la codifica non introduce blank,
+e $\omega(X)\subseteq A^{*}$ per ogni $X\subseteq A^{*}$.
+\\
+Sia ora $X \subseteq A^*$ un insieme che appartiene a $\mathrm{DTIME}^B_k(T(n))$, e sia
+$\mu$ una macchina di Turing a $k$ nastri di alfabeto $B$ che decide $X$ in tempo
+$T(n)$. Per il lemma~\ref{lem:codifica-blocchi} e l'osservazione~\ref{rem:codifica-blocchi}, esiste una macchina $\mu'$ a $k$
+nastri di alfabeto $A$ che decide l'insieme $\omega(X)\subseteq A^*$ in tempo
+$3d\,T(m/d)$ su input di lunghezza $m$; poiché $|\omega(w)| = d\,|w|$, su $\omega(w)$
+con $|w| = n$ essa impiega tempo $3d\,T(n)$.
+\\
+Sia $\mu''$ una macchina di alfabeto $A$ che, a partire dalla configurazione iniziale
+associata alla parola $w \in A^*$, porta a una configurazione che, a meno della
+sostituzione dello stato iniziale con uno stato terminale, è la configurazione
+iniziale associata alla parola $\omega(w)$. Allora la macchina ottenuta per
+concatenazione di $\mu''$ e $\mu'$, vale a dire riunendo le due tabelle e sostituendo
+ovunque in $\mu'$ lo stato iniziale con lo stato terminale di $\mu''$, decide
+l'insieme $X$ su alfabeto $A$. Il suo tempo è la somma dei tempi di $\mu''$ e di $\mu'$.
+\\
+Resta da costruire $\mu''$ e valutarne il tempo, per una parola $w$ di lunghezza $n$.
+\begin{itemize}
+    \item[Caso $k \geq 2$:] Ricordiamo che la configurazione iniziale associata a una
+parola ha la parola scritta su tutti i $k$ nastri, con le testine nella prima casella.
+La macchina $\mu''$ opera in tre fasi.
+\begin{enumerate}
+  \item Si scandisce $w$ sul nastro $1$ da sinistra a destra; per ogni carattere $a$
+  letto, le testine dei nastri $2,\dots,k$ scrivono (ciascuna sul proprio nastro, in
+  parallelo) il blocco $\omega(a)=\hat a$. Servono $dn$ passi. Poiché $dn \geq n$, i
+  blocchi sovrascrivono interamente la copia di $w$ presente sui nastri $2,\dots,k$,
+  che al termine contengono $\omega(w)$ con le testine in posizione $dn$; il nastro
+  $1$ contiene ancora $w$, con la testina in posizione $n$.
+  \item La testina del nastro $1$ si sposta a destra fino alla posizione $dn$, in
+  $(d-1)n$ passi.
+  \item Tutte le testine si spostano a sinistra fino alla posizione $0$, in $dn$ passi,
+  e a ogni passo il carattere letto sul nastro $2$ viene copiato sul nastro $1$.
+  Poiché $dn \geq n$, la copia sovrascrive tutto $w$.
+\end{enumerate}
+Al termine tutti i nastri contengono $\omega(w)$, con le testine nelle caselle di
+partenza: è la configurazione iniziale associata a $\omega(w)$. Il tempo di $\mu''$ è
+$dn + (d-1)n + dn = (3d-1)n \leq 3dn$, quindi il tempo totale è
+\[
+3d\,T(n) + 3dn \leq 3d\,T(n) + d\,T(n) = 4d\,T(n),
+\]
+dove si è usato $T(n) \geq 3n$.
+\item[\emph{Caso $k = 1$.}]
+ Con un solo nastro bisogna procedere carattere dopo carattere,
+spostando ogni volta a destra la parte restante della parola per fare posto al blocco.
+Se l'$i$-esimo carattere ($1 \le i \le n$) è seguito da $n-i$ caratteri ancora da
+elaborare, la sua sostituzione con il blocco di $d$ caratteri richiede al più
+$d + 2(n-i+1)$ passi (inclusi gli spostamenti avanti e indietro). Sommando,
+\[
+\sum_{i=1}^{n} \big(d + 2(n-i+1)\big) = dn + n(n+1) = n^2 + (d+1)n,
+\]
+a cui va aggiunto il ritorno della testina alla posizione iniziale, che richiede
+al più $dn$ passi. In totale
+\[
+n^2 + (2d+1)n \leq 2n^2 \qquad \text{per } n \geq 2d+1.
+\]
+Per gli $n \leq 2d$ le parole di tale lunghezza sono in numero finito: la macchina può
+leggere l'input memorizzandolo negli stati e decidere direttamente l'appartenenza
+a $X$, in al più $n+1 \leq 2n^2$ passi (per $n \geq 1$; il caso $n = 0$ è banale).
+Dunque in ogni caso il tempo di $\mu''$ è al più $2n^2$, e il tempo totale è
+al più $3d\,T(n) + 2n^2$.
+\end{itemize}
 \end{proof}
-
+\end{lemm}
 Si ricordi che con la notazione $2^{A^*}$ stiamo indicando l'insieme delle parti di $A^*$,
 ovvero tutti i possibili insiemi di parole di alfabeto $A$; allora, quando scriviamo
 \[
@@ -915,10 +1021,11 @@ stiamo indicando gli insiemi $X \subseteq A^*$ decidibili da una macchina di Tur
 alfabeto $B$, e quindi le parole di $X$ sono di alfabeto $A$ ma la macchina può utilizzare
 durante la computazione anche i simboli aggiuntivi che sono in $B$, che pertanto talvolta
 viene detto \emph{alfabeto di lavoro}.
-
 Come vedremo, la possibilità di utilizzare simboli aggiuntivi (cambiando l'alfabeto di
 lavoro di una macchina) permetterà di accelerarne la computazione. Così come nel valutare
-la complessità non teniamo conto del numero di stati utilizzati, così non sembra utile
+la complessità non teniamo conto del numero di stati utilizzati
+disporre di più stati
+(infatti, usare un insieme di stati più grande può rendere più veloce una macchina solo di un fattore costante), così non sembra utile
 restringere l'alfabeto utilizzato durante la computazione all'alfabeto del problema:
 
 \begin{defi}
@@ -935,29 +1042,67 @@ Grazie al lemma precedente è possibile mettere in relazione le classi di comple
 definite con quelle cui siamo abituati:
 
 \begin{prop}
-Se l'insieme $X \subseteq A^*$ e $X \in \mathrm{DTIME}(T(n))$ allora esiste $c > 0$ tale
+Se l'insieme $X \subseteq A^*$ e $X \in \mathrm{DTIME}(T(n))$ con $T(n)\geq 3n$ allora esiste $c > 0$ tale
 che $X \in \mathrm{DTIME}^A(c\,T(n))$. Esiste inoltre un'ulteriore costante $c_1 > 0$ tale
 che $X \in \mathrm{DTIME}^A_1(c_1\,T^2(n))$.
-\end{prop}
-
 \begin{proof}
 Per definizione $X \in \mathrm{DTIME}(T(n))$ implica l'esistenza di $B$ tale che
 $X \in \mathrm{DTIME}^B_k(T(n))$. Possiamo supporre $k > 1$, altrimenti si può indebolire
 immergendo la macchina mononastro in una a $2$ nastri. Per il
-Lemma~\ref{lem:alfabeto-ampio}
+lemma~\ref{lem:alfabeto-ampio}
 \[
-  X \in \mathrm{DTIME}^A_k\big(4d\,T(\lfloor n/d \rfloor)\big)
+  X \in \mathrm{DTIME}^A_k\big(4d\,T(n)\big)
 \]
 dove $d$ è preso in modo tale che $|B|+1$ è al più $(|A|+1)^d$. Un tale intero $d$ esiste
-perché necessariamente $|A|+1 \geq 2$. Poiché la funzione $T$ è non decrescente
-$T(\lfloor n/d \rfloor) \leq T(n)$ e dunque $X \in \mathrm{DTIME}^A(4d\,T(n))$.
-
-La tesi nel caso ad un nastro deriva immediatamente applicando il Corollario~??.
+perché necessariamente $|A|+1 \geq 2$.
+\\
+Per il secondo enunciato, 
+usando la relazione~$(\ref{rel:complessita-piu-nastri-un-nastro})$,
+otteniamo che
+\[
+  X \in \mathrm{DTIME}^B_1\big(c'\,T^2(n)\big).
+\]
+per qualche costante $c'$.
+Applichiamo ora il Lemma~\ref{lem:alfabeto-ampio} con $k=1$ e funzione di complessità
+$c'\,T^2(n)$, con lo stesso $d$ di prima:
+\[
+  X \in \mathrm{DTIME}^A_1\big(3d\,c'\,T^2(n) + 2n^2\big).
+\]
+Poiché $T(n) \geq n$, si ha $n^2 \leq T^2(n)$, quindi
+\[
+  3d\,c'\,T^2(n) + 2n^2 \leq (3d\,c' + 2)\,T^2(n),
+\]
+e la tesi vale con $c_1 = 3d\,c' + 2$.
 \end{proof}
+\end{prop}
 
-\medskip
-\noindent\textbf{Teorema di speed-up}
-\medskip
+\begin{rema}
+L'ipotesi $T(n)\ge 3n$ nel caso $k\ge 2$ del Lemma~\ref{lem:alfabeto-ampio} serve
+soltanto per assorbire il costo della macchina $\mu''$ nel termine $d\,T(n)$.
+Nella dimostrazione, infatti, per $k\ge 2$ si è ottenuto, senza alcuna ipotesi su $T$,
+\[
+2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(3d\,T(n) + 3dn\big)
+\qquad \text{se } k \geq 2,
+\]
+che è l'analogo, per $k\ge 2$, della prima inclusione del lemma (dove compare il
+termine $2n^2$ per $k=1$). Da questa inclusione si ricava l'enunciato con costante
+moltiplicativa sotto ipotesi più deboli:
+\begin{itemize}
+  \item se $T(n)\ge n$ per ogni $n$, allora $3dn \le 3d\,T(n)$, e quindi
+  \[
+  2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(6d\,T(n)\big)
+  \qquad \text{se } k \geq 2;
+  \]
+  \item se $T(n)\ge 3n$, si ottiene la costante migliore $4d$, come nell'enunciato
+  del lemma, perché allora $3dn \le d\,T(n)$.
+\end{itemize}
+In entrambi i casi la tesi è della stessa forma, cioè
+$\mathrm{DTIME}^A_k\big(c\,T(n)\big)$ con $c$ dipendente solo da $d$; cambia soltanto
+il valore della costante.
+\end{rema}
+
+
+\subsection{Teorema di Speed-up}
 
 I risultati precedenti mostrano che quando si estende l'alfabeto si può passare alla peggio
 da una complessità $T(n)$ a una complessità $c\,T(n)$ per una qualche costante $c$.

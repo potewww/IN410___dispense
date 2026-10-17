@@ -151,12 +151,52 @@ Per ogni coppia di matrici $A,B\in M_n(S)$ valgono le identità
 
 \subsection{Monoidi, Serie Formali e Algebre di Kleene}
 
+\subsubsection{Monoidi}\label{subsubsection: monoidi}
+
 \begin{defi}[Monoide]\label{def:monoide}
 Un \emph{monoide} è una terna $(M,\cdot,1)$ dove $M$ è un insieme,
 \[\cdot: M\times M \to M\]
 è un'operazione binaria associativa (cioè $(M,\cdot)$ è un semigruppo, Definizione~\ref{def:semigruppo}), e $1\in M$ è un elemento tale che
 \[1\cdot m = m\cdot 1 = m \qquad \text{per ogni } m\in M.\]
 \end{defi}
+
+
+
+\begin{defi}\label{def:prefix-suffix-free}
+Una funzione $\omega\colon B\to A^*$ è \emph{prefix-free} se $\omega(b)\neq\varepsilon$
+per ogni $b\in B$ e, per $b\neq b'$, la parola $\omega(b)$ non è un prefisso di
+$\omega(b')$ (in particolare $\omega$ è iniettiva sulle lettere). Analogamente,
+$\omega$ è \emph{suffix-free} se vale la stessa condizione con ``suffisso'' al posto di
+``prefisso''.
+\end{defi}
+
+\begin{rema}\label{rem:estensione-omomorfismo}
+Per la proprietà universale dei monoidi liberi, ogni funzione $\omega\colon B\to A^*$
+definita sui generatori si estende in modo unico a un omomorfismo
+$\omega\colon B^*\to A^*$, ponendo
+\[
+  \omega(b_1\cdots b_n)=\omega(b_1)\cdots\omega(b_n), \qquad \omega(\varepsilon)=\varepsilon.
+\]
+In generale l'iniettività di $\omega$ sui generatori non basta a garantire quella
+dell'omomorfismo esteso: ad esempio, se $B=\{b,c\}$ e $A=\{0\}$, la scelta
+$\omega(b)=0$, $\omega(c)=00$ è iniettiva sulle lettere, ma $\omega(bb)=\omega(c)$.
+\end{rema}
+
+\begin{rema}\label{rem:costruzione-codifiche}
+Valgono i seguenti fatti.
+\begin{enumerate}
+  \item Se $\omega\colon B\to A^*$ è prefix-free oppure suffix-free, allora
+  l'omomorfismo esteso $\omega\colon B^*\to A^*$ è iniettivo, quindi è una codifica.
+  \item Se $|\omega(b)|=d\geq 1$ per ogni $b\in B$ e $\omega$ è iniettiva sulle
+  lettere, allora $\omega$ è sia prefix-free sia suffix-free, quindi l'omomorfismo
+  esteso è una codifica. Questo è il caso delle codifiche a blocchi usate nel
+  Lemma~\ref{lem:alfabeto-ampio}.
+  \item Le condizioni prefix-free e suffix-free sono sufficienti ma non necessarie:
+  l'iniettività su $B^*$ equivale al fatto che $\omega(B)$ sia un codice
+  (decifrabilità unica), e esistono codici né prefix-free né suffix-free.
+\end{enumerate}
+\end{rema}
+\subsubsection{Serie formali}
 
 \begin{defi}[Serie formali]\label{def:serie-formali}
 Dato un monoide $(M,\cdot,1)$ (Definizione~\ref{def:monoide}) e un semianello $\mathbb{K}$, si consideri l'insieme delle \emph{serie formali} a coefficienti in $\mathbb{K}$ sul monoide $M$:
@@ -199,9 +239,9 @@ Sia $(S,\leq)$ un insieme parzialmente ordinato (ad esempio quello indotto come 
 Per un insieme finito, l'estremo superiore è la somma degli elementi:
 \[\sup\{a_1,a_2\} = a_1+a_2, \qquad\qquad \sup\{a_1,\dots,a_n\} = a_1+\cdots+a_n.\]
 (Questo segue induttivamente dalla definizione di $\leq$: $a_1\leq a_1+a_2$ poiché $a_1+(a_1+a_2)=(a_1+a_1)+a_2=a_1+a_2$ per idempotenza, e analogamente per $a_2$; la minimalità segue dalla definizione di $+$ come somma nel semianello.)
-
 Si noti che l'estremo superiore di un insieme infinito potrebbe non esistere in generale.
 
+\subsubsection{Algebra di Kleene}
 \begin{defi}[Algebra di Kleene]\label{def:kleene}
 L'algebra delle serie formali $\mathbb{K}[M]$ (Definizione~\ref{def:serie-formali}) su un semianello idempotente $\mathbb{K}$ si dice \emph{algebra di Kleene} se ad ogni elemento $a\in\mathbb{K}$ è associato un elemento $a^*\in\mathbb{K}$, detto \emph{chiusura di Kleene} di $a$, tale che
 \begin{equation}
