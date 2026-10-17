@@ -732,7 +732,7 @@ visto che vale le seguenti relazioni
 visto che $T(n)$,
 sempre dalla definziione di funzione di complesità, deve essere non decrescente).
 
-\subsection{cambiamenti di alfabeto}
+\subsection{Cambiamenti di alfabeto}
 In questa sezione, vogliamo studiare
 le cosneguenze relativo al cambiamento dell'alfabeto:
 la classe di insiemi decisi rimane invariata? come cambiano le classi di complessità?
@@ -1076,7 +1076,7 @@ e la tesi vale con $c_1 = 3d\,c' + 2$.
 \end{proof}
 \end{prop}
 
-\begin{rema}
+\begin{rema}\label{rem: indebolimento T geq 3n}
 L'ipotesi $T(n)\ge 3n$ nel caso $k\ge 2$ del Lemma~\ref{lem:alfabeto-ampio} serve
 soltanto per assorbire il costo della macchina $\mu''$ nel termine $d\,T(n)$.
 Nella dimostrazione, infatti, per $k\ge 2$ si è ottenuto, senza alcuna ipotesi su $T$,
@@ -1101,7 +1101,67 @@ $\mathrm{DTIME}^A_k\big(c\,T(n)\big)$ con $c$ dipendente solo da $d$; cambia sol
 il valore della costante.
 \end{rema}
 
+\begin{coro}\label{cor:binario-codifica}
+Sia $X\subseteq\Sigma^*$ e $T(n)$ una funzione di complessità. Se
+$X\in\operatorname{DTIME}(T(n))$, allora esistono una codifica
+$\omega\colon\Sigma^*\to\{0,1\}^*$ e una costante $c>0$ tali che
+\[
+  \omega(X)\in\operatorname{DTIME}^{\{0,1\}}_1\big(c\,T^2(n)\big).
+\]
+\begin{proof}
+Con lo stesso ragionamento fatto nell'osservazione
+\ref{rem: indebolimento T geq 3n}, possiamo
+assumere $T(n)\geq 3n$.
+Per definizione esistono un alfabeto $B\supseteq\Sigma$ e $k\geq 1$ tali che
+$X\in\operatorname{DTIME}^B_k(T(n))$. Poniamo $d:=\max\{1,\lceil\log_2|B|\rceil\}$, così
+che $|B|\leq 2^d$, e scegliamo una funzione iniettiva $\omega\colon B\to\{0,1\}^d$.
+Per la Definizione~\ref{def:prefix-suffix-free} e la
+Remark~\ref{rem:costruzione-codifiche}, poiché tutte le immagini hanno la stessa
+lunghezza $d$ e $\omega$ è iniettiva sulle lettere, l'omomorfismo esteso
+$\omega\colon B^*\to\{0,1\}^*$ è iniettivo, quindi è una codifica con $|\omega(w)|=d\,|w|$. In particolare la sua
+restrizione a $\Sigma^*$ è una codifica $\Sigma^*\to\{0,1\}^*$ e
+$w\in X\iff\omega(w)\in\omega(X)$.
+\begin{itemize}
+\item[Passo 1:] Poniamo $\omega(\square)=\square^d$. Poiché
+$\omega(X)\subseteq\{0,1\}^*$, il Lemma~\ref{lem:codifica-blocchi}, nella forma
+dell'Osservazione~\ref{rem:codifica-blocchi}, applicato a $Y=X$ e ad
+$A=\{0,1\}$, dà
+\[
+  \omega(X)\in\operatorname{DTIME}^{\{0,1\}}_k\big(S(n)\big),
+  \qquad S(n):=3d\,T(\lceil n/d\rceil).
+\]
 
+\item[Passo 2:] La funzione $S$ è non decrescente perché
+lo è $T$, e, poiché $T(m)\geq 3m$,
+\[
+  S(n)\geq 3d\cdot 3\lceil n/d\rceil\geq 9n\geq n,
+\]
+quindi $S$ è una funzione di complessità. Applicando la
+relazione~\eqref{rel:complessita-piu-nastri-un-nastro} sull'alfabeto $\{0,1\}$ e con
+$S$ al posto di $T$ si ottiene
+\[
+  \omega(X)\in\operatorname{DTIME}^{\{0,1\}}_1\big(4k(k+6)\,S^2(n)\big).
+\]
+
+\item[Passo 3:] Poiché $d\geq1$ si ha $\lceil n/d\rceil\leq n$, e $T$ è non
+decrescente, quindi $T(\lceil n/d\rceil)\leq T(n)$ e
+\[
+  S^2(n)=9d^2\,T^2(\lceil n/d\rceil)\leq 9d^2\,T^2(n).
+\]
+Dunque
+\[
+  \omega(X)\in\operatorname{DTIME}^{\{0,1\}}_1\big(c\,T^2(n)\big),
+  \qquad c:=36\,d^2\,k\,(k+6).
+\]
+\end{itemize}
+\end{proof}
+\end{coro}
+Questo ci dice che,
+un qualsiasi insieme decidibile, una volta codificato in binario,
+può essere
+deciso da una macchina ad un nastro
+che utilizza come alfabeto
+un insieme con soli due elementi.
 \subsection{Teorema di Speed-up}
 
 I risultati precedenti mostrano che quando si estende l'alfabeto si può passare alla peggio

@@ -31,8 +31,8 @@
 \contentsline {subsection}{\numberline {9.2}Macchine a seminastro}{64}{subsection.9.2}%
 \contentsline {subsection}{\numberline {9.3}Macchine multinastro}{68}{subsection.9.3}%
 \contentsline {subsection}{\numberline {9.4}Equivalenza tra macchine a multinastro e macchine a nastro singolo}{71}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}cambiamenti di alfabeto}{75}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{80}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.5}Cambiamenti di alfabeto}{75}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{81}{subsection.9.6}%
 \contentsline {section}{\numberline {10}Prerequisiti}{82}{section.10}%
 \contentsline {subsection}{\numberline {10.1}Definizioni Preliminari}{82}{subsection.10.1}%
 \contentsline {subsection}{\numberline {10.2}Grafi e Matrici di Adiacenza}{82}{subsection.10.2}%
