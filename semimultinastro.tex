@@ -471,6 +471,8 @@ l'insieme $X=\{0^p1^p\mid p\geq 0\}$. Introducendo la notazione per le classi di
 Dato l'insieme $X=\{0^p1^p\mid p\geq 0\}$, allora $X\in\mathrm{DTIME}_2^{\{0,1\}}(n)$.
 \end{lemm}
 
+\subsection{Equivalenza tra macchine a multinastro e macchine a nastro singolo}
+
 Vorremmo ora mostrare che il modello a multinastro decide
 gli stessi insiemi del modello a nastro singolo.
 Per farlo, forniremo una funzione di simulazione $\phi$
@@ -491,39 +493,40 @@ specificare che forma hanno
 $f$ (la configurazione del nastro 
 singolo) e $p$ (la posizione del 
 puntatore sul nastro singolo).
+
+
+
+
+
+
 La configurazione $f$ del nastro singolo è la concatenazione delle colonne (numerate a
-partire da $0$, così come le celle)dove ogni elemento viene separato da un altro con un simbolo $\square$ o $*$: la colonna $j$ occupa le celle da $2kj$ a
-$2kj+2k-1$ e ha la forma
+partire da $1$, così come le celle), in cui ogni lettera è seguita da un simbolo $*$ oppure
+$\square$: la colonna $j$ occupa le celle da $2k(j-1)+1$ a $2kj$ e ha la forma
 \[
-  m_1\, f_1(j)\; m_2\, f_2(j)\; \cdots\; m_k\, f_k(j),
+  f_1(j)\, m_1\; f_2(j)\, m_2\; \cdots\; f_k(j)\, m_k,
 \]
 dove $m_i = *$ se la testina del nastro $i$ si trova sulla cella $j$ (cioè $p_i=j$) e
-$m_i = \square$ altrimenti. In modo formale, per ogni $j \in \mathbb{N}$ e
+$m_i = \square$ altrimenti. In modo formale, per ogni $j \geq 1$ e
 $i \in \{1,\dots,k\}$,
 \[
-  f\big(2kj+2(i-1)\big) =
+  f\big(2k(j-1)+2i-1\big) = f_i(j),
+  \qquad
+  f\big(2k(j-1)+2i\big) =
   \begin{cases}
     * & \text{se } p_i = j,\\
-    \square & \text{altrimenti,}
+    \square & \text{altrimenti.}
   \end{cases}
-  \qquad
-  f\big(2kj+2i-1\big) = f_i(j).
-\]
-La testina del nastro singolo va posta nella prima cella della colonna più piccola tra
-quelle in cui si trova una testina. Posto
-\[
-  p_{\min} := \min\{p_1,\dots,p_k\},
-\]
-si ha dunque
-\[
-  p = 2k\,p_{\min}.
 \]
 
 \begin{rema}
 Gli asterischi occupano sempre posizioni pari: per questo si può usare un simbolo fissato
-di $A$ senza bisogno di ingrandire l'alfabeto, visto che nelle posizioni pari ci saranno solamante $\square$ oppure il simbolo fissato.
+di $A$ senza bisogno di ingrandire l'alfabeto, visto che nelle posizioni pari ci saranno
+solamente $\square$ oppure il simbolo fissato. Lo stato tiene un contatore modulo $2k$
+della posizione nella colonna, e così distingue le celle delle lettere da quelle dei
+marcatori e riconosce a quale nastro $i$ appartiene un asterisco.
 \end{rema}
 
+Se le testine dei nastri si trovano in posizioni diverse, come in figura,
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -543,9 +546,12 @@ di $A$ senza bisogno di ingrandire l'alfabeto, visto che nelle posizioni pari ci
 \caption{Due nastri con le testine in posizioni diverse.}
 \label{fig:testine-diverse}
 \end{figure}
-la testina del nastro singolo andrà nella prima cella della colonna più piccola,
-tra quelle in cui si trova una testina.
-
+la testina del nastro singolo va posta nella prima cella della colonna più piccola tra
+quelle in cui si trova una testina. Posto $p_{\min} := \min\{p_1,\dots,p_k\}$, si ha
+dunque
+\[
+  p = 2k\,(p_{\min}-1)+1.
+\]
 
 \medskip
 Ora costruiamo la macchina $\mu_1$ a partire dalla funzione di transizione della macchina
@@ -558,42 +564,52 @@ Gli stati di $\mu_1$ saranno
   Q_1 := Q \,\sqcup\, (R \times Q),
   \qquad R = \{R_i\}_{i\in I}, \quad |I| < \infty,
 \]
-dove gli $R_i$ sono stati ausiliari che permettono a $\mu_1$ di eseguire un passo di $\mu$: in uno
-stato $(R_i, q)$ la macchina $\mu_1$ ricorda lo stato $q$ di $\mu$ da cui è partita la
-simulazione del passo. Un passo di $\mu$ viene simulato da $\mu_1$ come segue:
+dove gli $R_i$ sono stati ausiliari che permettono a $\mu_1$ di eseguire un passo di
+$\mu$: in uno stato $(R_i, q)$ la macchina $\mu_1$ ricorda lo stato $q$ di $\mu$ da cui è
+partita la simulazione del passo. Un passo di $\mu$ viene simulato da $\mu_1$ con un giro
+di andata e uno di ritorno.
 \begin{enumerate}
-  \item \emph{Andata.} Si parte con la testina in $p = 2k\,p_{\min}$, ricordando nello
-        stato il valore $q \in Q$ di $M_k$. Si scorre il nastro verso destra e, ogni volta
-        che si trova un $*$, si legge la lettera marcata (nella cella successiva),
-        memorizzandola nello stato. Raggiunto l'ultimo asterisco si è memorizzata la
-        $k$-upla $(a_1,\dots,a_k)$.
+  \item \emph{Andata.} Si parte con la testina in $p = 2k\,(p_{\min}-1)+1$, ricordando
+        nello stato il valore $q \in Q$ di $\mu$. Si scorre il nastro verso destra tenendo
+        nello stato la posizione nella colonna (modulo $2k$) e l'ultima lettera letta.
+        Quando si trova un $*$ in una cella $x$, appartenente al nastro $i$, la lettera
+        marcata è quella della cella $x-1$, già memorizzata, e si pone $a_i$ uguale a
+        essa. Raggiunto il $k$-esimo asterisco la testina si trova su di esso, e nello
+        stato è memorizzata la $k$-upla $(a_1,\dots,a_k)$.
   \item \emph{Calcolo.} Si calcola
         \[
           \mu(q, a_1,\dots,a_k) = (q',\, b_1,\dots,b_k,\, s_1,\dots,s_k)
           \in Q \times A^k \times \{-1,0,1\}^k ,
         \]
         che è un'informazione finita e quindi può essere ricordata dallo stato.
-  \item \emph{Ritorno.} Si scorre il nastro verso sinistra. Ogni volta che si trova un
-        $*$ si sostituisce la lettera marcata con il corrispondente $b_i$ e, se
-        $s_i \neq 0$, si sposta l'asterisco di $2k\,s_i$ celle: lo si cancella
-        (scrivendo $\square$) e lo si riscrive nella nuova posizione. Se $s_i=-1$ la
-        testina si trova poi già sul nuovo asterisco e riprende da lì verso sinistra;
-        se $s_i=+1$ si torna indietro di $2k$ celle e si prosegue verso sinistra.
-  \item Finiti gli asterischi, la testina si trova sul nuovo $p_{\min}$, cioè nella prima
-        cella della colonna più a sinistra tra quelle contenenti un asterisco, e si entra
-        nello stato $q' \in Q$.
+  \item \emph{Ritorno.} Si scorre il nastro verso sinistra. Quando si legge un $*$ nella
+        cella $x$, appartenente al nastro $i$, la lettera marcata è in $x-1$ e si procede
+        così:
+        \begin{itemize}
+          \item se $s_i = 0$ si va in $x-1$, si scrive $b_i$ e si prosegue;
+          \item se $s_i = -1$ si cancella il $*$ (scrivendo $\square$), si va in $x-1$, si
+                scrive $b_i$ e si prosegue, ricordando nello stato che bisogna scrivere
+                $*$ nella cella dello slot $i$ della colonna precedente (cioè in
+                $x-2k$), dove si scriverà appena la scansione vi arriva;
+          \item se $s_i = +1$ si cancella il $*$, si va in $x+2k$ e vi si scrive $*$, si
+                torna in $x-1$, si scrive $b_i$ e si prosegue.
+        \end{itemize}
+  \item \emph{Riposizionamento.} Dopo aver processato tutti i $k$ asterischi si prosegue
+        verso sinistra fino all'inizio della colonna precedente a quella del vecchio
+        asterisco più a sinistra (scrivendo gli eventuali asterischi in sospeso), poi si
+        scorre verso destra fino al primo $*$ e si torna all'inizio della sua colonna: la
+        testina è sul nuovo $p = 2k\,(p_{\min}-1)+1$. Si entra nello stato
+        $q' \in Q$.
 \end{enumerate}
-In termini di configurazioni, 
-se $c = (f,p,q)$ e $c' = (f',p',q')$ 
-sono configurazioni di
-$\mu$ con consecutive, allora 
-$\mu_1$ passa da $\varphi(c)$ a $\varphi(c')$ attraversando
+In termini di configurazioni, se $c = (f,p,q)$ e $c' = (f',p',q')$ sono configurazioni
+consecutive di $\mu$, allora $\mu_1$ passa da $\varphi(c)$ a $\varphi(c')$ attraversando
 un numero finito di configurazioni intermedie, nelle quali lo stato è della forma
-$(R_h, q)$. Qui $R_h$ codifica l'informazione finita che $M_1$ deve ricordare durante il
-passo: la fase (andata o ritorno), le lettere lette finora e, dopo il calcolo, la
-$(k+k+1)$-upla $(q',b_1,\dots,b_k,s_1,\dots,s_k)$ ottenuta da $\mu$. Durante l'andata il
-nastro resta invariato e si muove solo la testina; durante il ritorno vengono modificati
-il nastro e la posizione degli asterischi.
+$(R_h, q)$. Qui $R_h$ codifica l'informazione finita che $\mu_1$ deve ricordare durante il
+passo: la fase (andata, ritorno o riposizionamento), la posizione nella colonna modulo
+$2k$, le lettere lette finora e, dopo il calcolo, la $(2k+1)$-upla
+$(q',b_1,\dots,b_k,s_1,\dots,s_k)$ ottenuta da $\mu$, insieme agli asterischi ancora da
+scrivere. Durante l'andata il nastro resta invariato e si muove solo la testina; durante il
+ritorno vengono modificati il nastro e la posizione degli asterischi.
 \[
 \begin{tikzpicture}[
     scale=0.85, transform shape,
@@ -604,12 +620,12 @@ il nastro e la posizione degli asterischi.
 \node at (0,4.4) {${Conf}^{A,Q}_k$};
 \node at (8,4.4) {${Conf}^{A,Q_1}_1$};
 
-% Colonna sinistra: un passo di M_k
+% Colonna sinistra: un passo di mu
 \node (c)  at (0,3.2)  {$c = (f,p,q)$};
 \node (c1) at (0,-4.2) {$c' = (f',p',q')$};
-\draw[->] (c) -- node[swap] {} (c1);
+\draw[->] (c) -- (c1);
 
-% Colonna destra: i passi corrispondenti di M_1
+% Colonna destra: i passi corrispondenti di mu_1
 \node (d0) at (8,3.2)  {$\varphi(c) = (\bar f,\bar p,q)$};
 \node (d1) at (8,1.8)  {$(\bar f,r_1,(R_1,q))$};
 \node (d2) at (8,0.7)  {$\vdots$};
@@ -622,7 +638,7 @@ il nastro e la posizione degli asterischi.
 \draw[->] (c)  -- node {$\varphi$} (d0);
 \draw[->] (c1) -- node[swap] {$\varphi$} (d6);
 
-% Passi di M_1
+% Passi di mu_1
 \draw[->] (d0) -- (d1);
 \draw[->] (d1) -- (d2);
 \draw[->] (d2) -- (d3);
@@ -639,22 +655,70 @@ il nastro e la posizione degli asterischi.
 \]
 
 Per stimare il costo osserviamo che, su un input di lunghezza $n$ (con $T(n)\geq n$),
-dopo $t \leq T(n)$ passi ciascun nastro di $M_k$ occupa al più $T(n)+1$ celle, quindi il
-nastro di $M_1$ ne occupa al più $2k\,(T(n)+1)$. Poiché a ogni passo la testina di $M_1$
-si sposta al più di una cella, un'andata o un ritorno su questa porzione richiedono al più
-$2k\,(T(n)+1)$ passi ciascuno. Perciò un passo di $M_k$ viene simulato in al più
-$2\cdot 2k\,(T(n)+1) = 2k\,(2T(n)+2)$ passi di $M_1$, a meno di una costante che dipende
-solo da $k$ (lo spostamento degli asterischi e il riposizionamento finale).
-\medskip
-Vale
+dopo $t \leq T(n)$ passi di $\mu$ le testine e gli asterischi si trovano nelle colonne
+$1,\dots,T(n)+1$, quindi tutto ciò che $\mu_1$ deve attraversare è contenuto nelle prime
+$2k\,(T(n)+1)$ celle del nastro.
+
+Il numero di passi di $\mu_1$ non è però limitato dal numero di celle occupate, ma dal modo
+in cui la testina si muove. Nella fase di andata la testina si sposta sempre verso destra,
+di una cella per passo, fino all'ultimo asterisco, quindi compie al più $2k\,(T(n)+1)$
+passi. Nella fase di ritorno la testina si sposta verso sinistra, con la sola eccezione di
+una deviazione per ciascun asterisco con $s_i = +1$ (andare a 
+scrivere il nuovo asterisco
+in $x+2k$ e tornare in $x-1$), 
+che richiede $4k$ passi in più rispetto alla scansione.
+Il ritorno costa perciò al più 
+$2k\,(T(n)+1) + 4k^2$ passi ($4k^2$ perchè si fanno $4k$ operazioni per $k$ asterischi). Il riposizionamento finale
+sul nuovo $p_{\min}$, che sta nelle colonne $j_{\min}-1$, $j_{\min}$ o $j_{\min}+1$,
+richiede al più $12k$ passi: al più $4k$ per arrivare all'inizio della colonna
+$j_{\min}-1$, al più $6k$ per scorrere a destra fino al primo $*$ e al più $2k$ per tornare
+all'inizio della sua colonna. Un passo di $\mu$ viene dunque simulato in al più
+\[
+  2\cdot 2k\,(T(n)+1) + 4k^2 + 12k
+\]
+passi di $\mu_1$.
+Poiché $\mu$ esegue al più $T(n)$ passi, 
+la macchina $\mu_1$, una volta inizializzata, 
+compie
+\[
+ (2\cdot 2k\,(T(n)+1) + 4k^2 + 12k) T(n)
+\]
+passi.
+Resta da stimare il costo della codifica iniziale $\varphi$ dell'input
+$w = w_1\cdots w_n$. La configurazione iniziale di $\mu$ ha la parola $w$ scritta su tutti
+i nastri, con le testine in cella $1$, cioè $f_i(j) = w_j$ per ogni $i$ e $p_i = 1$.
+La colonna $j$ della configurazione codificata è dunque
+\[
+  w_j\, m\; w_j\, m\; \cdots\; w_j\, m \qquad (k \text{ coppie}),
+\]
+con $m = *$ se $j = 1$ e $m = \square$ se $j \geq 2$. Partendo dalla parola $w$ scritta
+all'inizio del nastro di $\mu_1$, si procede con $n$ passate, una per lettera. Posto
+$d := 2k-1$, nella passata $j$ la testina si trova su $w_j$, in cella $2k(j-1)+1$:
+\begin{itemize}
+  \item nelle $d$ celle successive si scrive $m\,w_j\,m\,w_j\cdots m$, memorizzando nello
+        stato, che avrà la struttura di una coda di $d$ simboli, le lettere cancellate, si compiono così $d$ passi;
+  \item si prosegue verso destra: in ogni cella si legge il simbolo, si scrive il simbolo
+        più vecchio della coda e si inserisce in coda il simbolo letto, finché nella coda
+        restano solo blank. In questo modo le $n-j$ lettere rimanenti scorrono di $d$
+        celle verso destra, e la testina percorre $ (n-j)$ celle, che coincide con il numero di operazioni per questa fase;
+  \item si torna a sinistra fino al primo $\square$ o $*$ (l'ultimo marcatore inserito, in
+        cella $2kj$) e si fa un passo a destra, posizionandosi su $w_{j+1}$: al più
+        $(n-j)+1$ passi.
+\end{itemize}
+La passata $j$ richiede quindi al più $d + (n-j) + (n-j)+1= 2(n-j)+2k$ passi, e le $n$ passate
+richiedono quindi
+\[
+  \sum_{j=1}^{n}\big(2(n-j)+2k\big) = n^2 + (2k-1)\,n .
+\]
+Infine la testina deve tornare in cella $1$, per al più $2kn$ passi. Il costo della
+codifica è dunque al più $n^2 + (4k-1)\,n \leq 4k\,n^2$ per $n \geq 1$.
+Otteniamo quindi che
 \[
   \mathrm{DTIME}^A_k\big(T(n)\big) \subseteq
-  \mathrm{DTIME}^A_1\Big(2k\,\big(2T(n)+2\big)\,T(n) + c(k)\,n^2\Big),
+  \mathrm{DTIME}^A_1\Big(\big(2k\,(2T(n)+2) + 4k(k+3)\big)\,T(n) + 4k\,n^2\Big).
 \]
-dove $c(k)\,n^2$ è il costo della codifica iniziale dell'input.
+
 \subsection{cambiamenti di alfabeto}
-\noindent\textbf{Cambiamenti di alfabeto}
-\medskip
 
 \begin{lemm}
 Supponiamo che $A \subseteq B$ e che $T(n)$ sia una funzione di complessità.
