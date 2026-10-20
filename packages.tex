@@ -65,9 +65,8 @@
 \newtheorem{prop}[theo]{Proposizione}
 \newtheorem{exam}[theo]{Esempio}
 \newtheorem{coro}[theo]{Corollario}
-\newtheorem{ex}{Esercizio}
-\newtheorem{sol}{Soluzione esercizio}
-
+\newtheorem{ex}{Esercizio}[subsection]
+\newtheorem{sol}{Soluzione esercizio}[subsection]
 \makeatletter
 \AtBeginDocument{%
   \def\theHtheo{\thesection.\arabic{theo}}%

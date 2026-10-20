@@ -1,0 +1,389 @@
+\begin{ex}
+Sia $A:=\{0,1\}$ l'alfabeto binario. Stabilire se, per ogni dato $n$ intero positivo, l'insieme $X_n\subset A^*$
+\[
+X_n:=\{a^ib^jc^k \mid i+j\geq 3,\ k\equiv 0 \bmod n \text{ e } a,b,c\in A\}
+\]
+è DFA-decidibile. In caso affermativo fornire un automa che lo decide.
+\end{ex}
+
+\begin{sol}
+L'insieme $X_n$ è DFA-decidibile per ogni $n$. Per decidere il primo pezzo, cioè $a^ib^j$ con $i+j\geq 3$, basta l'automa $\mathcal{A}$ qui sotto (le transizioni non disegnate vanno in uno stato pozzo).
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state] (qe)    at (0,0)     {$q_\varepsilon$};
+\node[state] (q0)    at (2,2.75)  {$q_0$};
+\node[state] (q1)    at (2,-2.75) {$q_1$};
+\node[state] (q00)   at (4,4)     {$q_{00}$};
+\node[state] (q01)   at (4,1.5)   {$q_{01}$};
+\node[state] (q10)   at (4,-1.5)  {$q_{10}$};
+\node[state] (q11)   at (4,-4)    {$q_{11}$};
+\node[state] (q000)  at (6.5,5)   {$q_{000}$};
+\node[state] (q001)  at (6.5,3)   {$q_{001}$};
+\node[state] (q011)  at (6.5,1)   {$q_{011}$};
+\node[state] (q100)  at (6.5,-1)  {$q_{100}$};
+\node[state] (q110)  at (6.5,-3)  {$q_{110}$};
+\node[state] (q111)  at (6.5,-5)  {$q_{111}$};
+\node[state] (q0001) at (9.5,5)   {$q_{0001}$};
+\node[state] (q1110) at (9.5,-5)  {$q_{1110}$};
+\node[state, accepting] (qF) at (12,0) {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]qe.center) -- (qe);
+
+% Transizioni
+\draw[->] (qe)  -- node {$0$} (q0);
+\draw[->] (qe)  -- node[swap] {$1$} (q1);
+\draw[->] (q0)  -- node {$0$} (q00);
+\draw[->] (q0)  -- node[swap] {$1$} (q01);
+\draw[->] (q1)  -- node {$0$} (q10);
+\draw[->] (q1)  -- node[swap] {$1$} (q11);
+\draw[->] (q00) -- node {$0$} (q000);
+\draw[->] (q00) -- node[swap] {$1$} (q001);
+\draw[->] (q01) -- node[swap] {$1$} (q011);
+\draw[->] (q10) -- node {$0$} (q100);
+\draw[->] (q11) -- node {$0$} (q110);
+\draw[->] (q11) -- node[swap] {$1$} (q111);
+
+% Passaggi 000 -> 0001 e 111 -> 1110
+\draw[->] (q000) -- node {$1$} (q0001);
+\draw[->] (q111) -- node[swap] {$0$} (q1110);
+
+% Cappi
+\draw[->] (q000)  to[loop above, looseness=8] node {$0$} (q000);
+\draw[->] (q001)  to[loop above, looseness=8] node {$1$} (q001);
+\draw[->] (q011)  to[loop above, looseness=8] node {$1$} (q011);
+\draw[->] (q100)  to[loop below, looseness=8] node {$0$} (q100);
+\draw[->] (q110)  to[loop below, looseness=8] node {$0$} (q110);
+\draw[->] (q111)  to[loop below, looseness=8] node {$1$} (q111);
+\draw[->] (q0001) to[loop above, looseness=8] node {$1$} (q0001);
+\draw[->] (q1110) to[loop below, looseness=8] node {$0$} (q1110);
+
+% Epsilon-mosse verso lo stato finale
+\draw[->] (q000)  to[bend left=8]  node[pos=0.7] {$\varepsilon$} (qF);
+\draw[->] (q001)  -- node[pos=0.7] {$\varepsilon$} (qF);
+\draw[->] (q011)  -- node[pos=0.7] {$\varepsilon$} (qF);
+\draw[->] (q100)  -- node[pos=0.7] {$\varepsilon$} (qF);
+\draw[->] (q110)  -- node[pos=0.7] {$\varepsilon$} (qF);
+\draw[->] (q111)  to[bend right=8] node[pos=0.7] {$\varepsilon$} (qF);
+\draw[->] (q0001) -- node {$\varepsilon$} (qF);
+\draw[->] (q1110) -- node[swap] {$\varepsilon$} (qF);
+\end{tikzpicture}
+\]
+Lo concateniamo con l'automa $\mathcal{B}_n$, che accetta $\{c^k \mid k\equiv 0 \bmod n\}$. Per $n=1$ si ha $r_{0^1}=r_{0^n}$ e $r_{1^1}=r_{1^n}$.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state, accepting] (re)  at (0,0)     {$r_\varepsilon$};
+\node[state]            (r0)  at (3,1.5)   {$r_0$};
+\node[state]            (r02) at (6,1.5)   {$r_{0^2}$};
+\node                   (r0d) at (8.5,1.5) {$\cdots$};
+\node[state, accepting] (r0n) at (11,1.5)  {$r_{0^n}$};
+\node[state]            (r1)  at (3,-1.5)  {$r_1$};
+\node[state]            (r12) at (6,-1.5)  {$r_{1^2}$};
+\node                   (r1d) at (8.5,-1.5){$\cdots$};
+\node[state, accepting] (r1n) at (11,-1.5) {$r_{1^n}$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]re.center) -- (re);
+
+% Transizioni
+\draw[->] (re)  -- node {$0$} (r0);
+\draw[->] (re)  -- node[swap] {$1$} (r1);
+\draw[->] (r0)  -- node {$0$} (r02);
+\draw[->] (r02) -- node {$0$} (r0d);
+\draw[->] (r0d) -- node {$0$} (r0n);
+\draw[->] (r1)  -- node[swap] {$1$} (r12);
+\draw[->] (r12) -- node[swap] {$1$} (r1d);
+\draw[->] (r1d) -- node[swap] {$1$} (r1n);
+
+% Ritorni
+\draw[->] (r0n) to[bend right=35] node[above] {$0$} (r0);
+\draw[->] (r1n) to[bend left=35]  node[below] {$1$} (r1);
+\end{tikzpicture}
+\]
+L'automa che decide $X_n$ è il seguente: gli stati finali sono quelli di $\mathcal{B}_n$, ossia $r_\varepsilon$, $r_{0^n}$ e $r_{1^n}$.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Rettangolo di A
+\draw[-, line width=2.5pt, rounded corners=3pt] (0,-1.4) rectangle (4,1.4);
+\node at (2,0) {$\mathcal{A}$};
+
+% Rettangolo di B_n
+\draw[-, line width=2.5pt, rounded corners=3pt] (7,-1.4) rectangle (11,1.4);
+\node at (9,0) {$\mathcal{B}_n$};
+
+% Stati di A
+\node[state] (qe) at (0,0) {$q_\varepsilon$};
+\node[state] (qF) at (4,0) {$q_F$};
+
+% Stati di B_n
+\node[state, accepting] (re)  at (7,0)     {$r_\varepsilon$};
+\node[state, accepting] (r0n) at (11,0.8)  {$r_{0^n}$};
+\node[state, accepting] (r1n) at (11,-0.8) {$r_{1^n}$};
+
+% Freccia d'ingresso e epsilon-mossa di collegamento
+\draw[->] ([shift={(-0.7,0.7)}]qe.center) -- (qe);
+\draw[->] (qF) -- node {$\varepsilon$} (re);
+\end{tikzpicture}
+\]
+Abbiamo così mostrato che
+l'iniseme $X_n$ è $\epsilon$-NDFA
+decidibile e quindi è anche
+$DFA$ decidibile.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Con $X_n$ come nell'esercizio precedente,
+\begin{enumerate}
+    \item dare l'espressione regolare $\mathsf{e}_3$ tale che $[\![\mathsf{e}_3]\!]=X_3$,
+    \item generalizzare ad una famiglia di espressioni regolari $\mathsf{e}_n$ tale che $[\![\mathsf{e}_n]\!]=X_n$,
+\end{enumerate}
+(la doppia parentesi quadra indica l'interpretazione insiemistica delle espressioni regolari).
+\end{ex}
+
+\begin{sol}
+Poiché $X_n$ è la concatenazione di $\{a^ib^j \mid i+j\geq 3\}$ con $\{c^k \mid k\equiv 0 \bmod n\}$, cerchiamo un'espressione regolare per ciascuno dei due pezzi e le concateniamo.
+
+Leggendo l'automa $\mathcal{A}$ dell'esercizio precedente si ottiene
+\[
+\mathsf{e}_{\mathcal{A}} := 0\Bigl(0\bigl(00^*1^* + 11^*\bigr) + 111^*\Bigr) + 1\Bigl(000^* + 1\bigl(00^* + 11^*0^*\bigr)\Bigr)
+\]
+che è l'espressione per $\mathcal{A}$.
+
+Per trovare l'espressione di $\mathcal{B}_n$ facciamo le riduzioni.
+
+Passo 0. Partiamo da $\mathcal{B}_n$.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state, accepting] (re)  at (2.5,0)    {$r_\varepsilon$};
+\node[state]            (r0)  at (5.5,1.5)  {$r_0$};
+\node[state]            (r02) at (8,1.5)    {$r_{0^2}$};
+\node                   (r0d) at (10,1.5)   {$\cdots$};
+\node[state, accepting] (r0n) at (12,1.5)   {$r_{0^n}$};
+\node[state]            (r1)  at (5.5,-1.5) {$r_1$};
+\node[state]            (r12) at (8,-1.5)   {$r_{1^2}$};
+\node                   (r1d) at (10,-1.5)  {$\cdots$};
+\node[state, accepting] (r1n) at (12,-1.5)  {$r_{1^n}$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]re.center) -- (re);
+
+% Transizioni
+\draw[->] (re)  -- node {$0$} (r0);
+\draw[->] (re)  -- node[swap] {$1$} (r1);
+\draw[->] (r0)  -- node {$0$} (r02);
+\draw[->] (r02) -- node {$0$} (r0d);
+\draw[->] (r0d) -- node {$0$} (r0n);
+\draw[->] (r1)  -- node[swap] {$1$} (r12);
+\draw[->] (r12) -- node[swap] {$1$} (r1d);
+\draw[->] (r1d) -- node[swap] {$1$} (r1n);
+
+% Ritorni
+\draw[->] (r0n) to[bend right=35] node[above] {$0$} (r0);
+\draw[->] (r1n) to[bend left=35]  node[below] {$1$} (r1);
+\end{tikzpicture}
+\]
+
+Passo 1. Aggiungiamo un nuovo stato iniziale $r_\varepsilon^*$ e un nuovo stato finale $r_F$. Gli stati che erano finali, cioè $r_\varepsilon$, $r_{0^n}$ e $r_{1^n}$, vanno in $r_F$ con una $\mathbb 1$-mossa.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (rs)  at (0,0)      {$r_\varepsilon^*$};
+\node[state]            (re)  at (2.5,0)    {$r_\varepsilon$};
+\node[state]            (r0)  at (5.5,1.5)  {$r_0$};
+\node[state]            (r02) at (8,1.5)    {$r_{0^2}$};
+\node                   (r0d) at (10,1.5)   {$\cdots$};
+\node[state]            (r0n) at (12,1.5)   {$r_{0^n}$};
+\node[state]            (r1)  at (5.5,-1.5) {$r_1$};
+\node[state]            (r12) at (8,-1.5)   {$r_{1^2}$};
+\node                   (r1d) at (10,-1.5)  {$\cdots$};
+\node[state]            (r1n) at (12,-1.5)  {$r_{1^n}$};
+\node[state, accepting] (rF)  at (2.5,-4.2) {$r_F$};
+
+% Freccia d'ingresso e nuove 1-mosse
+\draw[->] ([shift={(-0.7,0.7)}]rs.center) -- (rs);
+\draw[->, very thick] (rs) -- node {$\mathbb 1$} (re);
+\draw[->, very thick] (re) -- node[left] {$\mathbb 1$} (rF);
+\draw[->, very thick, rounded corners=8pt]
+    (r1n.south) -- (r1n.south |- 0,-4.2) -- node[above] {$\mathbb 1$} (rF.east);
+\draw[->, very thick, rounded corners=8pt]
+    (r0n.east) -- (13.3,1.5) -- (13.3,-5.5) -- node[below] {$\mathbb 1$} (rF.south |- 0,-5.5) -- (rF.south);
+
+% Transizioni dell'automa originale
+\draw[->] (re)  -- node {$0$} (r0);
+\draw[->] (re)  -- node[swap] {$1$} (r1);
+\draw[->] (r0)  -- node {$0$} (r02);
+\draw[->] (r02) -- node {$0$} (r0d);
+\draw[->] (r0d) -- node {$0$} (r0n);
+\draw[->] (r1)  -- node[swap] {$1$} (r12);
+\draw[->] (r12) -- node[swap] {$1$} (r1d);
+\draw[->] (r1d) -- node[swap] {$1$} (r1n);
+\draw[->] (r0n) to[bend right=35] node[above] {$0$} (r0);
+\draw[->] (r1n) to[bend left=35]  node[below] {$1$} (r1);
+\end{tikzpicture}
+\]
+
+Passo 2. Comprimiamo le due catene: da $r_0$ a $r_{0^n}$ si leggono $n-1$ zeri, da $r_1$ a $r_{1^n}$ si leggono $n-1$ uni.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (rs)  at (0,0)      {$r_\varepsilon^*$};
+\node[state]            (re)  at (2.5,0)    {$r_\varepsilon$};
+\node[state]            (r0)  at (5.5,1.5)  {$r_0$};
+\node[state]            (r0n) at (12,1.5)   {$r_{0^n}$};
+\node[state]            (r1)  at (5.5,-1.5) {$r_1$};
+\node[state]            (r1n) at (12,-1.5)  {$r_{1^n}$};
+\node[state, accepting] (rF)  at (2.5,-4.2) {$r_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]rs.center) -- (rs);
+\draw[->] (rs) -- node {$\mathbb 1$} (re);
+\draw[->] (re) -- node[left] {$\mathbb 1$} (rF);
+\draw[->, rounded corners=8pt]
+    (r1n.south) -- (r1n.south |- 0,-4.2) -- node[above] {$\mathbb 1$} (rF.east);
+\draw[->, rounded corners=8pt]
+    (r0n.east) -- (13.3,1.5) -- (13.3,-5.5) -- node[below] {$\mathbb 1$} (rF.south |- 0,-5.5) -- (rF.south);
+
+% Transizioni
+\draw[->] (re) -- node {$0$} (r0);
+\draw[->] (re) -- node[swap] {$1$} (r1);
+\draw[->, very thick] (r0) -- node {$0^{n-1}$} (r0n);
+\draw[->, very thick] (r1) -- node[swap] {$1^{n-1}$} (r1n);
+\draw[->] (r0n) to[bend right=35] node[above] {$0$} (r0);
+\draw[->] (r1n) to[bend left=35]  node[below] {$1$} (r1);
+\end{tikzpicture}
+\]
+
+Passo 3. Eliminiamo $r_0$, $r_{0^n}$, $r_1$, $r_{1^n}$. Da $r_0$ si legge $0^{n-1}$ e poi si esce, oppure si torna in $r_0$ leggendo $0$ e si ripete, quindi da $r_\varepsilon$ a $r_F$ passando per questi stati si ha $0(0^{n-1}0)^*0^{n-1}=0(0^n)^*0^{n-1}$. Lo stesso vale per gli uni.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (rs) at (0,0) {$r_\varepsilon^*$};
+\node[state]            (re) at (3,0) {$r_\varepsilon$};
+\node[state, accepting] (rF) at (9,0) {$r_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]rs.center) -- (rs);
+\draw[->] (rs) -- node {$\mathbb 1$} (re);
+\draw[->] (re) -- node {$\mathbb 1$} (rF);
+
+% Nuove transizioni
+\draw[->, very thick] (re) to[bend left=40]  node {$0(0^n)^*0^{n-1}$} (rF);
+\draw[->, very thick] (re) to[bend right=40] node[swap] {$1(1^n)^*1^{n-1}$} (rF);
+\end{tikzpicture}
+\]
+Quindi $\mathsf{e}_{\mathcal{B}_n} := \varepsilon + 0(0^n)^*0^{n-1} + 1(1^n)^*1^{n-1}$, che equivale a $(0^n)^*+(1^n)^*$ (per $n=1$ la formula resta valida con $0^0=1^0=\varepsilon$).
+
+\begin{enumerate}
+    \item Per $n=3$ si ha $\mathsf{e}_{\mathcal{B}_3}=(000)^*+(111)^*$, quindi
+    \[
+    \mathsf{e}_3 := \mathsf{e}_{\mathcal{A}}\bigl((000)^*+(111)^*\bigr).
+    \]
+    \item Per ogni $n$ la concatenazione di $\mathsf{e}_{\mathcal{A}}$ con $\mathsf{e}_{\mathcal{B}_n}$ dà
+    \[
+    \mathsf{e}_n := \mathsf{e}_{\mathcal{A}}\bigl((0^n)^*+(1^n)^*\bigr),
+    \]
+    e $[\![\mathsf{e}_n]\!]=[\![\mathsf{e}_{\mathcal{A}}]\!]\cdot[\![\mathsf{e}_{\mathcal{B}_n}]\!]=X_n$.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+{Sia $X \in \operatorname{DTIME}_1^A(c \cdot n^2)$ e sia $X' \subset X$ DFA-decidibile.}
+{Mostrare che l'insieme}
+\[
+X'' = \{ w \mid ww \in X \text{ e } w \notin X' \} \in \operatorname{DTIME}_1^A(c' \cdot n^2).
+\]
+{(si precisa che l'esistenza di macchine di Turing eventualmente utilizzate, va argomentata nel dettaglio - ad esempio fornendone una rappresentazione come grafo etichettato).}
+\end{ex}
+\begin{sol}
+    Sia $\alpha$ una macchina du Turing mononastro
+    che decide $X$ in tempo $cn^2$ ed $A$
+    un DFA che decide $X'$.
+    Possiamo associare ad $A$
+    una macchina di Turing mononastro
+    $\beta$ che decide $X'$ in tempo lineare,
+    quindi esiste $b\in \mathbb N$ tale che
+    $\beta $ decide $X'$
+    in tempo $bn^2$.
+    Indichiamo con $\gamma$
+    la macchina che data una parola $w$,
+    scrive sul nastro la parola $ww$,
+    ovvero la macchina nella soluzione dell'esercizio 
+    $\ref{ex: macchina copia}$.
+    Indicando con $\delta$
+    la machcina di Turing che
+    effettua passi indietro
+    fino a quando non incontra un blank,
+    possiamo definire la macchina $\mu$
+    come la concatenazione seguente
+    \[
+    \mu:= \quad \beta
+    \to \delta \to \gamma \to \delta \to \alpha 
+    \]
+    Abbiamo chiaramente che la macchina $\mu$
+    decide l'insieme $X''$, dobbiamo ora capire in quanto tempo.
+    Consideriamo quindi
+    una parola $w$ 
+    in input di lungezza 
+    $n$:
+    \begin{enumerate}
+        \item 
+    la macchina $\beta$ compie
+    al più $bn^2$ ;
+
+    \item la macchina $\beta$,
+    non ha modificato 
+    la parola e si arresta nel primo 
+    blank dopo la parola,
+    quindi la macchina $\delta$ compie $n+2$ passi,
+    di cui $n+1$ per incontrare il primo blank prima della parola
+    e poi un passo per posizionarsi all'inizio della parola;
+
+    \item a questo punto $\gamma$ compie $T(n)$ passi;
+    
+    \item di nuovo $\delta$ compie $(2n) +2$ passi poiché
+    la parola è $ww$ ed è lunga $2n$;
+
+    \item infine $\alpha$ compie $(cn)^2$ passi.
+    \end{enumerate}
+    Quindi, abbiamo che $\mu$
+    decide $X''$ in tempo
+    \[
+    bn^2 + (n+2) + T(n) + (2n+2) + c^2n^2
+    \]
+    Mostriamo ora che la macchina $\gamma$ termina in
+    $dn^2$ passi. 
+\end{sol}
