@@ -346,7 +346,7 @@ X'' = \{ w \mid ww \in X \text{ e } w \notin X' \} \in \operatorname{DTIME}_1^A(
     Indicando con $\delta$
     la machcina di Turing che
     effettua passi indietro
-    fino a quando non incontra un blank,
+    fino a quando non incontra due blank,
     possiamo definire la macchina $\mu$
     come la concatenazione seguente
     \[
@@ -385,5 +385,65 @@ X'' = \{ w \mid ww \in X \text{ e } w \notin X' \} \in \operatorname{DTIME}_1^A(
     bn^2 + (n+2) + T(n) + (2n+2) + c^2n^2
     \]
     Mostriamo ora che la macchina $\gamma$ termina in
-    $dn^2$ passi. 
+    $dn^2$ passi.
+    Per copiare la prima lettera
+in fondo alla parola dopo
+il primo blank si compiono $n+1$ passi (si scrive blank nella prima cella e ci si posiziona nella cella $n+2$),
+poi se ne compiono $2$ per posizionarsi
+sull'ultima lettera della parola originale,
+ulteriori $n-1$ per posizionarsi sul primo blank
+che si incontra (che corrisponde alla posizione della prima lettera della parola $w$)
+e infine $1$ per riposizionare la lettera
+cancellata all'inizio e tornare in $q_0$.
+Per un totale di
+\[
+    (n+1)+ 2 + (n-1) + 1 = 2n+3
+\]
+passi.
+Per copiare la seconda lettera,
+si compiono
+$n-1$ passi per arrivare al primo blank
+e poi altri $2$ passi per posizionarsi
+nella prima casella vuota dopo la parola già copiata.
+A questo punto ci vorranno $3$ passi
+per scrivere la lettera nuova e posizionarsi
+sull'ultima lettera della parola originale,
+ulteriori $n-2$ per posizionarsi sul primo blank
+che si incontra (che corrisponde alla posizione della seconda lettera della parola $w$)
+e infine $1$ per riposizionare la lettera
+cancellata all'inizio e tornare in $q_0$.
+Per un totale di
+\[
+    (n-1)+ 2 + 3+ (n-2) + 1=2n+3
+\]
+passi.
+Facendo questo ragionamento per ogni lettera della parola
+si trova che il costo non dipende dalla lettera,
+quindi la macchina scrive sul nastro la parola
+$w\square w$ dopo $n(2n+3)$ passi e si trova sul
+blank tra le due parole.
+    A questo punto con $3$ passi
+    la macchina scala una lettera indietro, e quindi dopo $3n$
+    passi siamo nella situazione $ww$, e alla macchina 
+    serviranno solamente altri $2$ passi per arrestarsi.
+    Quindi per traslare la seconda parola si compieranno
+    \[
+    3n+2
+    \]
+    passi.
+    In totale, la macchina compierà 
+    \[
+    n(2n+3) +3n+2
+    \]
+    passi e si posizionerà sul primo blank dopo la parola.
+    In conclusione abbiamo che $\mu$ decide $X''$ in tempo
+    \[
+        T'(n):=bn^2 + (n+2) + n(2n+3) +3n+2 + (2n+2) + c^2n^2
+    \]
+    per un'opportuna costante $c'$ abbiamo chiaramente che
+    \[
+    T'(n) \leq c'n^2
+    \]
+    Abbiamo mostrato quindi che
+    $X'' \in \operatorname{DTIME}_1^A(c'n^2)$.
 \end{sol}
