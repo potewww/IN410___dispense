@@ -33,23 +33,25 @@
 \contentsline {subsection}{\numberline {9.4}Equivalenza tra macchine a multinastro e macchine a nastro singolo}{71}{subsection.9.4}%
 \contentsline {subsection}{\numberline {9.5}Cambiamenti di alfabeto}{75}{subsection.9.5}%
 \contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{81}{subsection.9.6}%
-\contentsline {section}{\numberline {10}Prerequisiti}{82}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Definizioni Preliminari}{82}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Grafi e Matrici di Adiacenza}{82}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Grafi Etichettati}{83}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Semianelli e Serie Formali}{83}{subsection.10.4}%
-\contentsline {subsection}{\numberline {10.5}Matrici su Semianelli}{85}{subsection.10.5}%
-\contentsline {subsection}{\numberline {10.6}Monoidi, Serie Formali e Algebre di Kleene}{86}{subsection.10.6}%
-\contentsline {subsubsection}{\numberline {10.6.1}Monoidi}{86}{subsubsection.10.6.1}%
-\contentsline {subsubsection}{\numberline {10.6.2}Serie formali}{86}{subsubsection.10.6.2}%
-\contentsline {subsubsection}{\numberline {10.6.3}Algebra di Kleene}{88}{subsubsection.10.6.3}%
-\contentsline {section}{\numberline {11}Wolfram}{89}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Introduzione}{89}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Entropia}{92}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Libreria TM-lib}{94}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Automi}{95}{subsection.11.4}%
-\contentsline {section}{\numberline {12}Esercizi}{97}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Automi}{97}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Macchine di Turing}{112}{subsection.12.2}%
-\contentsline {section}{\numberline {13}Esoneri ed esami}{120}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Esonero 1 - 13/11/2024}{120}{subsection.13.1}%
+\contentsline {subsection}{\numberline {9.7}Macchine Speciali}{85}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.8}Rappresentazione degli interi}{86}{subsection.9.8}%
+\contentsline {section}{\numberline {10}Prerequisiti}{90}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Definizioni Preliminari}{90}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Grafi e Matrici di Adiacenza}{90}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Grafi Etichettati}{91}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Semianelli e Serie Formali}{91}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Matrici su Semianelli}{93}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}Monoidi, Serie Formali e Algebre di Kleene}{94}{subsection.10.6}%
+\contentsline {subsubsection}{\numberline {10.6.1}Monoidi}{94}{subsubsection.10.6.1}%
+\contentsline {subsubsection}{\numberline {10.6.2}Serie formali}{94}{subsubsection.10.6.2}%
+\contentsline {subsubsection}{\numberline {10.6.3}Algebra di Kleene}{96}{subsubsection.10.6.3}%
+\contentsline {section}{\numberline {11}Wolfram}{97}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Introduzione}{97}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Entropia}{100}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Libreria TM-lib}{102}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Automi}{103}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Esercizi}{105}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Automi}{105}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Macchine di Turing}{118}{subsection.12.2}%
+\contentsline {section}{\numberline {13}Esoneri ed esami}{126}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Esonero 1 - 13/11/2024}{126}{subsection.13.1}%

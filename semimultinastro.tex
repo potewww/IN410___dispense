@@ -1164,18 +1164,304 @@ che utilizza come alfabeto
 un insieme con soli due elementi.
 \subsection{Teorema di Speed-up}
 
-I risultati precedenti mostrano che quando si estende l'alfabeto si può passare alla peggio
-da una complessità $T(n)$ a una complessità $c\,T(n)$ per una qualche costante $c$.
-Andiamo ora a mostrare che partendo da un insieme $X$ decidibile in tempo $T(n)$ e da una
-costante $c$ qualsiasi si può, cambiando l'alfabeto, costruire una nuova macchina che decide
-lo stesso insieme in tempo $c\,T(n)$. Dunque possiamo vedere una corrispondenza
-bidirezionale tra i cambi di complessità del tipo $T(n) \mapsto c\,T(n)$ e i cambi di
-alfabeto.
 
-\begin{theo}
-Sia $T$ una funzione di complessità tale che $n$ sia trascurabile rispetto a $T(n)$.
-Allora per ogni costante $c > 0$ si ha che
+
+
+
+I risultati precedenti mostrano che quando si estende l'alfabeto si può passare, alla peggio, da una complessità $T(n)$ a una complessità $cT(n)$ per una qualche costante $c$. Andiamo ora a mostrare che, partendo da un insieme $X$ decidibile in tempo $T(n)$ e da una costante $c$ qualsiasi, si può, cambiando l'alfabeto, costruire una nuova macchina che decide lo stesso insieme in tempo $cT(n)$. Dunque possiamo vedere una corrispondenza bidirezionale tra i cambi di complessità del tipo $T(n)\leftrightarrow cT(n)$ e i cambi di alfabeto.
+
+\begin{theo}[Speed-Up]\label{thm:speedup}
+Sia $T$ una funzione di complessità, e sia $n$ trascurabile rispetto a $T(n)$. Allora per ogni costante $c>0$ si ha che
 \[
-  \mathrm{DTIME}(T(n)) = \mathrm{DTIME}(c\,T(n)).
+\mathrm{DTIME}(T(n))=\mathrm{DTIME}(c\,T(n)).
 \]
 \end{theo}
+
+Prima della dimostrazione isoliamo il fatto che permette di simulare $d$ passi con soli $3$ passi. Sia $\Gamma$ l'alfabeto di lavoro di una macchina $\mu$ a un nastro (con $\square\in\Gamma$) e fissiamo $d\geq 1$. Dividiamo il nastro in \emph{blocchi} di $d$ celle consecutive: il blocco $i$ è formato dalle celle $id,\,id+1,\dots,id+d-1$, e il suo contenuto è una parola $\beta_i\in\Gamma^d$. Se la testina è nella cella $p$, scriviamo $p=id+r$ con $0\leq r<d$: diciamo che si trova nel blocco $i=\lfloor p/d\rfloor$, in posizione $r=p\bmod d$.
+
+\begin{lemm}
+\label{lem:vicino}
+Sia $(f,p,q)$ una configurazione di $\mu$ con la testina nel blocco $i$. Allora, nei successivi $d$ passi di $\mu$:
+\begin{enumerate}
+    \item la testina visita, oltre al blocco $i$, al più \emph{uno} tra i blocchi $i-1$ e $i+1$;
+    \item il lato dal quale la testina esce per la prima volta dal blocco $i$ (se esce) è determinato da $q$, $r$ e $\beta_i$.
+\end{enumerate}
+Di conseguenza la configurazione dopo $d$ passi differisce dalla precedente al più nei blocchi $i$ e $j$, dove $j\in\{i-1,i+1\}$ è il blocco vicino visitato, e la testina si trova in $i$ o in $j$. Inoltre il nuovo stato, la nuova posizione $r'$ nel blocco e i nuovi contenuti $\beta_i',\beta_j'$ sono funzione soltanto di $(q,r,\beta_i,\beta_j)$.
+\end{lemm}
+
+\begin{proof}
+Per raggiungere il blocco $i-1$ dalla cella $p=id+r$ servono almeno $r+1$ passi, e da lì per raggiungere il blocco $i+1$ (cella $(i+1)d$) ne servono almeno altri $d+1$: in totale almeno $r+d+2>d$ passi. Analogamente, per raggiungere prima $i+1$ servono almeno $d-r\geq 1$ passi, e poi almeno $d+1$ per arrivare al blocco $i-1$: in totale almeno $d+2>d$. Quindi in $d$ passi i due vicini non possono essere visitati entrambi, e questo prova il punto 1.
+
+Finché la testina resta nel blocco $i$, la computazione di $\mu$ legge solo celle di $\beta_i$, quindi dipende solo da $(q,r,\beta_i)$ e in particolare lo è il lato dal quale esce, se esce: questo prova il punto 2. L'ultima affermazione segue perché, una volta noti $\beta_i$ e $\beta_j$, tutte le celle lette nei $d$ passi sono note, e la simulazione è un calcolo su dati finiti.
+\end{proof}
+
+\begin{proof}[Dimostrazione del Teorema~\ref{thm:speedup}]
+Supponiamo $0<c<1$ (in caso contrario applicare il teorema a $c'=1/c$): il teorema prende allora il significato che ogni computazione di lunghezza $t$ può essere accelerata per avere lunghezza $ct$.
+
+La prima inclusione
+\[
+\mathrm{DTIME}(cT(n))\subset \mathrm{DTIME}(T(n))
+\]
+è banale: se un algoritmo termina in al più $cT(n)$ passi, termina a maggior ragione in al più $T(n)$ passi, essendo $cT(n)<T(n)$.
+
+Per l'altra inclusione
+\[
+\mathrm{DTIME}(T(n))\subset \mathrm{DTIME}(cT(n))
+\]
+dobbiamo associare alla macchina $\mu$ che decide $X$ in tempo $T(n)$ una macchina $\mu'$, con alfabeto esteso, che simula $\mu$ in tempo $cT(n)$. Per definizione esiste un alfabeto di lavoro $\Gamma\supset A$ tale che $X\in\mathrm{DTIME}^{\Gamma}_k(T(n))$. Trattiamo il caso $k=1$; il caso generale si ottiene in modo analogo (a meno di una costante diversa nel numero di passi per ciclo, che non cambia la conclusione perché $d$ è arbitrario).
+
+\medskip
+\noindent\textbf{Scelta di $d$ e alfabeto di $\mu'$.}
+Fissiamo
+\[
+d:=\left\lceil \frac{12}{c}\right\rceil
+\qquad\text{e}\qquad
+B:=A\cup\Gamma^d .
+\]
+Un simbolo di $\Gamma^d$ rappresenta un intero blocco di $d$ celle di $\mu$. La macchina $\mu'$ ha un nastro in più rispetto a $\mu$ ($k'=k+1$): sul secondo nastro viene scritta la versione compressa del nastro di $\mu$, in cui la cella $i$ contiene il simbolo $\beta_i\in\Gamma^d$.
+
+\medskip
+\noindent\textbf{Fase 1: compressione dell'input.}
+Leggendo $w$ dal primo nastro, $\mu'$ ricorda negli stati gli ultimi (al più $d$) simboli letti e, ogni volta che ne ha letti $d$, scrive sul secondo nastro il simbolo di $\Gamma^d$ corrispondente (l'ultimo blocco viene completato con $\square$). Poi riporta la testina del secondo nastro all'inizio. Questo costa al più
+\[
+n+\lceil n/d\rceil\leq n+\frac{n}{d}+1\leq 2n+1\quad\text{passi.}
+\]
+
+\medskip
+\noindent\textbf{Fase 2: simulazione a cicli.}
+Gli stati di $\mu'$ sono del tipo $(q,r,\beta)$ (più quelli intermedi del ciclo, in numero finito), con il significato:
+\begin{itemize}
+    \item $q$ è lo stato di $\mu$;
+    \item $r$ è la posizione della testina di $\mu$ nel blocco corrente;
+    \item $\beta\in\Gamma^d$ è il \emph{contenuto vero} del blocco corrente, che può essere diverso da quello scritto sul nastro di $\mu'$.
+\end{itemize}
+Così lo stato di $\mu'$ ``ricorda'' il blocco sotto la testina, e non serve rileggerlo. Sia $\mu'$ nella cella $i$ dello stato $(q,r,\beta_i)$. Per il Lemma~\ref{lem:vicino}, calcolando internamente (cioè senza spendere passi) le prime transizioni di $\mu$, $\mu'$ conosce il lato $s\in\{-1,+1\}$ da cui $\mu$ uscirebbe dal blocco, e pone $j:=i+s$. Se $\mu$ non esce mai dal blocco in $d$ passi, sceglie $j:=i+1$ (il vicino non verrà modificato). Un ciclo di $\mu'$ è il seguente.
+
+\begin{enumerate}
+    \item[\textbf{(1)}] In $i$: scrive $\beta_i$ (cioè il contenuto vero, aggiornando il nastro) e si sposta in $j$.
+    \item[\textbf{(2)}] In $j$: la transizione legge $\beta_j$. Ora $\mu'$ conosce $(q,r,\beta_i,\beta_j)$ e, per il Lemma~\ref{lem:vicino}, calcola $q'$, $r'$, $\beta_i'$, $\beta_j'$ e il blocco in cui finisce la testina di $\mu$. Scrive $\beta_j'$ in $j$ e si sposta in $i$.
+    \begin{itemize}
+        \item[$\bullet$] Se la testina di $\mu$ finisce nel blocco $i$, il ciclo termina qui, nel nuovo stato $(q',r',\beta_i')$. Il nastro contiene ancora il vecchio $\beta_i$ in $i$, ma non è un problema: sarà aggiornato al passo~(1) del ciclo successivo.
+    \end{itemize}
+    \item[\textbf{(3)}] Solo se la testina di $\mu$ finisce nel blocco $j$: in $i$ scrive $\beta_i'$ e si sposta in $j$, che già contiene $\beta_j'$ ed è il blocco in cui ci si trova ora, nello stato $(q',r',\beta_j')$.
+\end{enumerate}
+
+\[
+\begin{tikzpicture}[>=stealth', shorten >=1pt, auto]
+% Blocchi i e j
+\draw[line width=1.2pt] (0,0) rectangle (2,1);
+\draw[line width=1.2pt] (3,0) rectangle (5,1);
+\node at (1,0.5) {$\beta_i$};
+\node at (4,0.5) {$\beta_j$};
+\node at (1,-0.3) {\small blocco $i$};
+\node at (4,-0.3) {\small blocco $j$};
+
+% Passi del ciclo
+\draw[->] (1,1) to[bend left=35] node {$1$} (4,1);
+\draw[->] (4.5,0) to[out=-60,in=-120,looseness=1.2] node[swap] {$2$} (0.5,0);
+\draw[->] (0.5,1) to[out=70,in=110,looseness=1.5] node {$3$} (4.5,1);
+\end{tikzpicture}
+\]
+
+Ogni ciclo dura al più $3$ passi (il passo~(3) c'è solo se la testina finisce nel vicino) e simula esattamente $d$ passi di $\mu$ (oppure meno, se $\mu$ si arresta: in tal caso $\mu'$ entra nello stato di arresto corrispondente). Per costruzione, dopo ogni ciclo la configurazione di $\mu'$ è l'immagine, tramite la codifica dei blocchi, di quella di $\mu$ dopo $d$ passi; quindi $\mu'$ e $\mu$ decidono lo stesso insieme $X$.
+
+\medskip
+\noindent\textbf{Fase 3: conteggio dei passi.}
+Per simulare i $T(n)$ passi di $\mu$ servono al più $\lceil T(n)/d\rceil\leq T(n)/d+1$ cicli, quindi al più $\frac{3T(n)}{d}+3$ passi. Contando anche la lettura iniziale del primo blocco (un passo), il tempo totale di $\mu'$ su un input di lunghezza $n$ è
+\[
+t_{\mu'}(n)\leq \underbrace{2n+1}_{\text{Fase 1}}+1+\frac{3T(n)}{d}+3
+=2n+5+\frac{3T(n)}{d}.
+\]
+Dalla scelta $d\geq 12/c$ segue
+\[
+\frac{3T(n)}{d}\leq \frac{c}{4}\,T(n).
+\]
+Per ipotesi $\lim_{n\to\infty} n/T(n)=0$; in particolare $T(n)\to\infty$. Quindi per $n$ abbastanza grande valgono
+\[
+2n\leq \frac{c}{2}\,T(n)\qquad\text{e}\qquad 5\leq \frac{c}{4}\,T(n),
+\]
+da cui
+\[
+t_{\mu'}(n)\leq \frac{c}{2}T(n)+\frac{c}{4}T(n)+\frac{c}{4}T(n)=c\,T(n).
+\]
+Quindi $X\in\mathrm{DTIME}(cT(n))$.
+\end{proof}
+
+Grazie al teorema di speed-up possiamo, nel valutare le classi di complessità, considerare solo l'ordine di grandezza della funzione di complessità $T(n)$. In particolare, per le classi di complessità polinomiali sarà sufficiente considerare l'esponente del termine dominante del polinomio, risultano così descritte da un unico parametro $k$: $\mathrm{DTIME}(n^k)$. Il teorema di Speed-up ha anche come conseguenza che risulta determinata la relazione tra una classe di complessità espressa in funzione di un alfabeto $A$ e la classe di complessità che le corrisponde senza aver specificato l'alfabeto:
+
+\begin{prop}
+Supponiamo $n$ trascurabile rispetto ad una funzione di complessità $T(n)$. Allora
+\[
+2^{A^*}\cap \mathrm{DTIME}(T(n))=\bigcup_{c>0}\mathrm{DTIME}^A(cT(n)).
+\]
+\end{prop}
+
+\begin{proof}
+Da una parte è sufficiente applicare la Proposizione~\ref{prop:cambio-alfabeto}.
+\end{proof}
+
+
+\subsection{Macchine Speciali}
+
+
+Una macchina di Turing $\mu$ di alfabeto unario $A=\{1\}$ si dice \emph{speciale} quando per auto-confinamento utilizza la porzione di nastro con indice $p>0$:
+
+\begin{defi}
+Una macchina di Turing di alfabeto $A$ e insieme degli stati $Q$
+\[
+\mu: Q\times A'\to Q'\times A'\times\{+1,-1\}
+\]
+si dice \emph{speciale} quando $A=\{1\}$ e per ogni parola $w=1^n\in A^*$ la computazione di $\mu$ associata a $w$ ha configurazioni di nastro positive:
+\[
+\tau^k(\iota(w))=(f,p,q)\ \text{ con } p>0 \text{ per ogni } k \text{ per cui } \tau \text{ è definita.}
+\]
+\end{defi}
+
+\begin{prop}\label{prop:speciale}
+Data una macchina di Turing $\mu$ per seminastro di alfabeto $A=\{1\}$ esiste sempre una macchina di Turing speciale che la simula.
+\begin{proof}
+Osserviamo che se l'alfabeto di input è $A$ la macchina a seminastro $\mu$ sarà definita utilizzando l'alfabeto $A'_s=A\cup\{\square,\|\}$, mentre la macchina speciale $\mu'$ di cui dobbiamo mostrare l'esistenza sarà definita sull'insieme $A'=A\cup\{\square\}$.
+Per avere la tesi basta creare una simulazione, 
+per farlo basta creare da un'applicazione iniettiva $\phi:A'*_s\to A'^*$.
+Osservando che la mappa seguente
+\[
+\begin{cases}
+\varphi(1)=11\\
+\varphi(\|)=\square 1\\
+\varphi(\square)=\square\square
+\end{cases}
+\]
+è suffix-free, abbiamo che $\varphi$ induce una mappa iniettiva
+$\phi$ come voluto. Abbiamo quindi la tesi.
+\end{proof}
+\end{prop}
+
+In realtà, si può fare di più.
+
+\begin{rema}\label{rem:speciale-non-unario}
+La Proposizione vale anche se la macchina a seminastro $\mu$ ha un alfabeto $A$ qualunque, non necessariamente unario, mentre la macchina speciale $\mu'$ ha sempre alfabeto unario $\{1\}$ e alfabeto di lavoro $\{1,\square\}$. Basta cambiare la codifica $\varphi$, e il resto della dimostrazione resta identico.
+
+Sia $A'_s=A\cup\{\square,\|\}$ l'alfabeto di lavoro di $\mu$. Ciò che serve è una applicazione iniettiva a lunghezza costante
+\[
+\varphi:A'_s\to\{1,\square\}^k ,
+\]
+per un certo $k\geq 1$. Un tale $\varphi$ esiste se e solo se $|A'_s|\leq 2^k$, cioè basta prendere
+\[
+k:=\lceil\log_2(|A|+2)\rceil .
+\]
+Concretamente, numeriamo i simboli $A'_s=\{s_0,s_1,\dots,s_{m-1}\}$ con $s_0=\square$, e poniamo $\varphi(s_j)$ uguale alla scrittura di $j$ in base $2$ su $k$ cifre, dove la cifra $1$ è il simbolo $1$ e la cifra $0$ è il simbolo $\square$. In particolare $\varphi(\square)=\square^k$, quindi un nastro vuoto di $\mu$ corrisponde a un nastro vuoto di $\mu'$.
+
+Per $A=\{1\}$ si ha $|A'_s|=3\leq 2^2$ e $k=2$: si ritrova la codifica $\varphi(1)=11$, $\varphi(\|)=\square 1$, $\varphi(\square)=\square\square$ usata nella dimostrazione.
+
+Poiché tutte le parole $\varphi(x)$ hanno la stessa lunghezza $k$, l'estensione $\phi$ alle parole è iniettiva, e la simulazione (leggere un blocco di $k$ celle, riscriverlo, spostarsi di $k$ celle a destra o a sinistra) non dipende da $A$. Il seminastro ha ancora il simbolo $\|$ nella cella $0$, quindi $\mu'$ non esce mai dalle celle di indice $>0$ ed è speciale.
+\end{rema}
+Quindi, vale il seguente corollario:
+\begin{coro}
+Data una macchina di Turing $\mu$ di alfabeto $A$ 
+qualunque, esiste sempre una macchina di Turing speciale
+$\mu'$ che la simula.
+\begin{proof}\
+\begin{enumerate}
+\item[1.] \emph{Seminastro.} Per la Proposizione~\ref{prop:nastro-seminastro}, la macchina $\mu$ si simula con una macchina a seminastro $\mu_s$ di alfabeto $A$.
+\item[2.] \emph{Macchina speciale.} Per la Proposizione~\ref{prop:speciale} e la Remark~\ref{rem:speciale-non-unario}, la macchina a seminastro $\mu_s$ si simula con una macchina speciale $\mu'$ di alfabeto unario.
+\item[3.] \emph{Codifica.} L'input $w\in A^*$ è sostituito dalla parola $1^{n+1}$, dove $n$ è il numero rappresentato da $w$ in base $|A|$, e analogamente per l'output; per la Proposizione~\ref{prop:basi} questa sostituzione non cambia la calcolabilità né la decidibilità.
+\end{enumerate}
+\end{proof}
+\end{coro}
+
+\subsection{Rappresentazione degli interi}
+
+Rappresentazione di un intero $x\in\mathbb{N}$ in base $b\geq 2$:
+\[
+x=\sum_{i=0}^{m}d_i\,b^i\quad\text{con } d_i\in\{0,1,\dots,b-1\}\text{ e } d_m\neq 0 \ \ (\text{oppure } x=0,\ m=0,\ d_0=0).
+\]
+
+Tra gli oggetti matematici su cui si riferiscono i problemi di decidibilità, gli interi hanno un posto importante, sia per il loro ruolo diretto che per il loro utilizzo per una ulteriore codifica di altri dati. Poiché ci sono diversi sistemi di rappresentazione mediante parole, la questione della robustezza rispetto ai cambiamenti della rappresentazione delle nozioni di decidibilità e di complessità sorge spontanea.
+
+Le rappresentazioni più comuni di numeri interi tramite parole sono gli sviluppi relativi a una base fissata. Sia $b\geq 2$ un numero intero e sia $B=\{0,1,\dots,b-1\}$. Per ogni parola $d_n\cdots d_0\in B^*$ non vuota indichiamo con $(d_n\cdots d_0)_b$ il numero intero
+\[
+\sum_{i=0}^{n}d_i\,b^i .
+\]
+L'applicazione $w\mapsto (w)_b$, che ad una parola associa il numero intero corrispondente, è suriettiva ma non iniettiva (le parole $5$ e $05$ rappresentano lo stesso numero). Diciamo che una parola è \emph{canonica} se è la parola $0$ oppure non inizia per $0$. Ogni intero $n$ è l'immagine di una \emph{unica} parola canonica: la chiamiamo \emph{rappresentazione} di $n$ in base $b$ e la indichiamo con $(n)_b$. Quindi $w\mapsto (w)_b$ ristretta alle parole canoniche è una bigezione con $\mathbb{N}$, con inversa $n\mapsto (n)_b$, e vale $((n)_b)_b=n$.
+
+Possiamo immaginare molte altre rappresentazioni di numeri interi, ovvero molte altre funzioni iniettive dell'insieme $\mathbb{N}$ nel monoide libero $A^*$. In particolare, si può ottenere una rappresentazione con un alfabeto unario (con un solo elemento) associando ad ogni numero intero $n\in\mathbb{N}$ la parola formata da una sequenza di $n+1$ uno:
+\[
+(n)_1:=1^{n+1}.
+\]
+Si usano $n+1$ simboli, e non $n$, perché così lo zero ha una rappresentazione non vuota. Anche in base $1$ poniamo $B=\{1\}$ e $(w)_1:=|w|-1$ per ogni parola non vuota $w\in B^*$; in questo caso \emph{ogni} parola non vuota è canonica, e $w\mapsto (w)_1$ è una bigezione tra le parole non vuote e $\mathbb{N}$, con inversa $n\mapsto (n)_1$. D'ora in avanti, salvo diversa indicazione, $b$ indica un intero $b\geq 1$.
+
+Questa notazione viene estesa a insiemi di interi $X\subset\mathbb{N}^k$: se
+\[
+X=\{(x_1,\dots,x_k)\mid x_i\in\mathbb{N}\}\subset\mathbb{N}^k
+\]
+è un insieme di vettori di numeri interi, poniamo
+\[
+(X)_b:=\{(x_1)_b\,\square\,(x_2)_b\,\square\cdots\square\,(x_k)_b\mid (x_1,\dots,x_k)\in X\}\subset B'^*
+\]
+con $B'=B\cup\{\square\}$.
+
+Analogamente, se $F$ è una funzione da $\mathbb{N}$ in $\mathbb{N}$, indichiamo con $(F)_b$ la funzione che alla parola canonica $w$ associa la parola $(F((w)_b))_b$.
+
+Andiamo quindi a confrontare dal punto di vista della decidibilità i diversi insiemi $(X)_b$ ottenuti variando la base $b$ (e di conseguenza l'alfabeto $B$).
+
+\begin{prop}
+\label{prop:basi}
+Sia $X\subset\mathbb{N}$. Allora sono equivalenti:
+\begin{enumerate}
+    \item[(i)] esiste $b\geq 1$ tale che $(X)_b$ è TM-decidibile;
+    \item[(ii)] per ogni $b\geq 1$ l'insieme $(X)_b$ è TM-decidibile.
+\end{enumerate}
+
+\begin{proof}
+L'implicazione (ii)$\Rightarrow$(i) è ovvia. Per (i)$\Rightarrow$(ii), sia $b\geq 1$ tale che $(X)_b$ sia decidibile da una macchina di Turing $\mu_b$, e sia $b'\geq 1$ qualsiasi (anche $b'=b$ o una base uguale a $1$). Costruiamo una macchina $M$ a due nastri che decide $(X)_{b'}$; poiché ogni macchina a più nastri si simula con una macchina a un nastro, questo basta. La costruzione procede in quattro passi.
+
+\begin{enumerate}
+    \item[1.] \emph{Operazioni elementari sui nastri.} Per ogni base $\beta\geq 1$ consideriamo un nastro che contiene una parola non vuota in base $\beta$, e indichiamo con $v$ il numero rappresentato. Descriviamo tre operazioni, ciascuna realizzabile da una macchina con un numero finito di stati.
+    \begin{itemize}
+        \item \emph{Test di zero} ($v=0$?). Se $\beta\geq 2$: si scorre la parola e si controlla che tutte le cifre siano $0$ (la parola può avere zeri iniziali dopo i decrementi). Se $\beta=1$: si controlla che la parola sia formata da un solo simbolo $1$.
+        \item \emph{Decremento} ($v\mapsto v-1$, definito se $v>0$). Se $\beta\geq 2$: si porta la testina sull'ultima cifra; finché la cifra letta è $0$ la si sostituisce con $\beta-1$ e ci si sposta a sinistra; alla prima cifra $d\geq 1$ la si sostituisce con $d-1$ e ci si ferma. Il ciclo termina perché $v>0$ garantisce l'esistenza di una cifra non nulla. Se $\beta=1$: si cancella l'ultimo $1$ (la parola ha almeno due simboli perché $v>0$, quindi resta non vuota).
+        \item \emph{Incremento} ($v\mapsto v+1$). Se $\beta\geq 2$: si porta la testina sull'ultima cifra; finché la cifra letta è $\beta-1$ la si sostituisce con $0$ e ci si sposta a sinistra; alla prima cifra $d<\beta-1$ la si sostituisce con $d+1$ e ci si ferma; se si esce dalla parola a sinistra si scrive $1$ nella casella vuota. Se $\beta=1$: si aggiunge un $1$ in fondo alla parola.
+    \end{itemize}
+    In ciascun caso la nuova parola rappresenta effettivamente $v-1$ oppure $v+1$.
+
+    Se $\beta\geq 2$, l'incremento di una parola canonica produce ancora una parola canonica. La cifra più a sinistra viene modificata solo se tutte le altre cifre sono uguali a $\beta-1$, e ci sono tre casi:
+    \begin{itemize}
+        \item se la parola è $0$, diventa $1$ (perché $\beta-1\geq 1$);
+        \item se la cifra iniziale $d\geq 1$ è minore di $\beta-1$, diventa $d+1\neq 0$;
+        \item se la cifra iniziale è uguale a $\beta-1$, diventa $0$ e si scrive un $1$ davanti.
+    \end{itemize}
+    Se $\beta=1$, ogni parola non vuota è canonica, e le operazioni non producono mai la parola vuota.
+
+    \item[2.] \emph{Alfabeto di $M$.} Sia $\Gamma_b$ l'alfabeto di lavoro di $\mu_b$, che contiene l'alfabeto dell'input di $\mu_b$ e il simbolo $\square$. Poniamo
+    \[
+    \Gamma:=\Gamma_b\,\cup\,\{0,1,\dots,b'-1\}\,\cup\,\{1,\square\}.
+    \]
+    La macchina $M$ ha alfabeto di lavoro $\Gamma$. Non si richiede quindi che durante la computazione si usino solo i simboli dell'input. Inoltre ogni transizione di $\mu_b$ è anche una transizione di $M$, perché $\Gamma\supset\Gamma_b$.
+
+    \item[3.] \emph{Definizione di $M$.} Il nastro~1 contiene l'input $w'\in\{0,\dots,b'-1\}^*$ se $b'\geq 2$, oppure $w'\in\{1\}^*$ se $b'=1$. Il nastro~2 viene usato come nastro di lavoro di $\mu_b$. Indichiamo con $v_1$ il numero rappresentato sul nastro~1 in base $b'$ e con $v_2$ quello rappresentato sul nastro~2 in base $b$. La macchina $M$ procede in quattro fasi.
+    \begin{enumerate}
+        \item[Fase 0.] $M$ scorre il nastro~2 sostituendo ogni simbolo con $\square$ e riporta la testina all'inizio, in modo che il nastro~2 sia vuoto.
+        \item[Fase 1.] (controllo e inizializzazione) $M$ controlla con una scansione che $w'$ sia una parola canonica in base $b'$ (se $b'\geq 2$: non vuota e uguale a $0$ oppure non iniziante per $0$; se $b'=1$: non vuota); in caso contrario rifiuta. Poi scrive sul nastro~2 la parola $(0)_b$, cioè $0$ se $b\geq 2$ e $1$ se $b=1$. Detto $n:=(w')_{b'}$, all'inizio $v_1=n$ e $v_2=0$.
+        \item[Fase 2.] (conversione) $M$ ripete i seguenti passi.
+        \begin{enumerate}
+            \item Esegue il test di zero sul nastro~1 (in base $b'$): se $v_1=0$ passa alla Fase~3.
+            \item Altrimenti esegue il decremento sul nastro~1 (in base $b'$).
+            \item Esegue l'incremento sul nastro~2 (in base $b$) e torna al punto~(a).
+        \end{enumerate}
+        Ad ogni ripetizione $v_1$ diminuisce di $1$ e $v_2$ aumenta di $1$, quindi all'inizio di ogni ripetizione vale $v_1+v_2=n$. Poiché $v_1$ diminuisce strettamente, dopo $n$ ripetizioni $v_1=0$ e $M$ passa alla Fase~3, con $v_2=n$. Per quanto osservato sulle operazioni, la parola sul nastro~2 è sempre canonica in base $b$, quindi al termine della Fase~2 il nastro~2 contiene proprio $(n)_b$.
+        \item[Fase 3.] (simulazione di $\mu_b$) $M$ riporta la testina del nastro~2 sulla prima cifra di $(n)_b$ ed esegue da lì le transizioni di $\mu_b$, usando il nastro~2 come nastro di $\mu_b$ (gli stati di $\mu_b$ sono tra gli stati di $M$). Accetta se e solo se $\mu_b$ accetta.
+    \end{enumerate}
+
+    \item[4.] \emph{Correttezza.} $M$ si ferma su ogni input: le Fasi~1 e~2 terminano per quanto visto, e la Fase~3 termina perché $\mu_b$ decide $(X)_b$. Inoltre, per l'input $w'$,
+    \[
+    w'\in(X)_{b'}
+    \iff w'\ \text{è canonica e}\ (w')_{b'}=n\in X
+    \iff (n)_b\in(X)_b
+    \iff \mu_b\ \text{accetta}\ (n)_b,
+    \]
+    dove la seconda equivalenza segue dal fatto che $n\mapsto(n)_b$ è una bigezione tra $\mathbb{N}$ e le parole canoniche in base $b$. Quindi $M$ decide $(X)_{b'}$.
+\end{enumerate}
+\end{proof}
+\end{prop}
+
+

@@ -670,11 +670,12 @@ L'automa deterministico è il seguente:
 \newpage
 
 \begin{ex}
-Sia $n\in\mathbb N$, $A=\{0,1\}$ e definiamo
+    \label{ex: fix n, automa decide w con 1 in posizione |w|-n}
+Sia $n\in\mathbb N_{\geq 1}$, $A=\{0,1\}$ e definiamo
 \[
-X_n := \{ w\in A^* \mid w = w'1w'',\ |w''| = n-1 \}
+X_n := \{ w\in A^* \mid w = w'1w'',\ |w''| = n-1\}
 \]
-(parole che hanno $1$ in posizione $|w|-n$).
+(parole che hanno $1$ in posizione $|w|-n-1$).
 \begin{enumerate}
     \item Mostrare che per ogni $n$, $X_n$ è decidibile da un NDFA con $n+1$ stati (fornire l'automa).
     \item Fissato $n=3$, determinare un automa deterministico che decide $X_3$.
@@ -811,147 +812,7 @@ Il grafo asscoiato è il seguente:
 \end{enumerate}
 \end{sol}
 
-\newpage
 
-\begin{ex}
-    \label{ex: fix n, automa decide w con 1 in posizione |w|-n}
-Sia $n \in \mathbb{N}$, $A = \{0,1\}$ e definiamo
-\[
-    X_n := \{ w \in A^* \mid w = w'1w'',\ |w''| = n-1 \}
-\]
-(parole che hanno $1$ in posizione $|w|-n$).
-\begin{enumerate}
-    \item Mostrare che per ogni $n$, $X_n$ è NDFA decidibile, da un automa con $n+1$ stati (fornire l'automa).
-    \item Fissato $n=3$, determinare un automa deterministico che decide $X_3$.
-\end{enumerate}
-\end{ex}
-\begin{sol}\
-    \begin{enumerate}
-        \item L'automa che decide $X_n$ è:
-    % ---------- 1) NFA generale con n+1 stati ----------
-\[
-    \begin{tikzpicture}[
-    >=stealth', shorten >=1pt, auto,
-    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
-]
-% Stati
-\node[state]            (q0)   at (0,0)    {$q_0$};
-\node[state]            (q1)   at (2.5,0)  {$q_1$};
-\node[state]            (q2)   at (5,0)    {$q_2$};
-\node                   (dots) at (7,0)    {$\cdots$};
-\node[state]            (qn1)  at (9,0)    {$q_{n-1}$};
-\node[state, accepting] (qn)   at (11.5,0) {$q_n$};
-
-% Freccia d'ingresso
-\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
-
-% Cappi di q_0
-\draw[->] (q0) to[loop above, looseness=8] node {$0$} (q0);
-\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
-
-% Transizioni
-\draw[->] (q0)   -- node {$1$}   (q1);
-\draw[->] (q1)   -- node {$0,1$} (q2);
-\draw[->] (q2)   -- node {$0,1$} (dots);
-\draw[->] (dots) -- node {$0,1$} (qn1);
-\draw[->] (qn1)  -- node {$0,1$} (qn);
-\end{tikzpicture}
-\]
-\item per $n=3$, l'NDFA è
-% ---------- 2) NFA per n = 3 ----------
-\[
-\begin{tikzpicture}[
-    >=stealth', shorten >=1pt, auto,
-    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
-]
-% Stati
-\node[state]            (q0) at (0,0) {$q_0$};
-\node[state]            (q1) at (3,0) {$q_1$};
-\node[state]            (q2) at (6,0) {$q_2$};
-\node[state, accepting] (q3) at (9,0) {$q_3$};
-
-% Freccia d'ingresso
-\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
-
-% Cappi di q_0
-\draw[->] (q0) to[loop above, looseness=8] node {$0$} (q0);
-\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
-
-% Transizioni
-\draw[->] (q0) -- node {$1$}   (q1);
-\draw[->] (q1) -- node {$0,1$} (q2);
-\draw[->] (q2) -- node {$0,1$} (q3);
-\end{tikzpicture}
-\]
-Costruiamo il DFA tramite la costruizione
-dei sottoinsiemi.
-La tabella del nuovo automa è:
-\[
-\begin{tabular}{c|c|c}
-    $Q \backslash A$ & $0$ & $1$ \\
-    \hline
-    $S_0=\{q_0\}$             & $S_0$ & $S_1$ \\
-    $S_1=\{q_0,q_1\}$         & $S_2$ & $S_3$ \\
-    $S_2=\{q_0,q_2\}$         & $S_4$ & $S_5$ \\
-    $S_3=\{q_0,q_1,q_2\}$     & $S_6$ & $S_7$ \\
-    $S_4=\{q_0,q_3\}$         & $S_0$ & $S_1$ \\
-    $S_5=\{q_0,q_1,q_3\}$     & $S_2$ & $S_3$ \\
-    $S_6=\{q_0,q_2,q_3\}$     & $S_4$ & $S_5$ \\
-    $S_7=\{q_0,q_1,q_2,q_3\}$ & $S_6$ & $S_7$ \\
-\end{tabular}
-\]
-Il grafo del DFA ottenuto è:
-% ---------- 3) DFA ottenuto per costruzione dei sottoinsiemi (n = 3) ----------
-\[
-\begin{tikzpicture}[
-    >=stealth', shorten >=1pt, auto,
-    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
-]
-% Stati (S_i = sottoinsieme di {q_0,...,q_3}; finali = quelli che contengono q_3)
-\node[state]            (s0) at (0,0)   {$S_0$};
-\node[state]            (s1) at (3,0)   {$S_1$};
-\node[state]            (s2) at (6,0)   {$S_2$};
-\node[state, accepting] (s4) at (9,0)   {$S_4$};
-\node[state]            (s3) at (3,-2.5) {$S_3$};
-\node[state, accepting] (s5) at (6,-2.5) {$S_5$};
-\node[state, accepting] (s6) at (3,-5)   {$S_6$};
-\node[state, accepting] (s7) at (6,-5)   {$S_7$};
-
-% Freccia d'ingresso
-\draw[->] ([shift={(-0.7,0.7)}]s0.center) -- (s0);
-
-% Riga superiore
-\draw[->] (s0) to[loop below, looseness=8] node {$0$} (s0);
-\draw[->] (s0) -- node {$1$} (s1);
-\draw[->] (s1) -- node {$0$} (s2);
-\draw[->] (s2) -- node {$0$} (s4);
-
-% Ritorni da S_4 (archi superiori)
-\draw[->, rounded corners=8pt]
-    (s4.110) -- (s4.110 |- 0,1.7) -- node {$1$} (s1.70 |- 0,1.7) -- (s1.70);
-\draw[->, rounded corners=8pt]
-    (s4.60) -- (s4.60 |- 0,2.4) -- node {$0$} (s0.100 |- 0,2.4) -- (s0.100);
-
-% Discesa verso la seconda riga
-\draw[->] (s1) -- node[swap] {$1$} (s3);
-\draw[->] (s2) to[bend left=15] node {$1$} (s5);
-\draw[->] (s5) to[bend left=15] node {$0$} (s2);
-\draw[->] (s5) -- node {$1$} (s3);
-
-% Terza riga
-\draw[->] (s3) -- node[swap] {$0$} (s6);
-\draw[->] (s3) -- node[pos=0.25] {$1$} (s7);
-\draw[->] (s6) -- node[pos=0.25, swap] {$1$} (s5);
-\draw[->] (s7) -- node[swap] {$0$} (s6);
-\draw[->] (s7) to[loop right, looseness=8] node {$1$} (s7);
-
-% Ritorno da S_6 a S_4 (arco esterno)
-\draw[->, rounded corners=8pt]
-    (s6.south) -- (3,-6.2) -- node[below] {$0$} (10.2,-6.2) -- (10.2,0) -- (s4.east);
-\end{tikzpicture}
-\]
-\end{enumerate}
-\end{sol}
 
 \newpage
 
