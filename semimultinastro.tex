@@ -1172,7 +1172,7 @@ un insieme con soli due elementi.
 I risultati precedenti mostrano che quando si estende l'alfabeto si può passare, alla peggio, da una complessità $T(n)$ a una complessità $cT(n)$ per una qualche costante $c$. Andiamo ora a mostrare che, partendo da un insieme $X$ decidibile in tempo $T(n)$ e da una costante $c$ qualsiasi, si può, cambiando l'alfabeto, costruire una nuova macchina che decide lo stesso insieme in tempo $cT(n)$. Dunque possiamo vedere una corrispondenza bidirezionale tra i cambi di complessità del tipo $T(n)\leftrightarrow cT(n)$ e i cambi di alfabeto.
 
 \begin{theo}[Speed-Up]\label{thm:speedup}
-Sia $T$ una funzione di complessità, e sia $n$ trascurabile rispetto a $T(n)$. Allora per ogni costante $c>0$ si ha che
+Sia $T$ una funzione di complessità. Allora per ogni costante $c>0$ si ha che
 \[
 \mathrm{DTIME}(T(n))=\mathrm{DTIME}(c\,T(n)).
 \]
@@ -1279,14 +1279,69 @@ dobbiamo associare alla macchina $\mu$ che decide $X$ in tempo $T(n)$ una macchi
 Grazie al teorema di speed-up possiamo, nel valutare le classi di complessità, considerare solo l'ordine di grandezza della funzione di complessità $T(n)$. In particolare, per le classi di complessità polinomiali sarà sufficiente considerare l'esponente del termine dominante del polinomio, risultano così descritte da un unico parametro $k$: $\mathrm{DTIME}(n^k)$. Il teorema di Speed-up ha anche come conseguenza che risulta determinata la relazione tra una classe di complessità espressa in funzione di un alfabeto $A$ e la classe di complessità che le corrisponde senza aver specificato l'alfabeto:
 
 \begin{prop}
-Supponiamo $n$ trascurabile rispetto ad una funzione di complessità $T(n)$. Allora
+Sia $A$ un alfabeto con almeno due simboli e 
+sia $T(n)\ge 1$ una funzione di 
+complessità. 
+Allora
 \[
 2^{A^*}\cap \mathrm{DTIME}(T(n))=\bigcup_{c>0}\mathrm{DTIME}^A(cT(n)).
 \]
 \end{prop}
 
 \begin{proof}
-Da una parte è sufficiente applicare la Proposizione~\ref{prop:cambio-alfabeto}.
+Applichiamo 
+il teorema~\ref{thm:speedup} 
+a $T$.
+
+\smallskip
+\noindent($\supseteq$) Sia $c>0$ e $X\in\mathrm{DTIME}^A(cT(n))$. Allora $X\subset A^*$ e, a maggior
+ragione, $X\in\mathrm{DTIME}(cT(n))$ (basta prendere $\Gamma=A$ come alfabeto di lavoro).
+Per il Teorema~\ref{thm:speedup}, $\mathrm{DTIME}(cT(n))=\mathrm{DTIME}(T(n))$, dunque
+$X\in 2^{A^*}\cap\mathrm{DTIME}(T(n))$.
+
+\smallskip
+\noindent($\subseteq$) Sia $X\subset A^*$ con $X\in\mathrm{DTIME}(T(n))$. Esistono un alfabeto
+$\Gamma\supset A$, un intero $k\ge1$ e una macchina $\mu$ a $k$ nastri con alfabeto di lavoro
+$\Gamma$ che decide $X$ in tempo $T(n)$. Dobbiamo trovare una macchina $\mu'$ con alfabeto di
+lavoro $A$ che decide $X$ in tempo $cT(n)$ per un opportuno $c>0$.
+
+Scegliamo $m\in\mathbb{N}$ con $|A|^m\ge|\Gamma|$ e una codifica iniettiva
+$e\colon\Gamma\to A^m$ con $e(\square)=\square^m$. Ogni simbolo di $\Gamma$ viene così
+rappresentato da un blocco di $m$ celle. La macchina $\mu'$ ha $k+1$ nastri: il nastro~1 contiene
+l'input, i nastri $2,\dots,k+1$ contengono le versioni codificate dei nastri di $\mu$.
+
+\begin{enumerate}
+    \item[1.] \emph{Codifica dell'input.} Leggendo $w=a_1\cdots a_n$ dal nastro~1, $\mu'$ scrive
+    $e(a_1)\cdots e(a_n)$ sul nastro~2 (per ogni $a_i$ servono $m$ passi, durante i quali la testina
+    del nastro~1 avanza di una cella), poi riporta la testina del nastro~2 all'inizio. I nastri
+    $3,\dots,k+1$ vengono svuotati, e il vuoto è già codificato correttamente da $\square^m$.
+    Costo: al più $2mn+1$ passi.
+
+    \item[2.] \emph{Simulazione di un passo.} Con le testine all'inizio dei blocchi corrispondenti
+    alle celle osservate da $\mu$, $\mu'$ procede in tre fasi, muovendo in parallelo tutte le testine.
+    \begin{itemize}
+        \item Legge i blocchi spostandosi di $m-1$ celle a destra, memorizzando negli stati i
+        simboli letti. Ora conosce i $k$ simboli letti da $\mu$.
+        \item Applica internamente la transizione di $\mu$, che è determinata dallo stato corrente
+        e dai simboli letti. Quindi scrive i blocchi nuovi tornando indietro di $m-1$ celle.
+        \item Sposta ciascuna testina di $m$ celle a sinistra, a destra o la lascia ferma, a seconda
+        del movimento prescritto da $\mu$.
+    \end{itemize}
+    Un passo di $\mu$ costa così al più $(m-1)+(m-1)+m\le 3m$ passi di $\mu'$. Se $\mu$ entra in
+    uno stato di arresto, $\mu'$ entra nello stato di arresto corrispondente. Per costruzione
+    $\mu'$ accetta $w$ se e solo se lo fa $\mu$, quindi $\mu'$ decide $X$.
+
+    \item[3.] \emph{Conteggio dei passi.} Il tempo di $\mu'$ su input di lunghezza $n$ è
+    \[
+    t_{\mu'}(n)\le 2mn+1+3m\,T(n).
+    \]
+    Poiché $n/T(n)\to0$ e $T(n)\to\infty$, esiste $n_0$ tale che per $n\ge n_0$ vale
+    $2mn+1\le T(n)$, e quindi $t_{\mu'}(n)\le(3m+1)\,T(n)$. Per i finiti input con $n<n_0$,
+    $\mu'$ può leggere l'input in $n+1\le n_0\,T(n)$ passi (usando $T(n)\ge1$) e rispondere
+    in base a una tabella memorizzata negli stati. Posto $c:=\max\{3m+1,\,n_0\}$ si ha allora
+    $t_{\mu'}(n)\le cT(n)$ per ogni $n$.
+\end{enumerate}
+Dunque $X\in\mathrm{DTIME}^A(cT(n))$, il che conclude la dimostrazione.
 \end{proof}
 
 

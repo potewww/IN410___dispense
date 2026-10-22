@@ -1,0 +1,64 @@
+\begin{ex}
+Sia $A:=\{0,1\}$ l'alfabeto binario. Stabilire se, per ogni dato $n$ intero positivo, l'insieme $X_n\subset A^*$
+\[
+X_n:=\{a^ib^jc^k \mid i+j\geq 3,\ k\equiv 0 \bmod n \text{ e } a,b,c\in A\}
+\]
+è DFA-decidibile. In caso affermativo fornire un automa che lo decide.
+\end{ex}
+\begin{sol}
+    Guarda in \ref{esonero1:13_11_24}
+\end{sol}
+
+\begin{ex}
+Con $X_n$ come nell'esercizio precedente,
+\begin{enumerate}
+    \item dare l'espressione regolare $\mathsf{e}_3$ tale che $[\![\mathsf{e}_3]\!]=X_3$,
+    \item generalizzare ad una famiglia di espressioni regolari $\mathsf{e}_n$ tale che $[\![\mathsf{e}_n]\!]=X_n$,
+\end{enumerate}
+(la doppia parentesi quadra indica l'interpretazione insiemistica delle espressioni regolari).
+\end{ex}
+\begin{sol}
+    Guarda in \ref{esonero1:13_11_24}
+\end{sol}
+
+
+\begin{ex}
+Dati $X := \{0^k 1^{2k} \mid k \geq 0\}$ e $A := \{0,1\}$.
+\begin{enumerate}
+    \item Fornire \underline{esplicitamente} una macchina di Turing che mostra
+    \[
+        X \in \mathrm{DTIME}_1^A(c \cdot n^2), \quad \text{per qualche } c > 0.
+    \]
+    \item Mostrare inoltre che $X \notin \mathrm{DTIME}_1^A(c \cdot n)$, per nessuna $c > 0$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+
+    \item 
+    \item Sia $p>0$ e assumiamo per assurdo $X\in\mathrm{DTIME}_1^A(c\cdot n)$ per qualche $c>0$. Supponiamo inoltre $p=3k$ per qualche $k$ e consideriamo la parola $0^k1^{2k}\in X$, di lunghezza $p$. Scriviamola come $0^k1^{2k}=uxv$ con $x\neq\varepsilon$. Distinguiamo i casi su $u$.
+    \begin{enumerate}
+        \item Se $u=0^t$ con $0\le t\le k-1$, distinguiamo due sottocasi.
+        \begin{enumerate}
+            \item Se $x=0^{k-t}$, allora $v=1^{2k}$ e
+            \[
+                ux^2v=0^t\,0^{2(k-t)}\,1^{2k}=0^{t+2k-2t}1^{2k}=0^{2k-t}1^{2k}.
+            \]
+            Poiché $t\le k-1$ si ha $2k-t>k$, quindi $ux^2v\notin X$.
+            \item Se $x=0^{k-t}1^m$ con $m\ge 1$, allora $v=1^{2k-m}$ e
+            \[
+                ux^2v=0^t\,0^{k-t}1^m\,0^{k-t}1^m\,1^{2k-m}=0^k1^m0^{k-t}1^{2k}.
+            \]
+            Quindi $ux^2v\notin X$, poiché c'è uno $0$ in mezzo (infatti $k-t\ge 1$).
+        \end{enumerate}
+        \item Se $u=0^k1^t$ con $t\ge 0$, allora $x=1^m$ con $1\le m\le 2k-t$ e $v=1^{2k-t-m}$, quindi
+        \[
+            ux^2v=0^k1^t\,1^{2m}\,1^{2k-t-m}=0^k1^{m+2k}\notin X,
+        \]
+        poiché $m\ge 1$.
+    \end{enumerate}
+    In ogni caso $ux^2v\notin X$, il che è assurdo poichè contraddice il Pumping lemma. 
+    Dunque $X\notin\mathrm{DTIME}_1^A(c\cdot n)$ per nessuna $c>0$.
+\end{enumerate}
+\end{sol}
