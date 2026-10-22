@@ -1162,6 +1162,7 @@ può essere
 deciso da una macchina ad un nastro
 che utilizza come alfabeto
 un insieme con soli due elementi.
+
 \subsection{Teorema di Speed-up}
 
 
@@ -1208,83 +1209,71 @@ Per l'altra inclusione
 \[
 \mathrm{DTIME}(T(n))\subset \mathrm{DTIME}(cT(n))
 \]
-dobbiamo associare alla macchina $\mu$ che decide $X$ in tempo $T(n)$ una macchina $\mu'$, con alfabeto esteso, che simula $\mu$ in tempo $cT(n)$. Per definizione esiste un alfabeto di lavoro $\Gamma\supset A$ tale che $X\in\mathrm{DTIME}^{\Gamma}_k(T(n))$. Trattiamo il caso $k=1$; il caso generale si ottiene in modo analogo (a meno di una costante diversa nel numero di passi per ciclo, che non cambia la conclusione perché $d$ è arbitrario).
-
-\medskip
-\noindent\textbf{Scelta di $d$ e alfabeto di $\mu'$.}
-Fissiamo
-\[
-d:=\left\lceil \frac{12}{c}\right\rceil
-\qquad\text{e}\qquad
-B:=A\cup\Gamma^d .
-\]
-Un simbolo di $\Gamma^d$ rappresenta un intero blocco di $d$ celle di $\mu$. La macchina $\mu'$ ha un nastro in più rispetto a $\mu$ ($k'=k+1$): sul secondo nastro viene scritta la versione compressa del nastro di $\mu$, in cui la cella $i$ contiene il simbolo $\beta_i\in\Gamma^d$.
-
-\medskip
-\noindent\textbf{Fase 1: compressione dell'input.}
-Leggendo $w$ dal primo nastro, $\mu'$ ricorda negli stati gli ultimi (al più $d$) simboli letti e, ogni volta che ne ha letti $d$, scrive sul secondo nastro il simbolo di $\Gamma^d$ corrispondente (l'ultimo blocco viene completato con $\square$). Poi riporta la testina del secondo nastro all'inizio. Questo costa al più
-\[
-n+\lceil n/d\rceil\leq n+\frac{n}{d}+1\leq 2n+1\quad\text{passi.}
-\]
-
-\medskip
-\noindent\textbf{Fase 2: simulazione a cicli.}
-Gli stati di $\mu'$ sono del tipo $(q,r,\beta)$ (più quelli intermedi del ciclo, in numero finito), con il significato:
-\begin{itemize}
-    \item $q$ è lo stato di $\mu$;
-    \item $r$ è la posizione della testina di $\mu$ nel blocco corrente;
-    \item $\beta\in\Gamma^d$ è il \emph{contenuto vero} del blocco corrente, che può essere diverso da quello scritto sul nastro di $\mu'$.
-\end{itemize}
-Così lo stato di $\mu'$ ``ricorda'' il blocco sotto la testina, e non serve rileggerlo. Sia $\mu'$ nella cella $i$ dello stato $(q,r,\beta_i)$. Per il Lemma~\ref{lem:vicino}, calcolando internamente (cioè senza spendere passi) le prime transizioni di $\mu$, $\mu'$ conosce il lato $s\in\{-1,+1\}$ da cui $\mu$ uscirebbe dal blocco, e pone $j:=i+s$. Se $\mu$ non esce mai dal blocco in $d$ passi, sceglie $j:=i+1$ (il vicino non verrà modificato). Un ciclo di $\mu'$ è il seguente.
+dobbiamo associare alla macchina $\mu$ che decide $X$ in tempo $T(n)$ una macchina $\mu'$, con alfabeto esteso, che simula $\mu$ in tempo $cT(n)$. Per definizione esiste un alfabeto di lavoro $\Gamma\supset A$ tale che $X\in\mathrm{DTIME}^{\Gamma}_k(T(n))$. Trattiamo il caso $k=1$; il caso generale si ottiene in modo analogo (a meno di una costante diversa nel numero di passi per ciclo, che non cambia la conclusione perché $d$ è arbitrario). La costruzione procede in quattro passi.
 
 \begin{enumerate}
-    \item[\textbf{(1)}] In $i$: scrive $\beta_i$ (cioè il contenuto vero, aggiornando il nastro) e si sposta in $j$.
-    \item[\textbf{(2)}] In $j$: la transizione legge $\beta_j$. Ora $\mu'$ conosce $(q,r,\beta_i,\beta_j)$ e, per il Lemma~\ref{lem:vicino}, calcola $q'$, $r'$, $\beta_i'$, $\beta_j'$ e il blocco in cui finisce la testina di $\mu$. Scrive $\beta_j'$ in $j$ e si sposta in $i$.
+    \item[1.] \emph{Scelta di $d$ e alfabeto di $\mu'$.} Fissiamo
+    \[
+    d:=\left\lceil \frac{12}{c}\right\rceil
+    \qquad\text{e}\qquad
+    B:=A\cup\Gamma^d .
+    \]
+    Un simbolo di $\Gamma^d$ rappresenta un intero blocco di $d$ celle di $\mu$. La macchina $\mu'$ ha un nastro in più rispetto a $\mu$ ($k'=k+1$): sul secondo nastro viene scritta la versione compressa del nastro di $\mu$, in cui la cella $i$ contiene il simbolo $\beta_i\in\Gamma^d$.
+
+    \item[2.] \emph{Compressione dell'input.} Leggendo $w$ dal primo nastro, $\mu'$ ricorda negli stati gli ultimi (al più $d$) simboli letti e, ogni volta che ne ha letti $d$, scrive sul secondo nastro il simbolo di $\Gamma^d$ corrispondente (l'ultimo blocco viene completato con $\square$). Poi riporta la testina del secondo nastro all'inizio. Questo costa al più
+    \[
+    n+\lceil n/d\rceil\leq n+\frac{n}{d}+1\leq 2n+1\quad\text{passi.}
+    \]
+
+    \item[3.] \emph{Simulazione a cicli.} Gli stati di $\mu'$ sono del tipo $(q,r,\beta)$ (più quelli intermedi del ciclo, in numero finito), con il significato:
     \begin{itemize}
-        \item[$\bullet$] Se la testina di $\mu$ finisce nel blocco $i$, il ciclo termina qui, nel nuovo stato $(q',r',\beta_i')$. Il nastro contiene ancora il vecchio $\beta_i$ in $i$, ma non è un problema: sarà aggiornato al passo~(1) del ciclo successivo.
+        \item $q$ è lo stato di $\mu$;
+        \item $r$ è la posizione della testina di $\mu$ nel blocco corrente;
+        \item $\beta\in\Gamma^d$ è il \emph{contenuto vero} del blocco corrente, che può essere diverso da quello scritto sul nastro di $\mu'$.
     \end{itemize}
-    \item[\textbf{(3)}] Solo se la testina di $\mu$ finisce nel blocco $j$: in $i$ scrive $\beta_i'$ e si sposta in $j$, che già contiene $\beta_j'$ ed è il blocco in cui ci si trova ora, nello stato $(q',r',\beta_j')$.
+    Così lo stato di $\mu'$ ``ricorda'' il blocco sotto la testina, e non serve rileggerlo. Sia $\mu'$ nella cella $i$ dello stato $(q,r,\beta_i)$. Per il Lemma~\ref{lem:vicino}, calcolando internamente (cioè senza spendere passi) le prime transizioni di $\mu$, $\mu'$ conosce il lato $s\in\{-1,+1\}$ da cui $\mu$ uscirebbe dal blocco, e pone $j:=i+s$. Se $\mu$ non esce mai dal blocco in $d$ passi, sceglie $j:=i+1$ (il vicino non verrà modificato). Un ciclo di $\mu'$ è il seguente.
+    \begin{enumerate}
+        \item[(a)] In $i$: scrive $\beta_i$ (cioè il contenuto vero, aggiornando il nastro) e si sposta in $j$.
+        \item[(b)] In $j$: la transizione legge $\beta_j$. Ora $\mu'$ conosce $(q,r,\beta_i,\beta_j)$ e, per il Lemma~\ref{lem:vicino}, calcola $q'$, $r'$, $\beta_i'$, $\beta_j'$ e il blocco in cui finisce la testina di $\mu$. Scrive $\beta_j'$ in $j$ e si sposta in $i$. Se la testina di $\mu$ finisce nel blocco $i$, il ciclo termina qui, nel nuovo stato $(q',r',\beta_i')$. Il nastro contiene ancora il vecchio $\beta_i$ in $i$, ma non è un problema: sarà aggiornato al passo~(a) del ciclo successivo.
+        \item[(c)] Solo se la testina di $\mu$ finisce nel blocco $j$: in $i$ scrive $\beta_i'$ e si sposta in $j$, che già contiene $\beta_j'$ ed è il blocco in cui ci si trova ora, nello stato $(q',r',\beta_j')$.
+    \end{enumerate}
+    \[
+    \begin{tikzpicture}[>=stealth', shorten >=1pt, auto]
+    % Blocchi i e j
+    \draw[line width=1.2pt] (0,0) rectangle (2,1);
+    \draw[line width=1.2pt] (3,0) rectangle (5,1);
+    \node at (1,0.5) {$\beta_i$};
+    \node at (4,0.5) {$\beta_j$};
+    \node at (1,-0.3) {\small blocco $i$};
+    \node at (4,-0.3) {\small blocco $j$};
+
+    % Passi del ciclo
+    \draw[->] (1,1) to[bend left=35] node {$a$} (4,1);
+    \draw[->] (4.5,0) to[out=-60,in=-120,looseness=1.2] node[swap] {$b$} (0.5,0);
+    \draw[->] (0.5,1) to[out=70,in=110,looseness=1.5] node {$c$} (4.5,1);
+    \end{tikzpicture}
+    \]
+    Ogni ciclo dura al più $3$ passi (il passo~(c) c'è solo se la testina finisce nel vicino) e simula esattamente $d$ passi di $\mu$ (oppure meno, se $\mu$ si arresta: in tal caso $\mu'$ entra nello stato di arresto corrispondente). Per costruzione, dopo ogni ciclo la configurazione di $\mu'$ è l'immagine, tramite la codifica dei blocchi, di quella di $\mu$ dopo $d$ passi; quindi $\mu'$ e $\mu$ decidono lo stesso insieme $X$.
+
+    \item[4.] \emph{Conteggio dei passi.} Per simulare i $T(n)$ passi di $\mu$ servono al più $\lceil T(n)/d\rceil\leq T(n)/d+1$ cicli, quindi al più $\frac{3T(n)}{d}+3$ passi. Contando anche la lettura iniziale del primo blocco (un passo), il tempo totale di $\mu'$ su un input di lunghezza $n$ è
+    \[
+    t_{\mu'}(n)\leq \underbrace{2n+1}_{\text{compressione}}+1+\frac{3T(n)}{d}+3
+    =2n+5+\frac{3T(n)}{d}.
+    \]
+    Dalla scelta $d\geq 12/c$ segue
+    \[
+    \frac{3T(n)}{d}\leq \frac{c}{4}\,T(n).
+    \]
+    Per ipotesi $\lim_{n\to\infty} n/T(n)=0$; in particolare $T(n)\to\infty$. Quindi per $n$ abbastanza grande valgono
+    \[
+    2n\leq \frac{c}{2}\,T(n)\qquad\text{e}\qquad 5\leq \frac{c}{4}\,T(n),
+    \]
+    da cui
+    \[
+    t_{\mu'}(n)\leq \frac{c}{2}T(n)+\frac{c}{4}T(n)+\frac{c}{4}T(n)=c\,T(n).
+    \]
+    Quindi $X\in\mathrm{DTIME}(cT(n))$.
 \end{enumerate}
-
-\[
-\begin{tikzpicture}[>=stealth', shorten >=1pt, auto]
-% Blocchi i e j
-\draw[line width=1.2pt] (0,0) rectangle (2,1);
-\draw[line width=1.2pt] (3,0) rectangle (5,1);
-\node at (1,0.5) {$\beta_i$};
-\node at (4,0.5) {$\beta_j$};
-\node at (1,-0.3) {\small blocco $i$};
-\node at (4,-0.3) {\small blocco $j$};
-
-% Passi del ciclo
-\draw[->] (1,1) to[bend left=35] node {$1$} (4,1);
-\draw[->] (4.5,0) to[out=-60,in=-120,looseness=1.2] node[swap] {$2$} (0.5,0);
-\draw[->] (0.5,1) to[out=70,in=110,looseness=1.5] node {$3$} (4.5,1);
-\end{tikzpicture}
-\]
-
-Ogni ciclo dura al più $3$ passi (il passo~(3) c'è solo se la testina finisce nel vicino) e simula esattamente $d$ passi di $\mu$ (oppure meno, se $\mu$ si arresta: in tal caso $\mu'$ entra nello stato di arresto corrispondente). Per costruzione, dopo ogni ciclo la configurazione di $\mu'$ è l'immagine, tramite la codifica dei blocchi, di quella di $\mu$ dopo $d$ passi; quindi $\mu'$ e $\mu$ decidono lo stesso insieme $X$.
-
-\medskip
-\noindent\textbf{Fase 3: conteggio dei passi.}
-Per simulare i $T(n)$ passi di $\mu$ servono al più $\lceil T(n)/d\rceil\leq T(n)/d+1$ cicli, quindi al più $\frac{3T(n)}{d}+3$ passi. Contando anche la lettura iniziale del primo blocco (un passo), il tempo totale di $\mu'$ su un input di lunghezza $n$ è
-\[
-t_{\mu'}(n)\leq \underbrace{2n+1}_{\text{Fase 1}}+1+\frac{3T(n)}{d}+3
-=2n+5+\frac{3T(n)}{d}.
-\]
-Dalla scelta $d\geq 12/c$ segue
-\[
-\frac{3T(n)}{d}\leq \frac{c}{4}\,T(n).
-\]
-Per ipotesi $\lim_{n\to\infty} n/T(n)=0$; in particolare $T(n)\to\infty$. Quindi per $n$ abbastanza grande valgono
-\[
-2n\leq \frac{c}{2}\,T(n)\qquad\text{e}\qquad 5\leq \frac{c}{4}\,T(n),
-\]
-da cui
-\[
-t_{\mu'}(n)\leq \frac{c}{2}T(n)+\frac{c}{4}T(n)+\frac{c}{4}T(n)=c\,T(n).
-\]
-Quindi $X\in\mathrm{DTIME}(cT(n))$.
 \end{proof}
 
 Grazie al teorema di speed-up possiamo, nel valutare le classi di complessità, considerare solo l'ordine di grandezza della funzione di complessità $T(n)$. In particolare, per le classi di complessità polinomiali sarà sufficiente considerare l'esponente del termine dominante del polinomio, risultano così descritte da un unico parametro $k$: $\mathrm{DTIME}(n^k)$. Il teorema di Speed-up ha anche come conseguenza che risulta determinata la relazione tra una classe di complessità espressa in funzione di un alfabeto $A$ e la classe di complessità che le corrisponde senza aver specificato l'alfabeto:
