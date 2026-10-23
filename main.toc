@@ -35,24 +35,27 @@
 \contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{81}{subsection.9.6}%
 \contentsline {subsection}{\numberline {9.7}Macchine Speciali}{86}{subsection.9.7}%
 \contentsline {subsection}{\numberline {9.8}Rappresentazione degli interi}{87}{subsection.9.8}%
-\contentsline {section}{\numberline {10}Prerequisiti}{91}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Definizioni Preliminari}{91}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Grafi e Matrici di Adiacenza}{91}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Grafi Etichettati}{92}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Semianelli e Serie Formali}{92}{subsection.10.4}%
-\contentsline {subsection}{\numberline {10.5}Matrici su Semianelli}{94}{subsection.10.5}%
-\contentsline {subsection}{\numberline {10.6}Monoidi, Serie Formali e Algebre di Kleene}{95}{subsection.10.6}%
-\contentsline {subsubsection}{\numberline {10.6.1}Monoidi}{95}{subsubsection.10.6.1}%
-\contentsline {subsubsection}{\numberline {10.6.2}Serie formali}{95}{subsubsection.10.6.2}%
-\contentsline {subsubsection}{\numberline {10.6.3}Algebra di Kleene}{97}{subsubsection.10.6.3}%
-\contentsline {section}{\numberline {11}Wolfram}{98}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Introduzione}{98}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Entropia}{101}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Libreria TM-lib}{103}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Automi}{104}{subsection.11.4}%
-\contentsline {section}{\numberline {12}Esercizi}{106}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Automi}{106}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Macchine di Turing}{119}{subsection.12.2}%
-\contentsline {section}{\numberline {13}Esoneri ed esami}{127}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Esonero 1 - 13/11/2024}{127}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Esonero 1 - 10/11/2023}{133}{subsection.13.2}%
+\contentsline {section}{\numberline {10}Funzioni ricorsive}{91}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Funzioni Turing-computabili}{91}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Funzioni ricorsive}{95}{subsection.10.2}%
+\contentsline {section}{\numberline {11}Prerequisiti}{97}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{97}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{97}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{98}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{98}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{100}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{101}{subsection.11.6}%
+\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{101}{subsubsection.11.6.1}%
+\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{101}{subsubsection.11.6.2}%
+\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{103}{subsubsection.11.6.3}%
+\contentsline {section}{\numberline {12}Wolfram}{104}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Introduzione}{104}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Entropia}{107}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{109}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Automi}{110}{subsection.12.4}%
+\contentsline {section}{\numberline {13}Esercizi}{112}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Automi}{112}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{125}{subsection.13.2}%
+\contentsline {section}{\numberline {14}Esoneri ed esami}{133}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{133}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{139}{subsection.14.2}%

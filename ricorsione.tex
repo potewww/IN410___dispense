@@ -1,0 +1,190 @@
+% ============================================================
+% 16.1 Funzioni Turing-computabili (paragrafo intero)
+% ============================================================
+\subsection{Funzioni Turing-computabili}
+
+\medskip
+
+L'oggetto tecnico di questa sezione consiste nella sostituzione del concetto di \emph{insieme decidibile per macchina di Turing} con quello di \emph{funzione calcolabile per macchina di Turing}. Finora, abbiamo considerato gli algoritmi di decisione in cui l'input è una parola $w$ formata su un certo alfabeto $A$, e dove l'output è un booleano ``vero'' o ``falso'' a seconda che la parola $w$ appartenga o meno all'insieme $X$ che bisogna decidere. Quando si tratta di determinare i valori di una funzione $F$ da $A^*$ in $B^*$, diremo che un algoritmo calcola la funzione $F$ se, dalla configurazione la parola iniziale associata a una parola $w$ di $A^*$, si arriva in un numero finito di passi di computazione, a una configurazione terminale (accettante) associata alla parola $F(w)$.
+
+Al fine di trattare contemporaneamente i casi delle funzioni a più variabili e/o i casi delle funzioni a più valori, diamo le seguenti definizioni:
+
+\begin{defi}
+Sia $A$ un alfabeto qualunque, e siano $k$ ed $r$ due interi positivi. Per ogni vettore di $r$ elementi in $A^*$: $(w_1,w_2,\dots,w_r)\in (A^*)^r$, la configurazione iniziale a $k$ nastri associata al vettore $(w_1,w_2,\dots,w_r)$ è data dalla tripla $(f,p,q)$ dove $f\colon \mathbb Z\to (A')^k$, $p=(1,\dots,1)\in\mathbb Z^k$ e $q=q_0$ è lo stato iniziale in $Q$,
+\[
+f(k)=
+\begin{cases}
+w_j\!\left(k-\displaystyle\sum_{i=1}^{j-1}(|w_i|+1)\right) & \text{se } \displaystyle\sum_{i=1}^{j-1}(|w_i|+1)<k<\displaystyle\sum_{i=1}^{j}(|w_i|+1)\\[2ex]
+\square & \text{altrimenti}
+\end{cases}
+\]
+Diremo poi che una configurazione terminale a $k$ nastri associata al vettore $(w_1,w_2,\dots,w_r)$ è data dalla tripla $(f,p,q)$ dove $f$ e $p$ sono presi come nel caso della configurazione iniziale e $q=q_F^1$ è lo stato finale della macchina.
+\end{defi}
+
+In pratica la configurazione iniziale per una data macchina corrisponde alla seguente situazione: sul primo nastro è memorizzato l'input a partire dalla casella $1$ e lasciando un blank per separare le parole $w_i$, mentre gli altri nastri sono vuoti; ogni testina è posizionata sulla casella $1$ di ciascun nastro. La configurazione finale è del tutto analoga: gli ultimi $k-1$ nastri sono vuoti e l'output è memorizzato sul primo nastro a partire dalla casella $1$ e le testine sono tutte allineate in posizione $1$; coincide con la configurazione iniziale multinastro associata alla parola di ingresso.
+
+Come nel caso della decidibilità sarà possibile che una computazione non termini, questa situazione corrisponderà al caso di una funzione parziale, ovvero di una funzione il cui dominio non è tutto l'insieme di partenza.
+
+\begin{defi}
+Siano $A$ e $B$ due alfabeti e $F$ una funzione, non necessariamente definita dappertutto, da $(A^*)^r$ a $(B^*)^s$. Si dice che la funzione $F$ è calcolabile per macchina di Turing o \emph{Turing calcolabile}, se esiste un numero intero $k$ e una macchina di Turing $\mu$ a $k$ nastri il cui alfabeto include $A$ e $B$ tale che, per ogni sequenza finita $(w_1,\dots,w_r)\in(A^*)^r$
+\begin{enumerate}
+    \item[i)] se $F(w_1,\dots,w_r)$ è definito allora la computazione di $\mu$ a partire dalla configurazione iniziale a $k$ nastri associata a $(w_1,\dots,w_r)$ arriva alla configurazione terminale associata a $F(w_1,\dots,w_r)$; ovvero, la parola nella configurazione finale coincide con $F(w_1,\dots,w_r)$;
+    \item[ii)] se $F(w_1,\dots,w_r)$ non è definito, allora il calcolo di $\mu$ dalla configurazione iniziale a $k$ nastri associata a $(w_1,\dots,w_r)$ non termina mai.
+\end{enumerate}
+\end{defi}
+
+È importante discutere il fatto che una configurazione terminale corrisponda al fatto che tutti i nastri tranne il primo sono vuoti (nel senso che contengono solo il $\square$): questa condizione nella definizione di configurazione terminale è dettata dalla possibilità di comporre in modo naturale la computazione di due macchine di Turing, cosa che non sarebbe possibile nel caso in cui la configurazione finale non corrispondesse alla configurazione iniziale per la seconda macchina. D'altra parte la condizione non è restrittiva in quanto se esiste una macchina di Turing che computa una funzione senza ``cancellare'' i nastri è possibile definire una macchina $\mu'$ che fa la stessa computazione essendo pronta a ripulire i nastri diversi dal primo nella parte utilizzata, più precisamente:
+
+\begin{lemm}
+Per ogni macchina di Turing $\mu$ a $k$ nastri di alfabeto $A$ e insieme degli stati $Q$, esiste una macchina $\mu'$ che per ogni configurazione iniziale associata ad un vettore $(w_1,\dots,w_r)$ termina la computazione con lo stesso contenuto della $\mu$ sul primo nastro ed i rimanenti $k-1$ nastri posti identicamente uguali al $\square$, in particolare se il primo nastro contiene la sequenza corrispondente al vettore $(w'_1,\dots,w'_m)$ allora la macchina $\mu'$ terminerà nella configurazione terminale associata a $(w'_1,\dots,w'_m)$.
+\end{lemm}
+
+\begin{proof}
+Per dimostrare questa affermazione bisogna introdurre un nuovo simbolo nell'alfabeto ed utilizzarlo come marcatore di inizio e fine della zona di nastro che è stata utilizzata durante la computazione: quindi la macchina $\mu'$ sarà una macchina di Turing di alfabeto $A'=A\cup\{*\}$ supposto che $*$ non appartiene ad $A$. Analogamente bisognerà modificare l'insieme degli stati per tenere conto delle operazioni da fare al momento in cui si incontra il marcatore proveniendo da sinistra o da destra.
+Si può utilizzare ad esempio un certo carattere speciale su ogni nastro che marca le estremità destra e sinistra della parte di nastro effettivamente usata. Quando si incontra un carattere che corrisponde all'estremità destra, si spinge il carattere speciale di una casella a destra e si torna per continuare il calcolo; analogamente nell'estremità a sinistra. Alla fine del calcolo ci si sposta fino al carattere speciale di destra, e mentre si torna verso sinistra fino al carattere speciale di sinistra si cancellano tutti i nastri (tranne nel caso di un carattere speciale della casella numero $1$). Finalmente torneremo alla casella $1$ riconoscibile per il suo carattere speciale.
+\end{proof}
+
+Avremmo potuto chiedere che qualora la funzione $F$ non fosse definita per un certo valore, il calcolo della macchina di Turing termini, ad esempio, in uno stato di rifiuto. Questa sarebbe stata una definizione non equivalente. È davvero ovvio come trasformare una macchina che si ferma in uno stato di rifiuto in una macchina che non si ferma mai. D'altra parte, il passaggio inverso non è necessariamente possibile, e riguarda l'``indecidibilità'' del problema dell'arresto per una macchina di Turing, problema che sarà discusso più avanti nel corso.
+
+Con immediato adattamento dei risultati delle lezioni precedenti sulla rappresentazione degli interi e la decidibilità di sotto-insiemi di numeri interi, si dimostra facilmente che qualsiasi funzione calcolabile da una macchina di Turing è calcolabile con una macchina di Turing ad un nastro (o anche per un semi-nastro si può adattare la definizione).
+
+Se $(n_1,\dots,n_r)$ è una sequenza finita di numeri interi e $b>1$ una qualsiasi base, si denoti con $((n_1,\dots,n_r))_b$ la sequenza finita di parole $((n_1)_b,\dots,(n_r)_b)$. Quindi, se $F$ è una funzione di $\mathbb N^r$ in $\mathbb N^s$, denotiamo con $(F)_b$ la funzione da $\{0,1,\dots,b-1\}^*$ in $\{0,1,\dots,b-1\}^*$ che associa alla sequenza $(n_1,\dots,n_r)_b$ la sequenza $(F(n_1,\dots,n_r))_b$. I risultati della Sezione 15.1 mostrano che una qualsiasi funzione $(F)_b$ è Turing calcolabile non appena esiste una base $b$ rispetto alla quale lo è. Diremo in questo caso (quando esiste una qualsiasi base $b$ rispetto a cui la funzione è Turing computabile) semplicemente che la funzione $F$ è Turing calcolabile.
+
+\begin{defi}
+Il grafico di una funzione $F$, non necessariamente ovunque definita, da $(A^*)^r$ a $(B^*)^s$ è l'insieme
+\[
+G_F:=\{(a_1,\dots,a_r,b_1,\dots,b_s)\mid F(a_1,\dots,a_r)\text{ è definita e }(b_1,\dots,b_s)=F(a_1,\dots,a_r)\}.
+\]
+\end{defi}
+
+Il collegamento tra Turing decidibilità e Turing calcolabilità è semplice. Ricordiamo che la funzione caratteristica di un insieme $X$ è
+\[
+\mathbb 1_X(x)=\begin{cases}1 & \text{se } x\in X\\ 0 & \text{se } x\notin X\end{cases}
+\]
+allora si ha che
+
+\begin{prop}\
+\begin{enumerate}
+    \item[i)] Un insieme $X$ è Turing decidibile se e solo se la sua funzione caratteristica $\mathbb 1_X$ è Turing calcolabile.
+    \item[ii)] Supponiamo che $F$ sia ovunque definita su $(A^*)^r$, allora avremo che $F$ è Turing calcolabile se e solo se il grafico di $F$ è un insieme Turing decidibile.
+\end{enumerate}
+\end{prop}
+
+\begin{proof}\
+\begin{enumerate}
+    \item[i)] La funzione caratteristica di un insieme $X$ (che si presume incluso in $A^*$) è una funzione $F$ tale che $F(w)$ è $1$ per $w$ in $X$ e $0$ altrimenti. Se la funzione $F$ è Turing calcolabile, è immediato trasformare una macchina di Turing che la calcola in una macchina di Turing che decide $X$: basta sostituire la configurazione $(0,q_F)$ nella configurazione $(0,q_F^0)$ e la configurazione $(1,q_F)$ in $(1,q_F^1)$. Il passaggio inverso è più delicato perché, con le definizioni che abbiamo posto, la Turing calcolabilità di $F$ richiede non solo un algoritmo che, a partire dalla configurazione iniziale associata a $w$, raggiunga a una configurazione di nastro con $1$ o $0$ nella casella appropriata di un nastro prestabilito dedicato all'output, ma più specificatamente ad una configurazione analoga a quella iniziale, che dunque termina nella configurazione iniziale associata a $1$ o $0$, il che presuppone che tutti i nastri siano stati cancellati e i puntatori siano tornati nella posizione iniziale. Utilizzando il Lemma~70 possiamo trasformare una qualsiasi macchina che decide un insieme $X$ in una macchina che ancora decide $X$ ma che alla fine del calcolo cancella il contenuto di tutti i nastri tranne il primo e che sul primo ritrova il risultato e posiziona il puntatore nella prima colonna per ogni nastro.
+    \item[ii)] Supponiamo che $F$ sia una funzione di $A^*$ in se stesso. Se $F$ è Turing calcolabile possiamo decidere se una coppia $(w,v)$ è nel grafico di $F$ calcolando $F(w)$ e testando l'uguaglianza $F(w)=v$. Supponiamo invece che il grafico di $F$ sia Turing decidibile. Esiste un'enumerazione $v_1,v_2,\dots$ di parole di $A^*$ e una macchina di Turing che passa dalla configurazione iniziale associata a $v_i$ alla configurazione iniziale associata a $v_{i+1}$. Otterremo una macchina di Turing che calcola $F$ come segue. A partire dalla parola in ingresso $w$, la macchina scrive $w\square v_1$ e verifica se $(w,v_1)$ è nel grafico di $F$. Se lo è, cancella tutto (come sopra) e passa alla configurazione terminale associata $v_1$. Altrimenti, sostituisce $v_1$ con $v_2$ e verifica se $(w,v_2)$ è nel grafico di $F$, e così via. Il calcolo si fermerà nella configurazione terminale associata a quell'unico $v_i$ tale che $(w,v_i)$ sia grafico di $F$ (la computazione termina poiché $F$ è totale).
+\end{enumerate}
+\end{proof}
+
+Se non assumiamo più che le funzioni siano definite ovunque, allora esiste ancora un rapporto tra il concetto di decidibilità e quello di calcolabilità che questa volta si precisa tra la Turing calcolabilità (di funzioni parziali) e la Turing semi-decidibilità:
+
+\begin{prop}
+Sia $F$ una funzione qualunque (non necessariamente ovunque definita). Quindi $F$ è Turing calcolabile se e solo se il grafico di $F$ è un insieme Turing semi-decidibile.
+\end{prop}
+
+\begin{proof}
+Supponiamo la funzione $F$ Turing calcolabile. L'argomento è lo stesso di sopra. Dovendo decidere se $(w,y)$ è nel grafico di $F$, calcoliamo $F(w)$; se il calcolo risulta in un valore $y'$, verifichiamo se $y'$ è uguale a $y$: se sì, accettiamo, altrimenti entriamo in uno stato che provoca un calcolo infinito. L'algoritmo così ottenuto semi-decide il grafico di $F$: si ferma su $(w,y)$ esattamente se $(w,y)$ è in questo grafico.
+
+Supponiamo invece che la macchina $\mu$ decida il grafico di $F$. Di nuovo impostiamo un'enumerazione Turing calcolabile $y_1,y_2,\dots$ di tutte le parole di $A^*$; il problema è che, essendo il grafico di $F$ assunto solo Turing semi-decidibile, non possiamo aspettare l'ipotetica fine della decisione di $\mu$ in merito a $(w,y_1)$ per iniziare il calcolo relativo a $(w,y_2)$, seguito da quello $(w,y_3)$ e così via. L'idea è la seguente: eseguiremo un passo di computazione del calcolo di $\mu$ a partire da $(w,y_1)$, seguito dalla parte di calcolo che prepara l'input $(w,y_2)$, quindi riprenderemo il calcolo iniziato di $(w,y_1)$ (che si troverà nella seconda configurazione della computazione), il primo passo di computazione a partire da $(w,y_2)$ e la preparazione dell'input $(w,y_3)$, seguito dal terzo passo della computazione di $(w,y_1)$, il secondo per $(w,y_2)$, il primo per $(w,y_3)$ e la preparazione dell'input $(w,y_4)$.
+
+Ora se $w$ è nel dominio di $F$, deve esistere un indice $i$ in modo tale che $(w,y_i)$ è nel grafico di $F$, e quindi dopo un certo numero $t$ di passi di calcolo $\mu$ a partire da $(w,y_i)$ arriva ad una configurazione accettante, e possiamo produrre il valore corrispondente $y_i$ e fermare l'algoritmo.
+
+Nel caso in cui $w$ non sia nel dominio di $F$ si avrà che per ogni $y$, la coppia $(w,y)$ non sarà nel grafico di $F$, e quindi, qualunque sia il valore di $t$, dopo $t$ passi del calcolo di $\mu$ a partire da $(w,y)$ non porteranno a una configurazione finale che accetta e l'algoritmo non si fermerà. In conclusione, l'algoritmo così descritto calcola la funzione $F$. Per quanto riguarda la fattibilità delle simulazioni successive di un numero crescente di passi di calcolo di $\mu$ sulle parole $y_1,y_2$, ecc.\ sarà realizzabile con nastri aggiuntivi in numero sufficiente (uno per la parola $y$, uno per scrivere $t$ in base unaria).
+\end{proof}
+
+Grazie alle proposizioni precedenti si vede che la teoria delle funzioni calcolabili e quella degli insiemi decidibili sono equivalenti.
+
+
+
+\begin{prop}
+La funzione composta da due funzioni Turing calcolabili è Turing calcolabile.
+\end{prop}
+
+\begin{proof}
+Siano $G$ e $H$ due funzioni Turing calcolabili. Si supponga che il codominio di $G$ corrisponda al dominio di $H$ (altrimenti il risultato è banale poiché la funzione composta ha dominio vuoto). Supponiamo che la macchina di Turing
+\[
+\mu_1\colon Q_1\times A'^{k_1}\to Q_1'\times A'^{k_1}\times\{-1,+1\}^{k_1}
+\]
+calcoli $G$ e la macchina di Turing
+\[
+\mu_2\colon Q_2\times A'^{k_2}\to Q_2'\times A'^{k_2}\times\{-1,+1\}^{k_2}
+\]
+calcoli $H$. Possiamo ipotizzare che $\mu_1$ e $\mu_2$ siano macchine per lo stesso numero di nastri, ovvero $k_1=k_2$ e che i loro insiemi di stati siano, non contando lo stato $q_0$ e lo stato $q_F$, disgiunti $Q_1\cap Q_2=\emptyset$. Sia $\mu_1'$ la macchina ottenuta sostituendo in $\mu_1$ lo stato $q_F^1$ con un nuovo stato $q_A$, e sia $\mu_2'$ la macchina ottenuta da $\mu_2$ sostituendo lo stato iniziale con questo stesso stato $q_A$. Finalmente sia $\mu'$ l'unione di $\mu_1'$ e $\mu_2'$. Sia il vettore $(w_1,\dots,w_r)\in(A^*)^r$ nel dominio di $G$. Sono possibili tre casi:
+\begin{itemize}
+    \item $(w_1,\dots,w_r)$ non è nell'insieme di definizione di $G$. Quindi il calcolo di $\mu_1$ non finisce, ed è uguale a quello di $\mu_1'$, quindi quello di $\mu'$ non termina.
+    \item Oppure $G$ è definito in $(w_1,\dots,w_r)$ ma $G(w_1,\dots,w_r)$ non è nel dominio di $H$. Quindi $\mu_1$ passa dalla configurazione terminale, ma $\mu_1'$ passa allo stato $q_A$ che coincide con lo stato iniziale di $\mu_2'$. Quindi, per ipotesi, il calcolo di $\mu_2'$ dalla configurazione iniziale non si ferma, quindi il calcolo di $\mu'$ a partire da $(w_1,\dots,w_r)$ non termina.
+    \item Supponiamo infine che l'applicazione $H(G(w_1,\dots,w_r))$ sia definita. La macchina $\mu_1$ computa il risultato dell'applicazione $G(w_1,\dots,w_r)$ e così fa $\mu_1'$, passando dalla configurazione terminale per $\mu_1$ a quella iniziale per $\mu_2$ che, applicata a $G(w_1,\dots,w_r)$, calcolerà il risultato della composizione $H(G(w_1,\dots,w_r))$.
+\end{itemize}
+Quindi $\mu'$ calcola bene la funzione composta di $H$ e $G$.
+\end{proof}
+\subsection{Funzioni ricorsive}
+\begin{defi}
+Supponiamo che $G$ e $H$ siano due funzioni rispettivamente da $\mathbb N^{r+1}$ a $\mathbb N$ e da $\mathbb N^{r+2}$ a $\mathbb N$. La funzione definita per ricorsione primitiva di base $G$ e passo $H$ è la funzione $F$ da $\mathbb N^{r+1}$ a $\mathbb N$ tale che
+\[
+F(x_1,\dots,x_r,m)=
+\begin{cases}
+G(x_1,\dots,x_r) & \text{se } m=0\\
+H(x_1,\dots,x_r,m,F(x_1,\dots,x_r,m-1)) & \text{se } m>0.
+\end{cases}
+\]
+Dal punto di vista dei tipi sulle parole: $G\colon (A^*)^r\to B^*$, $H\colon (A^*)^r\times\mathbb N\times B^*\to B^*$ e $F\colon (A^*)^r\times\mathbb N\to B^*$.
+\end{defi}
+
+\begin{defi}
+Supponiamo che $G$ sia una funzione di $\mathbb N^{r+1}$ in $\mathbb N$. La funzione definita per minimalizzazione di $G$ è la funzione $F$ da $\mathbb N^r$ in $\mathbb N$, che soddisfa la seguente condizione:
+\[
+F(n_1,\dots,n_r)=k
+\]
+se e solo se
+\[
+\text{per ogni } i<k \text{ si ha che } G(n_1,\dots,n_r,i)\neq 0 \text{ e } G(n_1,\dots,n_r,k)=0.
+\]
+In particolare $G$ è definita (e non nulla) per ogni $i<k$. Con le notazioni sulle parole: $G\colon (A^*)^r\times\mathbb N\to\mathbb N$ e $F\colon (A^*)^r\to\mathbb N$.
+\end{defi}
+
+\noindent Utilizzeremo l'espressione $\mathsf S$ e la sua interpretazione $[[\mathsf S]](n,m)=S(n,m)=n+m$.
+
+\begin{defi}
+Le espressioni ricorsive di profondità $0$ sono $\mathsf S$, $\mathsf D$, $\mathsf C_{r,x_0}$ e $\mathsf P_{r,i}$. Per $d\geq 1$, una espressione ricorsiva è di profondità $d$ se è di profondità $d-1$ oppure se può essere scritta per composizione, concatenazione, ricorsione o minimalizzazione di espressioni di profondità $d-1$.
+\end{defi}
+
+\begin{defi}
+La classe delle funzioni ricorsive può essere definita come l'insieme delle funzioni che sono interpretazione di un'espressione ricorsiva:
+\[
+\mathcal R:=\{[[\mathsf e]]\mid \mathsf e\in\mathsf R\}.
+\]
+\end{defi}
+
+\begin{rema}
+Dal punto di vista sintattico, la costruzione di tutte le espressioni mostra in modo induttivo che i ``costrutti'' introdotti sopra possono essere ottenuti come interpretazione delle espressioni ricorsive generate dalla grammatica con simbolo iniziale $\mathsf R$ le cui regole di produzione sono
+\[
+\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{r,x_0}\mid\mathsf P_{r,i}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
+\]
+\end{rema}
+
+% Nota a mano: "Def" -- sposta questo in fondo, dopo la definizione di R
+\begin{defi}
+L'insieme delle espressioni ricorsive sarà indicato con $\mathsf R$. Più precisamente l'interpretazione sarà una funzione
+\[
+[[\;]]\colon \mathsf R\to\left(\bigcup_{r,s}\left(\mathbb N^r\to\mathbb N^s\right)\right),
+\]
+ad esempio se $\mathsf e\in\mathsf R$ è un'espressione ricorsiva $[[\mathsf e]]=F$ nel senso che per ogni $(n_1,\dots,n_r)$
+\[
+[[\mathsf e]](n_1,\dots,n_r)=F(n_1,\dots,n_r).
+\]
+\end{defi}
+
+% Pagina a mano: Funzioni Base
+\bigskip
+\noindent \textbf{Funzioni base} \quad ($A=B=(\mathbb N)_1$, cioè $\mathbb N$ in base $1$)
+
+\begin{itemize}
+    \item Addizione: $S(x,y)=x+y$.
+    \item Predecessore (decremento): $D(x)=\begin{cases}x-1 & x>0\\ 0 & \text{altrimenti.}\end{cases}$
+    \item Schemi per funzioni:
+    \begin{itemize}
+        \item costanti: $C_{x_0,n}\colon\mathbb N^n\to\mathbb N$, $(-)\mapsto x_0$;
+        \item proiezione: $P_{i,n}\colon\mathbb N^n\to\mathbb N$, $(x_1,\dots,x_n)\mapsto x_i$.
+    \end{itemize}
+\end{itemize}
