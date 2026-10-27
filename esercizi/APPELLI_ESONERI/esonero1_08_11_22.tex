@@ -1,0 +1,343 @@
+% ---------------- ESERCIZIO 1 ----------------
+\begin{ex}
+Si consideri il seguente automa di alfabeto $A=\{a,b\}$ e insieme degli stati $Q=\{q_0,q_1,q_2\}$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)   {$q_0$};
+\node[state]            (q1) at (3,2.2) {$q_1$};
+\node[state, accepting] (q2) at (6,0)   {$q_2$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) -- node {$a$} (q1);
+\draw[->] (q1) -- node {$a$} (q2);
+\draw[->] (q0) to[bend left=15] node {$b$} (q2);
+\draw[->] (q2) to[bend left=15] node {$b$} (q0);
+\end{tikzpicture}
+\]
+\begin{enumerate}
+    \item Scrivere la descrizione dell'automa in termini della tabella $T:Q\to A\to Q$, dello stato iniziale e dell'insieme $F$ degli stati finali accettanti;
+    \item Dire se quello rappresentato sia un automa deterministico oppure un automa non deterministico, nel secondo caso applicare la procedura per calcolare l'automa deterministico equivalente;
+    \item Costruire l'espressione regolare corrispondente all'automa (deterministico) seguendo la procedura di conversione;
+    \item Calcolare la matrice $M$ corrispondente all'automa deterministico calcolato, separare la matrice $M$ in due matrici di adiacenza (con elementi $0/1$) relative al grafo delle transizioni etichettate con $a$ e quelle etichettate con $b$, in modo tale che: $M=aM_a+bM_b$;
+    \item Calcolare $M_a^2$, $M_a^3$, $M_b^2$, $M_b^3$;
+    \item Calcolare, con l'aiuto del punto precedente, l'insieme $X$ deciso dall'automa tramite la formula dell'esecuzione.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+% (6) da completare
+\begin{enumerate}
+    \item Lo stato iniziale è $q_0$ e $F=\{q_2\}$. La tabella delle transizioni è
+    \[
+    \begin{array}{c|cc}
+    T & a & b \\ \hline
+    q_0 & q_1 & q_2 \\
+    q_1 & q_2 & \bot \\
+    q_2 & \bot & q_0
+    \end{array}
+    \]
+
+    \item La funzione $T$ non è totale, poiché $T(q_1,b)=\bot$ e $T(q_2,a)=\bot$. Applichiamo la procedura di determinizzazione (costruzione per sottoinsiemi), ponendo $S_0=\{q_0\}$, $S_1=\{q_1\}$, $S_2=\{q_2\}$, $S_3=\emptyset$:
+    \[
+    \begin{array}{c|cc}
+    T' & a & b \\ \hline
+    S_0 & S_1 & S_2 \\
+    S_1 & S_2 & S_3 \\
+    S_2 & S_3 & S_0 \\
+    S_3 & S_3 & S_3
+    \end{array}
+    \qquad F'=\{S_2\}
+    \]
+    L'automa deterministico equivalente è
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (s0) at (0,0)  {$S_0$};
+    \node[state]            (s1) at (3,2)  {$S_1$};
+    \node[state, accepting] (s2) at (3,-2) {$S_2$};
+    \node[state]            (s3) at (6,0)  {$S_3$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]s0.center) -- (s0);
+    \draw[->] (s0) -- node {$a$} (s1);
+    \draw[->] (s1) -- node {$a$} (s2);
+    \draw[->] (s1) -- node {$b$} (s3);
+    \draw[->] (s2) -- node {$a$} (s3);
+    \draw[->] (s0) to[bend left=15] node {$b$} (s2);
+    \draw[->] (s2) to[bend left=15] node {$b$} (s0);
+    \draw[->] (s3) to[loop above, looseness=8] node {$a$} (s3);
+    \draw[->] (s3) to[loop below, looseness=8] node {$b$} (s3);
+    \end{tikzpicture}
+    \]
+
+    \item Applichiamo la procedura di conversione in espressione regolare.
+    \begin{enumerate}
+        \item Setup: aggiungiamo il nuovo stato iniziale $S_0^*$, il nuovo stato finale $S_F^*$ e riuniamo i due cappi di $S_3$.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (s0s) at (0,0)    {$S_0^*$};
+        \node[state]            (s0)  at (2.5,0)  {$S_0$};
+        \node[state]            (s1)  at (5.5,2)  {$S_1$};
+        \node[state]            (s2)  at (5.5,-2) {$S_2$};
+        \node[state]            (s3)  at (9,2)    {$S_3$};
+        \node[state, accepting] (sf)  at (9,-2)   {$S_F^*$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]s0s.center) -- (s0s);
+        \draw[->, very thick] (s0s) -- node {$\mathbb 1$} (s0);
+        \draw[->, very thick] (s2) -- node {$\mathbb 1$} (sf);
+        \draw[->] (s0) -- node {$a$} (s1);
+        \draw[->] (s1) -- node {$a$} (s2);
+        \draw[->] (s1) -- node {$b$} (s3);
+        \draw[->] (s2) -- node {$a$} (s3);
+        \draw[->] (s0) to[bend left=15] node {$b$} (s2);
+        \draw[->] (s2) to[bend left=15] node {$b$} (s0);
+        \draw[->, very thick] (s3) to[loop above, looseness=8] node {$a+b$} (s3);
+        \end{tikzpicture}
+        \]
+
+        \item Eliminiamo $S_1$: i cammini $S_0\xrightarrow{a}S_1\xrightarrow{a}S_2$ e $S_0\xrightarrow{a}S_1\xrightarrow{b}S_3$ diventano rispettivamente $aa$ (da riunire con $b$) e $ab$.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (s0s) at (0,0)    {$S_0^*$};
+        \node[state]            (s0)  at (2.5,0)  {$S_0$};
+        \node[state]            (s2)  at (5.5,-2) {$S_2$};
+        \node[state]            (s3)  at (9,2)    {$S_3$};
+        \node[state, accepting] (sf)  at (9,-2)   {$S_F^*$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]s0s.center) -- (s0s);
+        \draw[->] (s0s) -- node {$\mathbb 1$} (s0);
+        \draw[->] (s2) -- node {$\mathbb 1$} (sf);
+        \draw[->, very thick] (s0) -- node {$ab$} (s3);
+        \draw[->, very thick] (s0) to[bend left=15] node {$aa+b$} (s2);
+        \draw[->] (s2) to[bend left=15] node {$b$} (s0);
+        \draw[->] (s2) -- node {$a$} (s3);
+        \draw[->] (s3) to[loop above, looseness=8] node {$a+b$} (s3);
+        \end{tikzpicture}
+        \]
+
+        \item Eliminiamo $S_3$: da $S_3$ non si raggiunge alcuno stato finale, quindi lo stato e le transizioni che lo coinvolgono non influenzano il linguaggio.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (s0s) at (0,0)    {$S_0^*$};
+        \node[state]            (s0)  at (2.5,0)  {$S_0$};
+        \node[state]            (s2)  at (5.5,-2) {$S_2$};
+        \node[state, accepting] (sf)  at (9,-2)   {$S_F^*$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]s0s.center) -- (s0s);
+        \draw[->] (s0s) -- node {$\mathbb 1$} (s0);
+        \draw[->] (s2) -- node {$\mathbb 1$} (sf);
+        \draw[->] (s0) to[bend left=15] node {$aa+b$} (s2);
+        \draw[->] (s2) to[bend left=15] node {$b$} (s0);
+        \end{tikzpicture}
+        \]
+
+        \item Eliminiamo $S_2$: il cammino $S_0\to S_2\to S_0$ diventa un cappio $(aa+b)b$ e il cammino $S_0\to S_2\to S_F^*$ diventa $aa+b$.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (s0s) at (0,0)   {$S_0^*$};
+        \node[state]            (s0)  at (2.5,0) {$S_0$};
+        \node[state, accepting] (sf)  at (9,-2)  {$S_F^*$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]s0s.center) -- (s0s);
+        \draw[->] (s0s) -- node {$\mathbb 1$} (s0);
+        \draw[->, very thick] (s0) to[loop above, looseness=8] node {$(aa+b)b$} (s0);
+        \draw[->, very thick] (s0) -- node {$aa+b$} (sf);
+        \end{tikzpicture}
+        \]
+
+        \item Eliminiamo $S_0$: il cappio diventa una stella di Kleene.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (s0s) at (0,0)  {$S_0^*$};
+        \node[state, accepting] (sf)  at (9,-2) {$S_F^*$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]s0s.center) -- (s0s);
+        \draw[->, very thick] (s0s) -- node {$((aa+b)b)^*(aa+b)$} (sf);
+        \end{tikzpicture}
+        \]
+    \end{enumerate}
+    L'espressione regolare cercata è quindi $((aa+b)b)^*(aa+b)$.
+
+    \item Ordinando gli stati come $S_0,S_1,S_2,S_3$, la matrice dell'automa deterministico è
+    \[
+    M=\begin{pmatrix}
+    \bot & a & b & \bot \\
+    \bot & \bot & a & b \\
+    b & \bot & \bot & a \\
+    \bot & \bot & \bot & a+b
+    \end{pmatrix}.
+    \]
+    Separando le transizioni etichettate con $a$ da quelle etichettate con $b$ si ottiene $M=aM_a+bM_b$ con
+    \[
+    M_a=\begin{pmatrix}
+    0&1&0&0\\
+    0&0&1&0\\
+    0&0&0&1\\
+    0&0&0&1
+    \end{pmatrix},\qquad
+    M_b=\begin{pmatrix}
+    0&0&1&0\\
+    0&0&0&1\\
+    1&0&0&0\\
+    0&0&0&1
+    \end{pmatrix}.
+    \]
+
+    \item Calcolando i prodotti si ottiene
+    \[
+    M_a^2=\begin{pmatrix}
+    0&0&1&0\\
+    0&0&0&1\\
+    0&0&0&1\\
+    0&0&0&1
+    \end{pmatrix},\qquad
+    M_a^3=\begin{pmatrix}
+    0&0&0&1\\
+    0&0&0&1\\
+    0&0&0&1\\
+    0&0&0&1
+    \end{pmatrix},
+    \]
+    \[
+    M_b^2=\begin{pmatrix}
+    1&0&0&0\\
+    0&0&0&1\\
+    0&0&1&0\\
+    0&0&0&1
+    \end{pmatrix},\qquad
+    M_b^3=M_b=\begin{pmatrix}
+    0&0&1&0\\
+    0&0&0&1\\
+    1&0&0&0\\
+    0&0&0&1
+    \end{pmatrix}.
+    \]
+\end{enumerate}
+\end{sol}
+
+% ---------------- ESERCIZIO 2 ----------------
+\newpage
+\begin{ex}
+Fornire una macchina di Turing $\mu$ di alfabeto $A=\{1\}$ (unario) che decide l'insieme
+\[
+X=\{1^n \mid n=2^k \text{ per qualche } k\}.
+\]
+\end{ex}
+\begin{sol}
+Sia $\alpha$ la macchina che, partendo da $1^m$, scrive $1^{2m}$ (raddoppia il contenuto del nastro) e riporta la testina sulla prima cella:
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Riga principale (copia)
+\node[state] (q0) at (0,0)  {$q_0^\alpha$};
+\node[state] (q1) at (3,0)  {$q_1^\alpha$};
+\node[state] (q2) at (6,0)  {$q_2^\alpha$};
+\node[state] (q3) at (9,0)  {$q_3^\alpha$};
+\node[state] (q4) at (12,0) {$q_4^\alpha$};
+
+% Riga inferiore (compattazione e ritorno all'inizio)
+\node[state]                    (qA) at (0,-3)  {$q_A^\alpha$};
+\node[state]                    (qB) at (0,-6)  {$q_B^\alpha$};
+\node[state]                    (qC) at (4,-3)  {$q_C^\alpha$};
+\node[state]        (qD) at (8,-3)  {$q_D^\alpha$};
+\node[state, accepting]         (qF) at (12,-3) {$q_F^\alpha$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni della riga principale
+\draw[->] (q0) -- node {$1/\square,+1$} (q1);
+\draw[->] (q1) -- node {$\square/\square,+1$} (q2);
+\draw[->] (q2) -- node {$\square/1,-1$} (q3);
+\draw[->] (q3) -- node {$\square/\square,-1$} (q4);
+
+% Cappi
+\draw[->] (q1) to[loop above, looseness=8] node {$1/1,+1$} (q1);
+\draw[->] (q2) to[loop above, looseness=8] node {$1/1,+1$} (q2);
+\draw[->] (q3) to[loop above, looseness=8] node {$1/1,-1$} (q3);
+\draw[->] (q4) to[loop above, looseness=8] node {$1/1,-1$} (q4);
+\draw[->] (qD) to[loop below, looseness=8] node {$1/1,-1$} (qD);
+
+% Ritorno da q_4 a q_0
+\draw[->] (q4) to[bend left=30] node[pos=0.5, below] {$\square/1,+1$} (q0);
+
+% Compattazione
+\draw[->] (q0) -- node[swap] {$\square/\square,+1$} (qA);
+\draw[->] (qA) -- node {$\square/\square,-1$} (qC);
+\draw[->] (qA) -- node[swap] {$1/\square,-1$} (qB);
+\draw[->, rounded corners=8pt]
+    (qB.west) -- (-2,-6) -- node[left] {$\square/1,+1$} (-2,-0.4) -- (q0.200);
+
+% Ritorno all'inizio
+\draw[->] (qC) -- node {$\square/\square,-1$} (qD);
+\draw[->] (qD) -- node {$\square/\square,+1$} (qF);
+\end{tikzpicture}
+\]
+La macchina $\alpha$ funziona in due fasi. Nella prima, a partire da $1^m$ copia il contenuto a destra, separandolo con una cella vuota: $q_0^\alpha$ cancella il primo $1$ non ancora copiato, $q_1^\alpha$ e $q_2^\alpha$ raggiungono la fine della copia e vi scrivono un $1$, poi $q_3^\alpha$ e $q_4^\alpha$ tornano indietro e riscrivono l'$1$ cancellato, passando al successivo. Quando l'originale è esaurito si ottiene $1^m\,\square\,1^m$. Nella seconda fase $q_A^\alpha$ e $q_B^\alpha$ spostano la copia di una cella a sinistra, un $1$ alla volta, eliminando la cella vuota, così sul nastro rimane $1^{2m}$. Infine $q_C^\alpha$ e $q_D^\alpha$ riportano la testina sulla prima cella e la macchina si ferma in $q_F^\alpha$.
+\\
+Definiamo la macchina a due nastri $\mu$ come segue, dove $Q^\alpha$ è l'insieme degli stati di $\alpha$ e $\alpha(q,b)=(\alpha(q,b)_{\pi_1},\alpha(q,b)_{\pi_2},\alpha(q,b)_{\pi_3})$ indica la terna (nuovo stato, simbolo scritto, movimento) data da $\alpha$:
+\[
+\begin{matrix}
+\mu:& Q\times A'^2 &\longrightarrow &Q\times A'^2\times\{+1,0,-1\}^2
+\\
+&
+(q,(a,b))& \mapsto &
+\begin{cases}
+(q_F^0,(a,b),(0,0)) & \text{se } q=q_0,\ a=\square\\
+(q_1,(a,1),(+1,0)) & \text{se } q=q_0,\ a=1\\
+(q_F^1,(a,b),(0,0)) & \text{se } q=q_1,\ a=\square\\
+(q_2,(a,b),(-1,0)) & \text{se } q=q_1,\ a\neq\square\\
+(q_0^\alpha,(a,b),(0,0)) & \text{se } q=q_2\\
+\bigl(\alpha(q,b)_{\pi_1},(a,\alpha(q,b)_{\pi_2}),(0,\alpha(q,b)_{\pi_3})\bigr) & \text{se } q\in Q^\alpha\setminus\{q_F^\alpha\}\\
+(q_R,(a,b),(0,0)) & \text{se } q=q_F^\alpha\\
+(q_R,(a,b),(-1,0)) & \text{se } q=q_R,\ a\neq\square\\
+(q_A,(a,b),(+1,0)) & \text{se } q=q_R,\ a=\square\\
+(q_A,(a,b),(+1,+1)) & \text{se } q=q_A,\ a,b\neq\square\\
+(q_F^0,(a,b),(0,0)) & \text{se } q=q_A,\ a=\square,\ b=1\\
+(q_{R'},(a,b),(-1,-1)) & \text{se } q=q_A,\ a=1,\ b=\square\\
+(q_{R'},(a,b),(-1,-1)) & \text{se } q=q_{R'},\ a,b\neq\square\\
+(q_0^\alpha,(a,b),(+1,+1)) & \text{se } q=q_{R'},\ a,b=\square\\
+(q_F^1,(a,b),(0,0)) & \text{se } q=q_A,\ a,b=\square
+\end{cases}
+\end{matrix}
+\]
+La macchina $\mu$ usa due nastri: sul primo c'è l'input $1^n$ e sul secondo si costruisce la successione delle potenze di $2$. Se $n=0$ rifiuta. Altrimenti scrive un $1$ sul secondo nastro e, se $n=1$, accetta ($2^0=1$). In caso contrario esegue $\alpha$ sul secondo nastro, ottenendo $1^2$, e confronta i due nastri avanzando in parallelo. Se i due nastri finiscono insieme accetta ($n$ è la potenza di $2$ appena raggiunta). Se finisce prima il primo, $n$ è compreso strettamente tra due potenze di $2$ consecutive e rifiuta. Se finisce prima il secondo, riavvolge le testine, raddoppia di nuovo il secondo nastro con $\alpha$ e ripete il confronto. Il procedimento termina perché la lunghezza del secondo nastro raddoppia a ogni giro, quindi prima o poi supera $n$.
+\end{sol}
+
+% ---------------- ESERCIZIO 3 ----------------
+\newpage
+\begin{ex}
+Sia $A=\{0,1\}$ l'alfabeto binario; per $w\in A^*$ sia $|w|_0$ (rispettivamente $|w|_1$) il numero di occorrenze dello $0$ (rispettivamente dell'$1$) in $w$. Si considerino i seguenti insiemi:
+\[
+X=\{0^n1^n \mid n\geq 0\},\qquad X'=\{0^n1^m \mid n\geq 0,\ m\geq 0\},\qquad Y=\{w\in A^* \mid |w|_0=|w|_1\}.
+\]
+Mostrare che:
+\begin{enumerate}
+    \item $X$ non è regolare poiché non soddisfa la condizione necessaria del Pumping Lemma;
+    \item $X'$ è regolare poiché è interpretazione di un'espressione regolare (quale?);
+    \item $X=X'\cap Y$;
+    \item $Y$ non è regolare.
+\end{enumerate}
+\end{ex}

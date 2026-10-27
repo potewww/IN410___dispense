@@ -59,3 +59,4 @@
 \contentsline {section}{\numberline {14}Esoneri ed esami}{133}{section.14}%
 \contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{133}{subsection.14.1}%
 \contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{139}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Esonero 2 - 08/11/2022}{140}{subsection.14.3}%

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  23 OCT 2026 19:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  27 OCT 2026 10:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1434,29 +1434,68 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has be
 <to be read again> 
                    \relax 
 l.36 \begin{sol}\
-                 ))
+                 )
 
-[139] (./main.aux)
+[139] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
+pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.3 S
+     i consideri il seguente automa di alfabeto $A=\{a,b\}$ e insieme degli ...
+pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.33     \item L
+                o stato iniziale è $q_0$ e $F=\{q_2\}$. La tabella delle tr...
+
+[140]
+
+[141]
+
+[142]
+
+[143]
+pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.240 F
+       ornire una macchina di Turing $\mu$ di alfabeto $A=\{1\}$ (unario) ch...
+pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.246 S
+       ia $\alpha$ la macchina che, partendo da $1^m$, scrive $1^{2m}$ (radd...
+
+[144]
+
+[145]
+pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.332 S
+       ia $A=\{0,1\}$ l'alfabeto binario; per $w\in A^*$ sia $|w|_0$ (rispet...))
+
+[146] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5FD9C1BF746F37BCEAFFDEA70E973FC3;10524.
+(rerunfilecheck)             Checksum: 91FF2A89B44244ECFA99A838EA7F7511;10703.
  ) 
 Here is how much of TeX's memory you used:
- 37343 strings out of 473190
- 753957 string characters out of 5715800
- 1224699 words of memory out of 5000000
- 59012 multiletter control sequences out of 15000+600000
+ 37443 strings out of 473190
+ 755512 string characters out of 5715800
+ 1225699 words of memory out of 5000000
+ 59076 multiletter control sequences out of 15000+600000
  578676 words of font info for 117 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1453b,1646s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (139 pages, 778246 bytes).
+Output written on main.pdf (146 pages, 797549 bytes).
 PDF statistics:
- 2048 PDF objects out of 2073 (max. 8388607)
- 1806 compressed objects within 19 object streams
- 900 named destinations out of 1000 (max. 500000)
- 629 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2115 PDF objects out of 2487 (max. 8388607)
+ 1866 compressed objects within 19 object streams
+ 933 named destinations out of 1000 (max. 500000)
+ 637 words of extra memory for PDF output out of 10000 (max. 10000000)
 
