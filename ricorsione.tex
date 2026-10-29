@@ -118,7 +118,30 @@ calcoli $H$. Possiamo ipotizzare che $\mu_1$ e $\mu_2$ siano macchine per lo ste
 \end{itemize}
 Quindi $\mu'$ calcola bene la funzione composta di $H$ e $G$.
 \end{proof}
+
+% ============================================================
+% Funzioni ricorsive
+% ============================================================
 \subsection{Funzioni ricorsive}
+
+% ---------- Funzioni base ----------
+Useremo le seguenti  funzione che chiameremo
+funzioni base
+indicando con 
+$A=B=(\mathbb N)_1$, 
+cioè $\mathbb N$ in base $1$,
+abbiamo
+\begin{itemize}
+    \item Addizione: $S(x,y)=x+y$.
+    \item Predecessore (decremento): $D(x)=\begin{cases}x-1 & x>0\\ 0 & \text{altrimenti.}\end{cases}$
+    \item Schemi per funzioni:
+    \begin{itemize}
+        \item costanti: $C_{x_0,n}\colon\mathbb N^n\to\mathbb N$, $(-)\mapsto x_0$;
+        \item proiezione: $P_{i,n}\colon\mathbb N^n\to\mathbb N$, $(x_1,\dots,x_n)\mapsto x_i$.
+    \end{itemize}
+\end{itemize}
+
+% ---------- Ricorsione primitiva e minimalizzazione ----------
 \begin{defi}
 Supponiamo che $G$ e $H$ siano due funzioni rispettivamente da $\mathbb N^{r+1}$ a $\mathbb N$ e da $\mathbb N^{r+2}$ a $\mathbb N$. La funzione definita per ricorsione primitiva di base $G$ e passo $H$ è la funzione $F$ da $\mathbb N^{r+1}$ a $\mathbb N$ tale che
 \[
@@ -143,11 +166,34 @@ se e solo se
 In particolare $G$ è definita (e non nulla) per ogni $i<k$. Con le notazioni sulle parole: $G\colon (A^*)^r\times\mathbb N\to\mathbb N$ e $F\colon (A^*)^r\to\mathbb N$.
 \end{defi}
 
-\noindent Utilizzeremo l'espressione $\mathsf S$ e la sua interpretazione $[[\mathsf S]](n,m)=S(n,m)=n+m$.
+% ---------- Funzioni ricorsive (def. astratta) ----------
+Introduciamo una famiglia di funzioni sugli interi tramite la prossima definizione ``astratta'' (o piuttosto induttiva):
 
 \begin{defi}
-Le espressioni ricorsive di profondità $0$ sono $\mathsf S$, $\mathsf D$, $\mathsf C_{r,x_0}$ e $\mathsf P_{r,i}$. Per $d\geq 1$, una espressione ricorsiva è di profondità $d$ se è di profondità $d-1$ oppure se può essere scritta per composizione, concatenazione, ricorsione o minimalizzazione di espressioni di profondità $d-1$.
+L'insieme delle \emph{funzioni ricorsive} $\mathcal R$ è il più piccolo insieme di funzioni su numeri interi
+\begin{itemize}
+    \item che contiene la funzione ``somma'', la funzione ``predecessore'', le funzioni costanti e le funzioni proiezione,
+    \item e che è chiuso per concatenazione, composizione, ricorsione primitiva e minimalizzazione.
+\end{itemize}
+Le funzioni ricorsive sono gli elementi dell'insieme precedente. Gli \emph{insiemi ricorsivi} sono insiemi di numeri interi la cui funzione caratteristica è una funzione ricorsiva.
 \end{defi}
+
+% ---------- Espressioni ricorsive e interpretazione ----------
+\bigskip
+\noindent \textbf{Espressioni ricorsive e interpretazione}
+
+\medskip
+
+\begin{defi}
+Le espressioni ricorsive di profondità $0$ sono $\mathsf S$, $\mathsf D$, $\mathsf C_{x_0,n}$ e $\mathsf P_{i,n}$. Per $d\geq 1$, una espressione ricorsiva è di profondità $d$ se è di profondità $d-1$ oppure se può essere scritta per composizione, concatenazione, ricorsione o minimalizzazione di espressioni di profondità $d-1$.
+\end{defi}
+
+\begin{rema}
+Dal punto di vista sintattico, la costruzione di tutte le espressioni mostra in modo induttivo che i ``costrutti'' introdotti sopra possono essere ottenuti come interpretazione delle espressioni ricorsive generate dalla grammatica con simbolo iniziale $\mathsf R$ le cui regole di produzione sono
+\[
+\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{x_0,n}\mid\mathsf P_{i,n}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
+\]
+\end{rema}
 
 \begin{defi}
 La classe delle funzioni ricorsive può essere definita come l'insieme delle funzioni che sono interpretazione di un'espressione ricorsiva:
@@ -156,14 +202,6 @@ La classe delle funzioni ricorsive può essere definita come l'insieme delle fun
 \]
 \end{defi}
 
-\begin{rema}
-Dal punto di vista sintattico, la costruzione di tutte le espressioni mostra in modo induttivo che i ``costrutti'' introdotti sopra possono essere ottenuti come interpretazione delle espressioni ricorsive generate dalla grammatica con simbolo iniziale $\mathsf R$ le cui regole di produzione sono
-\[
-\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{r,x_0}\mid\mathsf P_{r,i}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
-\]
-\end{rema}
-
-% Nota a mano: "Def" -- sposta questo in fondo, dopo la definizione di R
 \begin{defi}
 L'insieme delle espressioni ricorsive sarà indicato con $\mathsf R$. Più precisamente l'interpretazione sarà una funzione
 \[
@@ -175,16 +213,203 @@ ad esempio se $\mathsf e\in\mathsf R$ è un'espressione ricorsiva $[[\mathsf e]]
 \]
 \end{defi}
 
-% Pagina a mano: Funzioni Base
-\bigskip
-\noindent \textbf{Funzioni base} \quad ($A=B=(\mathbb N)_1$, cioè $\mathbb N$ in base $1$)
+È anche possibile avere presentazioni alternative della stessa classe di funzioni: ad esempio si potrebbe cambiare l'interpretazione del simbolo $\mathsf S$ dalla somma alla funzione successore, $[[\mathsf S]](x):=x+1$, senza cambiare il linguaggio:
+\[
+\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{x_0,n}\mid\mathsf P_{i,n}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
+\]
+Si vede facilmente che la classe delle funzioni che sono interpretazione delle (stesse) espressioni ricorsive non cambia, in quanto la funzione successore si può ottenere dalla somma e dalla funzione costante a $1$ per composizione, e la funzione somma si può ottenere come iterazione del successore per ricorsione primitiva di base la funzione identità e il successore come passo di ricorsione. In pratica, denotando con $[[\ ]]_1$ la prima interpretazione e con $[[\ ]]_2$ la seconda, quella che associa a $\mathsf S$ il successore, abbiamo le seguenti equazioni:
+\[
+[[\mathsf S]]_2=[[\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf C_{1,1}),\mathsf S)]]_1
+\qquad\qquad
+[[\mathsf S]]_1=[[\mathsf{REC}(\mathsf P_{1,1},\mathsf{COMP}(\mathsf P_{3,3},\mathsf S))]]_2
+\]
 
-\begin{itemize}
-    \item Addizione: $S(x,y)=x+y$.
-    \item Predecessore (decremento): $D(x)=\begin{cases}x-1 & x>0\\ 0 & \text{altrimenti.}\end{cases}$
-    \item Schemi per funzioni:
-    \begin{itemize}
-        \item costanti: $C_{x_0,n}\colon\mathbb N^n\to\mathbb N$, $(-)\mapsto x_0$;
-        \item proiezione: $P_{i,n}\colon\mathbb N^n\to\mathbb N$, $(x_1,\dots,x_n)\mapsto x_i$.
-    \end{itemize}
-\end{itemize}
+% ---------- Turing calcolabilità delle funzioni base ----------
+\bigskip
+\noindent \textbf{Turing calcolabilità delle funzioni base}
+
+\medskip
+
+\begin{lemm}
+La funzione somma $S\colon\mathbb N\times\mathbb N\to\mathbb N$ è Turing calcolabile.
+\end{lemm}
+
+\begin{proof}
+Usiamo la rappresentazione in base $1$. È quindi necessario passare dalla configurazione iniziale associata a $1^{n+1}\square 1^{m+1}$ (rappresentazione della coppia di numeri interi $(n,m)$) alla configurazione terminale associata alla parola $1^{n+m+1}$ (rappresentazione dell'intero $n+m$). In altre parole, si tratta di cancellare due $1$ alla fine e sostituire il blank centrale con un $1$. La macchina in Figura~\ref{fig:turing-somma} esegue i passi che abbiamo descritto.
+\end{proof}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)  {$q_0$};
+\node[state]            (q1) at (3,0)  {$q_1$};
+\node[state]            (q2) at (6,0)  {$q_2$};
+\node[state]            (q3) at (9,0)  {$q_3$};
+\node[state]            (q4) at (12,0) {$q_4$};
+\node[state, accepting] (qF) at (15,0) {$q_F^1$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni lungo la riga principale
+\draw[->] (q0) -- node {$\square/\square,+1$} (q1);
+\draw[->] (q1) -- node {$\square/\square,-1$} (q2);
+\draw[->] (q2) -- node {$1/\square,-1$}       (q3);
+\draw[->] (q3) -- node {$1/\square,-1$}       (q4);
+\draw[->] (q4) -- node {$\square/1,+1$}       (qF);
+
+% Cappi
+\draw[->] (q0) to[loop above, looseness=8] node {$1/1,+1$} (q0);
+\draw[->] (q1) to[loop above, looseness=8] node {$1/1,+1$} (q1);
+\draw[->] (q4) to[loop above, looseness=8] node {$1/1,-1$} (q4);
+\end{tikzpicture}
+\caption{Macchina di Turing che calcola la somma di due interi rappresentati in unario.}
+\label{fig:turing-somma}
+\end{figure}
+
+\noindent Utilizzeremo l'espressione $\mathsf S$ e la sua interpretazione $[[\mathsf S]](n,m)=S(n,m)=n+m$.
+
+\begin{lemm}
+La funzione predecessore $D\colon\mathbb N\to\mathbb N$ che associa all'intero $N+1$ il valore $N$ è Turing calcolabile.
+\end{lemm}
+
+\begin{proof}
+Più semplice del lemma precedente \dots
+\end{proof}
+
+\noindent Utilizzeremo l'espressione $\mathsf D$ e la sua interpretazione
+\[
+[[\mathsf D]](n)=D(n)=\begin{cases}n-1 & \text{se } n>0\\ 0 & \text{altrimenti.}\end{cases}
+\]
+
+\begin{lemm}
+Per ogni numero intero $n$, e per ogni numero intero $x_0$, la funzione da $\mathbb N^n$ in $\mathbb N$ di valore costante uguale a $x_0$ è Turing calcolabile.
+\end{lemm}
+
+\begin{proof}
+Cerca l'$n$-esimo blank a destra, ritorna cancellando tutti i caratteri fino a trovare il primo blank, quindi si sposta nella casella a destra e scrive la rappresentazione di $x_0$ e infine torna alla posizione $1$. Nella Figura~\ref{fig:turing-costante} è rappresentata la macchina nel caso $n=2$ e $x_0=2$.
+\end{proof}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Prima riga: ricerca dell'ultimo blank e cancellazione dei due blocchi
+\node[state] (q0) at (0,0)  {$q_0$};
+\node[state] (q1) at (3,0)  {$q_1$};
+\node[state] (q2) at (6,0)  {$q_2$};
+\node[state] (q3) at (9,0)  {$q_3$};
+
+% Seconda riga: scrittura di x_0 e ritorno alla casella 1
+\node[state]            (q4) at (0,-3.2)  {$q_4$};
+\node[state]            (q5) at (3,-3.2)  {$q_5$};
+\node[state]            (q6) at (6,-3.2)  {$q_6$};
+\node[state]            (q7) at (9,-3.2)  {$q_7$};
+\node[state, accepting] (qF) at (12,-3.2) {$q_F^1$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni della prima riga
+\draw[->] (q0) -- node {$\square/\square,+1$} (q1);
+\draw[->] (q1) -- node {$\square/\square,-1$} (q2);
+\draw[->] (q2) -- node {$\square/\square,-1$} (q3);
+
+% Passaggio dalla prima alla seconda riga
+\draw[->, rounded corners=8pt]
+    (q3.south) -- (q3.south |- 0,-1.6) -- node[above] {$\square/\square,+1$} (q4.north |- 0,-1.6) -- (q4.north);
+
+% Transizioni della seconda riga
+\draw[->] (q4) -- node {$\square/1,+1$}       (q5);
+\draw[->] (q5) -- node {$\square/1,+1$}       (q6);
+\draw[->] (q6) -- node {$\square/1,-1$}       (q7);
+\draw[->] (q7) -- node {$\square/\square,+1$} (qF);
+
+% Cappi
+\draw[->] (q0) to[loop above, looseness=8] node {$1/1,+1$}       (q0);
+\draw[->] (q1) to[loop above, looseness=8] node {$1/1,+1$}       (q1);
+\draw[->] (q2) to[loop above, looseness=8] node {$1/\square,-1$} (q2);
+\draw[->] (q3) to[loop above, looseness=8] node {$1/\square,-1$} (q3);
+\draw[->] (q7) to[loop below, looseness=8] node {$1/1,-1$}       (q7);
+\end{tikzpicture}
+\caption{Macchina di Turing che calcola la funzione costante $\mathsf C_{2,2}$ ($x_0=2$) su due argomenti rappresentati in unario.}
+\label{fig:turing-costante}
+\end{figure}
+
+\begin{rema}
+La macchina che calcola $F_1=[[\mathsf C_{m,1}]]$ è diversa da quella che calcola $F_2=[[\mathsf C_{m,2}]]$: l'elenco delle istruzioni necessarie per cancellare un blocco di $1$ non è affatto lo stesso di quello che cancella due blocchi di $1$. In effetti non possiamo costruire la macchina di Turing che, qualunque sia il numero intero $n$, calcoli la funzione $[[\mathsf C_{m,n}]]$, perché, necessariamente il valore del parametro $n$ deve essere codificato in un modo o nell'altro negli stati della macchina. L'impossibilità viene quindi dal fatto che $n$ non è un valore limitato, quindi non è possibile codificarlo in un insieme finito di stati.
+
+Tuttavia, possiamo facilmente costruire una macchina che calcola ciascuna delle funzioni $[[\mathsf C_{m,n}]]$ per ogni valore di $n$ inferiore a un valore $n_{\max}$. Infatti, una macchina che cancella $n_{\max}$ blocchi di $1$ procede allo stesso modo anche quando alcuni blocchi possono essere mancanti. Inoltre, vedremo questo tipo di proprietà molto più in generale più avanti.
+
+D'altra parte potremmo anche scrivere una macchina che, a partire dal valore di $n$ e di qualsiasi tupla, porta alla configurazione terminale associata alla costante $m$: assumendo il valore di $n$ codificato in rappresentazione unaria, la macchina cancellerà tanti blocchi di $1$ quanti ce ne sono nel primo di questi blocchi (che verrà cancellato per ultimo).
+\end{rema}
+
+\begin{lemm}
+Per ogni coppia di interi $n$ ed $i$ con $i\leq n$, la proiezione che associa ad una $n$-upla di interi l'$i$-esimo elemento è Turing calcolabile.
+\end{lemm}
+
+\begin{proof}
+Ancora una volta, si tratta di cancellare $n$ blocchi di numeri. Durante il passaggio in corrispondenza dell'$i$-esimo blocco, questo viene copiato sul secondo nastro e quindi, quando la cancellazione di tutti i blocchi è terminata, il puntatore torna alla casella iniziale, e infine il blocco dei numeri del secondo nastro viene copiato sul primo (e cancellato dal secondo).
+\end{proof}
+
+\noindent Utilizzeremo l'espressione $\mathsf P_{i,n}$ e la sua interpretazione $[[\mathsf P_{i,n}]](x_1,\dots,x_n)=x_i$.
+
+Con questa nozione possiamo riassumere i risultati di chiusura sopra stabiliti per funzioni Turing calcolabili nella forma delle seguenti inclusioni:
+
+\begin{prop}\
+\begin{enumerate}
+    \item[i)] Qualsiasi funzione ricorsiva su numeri interi è calcolabile mediante macchina di Turing.
+    \item[ii)] Qualsiasi insieme ricorsivo di numeri interi è decidibile per macchina di Turing.
+\end{enumerate}
+\end{prop}
+
+% ---------- Esempi di funzioni ricorsive ----------
+\bigskip
+\noindent \textbf{Esempi di funzioni ricorsive}
+
+\medskip
+
+\begin{lemm}
+Le funzioni ``prodotto'' ed ``esponenziale'' sono ricorsive.
+\end{lemm}
+
+\begin{proof}
+Abbiamo visto sopra che il prodotto può essere definito per ricorsione primitiva a partire dalla somma. Precisamente, se denotiamo con $M$ la funzione ``prodotto'', abbiamo che soddisfa le seguenti equazioni di ricorsione:
+\[
+M(n,m):=\begin{cases}0 & \text{se } m=0\\ n+M(n,m-1) & \text{se } m>0\end{cases}
+\]
+quindi si può applicare la definizione per ricorsione e, ponendo l'espressione ricorsiva
+\[
+\mathsf{MULT}:=\mathsf{REC}(\mathsf C_{0,1},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{1,3}),\mathsf S)),
+\]
+si ha che $[[\mathsf{MULT}]]=M\colon\mathbb N^2\to\mathbb N$.
+
+In modo analogo la funzione esponenziale $E(n,m):=n^m$ soddisfa l'equazione di ricorsione primitiva:
+\[
+E(n,m):=\begin{cases}1 & \text{se } m=0\\ n\cdot E(n,m-1) & \text{se } m>0\end{cases}
+\]
+quindi si può applicare la definizione per ricorsione e, ponendo l'espressione ricorsiva
+\[
+\mathsf{EXP}:=\mathsf{REC}(\mathsf C_{1,1},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{1,3}),\mathsf{MULT})),
+\]
+si ha che $[[\mathsf{EXP}]]=E\colon\mathbb N^2\to\mathbb N$. Quindi otteniamo una definizione di $E$ in termini di sole funzioni ricorsive di base e costrutti mediante sostituzione dell'espressione $\mathsf{MULT}$ con l'espressione ricorsiva che la rappresenta.
+\end{proof}
+
+\medskip
+\noindent \textbf{Domanda.} $f$ Turing calcolabile $\overset{?}{\Longrightarrow}$ $\exists\,\mathsf e\in\mathsf R$ tale che $[[\mathsf e]]=f$.
+
+\medskip
+
+Per $X\subset\mathbb N^r$, la funzione caratteristica di $X$ sia $\mathbb 1_X$ e sia $\Delta$ la funzione per cui $\Delta(x,y)=\sup(x-y,0)$.
+
+\begin{lemm}
+Le funzioni $\Delta$, $\sup$, $\inf$, $\mathbb 1_{\{0\}}$ e $\mathbb 1_{\{<\}}$ sono ricorsive.
+\end{lemm}

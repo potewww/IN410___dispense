@@ -38,25 +38,25 @@
 \contentsline {section}{\numberline {10}Funzioni ricorsive}{91}{section.10}%
 \contentsline {subsection}{\numberline {10.1}Funzioni Turing-computabili}{91}{subsection.10.1}%
 \contentsline {subsection}{\numberline {10.2}Funzioni ricorsive}{95}{subsection.10.2}%
-\contentsline {section}{\numberline {11}Prerequisiti}{97}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{97}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{97}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{98}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{98}{subsection.11.4}%
-\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{100}{subsection.11.5}%
-\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{101}{subsection.11.6}%
-\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{101}{subsubsection.11.6.1}%
-\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{101}{subsubsection.11.6.2}%
-\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{103}{subsubsection.11.6.3}%
-\contentsline {section}{\numberline {12}Wolfram}{104}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Introduzione}{104}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Entropia}{107}{subsection.12.2}%
-\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{109}{subsection.12.3}%
-\contentsline {subsection}{\numberline {12.4}Automi}{110}{subsection.12.4}%
-\contentsline {section}{\numberline {13}Esercizi}{112}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Automi}{112}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{125}{subsection.13.2}%
-\contentsline {section}{\numberline {14}Esoneri ed esami}{133}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{133}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{139}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Esonero 2 - 08/11/2022}{140}{subsection.14.3}%
+\contentsline {section}{\numberline {11}Prerequisiti}{101}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{101}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{101}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{102}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{102}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{104}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{105}{subsection.11.6}%
+\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{105}{subsubsection.11.6.1}%
+\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{105}{subsubsection.11.6.2}%
+\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{107}{subsubsection.11.6.3}%
+\contentsline {section}{\numberline {12}Wolfram}{108}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Introduzione}{108}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Entropia}{111}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{113}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Automi}{114}{subsection.12.4}%
+\contentsline {section}{\numberline {13}Esercizi}{116}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Automi}{116}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{129}{subsection.13.2}%
+\contentsline {section}{\numberline {14}Esoneri ed esami}{137}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{137}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{143}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Esonero 2 - 08/11/2022}{144}{subsection.14.3}%
