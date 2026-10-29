@@ -126,14 +126,10 @@ Quindi $\mu'$ calcola bene la funzione composta di $H$ e $G$.
 
 % ---------- Funzioni base ----------
 Useremo le seguenti  funzione che chiameremo
-funzioni base
-indicando con 
-$A=B=(\mathbb N)_1$, 
-cioè $\mathbb N$ in base $1$,
-abbiamo
+funzioni base:
 \begin{itemize}
-    \item Addizione: $S(x,y)=x+y$.
-    \item Predecessore (decremento): $D(x)=\begin{cases}x-1 & x>0\\ 0 & \text{altrimenti.}\end{cases}$
+    \item Addizione (o somma): $S(x,y)=x+y$.
+    \item Predecessore (o decremento): $D(x)=\begin{cases}x-1 & x>0\\ 0 & \text{altrimenti.}\end{cases}$
     \item Schemi per funzioni:
     \begin{itemize}
         \item costanti: $C_{x_0,n}\colon\mathbb N^n\to\mathbb N$, $(-)\mapsto x_0$;
@@ -166,6 +162,8 @@ se e solo se
 In particolare $G$ è definita (e non nulla) per ogni $i<k$. Con le notazioni sulle parole: $G\colon (A^*)^r\times\mathbb N\to\mathbb N$ e $F\colon (A^*)^r\to\mathbb N$.
 \end{defi}
 
+
+
 % ---------- Funzioni ricorsive (def. astratta) ----------
 Introduciamo una famiglia di funzioni sugli interi tramite la prossima definizione ``astratta'' (o piuttosto induttiva):
 
@@ -178,14 +176,12 @@ L'insieme delle \emph{funzioni ricorsive} $\mathcal R$ è il più piccolo insiem
 Le funzioni ricorsive sono gli elementi dell'insieme precedente. Gli \emph{insiemi ricorsivi} sono insiemi di numeri interi la cui funzione caratteristica è una funzione ricorsiva.
 \end{defi}
 
+\subsection{Espressioni ricorsive e interpretazioni}
 % ---------- Espressioni ricorsive e interpretazione ----------
-\bigskip
-\noindent \textbf{Espressioni ricorsive e interpretazione}
-
-\medskip
 
 \begin{defi}
-Le espressioni ricorsive di profondità $0$ sono $\mathsf S$, $\mathsf D$, $\mathsf C_{x_0,n}$ e $\mathsf P_{i,n}$. Per $d\geq 1$, una espressione ricorsiva è di profondità $d$ se è di profondità $d-1$ oppure se può essere scritta per composizione, concatenazione, ricorsione o minimalizzazione di espressioni di profondità $d-1$.
+\textit{Le espressioni ricorsive di profondità $0$} sono $\mathsf S$, $\mathsf D$, $\mathsf C_{x_0,n}$ e $\mathsf P_{i,n}$. Per $d\geq 1$, una espressione ricorsiva è di \textit{profondità $d$} se è di profondità $d-1$ oppure se può essere scritta per composizione, concatenazione, ricorsione o minimalizzazione di espressioni di profondità $d-1$.
+L'insieme delle espressioni ricorsive sarà indicato con $\mathsf R$. 
 \end{defi}
 
 \begin{rema}
@@ -195,24 +191,22 @@ Dal punto di vista sintattico, la costruzione di tutte le espressioni mostra in 
 \]
 \end{rema}
 
+
 \begin{defi}
-La classe delle funzioni ricorsive può essere definita come l'insieme delle funzioni che sono interpretazione di un'espressione ricorsiva:
+L'\textit{interpretazione} per un'espressione ricorsiva
+è l'immagine della data espressione tramite la funzione
 \[
-\mathcal R:=\{[[\mathsf e]]\mid \mathsf e\in\mathsf R\}.
+[[\;]]\colon \mathsf R\to\left(\bigcup_{r,s}\left(\mathbb N^r\to\mathbb N^s\right)\right)
 \]
 \end{defi}
 
-\begin{defi}
-L'insieme delle espressioni ricorsive sarà indicato con $\mathsf R$. Più precisamente l'interpretazione sarà una funzione
-\[
-[[\;]]\colon \mathsf R\to\left(\bigcup_{r,s}\left(\mathbb N^r\to\mathbb N^s\right)\right),
-\]
-ad esempio se $\mathsf e\in\mathsf R$ è un'espressione ricorsiva $[[\mathsf e]]=F$ nel senso che per ogni $(n_1,\dots,n_r)$
+\begin{exam}
+Se $\mathsf e\in\mathsf R$ è un'espressione ricorsiva tale che $[[\mathsf e]]=F$ allora per ogni $(n_1,\dots,n_r)$
 \[
 [[\mathsf e]](n_1,\dots,n_r)=F(n_1,\dots,n_r).
 \]
-\end{defi}
-
+\end{exam}
+\begin{rema}
 È anche possibile avere presentazioni alternative della stessa classe di funzioni: ad esempio si potrebbe cambiare l'interpretazione del simbolo $\mathsf S$ dalla somma alla funzione successore, $[[\mathsf S]](x):=x+1$, senza cambiare il linguaggio:
 \[
 \mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{x_0,n}\mid\mathsf P_{i,n}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
@@ -223,12 +217,18 @@ Si vede facilmente che la classe delle funzioni che sono interpretazione delle (
 \qquad\qquad
 [[\mathsf S]]_1=[[\mathsf{REC}(\mathsf P_{1,1},\mathsf{COMP}(\mathsf P_{3,3},\mathsf S))]]_2
 \]
+\end{rema}
+\begin{rema}
+La classe delle funzioni ricorsive può essere definita come l'insieme delle funzioni che sono interpretazione di un'espressione ricorsiva:
+\[
+\mathcal R:=\{[[\mathsf e]]\mid \mathsf e\in\mathsf R\}.
+\]
+\end{rema}
 
 % ---------- Turing calcolabilità delle funzioni base ----------
-\bigskip
-\noindent \textbf{Turing calcolabilità delle funzioni base}
 
-\medskip
+\subsection{Turing calcolabilità delle funzioni base}
+
 
 \begin{lemm}
 La funzione somma $S\colon\mathbb N\times\mathbb N\to\mathbb N$ è Turing calcolabile.
@@ -372,11 +372,20 @@ Con questa nozione possiamo riassumere i risultati di chiusura sopra stabiliti p
 \end{prop}
 
 % ---------- Esempi di funzioni ricorsive ----------
-\bigskip
-\noindent \textbf{Esempi di funzioni ricorsive}
 
-\medskip
-
+\subsection{Equivalenza tra turing calcolibilità e ricorsività}
+Nelle sezioni precedenti, abbiamo
+visto come le funzioni ricorsive siano turing calcolabili
+(infatti abbiamo mostrato che le funzioni base sono turing calcolabili,
+e che partendo da funzioni Turing calcolabili e applicando una tra composizione,
+concatenazione, ricorsione o minimalizzazione otteniamo sempre funzioni
+Turing calcolabili).
+Ci vogliamo ora porre la domanda opposta:
+ogni funzione Turing calcolabile è ricorsiva? Ovvero,
+data una funzione $f$ Turing calcolabile,
+esiste un $\mathsf e \in \mathsf R$ tale che
+$\llbracket e \rrbracket = f$? La rispsota è affermativa, per
+dimostrarlo però avremo bisogno di un po di risultati preliminari.
 \begin{lemm}
 Le funzioni ``prodotto'' ed ``esponenziale'' sono ricorsive.
 \end{lemm}
@@ -403,13 +412,12 @@ quindi si può applicare la definizione per ricorsione e, ponendo l'espressione 
 si ha che $[[\mathsf{EXP}]]=E\colon\mathbb N^2\to\mathbb N$. Quindi otteniamo una definizione di $E$ in termini di sole funzioni ricorsive di base e costrutti mediante sostituzione dell'espressione $\mathsf{MULT}$ con l'espressione ricorsiva che la rappresenta.
 \end{proof}
 
-\medskip
-\noindent \textbf{Domanda.} $f$ Turing calcolabile $\overset{?}{\Longrightarrow}$ $\exists\,\mathsf e\in\mathsf R$ tale che $[[\mathsf e]]=f$.
-
-\medskip
 
 Per $X\subset\mathbb N^r$, la funzione caratteristica di $X$ sia $\mathbb 1_X$ e sia $\Delta$ la funzione per cui $\Delta(x,y)=\sup(x-y,0)$.
 
 \begin{lemm}
 Le funzioni $\Delta$, $\sup$, $\inf$, $\mathbb 1_{\{0\}}$ e $\mathbb 1_{\{<\}}$ sono ricorsive.
+\begin{proof}
+    Prendi dalle dispense.
+\end{proof}
 \end{lemm}
