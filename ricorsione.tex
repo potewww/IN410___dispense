@@ -122,7 +122,7 @@ Quindi $\mu'$ calcola bene la funzione composta di $H$ e $G$.
 % ============================================================
 % Funzioni ricorsive
 % ============================================================
-\subsection{Funzioni ricorsive}
+\subsection{Funzioni per ricorsione}
 
 % ---------- Funzioni base ----------
 Useremo le seguenti  funzione che chiameremo
@@ -139,7 +139,8 @@ funzioni base:
 
 % ---------- Ricorsione primitiva e minimalizzazione ----------
 \begin{defi}
-Supponiamo che $G$ e $H$ siano due funzioni rispettivamente da $\mathbb N^{r+1}$ a $\mathbb N$ e da $\mathbb N^{r+2}$ a $\mathbb N$. La funzione definita per ricorsione primitiva di base $G$ e passo $H$ è la funzione $F$ da $\mathbb N^{r+1}$ a $\mathbb N$ tale che
+Supponiamo che $G$ e $H$ siano due funzioni rispettivamente da $\mathbb N^{r+1}$ a $\mathbb N$ e da $\mathbb N^{r+2}$ a $\mathbb N$. 
+La \textit{funzione definita per ricorsione primitiva di base $G$ e passo $H$} è la funzione $F$ da $\mathbb N^{r+1}$ a $\mathbb N$ tale che
 \[
 F(x_1,\dots,x_r,m)=
 \begin{cases}
@@ -362,18 +363,32 @@ Ancora una volta, si tratta di cancellare $n$ blocchi di numeri. Durante il pass
 
 \noindent Utilizzeremo l'espressione $\mathsf P_{i,n}$ e la sua interpretazione $[[\mathsf P_{i,n}]](x_1,\dots,x_n)=x_i$.
 
+
+\begin{defi}
+Una funzione $f$
+si dice \textit{ricorsiva}
+se esiste $e \in \mathsf R$ tale che
+$\llbracket e \rrbracket=f$.
+Un insieme $A$ si dice \textit{ricorsivo}
+se la sua funzione caratteristica $\mathbb 1_A$ è ricorsiva.
+\end{defi}
+
 Con questa nozione possiamo riassumere i risultati di chiusura sopra stabiliti per funzioni Turing calcolabili nella forma delle seguenti inclusioni:
 
 \begin{prop}\
 \begin{enumerate}
-    \item[i)] Qualsiasi funzione ricorsiva su numeri interi è calcolabile mediante macchina di Turing.
-    \item[ii)] Qualsiasi insieme ricorsivo di numeri interi è decidibile per macchina di Turing.
+    \item Qualsiasi funzione ricorsiva su numeri interi è calcolabile mediante macchina di Turing.
+    \item Qualsiasi insieme ricorsivo di numeri interi è decidibile per macchina di Turing.
 \end{enumerate}
 \end{prop}
 
 % ---------- Esempi di funzioni ricorsive ----------
 
+
+
+
 \subsection{Equivalenza tra turing calcolibilità e ricorsività}
+
 Nelle sezioni precedenti, abbiamo
 visto come le funzioni ricorsive siano turing calcolabili
 (infatti abbiamo mostrato che le funzioni base sono turing calcolabili,
@@ -418,6 +433,158 @@ Per $X\subset\mathbb N^r$, la funzione caratteristica di $X$ sia $\mathbb 1_X$ e
 \begin{lemm}
 Le funzioni $\Delta$, $\sup$, $\inf$, $\mathbb 1_{\{0\}}$ e $\mathbb 1_{\{<\}}$ sono ricorsive.
 \begin{proof}
-    Prendi dalle dispense.
+    Dall'equazione ricorsiva,
+\[
+\Delta(n,m) =
+\begin{cases}
+n & \text{se } m = 0\\
+D(f(n,m-1)) & \text{se } m > 0
+\end{cases}
+\]
+si ottiene che la funzione $\Delta$ è ricorsiva come interpretazione della espressione ricorsiva:
+\[
+\texttt{DIFF} := \texttt{REC}(\texttt{P}_{1,1}, \texttt{COMP}(\texttt{P}_{3,3}, \texttt{D}))
+\]
+d'altra parte $\Delta(n,m) = \sup(n-m,0)$ per cui l'equazione $\Delta = \llbracket \texttt{DIFF} \rrbracket$ è soddisfatta. Inoltre,
+\[
+\sup(n,m) = m + \sup(n-m,0)
+\]
+da cui otteniamo che ponendo
+\[
+\texttt{SUP} := \texttt{COMP}(\texttt{CONCAT}(\texttt{P}_{2,2}, \texttt{DIFF}), \texttt{S})
+\]
+si ha che $\llbracket \texttt{SUP} \rrbracket = \sup$.
+Inoltre, vale l'uguaglianza $\inf(n,m) = n + m - \sup(n,m)$ e pertanto si può scrivere l'espressione ricorsiva
+\[
+\texttt{INF} := \texttt{COMP}(\texttt{CONCAT}(\texttt{S}, \texttt{SUP}), \texttt{DIFF})
+\]
+ed avere come al solito $\llbracket \texttt{INF} \rrbracket = \inf$.
+Per la funzione caratteristica dell'insieme singleton $0$, abbiamo che soddisfa l'equazione di ricorsione primitiva:
+\[
+\mathbb{1}_{\{0\}}(m) =
+\begin{cases}
+1 & \text{se } m = 0\\
+0 & \text{se } m > 0
+\end{cases}
+\]
+e dunque ponendo
+\[
+\texttt{ISZERO} := \texttt{REC}(\texttt{C}_{0,1}, \texttt{COMP}(\texttt{P}_{2,2}, \texttt{D}))
+\]
+avremo che $\llbracket \texttt{ISZERO} \rrbracket = \mathbb{1}_{\{0\}}$.
+Infine, notiamo che soddisfare $n \ge m$ è equivalente a 
+verificare se $\Delta(m,n) = 0$ e dunque se $\mathbb{1}_{\{0\}}(\Delta(m,n))$ vale $0$, dunque calcolando
+\[
+\mathbb{1}_{<}(n,m) = \mathbb{1}_{\{0\}}(\mathbb{1}_{\{0\}}(
+    \Delta(m,n)))
+\]
+dunque possiamo definire l'espressione ricorsiva:
+\[
+\texttt{LESSER} := \texttt{COMP}(\texttt{COMP}(\texttt{COMP}(\texttt{CONCAT}(\texttt{P}_{2,2}, \texttt{P}_{2,1}), \texttt{DIFF}), \texttt{ISZERO}), \texttt{ISZERO})
+\]
+e quindi $\llbracket \texttt{LESSER} \rrbracket = \mathbb{1}_{<}$.
 \end{proof}
 \end{lemm}
+
+\begin{prop}
+ Per ogni numero intero $r$, gli insiemi ricorsivi formano u
+ n'algebra booleana di sottoinsiemi di $\mathbb{N}^r$, 
+ ovvero che la famiglia delle parti ricorsive di 
+ $\mathbb{N}^r$ è chiusa per unione finita, intersezione finita e
+  complemento. Inoltre, qualsiasi sottoinsieme finito di 
+  $\mathbb{N}^r$ è ricorsivo. 
+  \begin{proof} Dimostrazione Poiché la funzione caratteristica dell'unione di due insiemi è il limite superiore delle funzioni caratteristiche di questi insiemi, la chiusura per unione è un corollario immediato del fatto che la funzione sup è ricorsiva. Lo stesso vale per l'intersezione che corrisponde all'applicazione della funzione inf alle funzioni caratteristiche. 15-88 Per quanto riguarda la funzione caratteristica dell'insieme complemento, notiamo che la ricorsività della funzione $\mathbb{1}_X$ implica quella della funzione $f(n) := 1 - \mathbb{1}_X(n)$, che coincide con la funzione caratteristica dell'insieme complemento di $X$. Rimane solo da mostrare che gli insiemi singleton sono ricorsivi: si consideri un elemento di $(m_1,\dots,m_r) \in \mathbb{N}^r$ allora \[ \mathbb{1}_{\{(m_1,\dots,m_r)\}}(n_1,\dots,n_r) = \mathbb{1}_0(\Delta(n_1,m_1) + \cdots + \Delta(n_r,m_r)) \] da cui si può facilmente scrivere l'espressione ricorsiva corrispondente. Introduciamo la seguente notazione per la composizione di una sequenza di $n$ concatenazioni: \begin{equation} \mathtt{CONCAT}^n(R_1,\dots,R_n) := \begin{cases} R_1 & \text{se } n = 1 \\ \mathtt{CONCAT}(R_1, R_2) & \text{se } n = 2 \\ \mathtt{CONCAT}(\mathtt{CONCAT}^{n-1}(R_1,\dots,R_{n-1}), R_n) & \text{se } n > 2. \end{cases} \end{equation} \begin{equation} \mathtt{PLUS}^n(R_1,\dots,R_n) := \begin{cases} R_1 & \text{se } n = 1 \\ S(R_1, R_2) & \text{se } n = 2 \\ \mathtt{COMP}(\mathtt{CONCAT}(\mathtt{PLUS}^{n-1}(R_1,\dots,R_{n-1}), R_n), S) & \text{se } n > 2. \end{cases} \end{equation} allora \[ F := \mathtt{PLUS}^r(\mathtt{CONCAT}^r(\mathtt{COMP}(\mathtt{CONCAT}(C_{r,m_1}, P_{r,1}), \mathtt{DIFF}),\dots, \mathtt{COMP}(\mathtt{CONCAT}(C_{r,m_r}, P_{r,r}), \mathtt{DIFF}))) \] e ovviamente, per costruzione, $[\![F]\!] = \mathbb{1}_{\{(m_1,\dots,m_r)\}}$. (aggiungi ISZERO)
+  \end{proof}
+\end{prop}
+\begin{prop}
+    Sia $f_1=\llbracket \mathsf{effe1}\rrbracket$ una funzione ricorsiva, 
+    definita su $X\subset R^n$. Allora la funzione
+    \[
+    f(x_1, \dots , x_n):=
+    \begin{cases}
+        f_1(x_1, \dots , x_n) & \text{se }  (x_1, \dots , x_n)\in X
+        \\
+        \bot & \text{se } (x_1, \dots , x_n) \notin X
+    \end{cases}
+    \]
+    è ricorsiva.
+    \begin{proof}
+        Scriviamo
+\[
+f(x_1,\dots,x_n) = \mathbb{1}_X(x_1,\dots,x_n)\cdot f_1(x_1,\dots,x_n) + e(x_1,\dots,x_n)
+\]
+con
+\[
+e(x_1,\dots,x_n) =
+\begin{cases}
+0 & \text{se } (x_1,\dots,x_n)\in X,\\[2pt]
+\bot & \text{se } (x_1,\dots,x_n)\notin X.
+\end{cases}
+\]
+Dato che $e$ non è definita su $\overline{X}$ $\Rightarrow$ $f$ non è definita su $\overline{X}$.
+Quindi posso togliere $\mathbb{1}_X$ e ottengo
+\[
+f(x_1,\dots,x_n) = f_1(x_1,\dots,x_n) + e(x_1,\dots,x_n).
+\]
+Prendiamo $g(x_1,\dots,x_n) = \mathbb{1}_{\overline{X}}(x_1,\dots,x_n)$. Per \emph{minimalizzazione}
+\[
+\mu(g)(x_1,\dots,x_n) = e(x_1,\dots,x_n).
+\]
+Espressione ricorsiva di $f$:
+\[
+\mathrm{COMP}\Bigl(\mathrm{CONCAT}\bigl(f_1,\ \underbrace{\mathrm{COMP}^3(\mathrm{e}_X,\mathrm{ISZERO},\mathrm{MIN})}_{e_{\overline{X}}}\bigr),\ S\Bigr)
+\]
+    \end{proof}
+\end{prop}
+\begin{lemm}
+Se $f : \mathbb{N}^{r+1} \to \mathbb{N}$ è una funzione ricorsiva allora la funzione
+\[
+g(n_1, \dots, n_r, m) := \sum_{i=0}^m f(n_1, \dots, n_r, i)
+\]
+è anch'essa ricorsiva.
+\begin{proof}
+Dimostrazione Osserviamo che per $g$ vale l'equazione di ricorsione primitiva seguente:
+\[
+g(n_1, \dots, n_{r-1}, m) = \begin{cases} f(n_1, \dots, n_{r-1}, 0) & \text{se } m = 0 \\ f(n_1, \dots, n_{r-1}, m) + g(n_1, \dots, n_{r-1}, m - 1) & \text{se } m > 0 \end{cases}
+\]
+pertanto se $\mathtt{F}$ è un'espressione ricorsiva per cui $[\![\mathtt{F}]\!] = f$ allora prendendo
+\[
+\mathtt{BASE} := \mathtt{COMP}(\mathtt{CONCAT}^r(P_{r,1}, \dots, P_{r,r-1}, C_{r,0}), \mathtt{F})
+\]
+e
+\[
+\mathtt{STEP} := \mathtt{COMP}(\mathtt{CONCAT}(\mathtt{COMP}(\mathtt{CONCAT}^r(P_{r+1,1}, \dots, P_{r+1,r-1}, P_{r+1,r}), \mathtt{F}), P_{r+1,r+1}), \mathtt{S})
+\]
+ponendo $\mathtt{G} := \mathtt{REC}(\mathtt{BASE}, \mathtt{STEP})$ si ha che $[\![\mathtt{G}]\!] = g$. 
+\end{proof}
+\end{lemm}
+\begin{lemm}
+    La contro-immagine di un insieme ricorsivo 
+    attraverso un’applicazione ricorsiva definita ovunque è un
+insieme ricorsivo.
+\begin{proof}
+   Si noti che per una qualsiasi funzione $f$, la funzione
+caratteristica della controimmagine di un insieme $Y$ attraverso $f$ (ovvero $\mathbb{1}_{f^{-1}(Y)}$) coincide con la funzione
+caratteristica di $Y$ applicata all'immagine di un elemento $x$ del dominio: $\mathbb{1}_Y(f(x)) = \mathbb{1}_{f^{-1}(Y)}(x)$.
+\end{proof}
+\end{lemm}
+\begin{lemm}
+Supponiamo che le funzioni $f_1 : \mathbb{N}^r \to \mathbb{N}$ ed $f_2 : \mathbb{N}^r \to \mathbb{N}$ siano 
+ricorsive e totali e che l'insieme $X$ sia un sottoinsieme 
+ricorsivo di $\mathbb{N}^r$. 
+Allora la funzione $f : \mathbb{N}^r \to \mathbb{N}$ definita 
+come \[ f(x_1, \dots, x_r) = \begin{cases} f_1(x_1, \dots, x_r)
+     & \text{se } (x_1, \dots, x_r) \in X \\ f_2(x_1, \dots, x_r)
+      & \text{se } (x_1, \dots, x_r) \notin X \end{cases} \] è 
+      una funzione ricorsiva.    
+\begin{proof}
+        Dimostrazione L'uguaglianza \[ f(x_1, \dots, x_r) = \mathbb{1}_X(x_1, \dots, x_r) \cdot f_1(x_1, \dots, x_r) + \mathbb{1}_{\overline{X}}(x_1, \dots, x_r) \cdot f_1(x_1, \dots, x_r) \] mostra che $f$ è ricorsiva non appena $f_1, f_2$ e $\mathbb{1}_X$ lo sono.
+\end{proof}
+\end{lemm}
+
+\begin{prop}
+Le funzioni $\mathbb{1}_{2\mathbb{N}}$ (funzione caratteristica dell'insieme dei numeri pari), $f(n) := \lfloor n/2 \rfloor$ e $V_2$ sono funzioni ricorsive. 
+\begin{proof}
+ Dall'equazione di ricorsione primitiva \[ \mathbb{1}_{2\mathbb{N}}(m) = \begin{cases} 1 & \text{se } m = 0 \\ \mathbb{1}_{\{0\}}(\mathbb{1}_{2\mathbb{N}}(m - 1)) & \text{se } m > 0 \end{cases} \] abbiamo che posta l'espressione ricorsiva \[ \mathtt{ISEVEN} := \mathtt{REC}(C_{0,1}, \mathtt{COMP}(P_{2,2}, \mathtt{ISZERO})) \] per costruzione sarà $[\![\mathtt{ISEVEN}]\!] = \mathbb{1}_{2\mathbb{N}}$. Notiamo inoltre che la funzione $f(n) := \lfloor n/2 \rfloor$ soddisfa l'equazione di ricorsione primitiva \[ \lfloor m/2 \rfloor = \begin{cases} 0 & \text{se } m = 0 \\ \mathbb{1}_{2\mathbb{N}}(m) + \lfloor (m - 1)/2 \rfloor & \text{se } m > 0 \end{cases} \] pertanto si può definire l'espressione ricorsiva corrispondente: \[ \mathtt{FLOOR2} := \mathtt{REC}(C_{0,0}, \mathtt{COMP}(\mathtt{CONCAT}(\mathtt{COMP}(P_{2,1}, \mathtt{ISEVEN}), P_{2,2}), S)) \] e avere che $[\![\mathtt{FLOOR2}]\!] = f$.
+\end{proof}
+\end{prop} 
