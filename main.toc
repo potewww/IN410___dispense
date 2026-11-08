@@ -38,28 +38,29 @@
 \contentsline {section}{\numberline {10}Funzioni ricorsive}{92}{section.10}%
 \contentsline {subsection}{\numberline {10.1}Funzioni Turing-computabili}{92}{subsection.10.1}%
 \contentsline {subsection}{\numberline {10.2}Funzioni per ricorsione}{96}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Espressioni ricorsive e interpretazioni}{97}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Turing calcolabilità delle funzioni base}{98}{subsection.10.4}%
-\contentsline {subsection}{\numberline {10.5}Equivalenza tra turing calcolibilità e ricorsività}{100}{subsection.10.5}%
-\contentsline {section}{\numberline {11}Prerequisiti}{105}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{105}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{105}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{106}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{106}{subsection.11.4}%
-\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{108}{subsection.11.5}%
-\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{109}{subsection.11.6}%
-\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{109}{subsubsection.11.6.1}%
-\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{109}{subsubsection.11.6.2}%
-\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{111}{subsubsection.11.6.3}%
-\contentsline {section}{\numberline {12}Wolfram}{112}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Introduzione}{112}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Entropia}{115}{subsection.12.2}%
-\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{117}{subsection.12.3}%
-\contentsline {subsection}{\numberline {12.4}Automi}{118}{subsection.12.4}%
-\contentsline {section}{\numberline {13}Esercizi}{120}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Automi}{120}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{133}{subsection.13.2}%
-\contentsline {section}{\numberline {14}Esoneri ed esami}{141}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{141}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{147}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Esonero 2 - 08/11/2022}{148}{subsection.14.3}%
+\contentsline {subsection}{\numberline {10.3}Espressioni ricorsive e interpretazioni}{98}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Turing calcolabilità delle funzioni base}{99}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Equivalenza tra turing calcolibilità e ricorsività}{101}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}Teorema}{107}{subsection.10.6}%
+\contentsline {section}{\numberline {11}Prerequisiti}{108}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{108}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{108}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{109}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{109}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{111}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{112}{subsection.11.6}%
+\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{112}{subsubsection.11.6.1}%
+\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{112}{subsubsection.11.6.2}%
+\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{114}{subsubsection.11.6.3}%
+\contentsline {section}{\numberline {12}Wolfram}{115}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Introduzione}{115}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Entropia}{118}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{120}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Automi}{121}{subsection.12.4}%
+\contentsline {section}{\numberline {13}Esercizi}{123}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Automi}{123}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{136}{subsection.13.2}%
+\contentsline {section}{\numberline {14}Esoneri ed esami}{144}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{144}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{150}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Esonero 2 - 08/11/2022}{151}{subsection.14.3}%

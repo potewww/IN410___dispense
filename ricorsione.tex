@@ -10,7 +10,12 @@ L'oggetto tecnico di questa sezione consiste nella sostituzione del concetto di 
 Al fine di trattare contemporaneamente i casi delle funzioni a più variabili e/o i casi delle funzioni a più valori, diamo le seguenti definizioni:
 
 \begin{defi}
-Sia $A$ un alfabeto qualunque, e siano $k$ ed $r$ due interi positivi. Per ogni vettore di $r$ elementi in $A^*$: $(w_1,w_2,\dots,w_r)\in (A^*)^r$, la configurazione iniziale a $k$ nastri associata al vettore $(w_1,w_2,\dots,w_r)$ è data dalla tripla $(f,p,q)$ dove $f\colon \mathbb Z\to (A')^k$, $p=(1,\dots,1)\in\mathbb Z^k$ e $q=q_0$ è lo stato iniziale in $Q$,
+Sia $A$ un alfabeto qualunque, e siano $k$ ed $r$ due interi positivi. 
+Per ogni vettore di $r$ elementi in $A^*$: $(w_1,w_2,\dots,w_r)\in (A^*)^r$, 
+la 
+\textit{configurazione iniziale a $k$ nastri associata al vettore 
+$(w_1,w_2,\dots,w_r)$} 
+è data dalla tripla $(f,p,q)$ dove $f\colon \mathbb Z\to (A')^k$, $p=(1,\dots,1)\in\mathbb Z^k$ e $q=q_0$ è lo stato iniziale in $Q$,
 \[
 f(k)=
 \begin{cases}
@@ -18,7 +23,10 @@ w_j\!\left(k-\displaystyle\sum_{i=1}^{j-1}(|w_i|+1)\right) & \text{se } \display
 \square & \text{altrimenti}
 \end{cases}
 \]
-Diremo poi che una configurazione terminale a $k$ nastri associata al vettore $(w_1,w_2,\dots,w_r)$ è data dalla tripla $(f,p,q)$ dove $f$ e $p$ sono presi come nel caso della configurazione iniziale e $q=q_F^1$ è lo stato finale della macchina.
+Diremo poi che una 
+\textit{configurazione terminale a $k$ nastri associata 
+al vettore $(w_1,w_2,\dots,w_r)$} è
+data dalla tripla $(f,p,q)$ dove $f$ e $p$ sono presi come nel caso della configurazione iniziale e $q=q_F^1$ è lo stato finale della macchina.
 \end{defi}
 
 In pratica la configurazione iniziale per una data macchina corrisponde alla seguente situazione: sul primo nastro è memorizzato l'input a partire dalla casella $1$ e lasciando un blank per separare le parole $w_i$, mentre gli altri nastri sono vuoti; ogni testina è posizionata sulla casella $1$ di ciascun nastro. La configurazione finale è del tutto analoga: gli ultimi $k-1$ nastri sono vuoti e l'output è memorizzato sul primo nastro a partire dalla casella $1$ e le testine sono tutte allineate in posizione $1$; coincide con la configurazione iniziale multinastro associata alla parola di ingresso.
@@ -36,6 +44,7 @@ Siano $A$ e $B$ due alfabeti e $F$ una funzione, non necessariamente definita da
 È importante discutere il fatto che una configurazione terminale corrisponda al fatto che tutti i nastri tranne il primo sono vuoti (nel senso che contengono solo il $\square$): questa condizione nella definizione di configurazione terminale è dettata dalla possibilità di comporre in modo naturale la computazione di due macchine di Turing, cosa che non sarebbe possibile nel caso in cui la configurazione finale non corrispondesse alla configurazione iniziale per la seconda macchina. D'altra parte la condizione non è restrittiva in quanto se esiste una macchina di Turing che computa una funzione senza ``cancellare'' i nastri è possibile definire una macchina $\mu'$ che fa la stessa computazione essendo pronta a ripulire i nastri diversi dal primo nella parte utilizzata, più precisamente:
 
 \begin{lemm}
+    \label{lem: pulizia nastri}
 Per ogni macchina di Turing $\mu$ a $k$ nastri di alfabeto $A$ e insieme degli stati $Q$, esiste una macchina $\mu'$ che per ogni configurazione iniziale associata ad un vettore $(w_1,\dots,w_r)$ termina la computazione con lo stesso contenuto della $\mu$ sul primo nastro ed i rimanenti $k-1$ nastri posti identicamente uguali al $\square$, in particolare se il primo nastro contiene la sequenza corrispondente al vettore $(w'_1,\dots,w'_m)$ allora la macchina $\mu'$ terminerà nella configurazione terminale associata a $(w'_1,\dots,w'_m)$.
 \end{lemm}
 
@@ -46,7 +55,7 @@ Si può utilizzare ad esempio un certo carattere speciale su ogni nastro che mar
 
 Avremmo potuto chiedere che qualora la funzione $F$ non fosse definita per un certo valore, il calcolo della macchina di Turing termini, ad esempio, in uno stato di rifiuto. Questa sarebbe stata una definizione non equivalente. È davvero ovvio come trasformare una macchina che si ferma in uno stato di rifiuto in una macchina che non si ferma mai. D'altra parte, il passaggio inverso non è necessariamente possibile, e riguarda l'``indecidibilità'' del problema dell'arresto per una macchina di Turing, problema che sarà discusso più avanti nel corso.
 
-Con immediato adattamento dei risultati delle lezioni precedenti sulla rappresentazione degli interi e la decidibilità di sotto-insiemi di numeri interi, si dimostra facilmente che qualsiasi funzione calcolabile da una macchina di Turing è calcolabile con una macchina di Turing ad un nastro (o anche per un semi-nastro si può adattare la definizione).
+Con immediato adattamento dei risultati delle pagipne recedenti sulla rappresentazione degli interi e la decidibilità di sotto-insiemi di numeri interi, si dimostra facilmente che qualsiasi funzione calcolabile da una macchina di Turing è calcolabile con una macchina di Turing ad un nastro (o anche per un semi-nastro si può adattare la definizione).
 
 Se $(n_1,\dots,n_r)$ è una sequenza finita di numeri interi e $b>1$ una qualsiasi base, si denoti con $((n_1,\dots,n_r))_b$ la sequenza finita di parole $((n_1)_b,\dots,(n_r)_b)$. Quindi, se $F$ è una funzione di $\mathbb N^r$ in $\mathbb N^s$, denotiamo con $(F)_b$ la funzione da $\{0,1,\dots,b-1\}^*$ in $\{0,1,\dots,b-1\}^*$ che associa alla sequenza $(n_1,\dots,n_r)_b$ la sequenza $(F(n_1,\dots,n_r))_b$. I risultati della Sezione 15.1 mostrano che una qualsiasi funzione $(F)_b$ è Turing calcolabile non appena esiste una base $b$ rispetto alla quale lo è. Diremo in questo caso (quando esiste una qualsiasi base $b$ rispetto a cui la funzione è Turing computabile) semplicemente che la funzione $F$ è Turing calcolabile.
 
@@ -72,7 +81,9 @@ allora si ha che
 
 \begin{proof}\
 \begin{enumerate}
-    \item[i)] La funzione caratteristica di un insieme $X$ (che si presume incluso in $A^*$) è una funzione $F$ tale che $F(w)$ è $1$ per $w$ in $X$ e $0$ altrimenti. Se la funzione $F$ è Turing calcolabile, è immediato trasformare una macchina di Turing che la calcola in una macchina di Turing che decide $X$: basta sostituire la configurazione $(0,q_F)$ nella configurazione $(0,q_F^0)$ e la configurazione $(1,q_F)$ in $(1,q_F^1)$. Il passaggio inverso è più delicato perché, con le definizioni che abbiamo posto, la Turing calcolabilità di $F$ richiede non solo un algoritmo che, a partire dalla configurazione iniziale associata a $w$, raggiunga a una configurazione di nastro con $1$ o $0$ nella casella appropriata di un nastro prestabilito dedicato all'output, ma più specificatamente ad una configurazione analoga a quella iniziale, che dunque termina nella configurazione iniziale associata a $1$ o $0$, il che presuppone che tutti i nastri siano stati cancellati e i puntatori siano tornati nella posizione iniziale. Utilizzando il Lemma~70 possiamo trasformare una qualsiasi macchina che decide un insieme $X$ in una macchina che ancora decide $X$ ma che alla fine del calcolo cancella il contenuto di tutti i nastri tranne il primo e che sul primo ritrova il risultato e posiziona il puntatore nella prima colonna per ogni nastro.
+    \item[i)] La funzione caratteristica di un insieme $X$ 
+    
+    (che si presume incluso in $A^*$) è una funzione $F$ tale che $F(w)$ è $1$ per $w$ in $X$ e $0$ altrimenti. Se la funzione $F$ è Turing calcolabile, è immediato trasformare una macchina di Turing che la calcola in una macchina di Turing che decide $X$: basta sostituire la configurazione $(0,q_F)$ nella configurazione $(0,q_F^0)$ e la configurazione $(1,q_F)$ in $(1,q_F^1)$. Il passaggio inverso è più delicato perché, con le definizioni che abbiamo posto, la Turing calcolabilità di $F$ richiede non solo un algoritmo che, a partire dalla configurazione iniziale associata a $w$, raggiunga a una configurazione di nastro con $1$ o $0$ nella casella appropriata di un nastro prestabilito dedicato all'output, ma più specificatamente ad una configurazione analoga a quella iniziale, che dunque termina nella configurazione iniziale associata a $1$ o $0$, il che presuppone che tutti i nastri siano stati cancellati e i puntatori siano tornati nella posizione iniziale. Utilizzando il lemma \ref{lem: pulizia nastri} possiamo trasformare una qualsiasi macchina che decide un insieme $X$ in una macchina che ancora decide $X$ ma che alla fine del calcolo cancella il contenuto di tutti i nastri tranne il primo e che sul primo ritrova il risultato e posiziona il puntatore nella prima colonna per ogni nastro.
     \item[ii)] Supponiamo che $F$ sia una funzione di $A^*$ in se stesso. Se $F$ è Turing calcolabile possiamo decidere se una coppia $(w,v)$ è nel grafico di $F$ calcolando $F(w)$ e testando l'uguaglianza $F(w)=v$. Supponiamo invece che il grafico di $F$ sia Turing decidibile. Esiste un'enumerazione $v_1,v_2,\dots$ di parole di $A^*$ e una macchina di Turing che passa dalla configurazione iniziale associata a $v_i$ alla configurazione iniziale associata a $v_{i+1}$. Otterremo una macchina di Turing che calcola $F$ come segue. A partire dalla parola in ingresso $w$, la macchina scrive $w\square v_1$ e verifica se $(w,v_1)$ è nel grafico di $F$. Se lo è, cancella tutto (come sopra) e passa alla configurazione terminale associata $v_1$. Altrimenti, sostituisce $v_1$ con $v_2$ e verifica se $(w,v_2)$ è nel grafico di $F$, e così via. Il calcolo si fermerà nella configurazione terminale associata a quell'unico $v_i$ tale che $(w,v_i)$ sia grafico di $F$ (la computazione termina poiché $F$ è totale).
 \end{enumerate}
 \end{proof}
@@ -168,20 +179,33 @@ In particolare $G$ è definita (e non nulla) per ogni $i<k$. Con le notazioni su
 % ---------- Funzioni ricorsive (def. astratta) ----------
 Introduciamo una famiglia di funzioni sugli interi tramite la prossima definizione ``astratta'' (o piuttosto induttiva):
 
-\begin{defi}
+\begin{defi}\label{defi: funzioni ricorsive}
 L'insieme delle \emph{funzioni ricorsive} $\mathcal R$ è il più piccolo insieme di funzioni su numeri interi
 \begin{itemize}
     \item che contiene la funzione ``somma'', la funzione ``predecessore'', le funzioni costanti e le funzioni proiezione,
-    \item e che è chiuso per concatenazione, composizione, ricorsione primitiva e minimalizzazione.
+    \item e che è chiuso per concatenazione
+    \footnote{Date due funzioni $f\colon A \to B$ e $g\colon X \to Y$, il
+    \emph{prodotto di funzioni} o \emph{concatenazione} è la funzione
+    $(f, g)\colon A \times X \to B \times Y$
+    definita da $(a,x) \mapsto (f(a), g(x))$.},
+    composizione, ricorsione primitiva e minimalizzazione.
 \end{itemize}
 Le funzioni ricorsive sono gli elementi dell'insieme precedente. Gli \emph{insiemi ricorsivi} sono insiemi di numeri interi la cui funzione caratteristica è una funzione ricorsiva.
+Un insieme $A$ si dice \textit{ricorsivo}
+se la sua funzione caratteristica $\mathbb 1_A$ è ricorsiva.
 \end{defi}
 
 \subsection{Espressioni ricorsive e interpretazioni}
 % ---------- Espressioni ricorsive e interpretazione ----------
 
 \begin{defi}
-\textit{Le espressioni ricorsive di profondità $0$} sono $\mathsf S$, $\mathsf D$, $\mathsf C_{x_0,n}$ e $\mathsf P_{i,n}$. Per $d\geq 1$, una espressione ricorsiva è di \textit{profondità $d$} se è di profondità $d-1$ oppure se può essere scritta per composizione, concatenazione, ricorsione o minimalizzazione di espressioni di profondità $d-1$.
+\textit{Le espressioni ricorsive di profondità $0$} sono $\mathsf S$, 
+$\mathsf D$, $\mathsf C_{x_0,n}$ e $\mathsf P_{i,n}$. 
+Per $d\geq 1$, una espressione ricorsiva $\mathsf e$ è di 
+\textit{profondità $d$} se è di profondità $d-1$ oppure se può essere scritta 
+per composizione $\mathsf{COMP}(\mathsf f)$, 
+concatenazione $\mathsf{CONCAT}(\mathsf f, \mathsf g)$, ricorsione $\mathsf{REC}(\mathsf f, \mathsf g)$
+o minimalizzazione $\mathsf{MIN}(\mathsf g)$  di espressioni $\mathsf f$, $\mathsf g$ di profondità $d-1$.
 L'insieme delle espressioni ricorsive sarà indicato con $\mathsf R$. 
 \end{defi}
 
@@ -201,12 +225,22 @@ L'\textit{interpretazione} per un'espressione ricorsiva
 \]
 \end{defi}
 
+
 \begin{exam}
 Se $\mathsf e\in\mathsf R$ è un'espressione ricorsiva tale che $[[\mathsf e]]=F$ allora per ogni $(n_1,\dots,n_r)$
 \[
 [[\mathsf e]](n_1,\dots,n_r)=F(n_1,\dots,n_r).
 \]
 \end{exam}
+Oltre a considerare la funzione di interpretazione più naurale possibile 
+($\mathsf{S} \mapsto S$, $\mathsf{COMP}(\mathsf f, \mathsf g)$
+ nella funzione data dalla composizione delle interpetazioni di 
+ $\mathsf f$ e $\mathsf g$),
+ se ne possono considerare altre.
+Questo significa che l'insieme senza modifcare $\mathsf R$ 
+e cambiando l'interpretazione, si potrebbero avere delle modifiche
+per l'insieme $\mathcal R$ (potrebbe succedere che, 
+anche cambiando l'interpretazione, potremmo non avere modifche in $\mathcal R$).
 \begin{rema}
 È anche possibile avere presentazioni alternative della stessa classe di funzioni: ad esempio si potrebbe cambiare l'interpretazione del simbolo $\mathsf S$ dalla somma alla funzione successore, $[[\mathsf S]](x):=x+1$, senza cambiare il linguaggio:
 \[
@@ -236,7 +270,13 @@ La funzione somma $S\colon\mathbb N\times\mathbb N\to\mathbb N$ è Turing calcol
 \end{lemm}
 
 \begin{proof}
-Usiamo la rappresentazione in base $1$. È quindi necessario passare dalla configurazione iniziale associata a $1^{n+1}\square 1^{m+1}$ (rappresentazione della coppia di numeri interi $(n,m)$) alla configurazione terminale associata alla parola $1^{n+m+1}$ (rappresentazione dell'intero $n+m$). In altre parole, si tratta di cancellare due $1$ alla fine e sostituire il blank centrale con un $1$. La macchina in Figura~\ref{fig:turing-somma} esegue i passi che abbiamo descritto.
+Usiamo la rappresentazione in base $1$. È quindi necessario passare dalla 
+configurazione iniziale associata a $1^{n+1}\square 1^{m+1}$ 
+(rappresentazione della coppia di numeri interi $(n,m)$) alla 
+configurazione terminale associata alla parola $1^{n+m+1}$ 
+(rappresentazione dell'intero $n+m$). In altre parole, si 
+tratta di cancellare due $1$ alla fine e sostituire il blank 
+centrale con un $1$. La macchina in figura~\ref{fig:turing-somma} esegue i passi che abbiamo descritto.
 \end{proof}
 
 \begin{figure}[H]
@@ -276,11 +316,12 @@ Usiamo la rappresentazione in base $1$. È quindi necessario passare dalla confi
 \noindent Utilizzeremo l'espressione $\mathsf S$ e la sua interpretazione $[[\mathsf S]](n,m)=S(n,m)=n+m$.
 
 \begin{lemm}
-La funzione predecessore $D\colon\mathbb N\to\mathbb N$ che associa all'intero $N+1$ il valore $N$ è Turing calcolabile.
+La funzione predecessore $D\colon\mathbb N\to\mathbb N$ che 
+associa all'intero $N+1$ il valore $N$ è Turing calcolabile.
 \end{lemm}
 
 \begin{proof}
-Più semplice del lemma precedente \dots
+Usando sempre la rappresentazione in base uno, basta scorrere il nastro fino all'ultimo carettere non vuoto ed eliminarlo.
 \end{proof}
 
 \noindent Utilizzeremo l'espressione $\mathsf D$ e la sua interpretazione
@@ -293,7 +334,7 @@ Per ogni numero intero $n$, e per ogni numero intero $x_0$, la funzione da $\mat
 \end{lemm}
 
 \begin{proof}
-Cerca l'$n$-esimo blank a destra, ritorna cancellando tutti i caratteri fino a trovare il primo blank, quindi si sposta nella casella a destra e scrive la rappresentazione di $x_0$ e infine torna alla posizione $1$. Nella Figura~\ref{fig:turing-costante} è rappresentata la macchina nel caso $n=2$ e $x_0=2$.
+Cerca l'$n$-esimo blank a destra, ritorna cancellando tutti i caratteri fino a trovare il primo blank, quindi si sposta nella casella a destra e scrive la rappresentazione di $x_0$ e infine torna alla posizione $1$. Nella figura~\ref{fig:turing-costante} è rappresentata la macchina nel caso $n=2$ e $x_0=2$.
 \end{proof}
 
 \begin{figure}[H]
@@ -360,21 +401,7 @@ Per ogni coppia di interi $n$ ed $i$ con $i\leq n$, la proiezione che associa ad
 \begin{proof}
 Ancora una volta, si tratta di cancellare $n$ blocchi di numeri. Durante il passaggio in corrispondenza dell'$i$-esimo blocco, questo viene copiato sul secondo nastro e quindi, quando la cancellazione di tutti i blocchi è terminata, il puntatore torna alla casella iniziale, e infine il blocco dei numeri del secondo nastro viene copiato sul primo (e cancellato dal secondo).
 \end{proof}
-
-\noindent Utilizzeremo l'espressione $\mathsf P_{i,n}$ e la sua interpretazione $[[\mathsf P_{i,n}]](x_1,\dots,x_n)=x_i$.
-
-
-\begin{defi}
-Una funzione $f$
-si dice \textit{ricorsiva}
-se esiste $e \in \mathsf R$ tale che
-$\llbracket e \rrbracket=f$.
-Un insieme $A$ si dice \textit{ricorsivo}
-se la sua funzione caratteristica $\mathbb 1_A$ è ricorsiva.
-\end{defi}
-
-Con questa nozione possiamo riassumere i risultati di chiusura sopra stabiliti per funzioni Turing calcolabili nella forma delle seguenti inclusioni:
-
+Utilizzeremo l'espressione $\mathsf P_{i,n}$ e la sua interpretazione $[[\mathsf P_{i,n}]](x_1,\dots,x_n)=x_i$.
 \begin{prop}\
 \begin{enumerate}
     \item Qualsiasi funzione ricorsiva su numeri interi è calcolabile mediante macchina di Turing.
@@ -521,7 +548,7 @@ e(x_1,\dots,x_n) =
 \bot & \text{se } (x_1,\dots,x_n)\notin X.
 \end{cases}
 \]
-Dato che $e$ non è definita su $\overline{X}$ $\Rightarrow$ $f$ non è definita su $\overline{X}$.
+Dato che $e$ non è definita su $\overline{X}$, abbiamo che $f$ non è definita su $\overline{X}$.
 Quindi posso togliere $\mathbb{1}_X$ e ottengo
 \[
 f(x_1,\dots,x_n) = f_1(x_1,\dots,x_n) + e(x_1,\dots,x_n).
@@ -581,10 +608,122 @@ come \[ f(x_1, \dots, x_r) = \begin{cases} f_1(x_1, \dots, x_r)
         Dimostrazione L'uguaglianza \[ f(x_1, \dots, x_r) = \mathbb{1}_X(x_1, \dots, x_r) \cdot f_1(x_1, \dots, x_r) + \mathbb{1}_{\overline{X}}(x_1, \dots, x_r) \cdot f_1(x_1, \dots, x_r) \] mostra che $f$ è ricorsiva non appena $f_1, f_2$ e $\mathbb{1}_X$ lo sono.
 \end{proof}
 \end{lemm}
-
+\begin{defi}
+    Indichiamo con $V_2$
+    la funzione $\mathbb N \to \mathbb N$ che
+    ad ogni $n$
+    associa il più grande intero non negativo $i$ 
+    tlae che $2^i$ divide $n$.
+\end{defi}
 \begin{prop}
 Le funzioni $\mathbb{1}_{2\mathbb{N}}$ (funzione caratteristica dell'insieme dei numeri pari), $f(n) := \lfloor n/2 \rfloor$ e $V_2$ sono funzioni ricorsive. 
 \begin{proof}
  Dall'equazione di ricorsione primitiva \[ \mathbb{1}_{2\mathbb{N}}(m) = \begin{cases} 1 & \text{se } m = 0 \\ \mathbb{1}_{\{0\}}(\mathbb{1}_{2\mathbb{N}}(m - 1)) & \text{se } m > 0 \end{cases} \] abbiamo che posta l'espressione ricorsiva \[ \mathtt{ISEVEN} := \mathtt{REC}(C_{0,1}, \mathtt{COMP}(P_{2,2}, \mathtt{ISZERO})) \] per costruzione sarà $[\![\mathtt{ISEVEN}]\!] = \mathbb{1}_{2\mathbb{N}}$. Notiamo inoltre che la funzione $f(n) := \lfloor n/2 \rfloor$ soddisfa l'equazione di ricorsione primitiva \[ \lfloor m/2 \rfloor = \begin{cases} 0 & \text{se } m = 0 \\ \mathbb{1}_{2\mathbb{N}}(m) + \lfloor (m - 1)/2 \rfloor & \text{se } m > 0 \end{cases} \] pertanto si può definire l'espressione ricorsiva corrispondente: \[ \mathtt{FLOOR2} := \mathtt{REC}(C_{0,0}, \mathtt{COMP}(\mathtt{CONCAT}(\mathtt{COMP}(P_{2,1}, \mathtt{ISEVEN}), P_{2,2}), S)) \] e avere che $[\![\mathtt{FLOOR2}]\!] = f$.
+Mostriamo infine la ricorsività della funzione $V_2$, per questo avremo bisogno di una funzione ausiliaria definita per casi \[ \rho(n) := \begin{cases} n/2 & \text{se } n \text{ è pari} \\ n & \text{altrimenti} \end{cases} \] a partire dalla funzione $[\![\mathtt{FLOOR2}]\!]$ e dalla funzione identità di un argomento che coincide con $[\![\mathtt{P}_{1,1}]\!]$ e dalla funzione caratteristica dell'insieme dei numeri pari che abbiamo fatto vedere essere $[\![\mathtt{ISEVEN}]\!]$. 
+Otteniamo così l'espressione ricorsiva per $\rho$ seguente
+\begin{align*}
+\mathsf{RHO} := \mathsf{COMP}\Big( & \mathsf{CONCAT}\Big( \\
+& \mathsf{COMP}(\mathsf{CONCAT}(\mathsf{ISEVEN}, \mathsf{FLOOR2}), \mathsf{MULT}), \\
+& \mathsf{COMP}(\mathsf{CONCAT}(\mathsf{ISODD}, P_{1,1}), \mathsf{MULT}) \\
+& \Big), \mathsf{ADD}\Big)
+\end{align*}
+Definiamo ora una funzione $\sigma$ che itera l'applicazione della funzione $\rho$ in particolare avremo che \[ \sigma(n,m) = \begin{cases} n & \text{se } m = 0 \\ \rho(\sigma(n, m-1)) & \text{se } m > 0 \end{cases}
+ \] pertanto 
+ avremo che \[ \mathtt{V2AUX} := \mathtt{REC}(\mathtt{P}_{1,1}, \mathtt{COMP}(\mathtt{P}_{3,3}, \mathtt{RHO})) \] e $[\![\mathtt{V2AUX}]\!] = \sigma$.
+ Finalmente ci basta contare il numero di volte che 
+ $\sigma(n, i)$ è maggiore di $\sigma(n, i+1)$, 
+ questo si può fare con la funzione \[ \sum_{i=0}^n \mathbb{1}_<(\sigma(n, i+1), \sigma(n, i)) \] avremo così il valore di $V_2(n)$: \[ V_2(n) = \sum_{i=0}^n \mathbb{1}_<(\sigma(n, i+1), \sigma(n, i)) \]
 \end{proof}
 \end{prop} 
+\begin{prop}{Per ogni intero $s$ esiste una bijezione ricorsiva da $\mathbb{N}^s$ in $\mathbb{N}$ la cui inversione è anche ricorsiva.}
+
+\begin{proof}
+    Per $s = 2$, poniamo 
+    $K_2(n, m) := 2^n(2m + 1)$. 
+    Chiaramente $K_2$ è 
+    ricorsiva ed ha espresisone:
+\begin{align*}
+\mathsf{K2} := \mathsf{COMP}\Big( & \mathsf{CONCAT}\Big( \\
+& \mathsf{COMP}(\mathsf{CONCAT}(C_{2,2}, P_{2,1}), \mathsf{EXP}), \\
+& \mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf{CONCAT}(C_{2,2}, P_{2,2}), \mathsf{MULT}), C_{2,1}), \mathsf{S}) \\
+& \Big), \mathsf{MULT}\Big)
+\end{align*}
+e quindi $\llbracket \mathsf{K2} \rrbracket = K_2$.
+
+Inoltre l'inversa $K_2^{-1}(y) = (V_2(y), \lfloor \sigma(y, y)/2 \rfloor)$ e dunque $K_2^{-1} = \llbracket \mathsf{K2INV} \rrbracket$ dove
+\[
+\mathsf{K2INV} := \mathsf{CONCAT}(\mathsf{V2}, \mathsf{COMP}(\mathsf{COMP}(\mathsf{CONCAT}(P_{1,1}, P_{1,1}), \mathsf{V2AUX}), \mathsf{FLOOR2})).
+\]
+
+Per codificare una qualsiasi $s$-upla, si itera la codifica delle coppie, ponendo
+\[
+K_s(n_1, \dots, n_s) := K_2(n_1, K_{s-1}(n_2, \dots, n_s))
+\]
+e dunque resta stabilita una famiglia di espressioni ricorsive definita induttivamente
+\[
+\mathsf{K}^s := \begin{cases} 
+P_{1,1} & \text{se } s = 1 \\
+\mathsf{K2} & \text{se } s = 2 \\
+\mathsf{COMP}(\mathsf{CONCAT}(P_{s,1}, \mathsf{COMP}(\mathsf{CONCAT}^{s-1}(P_{s,2}, \dots, P_{s,s}), \mathsf{K}^{s-1})), \mathsf{K2}) & \text{se } s > 2.
+\end{cases}
+\]
+
+Similmente per l'inversione $K_s^{-1}(n)$ avremo che applicando $K_2^{-1}(n) = (n_1, n_2)$ di cui $n_1$ sarà la prima componente dell'inversa di $K_s$ e su $n_2$ applicheremo l'induzione $K_{s-1}^{-1}(n_2)$ fino ad arrivare a $s = 1$ oppure $s = 2$; possiamo dunque definire un'espressione ricorsiva per induzione su $s$ (analoga della definizione di $\mathsf{K}^s$):
+\[
+\mathsf{KINV}^s := \begin{cases} 
+P_{1,1} & \text{se } s = 1 \\
+\mathsf{K2INV} & \text{se } s = 2 \\
+\mathsf{COMP}(\mathsf{K2INV}, \mathsf{CONCAT}(P_{2,1}, \mathsf{COMP}(P_{2,2}, \mathsf{KINV}^{s-1}))) & \text{se } s > 2.
+\end{cases}
+\]
+\end{proof}
+\end{prop}
+\begin{defi}
+    {Date due funzioni $G
+     : \mathbb{N}^r \to
+      \mathbb{N}^s$ e $H 
+      : \mathbb{N}^{r+1+s}
+       \to \mathbb{N}^s$, 
+       la funzione 
+    $F : \mathbb{N}^{r+1} \to \mathbb{N}^s$ definita per \textit{ricorsione generalizzata
+    su $s$-uple di base $G$ e passo di ricorsione $H$} è la funzione definita dall'equazione di ricorsione seguente:}
+\[
+F(n_1, \dots, n_r, m) = \begin{cases} 
+G(n_1, \dots, n_r) & \text{se } m = 0 \\
+H(n_1, \dots, n_r, m, F(n_1, \dots, n_r, m - 1)) & \text{se } m > 0
+\end{cases}
+\]
+\end{defi}
+
+Come abbiamo già fatto notare la notazione è un po' imprecisa poiché utilizziamo l'$s$-upla risultato della valutazione di $F$ come le sue componenti passate come $s$ argomenti di $H$, (confondendo, in sostanza, $\mathbb{N}^{r+1} \times \mathbb{N}^s$ con $\mathbb{N}^{r+1+s}$) la qual cosa si può formalizzare utilizzando le proiezioni e la concatenazione.
+\begin{prop}
+    Ogni funzione definita per ricorsione generalizzata
+    è ricorsiva.
+    \begin{proof}
+        Prop 103
+    \end{proof}
+\end{prop}
+\subsection{Teorema}
+\begin{theo} \textit{Sia $f : \mathbb{N}^k \to \mathbb{N}$ una funzione Turing computabile allora esiste un'espressione ricorsiva $\mathbf{effe} \in \mathbf{R}$ tale che $\llbracket \mathbf{effe} \rrbracket = f$.}
+
+\begin{proof} Per dimostrare la proprietà restringiamoci al caso più semplice da trattare: in cui l'alfabeto della macchina $\mu$ che computa $f$ è $A = \{1\}$ e la macchina è una macchina mono-nastro. Non è un'ipotesi restrittiva: data una macchina a $k$ nastri e di alfabeto $B$ posso costruire una macchina mononastro di alfabeto $A = \{1\}$ grazie ai risultati di simulazione della macchina multinastro con una mononastro e ai risultati sui cambiamenti di alfabeto.
+
+Sia dunque $\mu : Q \times A' \to Q' \times A' \times \{-1, +1\}$ con $A' = \{1, \square\}$, $Q' = Q \cup \{q_F\}$, e $|Q| = d$. Potremo quindi associare ad ogni stato $q \in Q'$ un numero intero tra $0$ e $d$, dove $0$ rappresenterà lo stato iniziale $q_0$ e $d$ corrisponderà allo stato finale $q_F$.
+
+Per ogni passo di computazione $t$ la corrispondente configurazione $c_t$ dell'algoritmo associato alla macchina $\mu$ è costituita da una tripla $c_t = (f, p, q) \in Conf_1^{A, Q}$ e viene, per i nostri scopi, rappresentata da una tripla di numeri naturali $(f^-, f^+, q)$ (denoteremo con $q$ sia lo stato in $q$ sia l'intero $q$ con $0 \le q \le d$ ad esso associato).
+
+Infine, codificando $\square$ con $0$, e $1 \in A$ con l'intero $1$ definiamo
+\begin{itemize}
+    \item la codifica della porzione di nastro a sinistra della posizione $p$ (escluso $p$)
+    \[
+    f^- := \sum_{i=0}^{\infty} f(p - i - 1)2^i,
+    \]
+    \item la codifica della parte di nastro destro a partire dalla posizione $p$ (incluso $p$) è
+    \[
+    f^+ := \sum_{i=0}^{\infty} f(p + i)2^i.
+    \]
+\end{itemize}
+
+Si noti che $q$ è l'intero compreso tra $0$ e $d$ che rappresenta la terza componente della configurazione corrente. Considerando che gli stati sono $d = |Q|$ faremo corrispondere lo stato iniziale con $0$ e lo stato finale $q_F$ con il valore $d$.
+\end{proof}
+\end{theo}

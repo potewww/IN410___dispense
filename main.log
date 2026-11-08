@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  1 NOV 2026 15:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  7 NOV 2026 14:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1171,6 +1171,11 @@ Overfull \hbox (9.0327pt too wide) detected at line 1505
 [96]
 
 [97]
+Overfull \hbox (2.7471pt too wide) in paragraph at lines 235--245
+[]\OT1/cmr/m/n/12 Oltre a con-si-de-ra-re la fun-zio-ne di in-ter-pre-ta-zio-ne pi^^Ru nau-ra-le pos-si-bi-le ($\OT1/cmss/m/n/12 S \OMS/cmsy/m/n/12 7! \OML/cmm/m/it/12 S$\OT1/cmr/m/n/12 , $[](\OT1/cmss/m/n/12 f\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 g\OT1/cmr/m/n/12 )$
+ []
+
+
 
 [98]
 
@@ -1182,39 +1187,45 @@ Overfull \hbox (9.0327pt too wide) detected at line 1505
 
 [102]
 
-[103])
+[103]
 
-[104] (./prerequisiti.tex
+[104]
 
 [105]
 
-[106]
+[106])
 
-[107]
+[107] (./prerequisiti.tex
 
 [108]
 
 [109]
+
+[110]
+
+[111]
+
+[112]
 Overfull \hbox (4.35237pt too wide) in paragraph at lines 246--247
 [][]\OT1/cmr/bx/n/12 Definizione 11.26 \OT1/cmr/m/n/12 (Al-ge-bra di Klee-ne)\OT1/cmr/bx/n/12 . []\OT1/cmr/m/n/12 L'al-ge-bra del-le se-rie for-ma-li $\U/bbold/m/n/12 K\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 M\OT1/cmr/m/n/12 ]$ (De-fi-ni-zio-ne [][]11.23[][])
  []
 
 
 
-[110])
+[113])
 
-[111] (./wolfram.tex
+[114] (./wolfram.tex
 \g__tcobox_out_iow=\write7
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[112]
+[115]
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[113]
+[116]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1224,9 +1235,9 @@ Overfull \hbox (15.59825pt too wide) in paragraph at lines 148--149
 
 
 
-[114]
+[117]
 
-[115]
+[118]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1235,7 +1246,7 @@ LaTeX Font Info:    Trying to load font information for U+bbm on input line 227.
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
 
-[116]
+[119]
 Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 []\OT1/cmr/m/n/12 Assegnare la di-rec-to-ry cor-ren-te, cio^^Re la car-tel-la che con-tie-ne il pac-chet-to: [][][][][][][][] 
  []
@@ -1244,7 +1255,7 @@ Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 
 (./main.listing)
 
-[117]
+[120]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1252,9 +1263,9 @@ Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 
  (./main.listing)
 
-[118])
+[121])
 
-[119] (./esercizi/automi.tex
+[122] (./esercizi/automi.tex
 pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1265,12 +1276,6 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has be
                    \relax 
 l.8 \begin{sol} S
                  i richiede di mostrare un automa il cui algoritmo associato...
-
-[120]
-
-[121]
-
-[122]
 
 [123]
 
@@ -1288,9 +1293,15 @@ l.8 \begin{sol} S
 
 [130]
 
-[131])
+[131]
 
-[132] (./esercizi/macchineturing.tex
+[132]
+
+[133]
+
+[134])
+
+[135] (./esercizi/macchineturing.tex
 pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1305,7 +1316,7 @@ l.5 L
 
  (./main.listing)
 
-[133]
+[136]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1320,7 +1331,7 @@ l.51 L
 
  (./main.listing)
 
-[134]
+[137]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1332,7 +1343,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has be
 l.115 \begin{sol}\
                   
 
-[135]
+[138]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1349,7 +1360,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.4}) has be
 l.165     \
            
 
-[136]
+[139]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1361,7 +1372,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.5}) has be
 l.201 \[
         
 
-[137]
+[140]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1373,11 +1384,11 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.6}) has be
 l.296 \[
         
 
-[138]
+[141]
 
-[139])
+[142])
 
-[140] (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
+[143] (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
 pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1389,9 +1400,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has be
 l.12 L
       'insieme $X_n$ è DFA-decidibile per ogni $n$. Per decidere il primo p...
 
-[141]
+[144]
 
-[142]
+[145]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1403,9 +1414,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has be
 l.161 P
        oiché $X_n$ è la concatenazione di $\{a^ib^j \mid i+j\geq 3\}$ con ...
 
-[143]
+[146]
 
-[144]
+[147]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1417,9 +1428,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has be
 l.334     S
            ia $\alpha$ una macchina du Turing mononastro
 
-[145])
+[148])
 
-[146] (./esercizi/APPELLI_ESONERI/esonero1_10_11_23.tex
+[149] (./esercizi/APPELLI_ESONERI/esonero1_10_11_23.tex
 pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1451,7 +1462,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has be
 l.36 \begin{sol}\
                  )
 
-[147] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
+[150] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
 pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1463,13 +1474,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has be
 l.33     \item L
                 o stato iniziale è $q_0$ e $F=\{q_2\}$. La tabella delle tr...
 
-[148]
-
-[149]
-
-[150]
-
 [151]
+
+[152]
+
+[153]
+
+[154]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1481,40 +1492,36 @@ pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has be
 l.246 S
        ia $\alpha$ la macchina che, partendo da $1^m$, scrive $1^{2m}$ (radd...
 
-[152]
+[155]
 
-[153]
+[156]
 pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.332 S
        ia $A=\{0,1\}$ l'alfabeto binario; per $w\in A^*$ sia $|w|_0$ (rispet...))
 
-[154] (./main.aux)
+[157] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E2E1EF2B181EC5803632F0E7D6DA93C5;11601.
+(rerunfilecheck)             Checksum: CF78B0C8DB557C0EF8BA205E82917C47;11696.
  ) 
 Here is how much of TeX's memory you used:
- 37506 strings out of 473190
- 756452 string characters out of 5715800
- 1225976 words of memory out of 5000000
- 59086 multiletter control sequences out of 15000+600000
+ 37522 strings out of 473190
+ 756698 string characters out of 5715800
+ 1226033 words of memory out of 5000000
+ 59089 multiletter control sequences out of 15000+600000
  579180 words of font info for 120 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1992b,1646s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (154 pages, 826267 bytes).
+Output written on main.pdf (157 pages, 841972 bytes).
 PDF statistics:
- 2219 PDF objects out of 2487 (max. 8388607)
- 1961 compressed objects within 20 object streams
- 986 named destinations out of 1000 (max. 500000)
- 661 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2250 PDF objects out of 2487 (max. 8388607)
+ 1989 compressed objects within 20 object streams
+ 999 named destinations out of 1000 (max. 500000)
+ 669 words of extra memory for PDF output out of 10000 (max. 10000000)
 
