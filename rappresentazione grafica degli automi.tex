@@ -771,3 +771,55 @@ mentre dal grafo dell'automa sappiamo che esiste il cammino
 $baba$ di lunghezza $4$ che parte e ritorna nello stato $q_0$.
 \end{sol}
 \end{ex}
+Possiamo dare anche una forma alternativa
+per la formula dell'esecuzione:
+\begin{theo}\label{theo: scrittura della matrice adiacenza in modo bello}
+Sia $A$ un alfabeto finito e sia $\mathcal{A}'$ un automa deterministico con insieme di stati $\{S_0,\dots,S_{n-1}\}$ e funzione di transizione $T'$.
+Per ogni $c\in A$ sia $M_c$ la matrice con elementi $0/1$ definita da $(M_c)_{ij}=1$ se e solo se $T'(S_i,c)=S_j$, e per ogni parola $w=w_1\cdots w_k$ sia $M_w=M_{w_1}\cdots M_{w_k}$, con $M_\varepsilon=I$.
+Posto
+\[
+E=\sum_{c\in A}c\,M_c,
+\]
+cioè $E_{ij}=\sum_{c\,:\,T'(S_i,c)=S_j}c$ (ovvero la matrice di adiacenza del grafo etichettato associato ad $\mathcal A$), per ogni $k\ge 0$ vale
+\[
+E^k=\sum_{w\in A^k}w\,M_w .
+\]
+\end{theo}
+
+\begin{proof}
+Procediamo per induzione su $k$.
+\begin{itemize}
+\item Per $k=0$ si ha $E^0_{ij}=\begin{cases}
+A^{\emptyset}, & \text{se e solo se } i=j=1
+\\
+\bot, & \text{altrimenti}  
+\end{cases}$ e $A^0=\{A^{\emptyset}\}$, e abbiamo chiaramente $A^{\emptyset}\,M_{A^{\emptyset}}=E^0$.
+\item Per $k=1$ l'enunciato è la definizione di $E$.
+\item Supponiamo l'enunciato vero per $k$. Allora
+\[
+E^{k+1}=E^k\,E=\Big(\sum_{u\in A^k}u\,M_u\Big)\Big(\sum_{c\in A}c\,M_c\Big)
+=\sum_{u\in A^k}\sum_{c\in A}u\,M_u\,c\,M_c .
+\]
+Poiché $c$ commuta con $M_u$, si ha $u\,M_u\,c\,M_c=(uc)\,M_uM_c=(uc)\,M_{uc}$.
+Ogni parola di $A^{k+1}$ si scrive in modo unico come $w=uc$ con $u\in A^k$ e $c\in A$, quindi
+\[
+E^{k+1}=\sum_{w\in A^{k+1}}w\,M_w. \qedhere
+\]
+\end{itemize}
+\end{proof}
+
+\begin{coro}
+Nelle ipotesi del teorema \ref{theo: scrittura della matrice adiacenza in modo bello}, sia $\pi_0$ il vettore riga con $1$ nella posizione dello stato iniziale e $0$ altrove, e sia $\eta$ il vettore colonna con $1$ nelle posizioni degli stati finali e $0$ altrove. Allora, per ogni parola $w\in A^*$,
+\[
+w\in X \iff \pi_0 M_w\eta=1 .
+\]
+\end{coro}
+
+\begin{proof}
+Sia $k=|w|$. Poiché $\pi_0$ e $\eta$ sono matrici a elementi $0/1$, commutano con le lettere, e dal teorema \ref{theo: scrittura della matrice adiacenza in modo bello} si ottiene
+\[
+\pi_0\,E^k\,\eta=\sum_{u\in A^k}u\,\big(\pi_0M_u\eta\big).
+\]
+Il coefficiente della parola $w$ in questa somma è $\pi_0M_w\eta$. D'altra parte $\pi_0E^k\eta$ è la somma delle parole di lunghezza $k$ che etichettano un cammino dallo stato iniziale a uno stato finale, e, essendo l'automa deterministico, ciascuna di tali parole compare con coefficiente $1$. Quindi $\pi_0M_w\eta=1$ se $w\in X$ e $\pi_0M_w\eta=0$ altrimenti.
+\end{proof}
+Per vedere come usare questo teorema, si guardi l'esercizio \ref{ex:formula esecuzione trucchetto}.

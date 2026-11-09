@@ -9,6 +9,8 @@ X_n:=\{a^ib^jc^k \mid i+j\geq 3,\ k\equiv 0 \bmod n \text{ e } a,b,c\in A\}
     Guarda in \ref{esonero1:13_11_24}
 \end{sol}
 
+\newpage
+
 \begin{ex}
 Con $X_n$ come nell'esercizio precedente,
 \begin{enumerate}
@@ -21,6 +23,7 @@ Con $X_n$ come nell'esercizio precedente,
     Guarda in \ref{esonero1:13_11_24}
 \end{sol}
 
+\newpage
 
 \begin{ex}
 Dati $X := \{0^k 1^{2k} \mid k \geq 0\}$ e $A := \{0,1\}$.
@@ -36,7 +39,84 @@ Dati $X := \{0^k 1^{2k} \mid k \geq 0\}$ e $A := \{0,1\}$.
 \begin{sol}\
 \begin{enumerate}
 
-    \item 
+    \item  La macchina di Turing è la seguente:
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth,auto,initial text=,
+  every state/.style={minimum size=1cm}]
+  \node[state,initial] (q0) at (0,0)     {$q_0$};
+  \node[state,accepting] (qf1) at (3.5,1.5) {$q_F^1$};
+  \node[state] (qf0) at (0,-3.5)         {$q_F^0$};
+  \node[state] (q1) at (3.5,-1.5)        {$q_1$};
+  \node[state] (q2) at (7,-1.5)          {$q_2$};
+  \node[state] (q3) at (10.5,-1.5)       {$q_3$};
+  \node[state] (q4) at (10.5,-4.5)       {$q_4$};
+  \node[state] (q5) at (7,-4.5)          {$q_5$};
+
+  \path
+    (q0) edge node {$\square$} (qf1)
+    (q0) edge node[swap] {$1$} (qf0)
+    (q0) edge node {$0/\square,+1$} (q1)
+    (q1) edge[loop above] node {$0/0,+1$} (q1)
+    (q1) edge node {$1/1,+1$} (q2)
+    (q1) edge node[swap] {$\square$} (qf0)
+    (q2) edge[loop above] node {$1/1,+1$} (q2)
+    (q2) edge node {$\square/\square,-1$} (q3)
+    (q3) edge node {$1/\square,-1$} (q4)
+    (q4) edge node[swap] {$1/\square,-1$} (q5)
+    (q5) edge[loop below] node {$0/0,-1;\ 1/1,-1$} (q5)
+    (q5) edge[bend left=35] node {$\square/\square,+1$} (q0);
+\end{tikzpicture}
+\end{center}
+A ogni giro la macchina cancella il primo $0$ (in $q_0$), scorre fino alla fine
+della parola, cancella gli ultimi due $1$ ($q_3,q_4$) e torna a sinistra ($q_5$)
+fino al primo blank, per poi ripartire da $q_0$. Se la parola rimasta è vuota,
+$q_0$ legge $\square$ e va in $q_F^1$ (accetta); se manca uno $0$ o un $1$, o se
+l'ordine è sbagliato, la macchina va in $q_F^0$ (o si blocca) e rifiuta.
+\\
+Studiamo ora la complessità.
+Sia $w\in X$ di lunghezza $n=3k$. Per eliminare il primo $0$ e gli ultimi due $1$
+la macchina impiega $2n+1$ passi: $1$ per cancellare lo $0$, $n-1$ per
+raggiungere il blank a destra, $3$ per cancellare i due $1$ e posizionarsi, $n-3$
+per tornare a sinistra e $1$ per rientrare in $q_0$. Dopo il primo giro la
+parola ha lunghezza $n-3$, e un nuovo giro costa $2(n-3)+1$ passi, e così via.
+Per ottenere la stringa vuota e fare il passo finale verso $q_F^1$ servono
+quindi
+\[
+\sum_{i=0}^{n/3}\bigl(2(n-3i)+1\bigr)
+= \sum_{i=0}^{n/3}2n-\sum_{i=0}^{n/3}6i+\sum_{i=0}^{n/3}1
+= 2n\Bigl(\frac n3+1\Bigr)-6\cdot\frac{\frac n3\bigl(\frac n3+1\bigr)}{2}+\Bigl(\frac n3+1\Bigr).
+\]
+Raccogliendo $\frac n3+1$ si ottiene
+\[
+\Bigl(\frac n3+1\Bigr)\bigl(2n-n+1\bigr)=\Bigl(\frac n3+1\Bigr)(n+1)
+=\frac{n^2+4n+3}{3}
+\]
+Quando $i=\frac n3$ la parola è vuota e si compie un solo passo, quello che porta
+la macchina in $q_F^1$.
+Sia $w\in X$ con $|w|=n=3k\ge 1$. Dal calcolo precedente
+\[
+T(n)=\frac{n^2+4n+3}{3}.
+\]
+Per $n\ge 1$ vale $n\le n^2$ e $1\le n^2$, dunque
+\[
+n^2+4n+3\le n^2+4n^2+3n^2=8n^2,
+\qquad\text{da cui}\qquad
+T(n)\le \frac{8}{3}\,n^2\le 3n^2 .
+\]
+Quindi $c=3$ funziona per le parole di $X$.
+
+Sia $w\in\{0,1\}^*$ con $|w|=n\ge 1$. Ogni giro completo
+cancella $3$ simboli, quindi la macchina inizia al più $\lfloor n/3\rfloor+1$ giri
+(l'ultimo può essere parziale, e dopo di esso la macchina si ferma). Poiché la
+parola non si allunga mai, ogni giro costa al più $2n+1$ passi. Perciò
+\[
+T(n)\le\Bigl(\frac n3+1\Bigr)(2n+1)=\frac{2n^2+7n+3}{3}
+\le \frac{2n^2+7n^2+3n^2}{3}=4n^2 \qquad (n\ge 1).
+\]
+Dunque $c=4$ vale per ogni input.
+Abbiamo la tesi.
+
     \item Sia $p>0$ e assumiamo per assurdo $X\in\mathrm{DTIME}_1^A(c\cdot n)$ per qualche $c>0$. Supponiamo inoltre $p=3k$ per qualche $k$ e consideriamo la parola $0^k1^{2k}\in X$, di lunghezza $p$. Scriviamola come $0^k1^{2k}=uxv$ con $x\neq\varepsilon$. Distinguiamo i casi su $u$.
     \begin{enumerate}
         \item Se $u=0^t$ con $0\le t\le k-1$, distinguiamo due sottocasi.

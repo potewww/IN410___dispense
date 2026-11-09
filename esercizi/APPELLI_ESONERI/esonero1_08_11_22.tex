@@ -1,5 +1,5 @@
 % ---------------- ESERCIZIO 1 ----------------
-\begin{ex}
+\begin{ex}\label{ex:formula esecuzione trucchetto}
 Si consideri il seguente automa di alfabeto $A=\{a,b\}$ e insieme degli stati $Q=\{q_0,q_1,q_2\}$:
 \[
 \begin{tikzpicture}[
@@ -27,8 +27,7 @@ Si consideri il seguente automa di alfabeto $A=\{a,b\}$ e insieme degli stati $Q
 \end{enumerate}
 \end{ex}
 
-\begin{sol}
-% (6) da completare
+\begin{sol}\
 \begin{enumerate}
     \item Lo stato iniziale è $q_0$ e $F=\{q_2\}$. La tabella delle transizioni è
     \[
@@ -231,9 +230,86 @@ Si consideri il seguente automa di alfabeto $A=\{a,b\}$ e insieme degli stati $Q
     0&0&0&1
     \end{pmatrix}.
     \]
+
+    \item La formula dell'esecuzione per una stringa $w = w_1 w_2 \dots w_k \in A^*$ afferma che $w \in X$ se e solo se
+\[
+\pi_0 M_w \eta = 1,
+\]
+dove $\pi_0 = \begin{pmatrix} 1 & 0 & 0 & 0 \end{pmatrix}$ è il vettore dello stato iniziale $S_0$ e
+$\eta = \begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix}$ è il vettore colonna dello stato finale $S_2$.
+Questo equivale a richiedere che l'elemento di indici $(1,3)$ della matrice prodotto
+$M_w = M_{w_1} \cdots M_{w_k}$ sia pari a $1$.
+
+Indichiamo con $\pi_i$ il vettore riga con $1$ in posizione $i+1$ e $0$ altrove. Poiché l'automa è deterministico,
+$\pi_i M_c = \pi_j$ se e solo se $T'(S_i,c)=S_j$, dove $T'$ è la funzione di transizione di $\mathcal{A}'$. Dalle righe di $M_a$ e $M_b$ otteniamo
+tutte le possibili mosse, stato per stato:
+\[
+\begin{array}{c|cc}
+ & \cdot M_a & \cdot M_b \\ \hline
+\pi_0 & \pi_1 & \pi_2 \\
+\pi_1 & \pi_2 & \pi_3 \\
+\pi_2 & \pi_3 & \pi_0 \\
+\pi_3 & \pi_3 & \pi_3
+\end{array}
+\]
+Consideriamo i vari casi.
+\begin{itemize}
+\item \textbf{Da $S_0$.} Lo stato $S_0$ è lo stato iniziale, non accettante e non è un pozzo, quindi occorre guardare cosa segue:
+\begin{itemize}
+\item $\pi_0 M_a = \pi_1$: leggendo $a$ si va in $S_1$, caso trattato a parte;
+\item $\pi_0 M_b = \pi_2$: leggendo $b$ si va in $S_2$, quindi il prefisso $b$ porta direttamente da $S_0$ allo stato finale;
+\end{itemize}
+
+\item \textbf{Da $S_1$.} Lo stato $S_1$ non è accettante e non è un pozzo, quindi occorre guardare cosa segue:
+\begin{itemize}
+\item $\pi_1 M_a = \pi_2$: leggendo $a$ si va in $S_2$, quindi il prefisso $aa$ porta da $S_0$ a $S_2$;
+\item $\pi_1 M_b = \pi_3$: leggendo $b$ si va nel pozzo $S_3$, quindi il prefisso $ab$ non può essere esteso a una stringa di $X$.
+\end{itemize}
+Gli unici cammini minimi che portano da $S_0$ a $S_2$ senza passare da $S_0$ o $S_2$ intermedi sono
+quindi quelli etichettati da $b$ e $aa$.
+
+\item \textbf{Da $S_2$.} Lo stato $S_2$ è lo stato finale e non è un pozzo, quindi occorre guardare cosa segue:
+\begin{itemize}
+\item $\pi_2 M_b = \pi_0$: leggendo $b$ si torna in $S_0$, quindi da $S_2$ si può proseguire e formare un nuovo ciclo;
+\item $\pi_2 M_a = \pi_3$: leggendo $a$ si va nel pozzo $S_3$, quindi la stringa non può essere estesa con $a$ restando in $X$.
+\end{itemize}
+
+\item \textbf{Da $S_3$.} Lo stato $S_3$ non è accettante ed è un pozzo:
+\begin{itemize}
+\item $\pi_3 M_a = \pi_3$: leggendo $a$ si resta in $S_3$;
+\item $\pi_3 M_b = \pi_3$: leggendo $b$ si resta in $S_3$.
+\end{itemize}
+Il pozzo non si abbandona più, quindi da $S_3$ non è possibile raggiungere $S_2$.
+Ogni stringa che passa da $S_3$ non appartiene a $X$.
+\end{itemize}
+Per soddisfare $\pi_0 M_w \eta = 1$, la stringa $w$ deve evitare $S_3$ e finire in $S_2$.
+Studiamo come può evolvere una stringa a partire da $S_0$, distinguendo la prima lettera.
+\begin{itemize}
+\item Se $w$ inizia con $a$, si va in $S_1$. La lettera successiva non può essere $b$
+(si andrebbe nel pozzo $S_3$), quindi $w$ ha prefisso $aa$ e si è in $S_2$.
+Se $w=aa$ la parola è accettata. Altrimenti la lettera successiva non può essere $a$
+(si andrebbe in $S_3$), quindi è $b$ e si torna in $S_0$: il prefisso è $aab$.
+
+\item Se $w$ inizia con $b$, si va in $S_2$. Se $w=b$ la parola è accettata.
+Altrimenti la lettera successiva non può essere $a$ (si andrebbe in $S_3$),
+quindi è $b$ e si torna in $S_0$: il prefisso è $bb$.
+\end{itemize}
+In entrambi i casi, o la parola termina in $S_2$ (ed è uguale a $aa$ oppure a $b$),
+oppure si torna in $S_0$ avendo letto $aab$ oppure $bb$. Ripetendo l'argomento da $S_0$,
+una parola accettata si scrive in modo unico come
+\[
+w=u_1u_2\cdots u_k\,v,\qquad k\ge0,\ u_i\in\{aab,bb\},\ v\in\{aa,b\}.
+\]
+Viceversa, ogni parola di questa forma porta da $S_0$ a $S_2$ passando per $S_0$
+dopo ogni $u_i$, ed è quindi accettata. Dunque
+\[
+X=\{w\in\{a,b\}^*\mid w=u_1\cdots u_kv,\ k\ge0,\ u_i\in\{aab,bb\},\ v\in\{aa,b\}\}
+=\{aab,bb\}^*\{aa,b\},
+\]
+che coincide con il linguaggio di $((aa+b)b)^*(aa+b)$ trovato al punto~3.
+
 \end{enumerate}
 \end{sol}
-
 % ---------------- ESERCIZIO 2 ----------------
 \newpage
 \begin{ex}
@@ -335,9 +411,137 @@ X=\{0^n1^n \mid n\geq 0\},\qquad X'=\{0^n1^m \mid n\geq 0,\ m\geq 0\},\qquad Y=\
 \]
 Mostrare che:
 \begin{enumerate}
-    \item $X$ non è regolare poiché non soddisfa la condizione necessaria del Pumping Lemma;
-    \item $X'$ è regolare poiché è interpretazione di un'espressione regolare (quale?);
-    \item $X=X'\cap Y$;
-    \item $Y$ non è regolare.
+\item $X$ non è regolare poiché non soddisfa la condizione necessaria del Pumping Lemma;
+\item $X'$ è regolare poiché è interpretazione di un'espressione regolare (quale?);
+\item $X=X'\cap Y$;
+\item $Y$ non è regolare.
 \end{enumerate}
 \end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+\item Mostriamo che per ogni $p>0$ esiste $w\in X$ con $|w|\geq p$ tale che per ogni fattorizzazione $w=uxv$ con $x\neq\varepsilon$ esiste $i\geq 0$ con $ux^iv\notin X$.
+
+Sia $p>0$ e sia $w=0^p1^p\in X$; quindi $|w|=2p\geq p$. Sia $w=uxv$ una fattorizzazione arbitraria con $x\neq\varepsilon$. Poiché $x$ è un fattore di $0^p1^p$, si hanno tre casi.
+\begin{itemize}
+\item Se $x=0^k$ con $k\geq 1$, allora $ux^0v=uv=0^{p-k}1^p\notin X$.
+\item Se $x=1^k$ con $k\geq 1$, allora $ux^0v=uv=0^p1^{p-k}\notin X$.
+\item Se $x=0^\alpha1^\beta$ con $\alpha,\beta\geq 1$, allora
+\[
+ux^2v=0^a\,0^\alpha1^\beta\,0^\alpha1^\beta\,1^b\notin X
+\]
+per opportuni $a,b\in\mathbb N$, perché contiene il fattore $10$.
+\end{itemize}
+In ogni caso la condizione necessaria del Pumping Lemma non è soddisfatta, quindi $X$ non è regolare.
+
+\item Il DFA che decide $X'$ è
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state, accepting] (q0) at (0,0)   {$q_0$};
+\node[state, accepting] (q1) at (2.5,0) {$q_1$};
+\node[state, accepting] (q2) at (5,0)   {$q_2$};
+\node[state]            (q3) at (7.5,0) {$q_3$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) -- node {$0$} (q1);
+\draw[->] (q1) -- node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\path[->] (q1) edge[loop above] node {$0$} (q1);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+\path[->] (q3) edge[loop above] node {$0,1$} (q3);
+\draw[->, rounded corners=8pt]
+    (q0.south) -- (q0.south |- 0,-1.5) -- node[swap] {$1$} (q2.south |- 0,-1.5) -- (q2.south);
+\end{tikzpicture}
+\]
+Per trovare l'espressione regolare eliminiamo gli stati dal DFA.
+
+\emph{Passo 1.} Togliamo il pozzo $q_3$, aggiungiamo un nuovo stato iniziale $q_0^*$ e un nuovo stato finale $q_F$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0s) at (0,0)     {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)   {$q_0$};
+\node[state]            (q1)  at (5,0)     {$q_1$};
+\node[state]            (q2)  at (7.5,0)   {$q_2$};
+\node[state, accepting] (qF)  at (6.25,2.6) {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->, very thick] (q0s) -- node {$\varepsilon$} (q0);
+\draw[->, very thick] (q0) to[bend left=25] node[above left] {$\varepsilon$} (qF);
+\draw[->, very thick] (q1) -- node[left] {$\varepsilon$} (qF);
+\draw[->, very thick] (q2) -- node[right] {$\varepsilon$} (qF);
+
+\draw[->] (q0) -- node {$0$} (q1);
+\draw[->] (q1) -- node {$1$} (q2);
+\path[->] (q1) edge[loop below] node {$0$} (q1);
+\path[->] (q2) edge[loop right] node {$1$} (q2);
+\draw[->, rounded corners=8pt]
+    (q0.south) -- (q0.south |- 0,-1.9) -- node[swap] {$1$} (q2.south |- 0,-1.9) -- (q2.south);
+\end{tikzpicture}
+\]
+
+\emph{Passo 2.} Eliminiamo $q_1$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0s) at (0,0)    {$q_0^*$};
+\node[state]            (q0)  at (2.5,0)  {$q_0$};
+\node[state]            (q2)  at (5.5,0)  {$q_2$};
+\node[state, accepting] (qF)  at (4,2.6)  {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\varepsilon$} (q0);
+\draw[->, very thick] (q0) -- node[left] {$\varepsilon+00^*$} (qF);
+\draw[->] (q2) -- node[right] {$\varepsilon$} (qF);
+\draw[->, very thick] (q0) -- node[swap] {$00^*1+1$} (q2);
+\path[->] (q2) edge[loop right] node {$1$} (q2);
+\end{tikzpicture}
+\]
+
+\emph{Passo 3.} Eliminiamo $q_2$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0s) at (0,0)   {$q_0^*$};
+\node[state]            (q0)  at (2.5,0) {$q_0$};
+\node[state, accepting] (qF)  at (9,0)   {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->] (q0s) -- node {$\varepsilon$} (q0);
+\draw[->, very thick] (q0) -- node {$\varepsilon+00^*+(00^*1+1)1^*$} (qF);
+\end{tikzpicture}
+\]
+
+\emph{Passo 4.} Eliminiamo $q_0$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0s) at (0,0)   {$q_0^*$};
+\node[state, accepting] (qF)  at (7,0)   {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+\draw[->, very thick] (q0s) -- node {$\varepsilon+00^*+00^*11^*+11^*$} (qF);
+\end{tikzpicture}
+\]
+L'espressione ottenuta si riduce a $\varepsilon+0^*1^*$, ma anche più semplicemente a $0^*1^*$: infatti $\varepsilon+00^*+00^*11^*+11^*=\varepsilon+00^*1^*+11^*=0^*1^*$. Quindi $X'$ è l'interpretazione di $0^*1^*$ ed è regolare.
+
+\item Mostriamo le due inclusioni.
+
+``$\subseteq$'': se $w\in X$, allora $w=0^n1^n$ per qualche $n\geq 0$. In particolare $|w|_0=|w|_1=n$, quindi $w\in Y$, e banalmente $w\in X'$ (con $m=n$).
+
+``$\supseteq$'': sia $w\in X'\cap Y$. Poiché $w\in X'$, si ha $w=0^n1^k$ per certi $n,k\geq 0$. Poiché $w\in Y$, si ha $n=|w|_0=|w|_1=k$. Dunque $w=0^n1^n\in X$.
+
+\item Supponiamo per assurdo che $Y$ sia regolare. Per il punto 2, $X'$ è regolare. Poiché i linguaggi regolari sono chiusi rispetto all'intersezione, $X'\cap Y$ sarebbe regolare. Ma per il punto 3, $X'\cap Y=X$, e $X$ non è regolare per il punto 1: assurdo. Quindi $Y$ non è regolare.
+\end{enumerate}
+\end{sol}

@@ -1,0 +1,238 @@
+\begin{ex}
+Un intero $x$ si scrive in base $b>1$ se vale l'uguaglianza
+\[
+x=\sum_{i=0}^{d}\alpha_i b^i
+\]
+con $\alpha_i\in\{0,1,\dots,b-1\}$ e $\alpha_d\neq 0$; in tal caso, la parola
+$[x]_b=\alpha_d\alpha_{d-1}\cdots\alpha_0$ di alfabeto $A=\{0,1,\dots,b-1\}$ si dice la
+rappresentazione di $x$ in base $b$.
+
+Dato un insieme $X\subset\mathbb{N}$, denotiamo con
+\[
+[X]_b=\{[x]_b\mid x\in X\}.
+\]
+Un insieme $X$ si dice \emph{$b$-automatico} se $[X]_b$ è DFA-decidibile (ovvero regolare).
+
+Mostrare che:
+\begin{enumerate}
+    \item $X=\mathbb{N}$ è $b$-automatico per ogni intero $b>1$.
+    \item $X=\{2^k\mid k\in\mathbb{N}\}$ è $2$-automatico.
+    \item $X=\{b^k\mid k\in\mathbb{N}\}$ è $b$-automatico.
+    \item $X=\{x\in\mathbb{N}\mid [x]_2 \text{ contiene un numero dispari di } 1\}$ è $2$-automatico.
+    \item (facoltativo) $X=\{2^k\mid k\in\mathbb{N}\}$ non è $3$-automatico.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+    \item Dobbiamo mostrare che $[\mathbb{N}]_b=\{[x]_b\mid x\in\mathbb{N}\}$ è DFA-decidibile.
+    Basta controllare che la parola non inizi con ``zero'' e che, se lo fa, debba essere
+    la parola ``zero''. Il DFA è:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Stati
+    \node[state]            (q0) at (0,0)    {$q_0$};
+    \node[state, accepting] (q1) at (4,1.5)  {$q_1$};
+    \node[state, accepting] (q2) at (4,-1.5) {$q_2$};
+    \node[state]            (q3) at (8,1.5)  {$q_3$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Transizioni
+    \draw[->] (q0) -- node {$0$} (q1);
+    \draw[->] (q0) -- node[swap] {$i\in\{1,\dots,b-1\}$} (q2);
+    \draw[->] (q1) -- node {$i\in\{0,\dots,b-1\}$} (q3);
+
+    % Cappi
+    \path[->] (q2) edge[loop below] node {$i\in\{0,\dots,b-1\}$} (q2);
+    \path[->] (q3) edge[loop above] node {$i\in\{0,\dots,b-1\}$} (q3);
+    \end{tikzpicture}
+    \]
+
+    \item Si ha $[X]_2=\{[x]_2\mid x=2^k,\ k\in\mathbb{N}\}=\{1\,0^k\mid k\in\mathbb{N}\}$. Quindi il DFA è:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Stati
+    \node[state]            (q0) at (0,0)    {$q_0$};
+    \node[state, accepting] (q1) at (4,0)    {$q_1$};
+    \node[state]            (q2) at (2,-2.5) {$q_2$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Transizioni
+    \draw[->] (q0) -- node {$1$} (q1);
+    \draw[->] (q0) -- node[swap] {$0$} (q2);
+    \draw[->] (q1) -- node {$1$} (q2);
+
+    % Cappi
+    \path[->] (q1) edge[loop above] node {$0$} (q1);
+    \path[->] (q2) edge[loop below] node {$0,1$} (q2);
+    \end{tikzpicture}
+    \]
+
+    \item Si ha $[X]_b=\{[x]_b\mid x=b^k,\ k\in\mathbb{N}\}=\{1\,0^k\mid k\in\mathbb{N}\}$
+    (il punto precedente è il caso $b=2$). Il DFA è:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Stati
+    \node[state]            (q0) at (0,0)    {$q_0$};
+    \node[state, accepting] (q1) at (5,0)    {$q_1$};
+    \node[state]            (q2) at (2.5,-2.5) {$q_2$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Transizioni
+    \draw[->] (q0) -- node {$1$} (q1);
+    \draw[->] (q0) -- node[swap] {$i\in\{0,2,\dots,b-1\}$} (q2);
+    \draw[->] (q1) -- node {$i\in\{1,\dots,b-1\}$} (q2);
+
+    % Cappi
+    \path[->] (q1) edge[loop above] node {$0$} (q1);
+    \path[->] (q2) edge[loop below] node {$i\in\{0,\dots,b-1\}$} (q2);
+    \end{tikzpicture}
+    \]
+
+    \item Si ha $[X]_2=\{[x]_2\mid [x]_2 \text{ contiene un numero dispari di } 1\}$.
+    Il DFA è (lo stato $q_z$ rifiuta le parole che iniziano con $0$):
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Stati
+    \node[state]            (q0) at (0,0)    {$q_0$};
+    \node[state, accepting] (qd) at (3.5,0)  {$q_d$};
+    \node[state]            (qp) at (7,0)    {$q_p$};
+    \node[state]            (qz) at (0,-2.5) {$q_z$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Transizioni
+    \draw[->] (q0) -- node {$1$} (qd);
+    \draw[->] (q0) -- node[swap] {$0$} (qz);
+    \draw[->] (qd) to[bend left=25]  node {$1$} (qp);
+    \draw[->] (qp) to[bend left=25]  node {$1$} (qd);
+
+    % Cappi
+    \path[->] (qd) edge[loop above] node {$0$} (qd);
+    \path[->] (qp) edge[loop above] node {$0$} (qp);
+    \path[->] (qz) edge[loop below] node {$0,1$} (qz);
+    \end{tikzpicture}
+    \]
+\end{enumerate}
+\end{sol}
+
+\begin{ex}
+Dopo aver ricordato la definizione della formula di esecuzione per un automa, dare la
+matrice $M$ associata al seguente automa di alfabeto $A=\{a,b\}$ e calcolarne la serie
+parziale $S$ troncata al terzo termine:
+\[
+S=M^0+M^1+M^2
+\]
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)     {$q_0$};
+\node[state]            (q3) at (3,1.5)   {$q_3$};
+\node[state]            (q4) at (6,1.5)   {$q_4$};
+\node[state, accepting] (q1) at (3,-1.5)  {$q_1$};
+\node[state, accepting] (q2) at (6,-1.5)  {$q_2$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni
+\draw[->] (q0) -- node {$\varepsilon$} (q3);
+\draw[->] (q0) -- node[swap] {$\varepsilon$} (q1);
+\draw[->] (q1) -- node {$b$} (q3);
+\draw[->] (q3) -- node {$a$} (q4);
+\draw[->] (q4) -- node[pos=0.3] {$b$} (q1);
+\draw[->] (q1) -- node[swap] {$a$} (q2);
+\draw[->] (q2) -- node {$b$} (q4);
+
+% Cappi
+\path[->] (q4) edge[loop above] node {$b$} (q4);
+\path[->] (q1) edge[loop below] node {$a$} (q1);
+\end{tikzpicture}
+\]
+\end{ex}
+
+\begin{ex}
+Si consideri una macchina di Turing $\mu$ di alfabeto $A=\{0,1\}$ e sia
+\[
+X=\{x\in A^*\mid \text{la computazione di }\mu\text{ associata a }x\,x^R\text{ termina}\}
+\]
+dove $x^R$ è la parola $x$ invertita.
+
+Mostrare che $X$ è un insieme semidecidibile definendo esplicitamente la macchina $\mu'$
+che semidecide $X$ in funzione della macchina $\mu$.
+\end{ex}
+
+\begin{sol}
+Fissata $\mu$, sia $Y=\{y\in A^*\mid \text{la computazione di }\mu\text{ associata a }y\text{ termina}\}$,
+così che $X=\{x\in A^*\mid x\,x^R\in Y\}$. Sia $\alpha$ la macchina a un nastro che
+semidecide $Y$ (ad esempio $\mu$ stessa).
+
+Definiamo $\gamma$ come la macchina di Turing a $2$ nastri che, sul nastro $1$ legge $w$ e
+scrive $w\,w^R$ sul nastro $2$. Le sue transizioni, con $b\in\{0,1\}$ e nella forma
+$(\text{nastro }1,\text{nastro }2)/(\text{nastro }1,\text{nastro }2),(\text{mossa }1,\text{mossa }2)$, sono:
+\[
+\begin{tikzpicture}[
+    scale=0.75, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state] (q0) at (0,0)   {$q_0$};
+\node[state] (q1) at (7,0)   {$q_1$};
+\node[state] (q2) at (14,0)  {$q_2$};
+\node[state] (qa) at (21,0)  {$q_\alpha$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Copia di w sul nastro 2
+\path[->] (q0) edge[loop above, looseness=8] node {$(b,\square)/(b,b),(+1,+1)$} (q0);
+\draw[->] (q0) -- node[swap] {$(\square,\square)/(\square,\square),(-1,0)$} (q1);
+
+% Scrittura di w^R sul nastro 2
+\path[->] (q1) edge[loop above, looseness=8] node {$(b,\square)/(b,b),(-1,+1)$} (q1);
+\draw[->] (q1) -- node[swap] {$(\square,\square)/(\square,\square),(0,-1)$} (q2);
+
+% Ritorno all'inizio del nastro 2
+\path[->] (q2) edge[loop above, looseness=8] node {$(\square,b)/(\square,b),(0,-1)$} (q2);
+\draw[->] (q2) -- node[swap] {$(\square,\square)/(\square,\square),(0,+1)$} (qa);
+\end{tikzpicture}
+\]
+\begin{enumerate}
+    \item In $q_0$ la macchina copia $w$ sul nastro $2$, spostando entrambe le testine a destra.
+    \item In $q_1$ la testina del nastro $1$ torna indietro leggendo $w$ al contrario, mentre sul
+    nastro $2$ si scrive $w^R$ di seguito a $w$.
+    \item In $q_2$ la testina del nastro $2$ torna all'inizio di $w\,w^R$ e si passa a $q_\alpha$, lo
+    stato iniziale di $\alpha$.
+\end{enumerate}
+
+La macchina $\mu'$ opererà prima come $\gamma$ e poi, dopo che $\gamma$ ha finito, opererà sul
+nastro $2$ come $\alpha$, mentre il nastro $1$ è fermo (ogni transizione di $\alpha$ viene
+estesa lasciando fissa la testina del nastro $1$). La macchina $\mu'$ si ferma solamente
+quando si ferma $\alpha$.
+
+Quindi $\mu'$ termina su $w$ se e solo se $\alpha$ termina su $w\,w^R$, cioè se e solo se
+$w\,w^R\in Y$, ovvero $w\in X$. Dunque $\mu'$ semidecide $X$.
+\end{sol}
