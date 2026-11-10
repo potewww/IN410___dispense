@@ -1,0 +1,288 @@
+\begin{ex}
+\begin{enumerate}
+    \item Costruire un $\varepsilon$-NDFA sull'alfabeto $A=\{a,b,c,d\}$ che decide l'insieme specificato dall'espressione regolare:
+    \[
+        a^*(b+c(\varepsilon+d))(b+c(\varepsilon+d))^*.
+    \]
+    \item Convertire l'automa non-deterministico trovato al punto precedente in uno deterministico equivalente (che decide lo stesso insieme).
+    \item A partire dall'automa deterministico ricavato al punto precedente, trovare un automa deterministico con un numero inferiore di stati che decide lo stesso insieme regolare.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\begin{enumerate}
+    \item Sia $y=b+c(\varepsilon+d)$ e sia $x=a^*\,y\,y^*$ l'espressione data. Costruisco l'$\varepsilon$-NDFA tramite le procedure viste.
+    \begin{enumerate}
+        \item Passo 1.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (q0) at (0,0) {$q_0$};
+        \node[state, accepting] (qF) at (5,0) {$q_F$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+        \draw[->] (q0) -- node {$a^*\,y\,y^*$} (qF);
+        \end{tikzpicture}
+        \]
+        \item Passo 2: scompongo $x=a^*\,y\,z^*$ con $z=y$.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (q0) at (0,0) {$q_0$};
+        \node[state, accepting] (qF) at (5,0) {$q_F$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+        \path[->, very thick] (q0) edge[loop above] node {$a$} (q0);
+        \draw[->, very thick] (q0) -- node {$y$} (qF);
+        \path[->, very thick] (qF) edge[loop above] node {$y$} (qF);
+        \end{tikzpicture}
+        \]
+        \item Passo 3: sostituisco $y=b+c(\varepsilon+d)$, ottenendo due archi paralleli e due cappi.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (q0) at (0,0) {$q_0$};
+        \node[state, accepting] (qF) at (5,0) {$q_F$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+        \path[->] (q0) edge[loop above] node {$a$} (q0);
+        \draw[->, very thick] (q0) to[bend left=25] node {$b$} (qF);
+        \draw[->, very thick] (q0) to[bend right=25] node[swap] {$c(\varepsilon+d)$} (qF);
+        \path[->, very thick] (qF) edge[loop above] node {$b$} (qF);
+        \path[->, very thick] (qF) edge[loop below] node {$c(\varepsilon+d)$} (qF);
+        \end{tikzpicture}
+        \]
+        \item Passo 4: espando $c(\varepsilon+d)$ introducendo gli stati $q_1$ e $q_2$.
+        \[
+        \begin{tikzpicture}[
+            >=stealth', shorten >=1pt, auto,
+            every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+        ]
+        \node[state]            (q0) at (0,0)    {$q_0$};
+        \node[state, accepting] (qF) at (6,0)    {$q_F$};
+        \node[state, very thick] (q1) at (3,-2.2) {$q_1$};
+        \node[state, very thick] (q2) at (3,2.5)  {$q_2$};
+
+        \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+        \path[->] (q0) edge[loop above] node {$a$} (q0);
+        \draw[->] (q0) -- node {$b$} (qF);
+        \path[->] (qF) edge[loop right] node {$b$} (qF);
+
+        \draw[->, very thick] (q0) -- node[swap] {$c$} (q1);
+        \draw[->, very thick] (q1) to[bend left=20] node {$\varepsilon$} (qF);
+        \draw[->, very thick] (q1) to[bend right=20] node[swap] {$d$} (qF);
+
+        \draw[->, very thick] (qF) -- node[swap] {$c$} (q2);
+        \draw[->, very thick] (q2) to[bend left=30] node {$\varepsilon$} (qF);
+        \draw[->, very thick] (q2) to[bend right=30] node[swap] {$d$} (qF);
+        \end{tikzpicture}
+        \]
+    \end{enumerate}
+
+    \item Applico la costruzione per sottoinsiemi (con $\varepsilon$-chiusura). Pongo
+    $S_0=\{q_0\}$, $S_1=\{q_F\}$, $S_2=\{q_1,q_F\}$, $S_3=\emptyset$, $S_4=\{q_F,q_2\}$.
+    \[
+    \begin{array}{c|c|c|c|c}
+             & a   & b   & c   & d   \\ \hline
+        S_0  & S_0 & S_1 & S_2 & S_3 \\
+        S_1  & S_3 & S_1 & S_4 & S_3 \\
+        S_2  & S_3 & S_1 & S_4 & S_1 \\
+        S_3  & S_3 & S_3 & S_3 & S_3 \\
+        S_4  & S_3 & S_1 & S_4 & S_1
+    \end{array}
+    \]
+    Gli stati finali sono quelli che contengono $q_F$, cioè $S_1$, $S_2$ e $S_4$. Otteniamo il DFA:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (S0) at (0,0)    {$S_0$};
+    \node[state, accepting] (S1) at (4,0)    {$S_1$};
+    \node[state, accepting] (S4) at (8,0)    {$S_4$};
+    \node[state, accepting] (S2) at (0,-3.5) {$S_2$};
+    \node[state]            (S3) at (4,-3.5) {$S_3$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]S0.center) -- (S0);
+
+    \path[->] (S0) edge[loop above] node {$a$} (S0);
+    \draw[->] (S0) -- node {$b$} (S1);
+    \draw[->] (S0) -- node[swap] {$c$} (S2);
+    \draw[->] (S0) -- node[pos=0.4] {$d$} (S3);
+
+    \path[->] (S1) edge[loop above] node {$b$} (S1);
+    \draw[->] (S1) to[bend left=20] node {$c$} (S4);
+    \draw[->] (S1) -- node[swap] {$a,d$} (S3);
+
+    \path[->] (S4) edge[loop above] node {$c$} (S4);
+    \draw[->] (S4) to[bend left=20] node {$b,d$} (S1);
+    \draw[->] (S4) -- node[pos=0.4] {$a$} (S3);
+
+    \draw[->] (S2) -- node {$a$} (S3);
+    \draw[->] (S2) -- node[pos=0.3] {$b,d$} (S1);
+    \draw[->, rounded corners=8pt] (S2.south) -- (0,-5.6) -- node {$c$} (8,-5.6) -- (S4.south);
+
+    \path[->] (S3) edge[loop below] node {$a,b,c,d$} (S3);
+    \end{tikzpicture}
+    \]
+
+    \item Gli stati $S_2$ e $S_4$ sono entrambi finali e hanno le stesse transizioni ($a\to S_3$, $b\to S_1$, $c\to S_4$, $d\to S_1$), quindi sono equivalenti e si possono identificare. Eliminando $S_2$ e reindirizzando su $S_4$ l'arco $c$ uscente da $S_0$, si ottiene un DFA con $4$ stati che decide lo stesso insieme:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (S0) at (0,0)    {$S_0$};
+    \node[state, accepting] (S1) at (4,0)    {$S_1$};
+    \node[state, accepting] (S4) at (8,0)    {$S_4$};
+    \node[state]            (S3) at (4,-3.5) {$S_3$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]S0.center) -- (S0);
+
+    \path[->] (S0) edge[loop above] node {$a$} (S0);
+    \draw[->] (S0) -- node {$b$} (S1);
+    \draw[->] (S0) -- node[pos=0.4] {$d$} (S3);
+    \draw[->, very thick] (S0) to[bend right=45] node[swap, pos=0.25] {$c$} (S4);
+
+    \path[->] (S1) edge[loop above] node {$b$} (S1);
+    \draw[->] (S1) to[bend left=20] node {$c$} (S4);
+    \draw[->] (S1) -- node[swap] {$a,d$} (S3);
+
+    \path[->] (S4) edge[loop above] node {$c$} (S4);
+    \draw[->] (S4) to[bend left=20] node {$b,d$} (S1);
+    \draw[->] (S4) -- node[pos=0.4] {$a$} (S3);
+
+    \path[->] (S3) edge[loop below] node {$a,b,c,d$} (S3);
+    \end{tikzpicture}
+    \]
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Dato un alfabeto $A$ e $\#\notin A$, sia $B=A\cup\{\#\}$
+\[
+    X:=\{w\#x \mid x \text{ sottostringa di } w \text{ con } x,w\in A^*\}\subset B^*.
+\]
+Mostrare che
+\[
+    X\notin\mathbf{DTIME}^B_1(cn),
+\]
+(ovvero non è TM-decidibile in tempo lineare).
+\end{ex}
+
+\begin{sol}
+Ricordiamo che gli insiemi decidibili in tempo lineare da una macchina di Turing a un nastro sono regolari, cioè $\mathbf{DTIME}^B_1(cn)\subseteq\mathbf{REG}$. Basta quindi mostrare che $X$ non è regolare, e lo facciamo con il pumping lemma.
+
+Supponiamo per assurdo che $X$ sia regolare e sia $p\geq 1$ la lunghezza del pumping lemma. Sia $a\in A$ e consideriamo
+\[
+    w=a^p\#a^p.
+\]
+Si ha $w\in X$, perché $a^p$ è sottostringa di $a^p$, e $|w|\geq p$.
+
+Sia $w=uxv$ una decomposizione con $|x|>0$ e $|ux|\leq p$. Allora $ux=a^t$ con $0<t\leq p$, quindi
+\[
+    u=a^{t_1},\qquad x=a^{t_2},\qquad t_1\geq 0,\ t_2>0,\ t_1+t_2=t,
+\]
+e $v=a^{p-t}\#a^p$. Consideriamo
+\[
+    ux^0v=uv=a^{t_1}\,a^{p-t}\#a^p=a^{p-t_2}\#a^p.
+\]
+Poiché $t_2>0$ si ha $p-t_2<p$, quindi $a^p$ non è sottostringa di $a^{p-t_2}$ perché questa è di lunghezza inferiore. Dunque $ux^0v\notin X$, e il pumping lemma non vale.
+
+Quindi $X$ non è regolare, e dunque $X\notin\mathbf{DTIME}^B_1(cn)$.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+\begin{enumerate}
+    \item Dire cosa significa che una macchina di Turing semidecide l'insieme vuoto $X=\emptyset$.
+    \item Si considerino gli insiemi minimali $A=\{1\}$ e $Q=\{q_0\}$, sia $\mathcal M_0$ l'insieme delle macchine di Turing di alfabeto $A$ e insieme degli stati $Q$. Determinare la cardinalità dell'insieme $\mathcal M_0$.
+    \item Dire se in $\mathcal M_0$ ci sono macchine che decidono un qualche insieme $X$. Quante sono?
+    \item Trovare tutti gli insiemi decidibili da almeno una macchina in $\mathcal M_0$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\begin{enumerate}
+    \item Una macchina $\mu$ semidecide $X=\emptyset$ se non termina su nessun input, cioè se la computazione non finisce mai.
+
+    \item Una macchina in $\mathcal M_0$ è una funzione di transizione
+    \[
+        \mathcal M_0=\Big\{\mu \;\Big|\; \mu:\{q_0\}\times\{1,\square\}\to\{q_0,q_F^0,q_F^1\}\times\{1,\square\}\times\{+1,-1\}\Big\}.
+    \]
+    Il dominio ha $2$ elementi, $(q_0,1)$ e $(q_0,\square)$. Per ciascuno ci sono $3$ scelte per il nuovo stato, $2$ per il simbolo scritto e $2$ per lo spostamento. Quindi
+    \[
+        |\mathcal M_0|=(3\cdot 2\cdot 2)^2=12^2=144.
+    \]
+
+    \item Sì. Sia $\mu\in\mathcal M_0$ una macchina che decide un insieme $X$. Allora la computazione termina per ogni $w\in A^*=\{\varepsilon,1^n\mid n\in\mathbb N_{\geq 1}\}$.
+    \begin{enumerate}
+        \item Su $w=\varepsilon$: se $T(q_0,\square)=q_0$ la computazione non finisce, quindi $T(q_0,\square)=q_F^b$ con $b\in\{0,1\}$.
+        \item Su $w=1^n$: la computazione inizia con $T(q_0,1)=q_F^{b'}$ oppure con $T(q_0,1)=q_0$.
+    \end{enumerate}
+    Quindi $T(q_0,\square)=q_F^b$ per un $b\in\{0,1\}$ e abbiamo le seguenti macchine, che decidono rispettivamente:
+    \[
+    \begin{array}{c|c|c}
+        T(q_0,\square) & T(q_0,1) & \text{insieme deciso} \\ \hline
+        q_F^0 & q_F^0 & \emptyset \\
+        q_F^1 & q_F^1 & A^* \\
+        q_F^0 & q_F^1 & A^*\setminus\{\varepsilon\} \\
+        q_F^1 & q_F^0 & \{\varepsilon\}
+    \end{array}
+    \]
+    Ad esempio, la macchina
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0)  at (0,0)    {$q_0$};
+    \node[state, accepting] (qF0) at (4,1.5)  {$q_F^0$};
+    \node[state, accepting] (qF1) at (4,-1.5) {$q_F^1$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+    \draw[->] (q0) -- node {$\square/$} (qF0);
+    \draw[->] (q0) -- node[swap] {$1/$} (qF1);
+    \end{tikzpicture}
+    \]
+    decide l'insieme $A^*\setminus\{\varepsilon\}$.
+
+    Poiché in ciascuna delle due transizioni si può scegliere liberamente il simbolo scritto e lo spostamento ($2\cdot 2$ scelte per transizione), per ciascuna riga della tabella esistono $2^4$ macchine.
+
+    Se invece $T(q_0,1)=q_0$, la macchina termina comunque su ogni input (con $T(q_0,\square)=q_F^b$), e decide
+    \[
+    \begin{array}{c|c|c}
+        T(q_0,\square) & T(q_0,1) & \text{insieme deciso} \\ \hline
+        q_F^0 & q_0 & \emptyset \\
+        q_F^1 & q_0 & A^*
+    \end{array}
+    \]
+    Anche qui, contando come prima, ci sono $2^4$ macchine per ciascuna riga.
+
+    \item Gli unici insiemi decidibili da almeno una macchina in $\mathcal M_0$ sono quindi
+    \[
+        \emptyset,\qquad A^*,\qquad A^*\setminus\{\varepsilon\},\qquad \{\varepsilon\}.
+    \]
+    Il numero di macchine che decide ciascun insieme è:
+    \[
+    \begin{array}{c|c}
+        \text{insieme deciso} & \#\text{macchine} \\ \hline
+        \emptyset & 2^5 \\
+        A^* & 2^5 \\
+        A^*\setminus\{\varepsilon\} & 2^4 \\
+        \{\varepsilon\} & 2^4
+    \end{array}
+    \]
+    Il totale delle macchine che decidono un insieme è $2\cdot 2^5+2\cdot 2^4=2^6+2^5=96$.
+\end{enumerate}
+\end{sol}
