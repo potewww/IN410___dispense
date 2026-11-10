@@ -464,3 +464,53 @@ e si posiziona alla fine della parola
 \end{tikzpicture}
 \]
 \end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $2^{[d]}(n)$ la torre di esponenziali definita da
+\[
+2^{[d]}(n)=
+\begin{cases}
+n & \text{se } d=0,\\[2pt]
+2^{\,2^{[d-1]}(n)} & \text{se } d>0.
+\end{cases}
+\]
+Mostrare che
+\[
+\bigcup_{d\ge1}\mathrm{DTIME}_1^{\{0,1\}}\big(2^{[d]}(n)\big)=\bigcup_{d\ge1}\mathrm{DSPACE}_1^{\{0,1\}}\big(2^{[d]}(n)\big).
+\]
+\end{ex}
+
+\begin{sol}
+Usiamo la relazione
+\[
+\mathrm{DTIME}_1^{\{0,1\}}(T)\ \overset{(a)}{\subseteq}\ \mathrm{DSPACE}_1^{\{0,1\}}(T)\ \overset{(b)}{\subseteq}\ \bigcup_{\varepsilon>0}\mathrm{DTIME}_1^{\{0,1\}}\big(2^{\varepsilon T}\big)
+\]
+Mostriamo la doppia inclusione.
+\begin{enumerate}
+\item[``$\subseteq$''] Segue da $(a)$ con $T(n)=2^{[d]}(n)$: per ogni $d\ge1$ si ha
+\[
+\mathrm{DTIME}_1^{\{0,1\}}\big(2^{[d]}(n)\big)\subseteq\mathrm{DSPACE}_1^{\{0,1\}}\big(2^{[d]}(n)\big),
+\]
+e passando all'unione su $d\ge1$ si ottiene l'inclusione.
+\item[``$\supseteq$''] Sia $X\in\mathrm{DSPACE}_1^{\{0,1\}}\big(2^{[d]}(n)\big)$ per qualche $d\ge1$. Per la relazione $(b)$ con $T(n)=2^{[d]}(n)$, esiste $\varepsilon>0$ tale che
+\[
+X\in\mathrm{DTIME}_1^{\{0,1\}}\big(2^{\varepsilon\cdot2^{[d]}(n)}\big).
+\]
+Posto $t=2^{[d]}(n)$, 
+per $n$ sufficientemente grande si ha 
+$\varepsilon t\le 2^t$, quindi definitivamente valgono
+le seguenti disuguaglianze
+\[
+2^{\varepsilon\cdot2^{[d]}(n)}\le 
+2^{2^{2^{[d]}(n)}} =
+2^{2^{[d+1]}(n)}
+=2^{[d+2]}(n).
+\]
+Dunque $X\in\mathrm{DTIME}_1^{\{0,1\}}
+\big(2^{[d+2]}(n)\big)$, 
+che compare nell'unione di sinistra perché 
+$d+2\ge1$.
+\end{enumerate}
+\end{sol}

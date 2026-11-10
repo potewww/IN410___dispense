@@ -9,59 +9,62 @@
 \contentsline {section}{\numberline {3}Rappresentazione grafica degli automi}{10}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Automi come grafi}{10}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Matrici di adiacenza per grafi di automi finiti}{11}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Linguaggi regolari}{20}{section.4}%
-\contentsline {section}{\numberline {5}Automi non deterministici}{22}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Automi NDFA}{22}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Automi $\epsilon $-NDFA}{26}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Chiusura per concatenazione e star di Kleene}{30}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Espressioni regolari}{35}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Sintassi ed interpretazione}{35}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Automi non deterministici generalizzati}{37}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Da automa ad espressione regolare (e viceversa)}{39}{subsection.6.3}%
-\contentsline {section}{\numberline {7}Macchina di Turing}{47}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Configurazione e algoritmo associato}{47}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Decidibilità per macchina di Turing}{50}{subsection.7.2}%
-\contentsline {section}{\numberline {8}Teoria della complessità}{53}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Classi di complessità}{53}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Look-up Table}{57}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Relazioni tra le classi DTIME e DSPACE}{60}{subsection.8.3}%
-\contentsline {subsection}{\numberline {8.4}Pumping lemma}{61}{subsection.8.4}%
-\contentsline {section}{\numberline {9}Macchine a seminastro e multinastro}{65}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Simulazione di algoritmi}{65}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Macchine a seminastro}{66}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Macchine multinastro}{70}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Equivalenza tra macchine a multinastro e macchine a nastro singolo}{73}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}Cambiamenti di alfabeto}{77}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{83}{subsection.9.6}%
-\contentsline {subsection}{\numberline {9.7}Macchine Speciali}{88}{subsection.9.7}%
-\contentsline {subsection}{\numberline {9.8}Rappresentazione degli interi}{89}{subsection.9.8}%
-\contentsline {section}{\numberline {10}Funzioni ricorsive}{93}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Funzioni Turing-computabili}{93}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Funzioni per ricorsione}{97}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Espressioni ricorsive e interpretazioni}{99}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Turing calcolabilità delle funzioni base}{100}{subsection.10.4}%
-\contentsline {subsection}{\numberline {10.5}Equivalenza tra turing calcolibilità e ricorsività}{102}{subsection.10.5}%
-\contentsline {subsection}{\numberline {10.6}Teorema}{108}{subsection.10.6}%
-\contentsline {section}{\numberline {11}Prerequisiti}{109}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{109}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{109}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{110}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{110}{subsection.11.4}%
-\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{112}{subsection.11.5}%
-\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{113}{subsection.11.6}%
-\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{113}{subsubsection.11.6.1}%
-\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{113}{subsubsection.11.6.2}%
-\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{115}{subsubsection.11.6.3}%
-\contentsline {section}{\numberline {12}Wolfram}{116}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Introduzione}{116}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Entropia}{119}{subsection.12.2}%
-\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{121}{subsection.12.3}%
-\contentsline {subsection}{\numberline {12.4}Automi}{122}{subsection.12.4}%
-\contentsline {section}{\numberline {13}Esercizi}{124}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Automi}{124}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{137}{subsection.13.2}%
-\contentsline {section}{\numberline {14}Esoneri ed esami}{145}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{145}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{151}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Esonero 1 - 08/11/2022}{155}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Esonero 1 - 08/11/2018}{165}{subsection.14.4}%
+\contentsline {subsection}{\numberline {3.3}Formula dell'esecuzione}{12}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Linguaggi regolari}{16}{section.4}%
+\contentsline {section}{\numberline {5}Automi non deterministici}{18}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Automi NDFA}{18}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Automi $\epsilon $-NDFA}{22}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Chiusura per concatenazione e star di Kleene}{26}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Espressioni regolari}{31}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Sintassi ed interpretazione}{31}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Automi non deterministici generalizzati}{33}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Da automa ad espressione regolare (e viceversa)}{35}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Macchina di Turing}{43}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Configurazione e algoritmo associato}{43}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Decidibilità per macchina di Turing}{46}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Teoria della complessità}{49}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Classi di complessità}{49}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Look-up Table}{53}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Relazioni tra le classi DTIME e DSPACE}{56}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Pumping lemma}{57}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Macchine a seminastro e multinastro}{62}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Simulazione di algoritmi}{62}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Macchine a seminastro}{63}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Macchine multinastro}{67}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Equivalenza tra macchine a multinastro e macchine a nastro singolo}{70}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Cambiamenti di alfabeto}{74}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{80}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Macchine Speciali}{85}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.8}Rappresentazione degli interi}{86}{subsection.9.8}%
+\contentsline {section}{\numberline {10}Funzioni ricorsive}{90}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Funzioni Turing-computabili}{90}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Funzioni per ricorsione}{94}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Espressioni ricorsive e interpretazioni}{96}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Turing calcolabilità delle funzioni base}{97}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Equivalenza tra turing calcolibilità e ricorsività}{99}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}Teorema}{105}{subsection.10.6}%
+\contentsline {section}{\numberline {11}Prerequisiti}{106}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{106}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{106}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{107}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{107}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{109}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{110}{subsection.11.6}%
+\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{110}{subsubsection.11.6.1}%
+\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{110}{subsubsection.11.6.2}%
+\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{112}{subsubsection.11.6.3}%
+\contentsline {section}{\numberline {12}Wolfram}{113}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Introduzione}{113}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Entropia}{116}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{118}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Automi}{119}{subsection.12.4}%
+\contentsline {section}{\numberline {13}Esercizi}{121}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Automi ed espressioni}{121}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{138}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Pumping lemma}{147}{subsection.13.3}%
+\contentsline {section}{\numberline {14}Esoneri ed esami}{153}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{153}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{159}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Esonero 1 - 08/11/2022}{163}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Esonero 1 - 11/11/2019}{173}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Esonero 1 - 08/11/2018}{178}{subsection.14.5}%

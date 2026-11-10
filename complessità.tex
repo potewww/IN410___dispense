@@ -486,11 +486,17 @@ Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità; le inclusioni 
 
 \subsection{Pumping lemma}
 In questa sezione, vogliamo dare l'enunciato del Pumping Lemma che fornisce una condizione necessaria soddisfatta da ogni insieme decidibile in tempo lineare per macchina di Turing. Mostrare che la condizione è soddisfatta non permette di dedurre che un insieme appartiene alla classe di complessità lineare. D'altra parte permette di collocare ogni insieme che non la soddisfa al di fuori di essa.
-\\ \\
-Prima di dare l'enunciato,
-diamo una definizione e mostriamo un lemma
+\begin{lemm}[Pumping Lemma]\label{lemm:pumping forte}
+Supponiamo che $X \in \text{DTIME}^{A,Q}_1(kn)$. Allora esiste $P > 0$ tale che per ogni $w \in X$ con $|w| = n \ge P$ esiste una fattorizzazione $w = uxv$ con $u, x, v \in A^*$, $|x| > 0$ e $|ux| \le P$ per cui, per ogni $m \ge 0$,
+\[
+u x^m v \in X.
+\]
+\end{lemm}
+In questa sezione daremo però la dimostrazione di una versione
+più debole del teorema (senza la condizione che $|ux|\leq P$).
+Cominciamo dando una definizione e mostrando un lemma
 tecnico cruciale per la dimostrazione
-del Pumping lemma.
+del lemma.
 \begin{defi}[Sequenza degli stati di passaggio]\label{defi:sequenza-passaggio}
 Sia $\mu$ una macchina di Turing con insieme di stati $Q$, la cui testina parte dalla prima cella del nastro, e sia
 \[
@@ -554,7 +560,7 @@ in contraddizione con l'ipotesi $n \ge (k+1)d^{k+1}$. Dunque l'ipotesi di assurd
 \end{proof}
 \end{lemm}
 Siamo ora pronti per la dimostrazione del lemma.
-\begin{lemm}[Pumping Lemma]\label{lemm:pumping}
+\begin{lemm}[Pumping Lemma, versione debole]\label{lemm:pumping}
 Supponiamo che $X \in \text{DTIME}^{A,Q}_1(kn)$. Allora esiste $P > 0$ tale che per ogni $w \in X$ con $|w| = n \ge P$ esiste una fattorizzazione $w = uxv$ con $u, x, v \in A^*$ e $|x| > 0$ per cui, per ogni $m \ge 0$,
 \[
 u x^m v \in X.
@@ -598,12 +604,13 @@ non è DFA-decidibile.
 Per ogni costante positiva $c$ l'insieme $X=\{ 0^n1^n \, | \, n \in \mathbb N\}$
 non appartiene alla classe di complessità $\text{DTIME}_1^{\{0,1\}}(cn)$.
 \begin{proof}
-Per il pumping-lemma, se esistesse una fattorizzazione $uxv = 0\dots 01\dots 1$, si dovrebbe avere che la parola $uxxv \in X$, ma questo non è possibile in quanto abbiamo solo tre possibilità per scegliere $x$:
+Per assurdo, sia $X\in\text{DTIME}_1^{\{0,1\}}(cn)$ e sia $P$ la costante data dal Lemma~\ref{lemm:pumping}. Consideriamo $w=0^P1^P\in X$, con $|w|=2P\ge P$. Allora esiste una fattorizzazione $w=uxv$ con $|x|>0$ tale che $ux^mv\in X$ per ogni $m\ge 0$; in particolare $uxxv\in X$. Ci sono tre casi per $x$:
 \begin{itemize}
-    \item $x = 0\dots 0$, questo caso non è possibile poiché $uxxv$ non apparterrebbe a $X$ avendo aumentato il numero di zero ma non quello di $1$;
-    \item $x = 1\dots 1$ analogo all'argomento precedente applicato al numero di $1$;
-    \item $x = 0\dots 01\dots 1$ in questo caso la parola $xx$ alternerebbe una serie di $0$ con una di $1$ e questo non è possibile in $X$.
+    \item $x = 0\dots 0$: in $uxxv$ il numero di $0$ aumenta ma non quello di $1$, quindi $uxxv\notin X$;
+    \item $x = 1\dots 1$: analogo, aumenta il numero di $1$ ma non quello di $0$;
+    \item $x = 0\dots 01\dots 1$ (con almeno uno $0$ e un $1$): $xx$ contiene un $1$ seguito da uno $0$, quindi $uxxv$ non ha la forma $0^n1^n$.
 \end{itemize}
+In ogni caso $uxxv\notin X$, una contraddizione.
 \end{proof}
 \end{prop}
 

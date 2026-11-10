@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  9 NOV 2026 01:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  10 NOV 2026 02:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -904,10 +904,11 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 11
  (./intro.tex
 Package hyperref Info: bookmark level for unknown defi defaults to 0 on input line 2.
 Package hyperref Info: bookmark level for unknown rema defaults to 0 on input line 22.
-LaTeX Font Info:    Trying to load font information for U+bbold on input line 46.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/bbold/Ubbold.fd)
+
 
 [3]
+LaTeX Font Info:    Trying to load font information for U+bbold on input line 46.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/bbold/Ubbold.fd)
 Underfull \hbox (badness 10000) in paragraph at lines 116--122
 
  []
@@ -916,9 +917,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--122
 
 [4]
 Package hyperref Info: bookmark level for unknown prop defaults to 0 on input line 163.
-)
 
-[5]
+
+[5])
 
 [6] (./automi_finiti.tex
 
@@ -941,51 +942,31 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [12]
 
 [13]
-Package hyperref Info: bookmark level for unknown ex defaults to 0 on input line 460.
-
-Underfull \hbox (badness 10000) in paragraph at lines 460--461
-
- []
-
-Package hyperref Info: bookmark level for unknown sol defaults to 0 on input line 495.
+Package hyperref Info: bookmark level for unknown theo defaults to 0 on input line 398.
 
 
 [14]
+Package hyperref Info: bookmark level for unknown coro defaults to 0 on input line 434.
+)
 
-[15]
-Overfull \hbox (2.99716pt too wide) detected at line 630
-[][]
- []
+[15] (./linguaggi_regolari.tex
 
+[16])
 
+[17] (./automi_non_deterministici.tex
 
-[16]
-
-[17]
-Package hyperref Info: bookmark level for unknown theo defaults to 0 on input line 776.
-Package hyperref Info: bookmark level for unknown coro defaults to 0 on input line 812.
-
-
-[18])
-
-[19] (./linguaggi_regolari.tex
-
-[20])
-
-[21] (./automi_non_deterministici.tex
-
-[22]
+[18]
 Overfull \hbox (42.8481pt too wide) detected at line 108
 []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 q[]; w\OT1/cmr/m/n/12 ) := \OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 q[]; w\OT1/cmr/m/n/12 ) := []
  []
 
 
 
-[23]
+[19]
 
-[24]
+[20]
 
-[25]
+[21]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 296.
@@ -1000,23 +981,31 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 
 
+[22]
+
+[23]
+
+[24]
+
+[25]
+
 [26]
 
 [27]
 
 [28]
 
-[29]
+[29])
 
-[30]
+[30] (./espressioniregolari.tex
 
 [31]
 
 [32]
 
-[33])
+[33]
 
-[34] (./espressioniregolari.tex
+[34]
 
 [35]
 
@@ -1030,33 +1019,35 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [40]
 
-[41]
+[41])
 
-[42]
+[42] (./macchinadituring.tex
 
 [43]
 
 [44]
 
-[45])
+[45]
 
-[46] (./macchinadituring.tex
+[46]
 
-[47]
+[47])
 
-[48]
+[48] (./complessità.tex
+Underfull \hbox (badness 10000) in paragraph at lines 53--62
+
+ []
+
+
 
 [49]
 
 [50]
 
-[51])
+[51]
 
-[52] (./complessità.tex
-Underfull \hbox (badness 10000) in paragraph at lines 53--62
-
- []
-
+[52]
+Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input line 301.
 
 
 [53]
@@ -1066,8 +1057,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--62
 [55]
 
 [56]
-Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input line 301.
-
 
 [57]
 
@@ -1076,31 +1065,26 @@ Package hyperref Info: bookmark level for unknown lemm defaults to 0 on input li
 [59]
 
 [60]
-Underfull \hbox (badness 10000) in paragraph at lines 488--494
-
- []
-
-
-
-[61]
-
-[62]
-
-[63]
-Overfull \hbox (17.21487pt too wide) in paragraph at lines 617--622
+Overfull \hbox (17.21487pt too wide) in paragraph at lines 624--629
 []\OT1/cmr/m/n/12 L'insieme $\OML/cmm/m/it/12 X \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 0[]1[] \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 n \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g$ \OT1/cmr/m/n/12 ap-par-tie-ne a $[][](\OML/cmm/m/it/12 n[]\OT1/cmr/m/n/12 )$ ma non a $[][](\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )$.
  []
 
 )
 
-[64] (./semimultinastro.tex
+[61] (./semimultinastro.tex
 
-[65]
+[62]
 Underfull \hbox (badness 10000) in paragraph at lines 95--98
 
  []
 
 
+
+[63]
+
+[64]
+
+[65]
 
 [66]
 
@@ -1147,36 +1131,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 95--98
 [87]
 
 [88]
-
-[89]
-
-[90]
-
-[91]
 Overfull \hbox (9.0327pt too wide) detected at line 1505
 \OML/cmm/m/it/12 w[] \OMS/cmsy/m/n/12 2 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 X\OT1/cmr/m/n/12 )[]  \OMS/cmsy/m/n/12 ([])  \OML/cmm/m/it/12 w[] [] \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 w[]\OT1/cmr/m/n/12 )[] = \OML/cmm/m/it/12 n \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 X  \OMS/cmsy/m/n/12 ([])  \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )[] \OMS/cmsy/m/n/12 2 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 X\OT1/cmr/m/n/12 )[]  \OMS/cmsy/m/n/12 ([])  \OML/cmm/m/it/12 ^^V[] [] \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )[]\OML/cmm/m/it/12 ;
  []
 
 )
 
-[92] (./ricorsione.tex
+[89] (./ricorsione.tex
+
+[90]
+
+[91]
+
+[92]
 
 [93]
 
 [94]
 
 [95]
+Overfull \hbox (2.7471pt too wide) in paragraph at lines 235--245
+[]\OT1/cmr/m/n/12 Oltre a con-si-de-ra-re la fun-zio-ne di in-ter-pre-ta-zio-ne pi^^Ru nau-ra-le pos-si-bi-le ($\OT1/cmss/m/n/12 S \OMS/cmsy/m/n/12 7! \OML/cmm/m/it/12 S$\OT1/cmr/m/n/12 , $[](\OT1/cmss/m/n/12 f\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 g\OT1/cmr/m/n/12 )$
+ []
+
+
 
 [96]
 
 [97]
 
 [98]
-Overfull \hbox (2.7471pt too wide) in paragraph at lines 235--245
-[]\OT1/cmr/m/n/12 Oltre a con-si-de-ra-re la fun-zio-ne di in-ter-pre-ta-zio-ne pi^^Ru nau-ra-le pos-si-bi-le ($\OT1/cmss/m/n/12 S \OMS/cmsy/m/n/12 7! \OML/cmm/m/it/12 S$\OT1/cmr/m/n/12 , $[](\OT1/cmss/m/n/12 f\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 g\OT1/cmr/m/n/12 )$
- []
-
-
 
 [99]
 
@@ -1188,45 +1172,39 @@ Overfull \hbox (2.7471pt too wide) in paragraph at lines 235--245
 
 [103]
 
-[104]
+[104])
 
-[105]
+[105] (./prerequisiti.tex
 
 [106]
 
-[107])
+[107]
 
-[108] (./prerequisiti.tex
+[108]
 
 [109]
 
 [110]
-
-[111]
-
-[112]
-
-[113]
 Overfull \hbox (4.35237pt too wide) in paragraph at lines 246--247
 [][]\OT1/cmr/bx/n/12 Definizione 11.26 \OT1/cmr/m/n/12 (Al-ge-bra di Klee-ne)\OT1/cmr/bx/n/12 . []\OT1/cmr/m/n/12 L'al-ge-bra del-le se-rie for-ma-li $\U/bbold/m/n/12 K\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 M\OT1/cmr/m/n/12 ]$ (De-fi-ni-zio-ne [][]11.23[][])
  []
 
 
 
-[114])
+[111])
 
-[115] (./wolfram.tex
+[112] (./wolfram.tex
 \g__tcobox_out_iow=\write7
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[116]
+[113]
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[117]
+[114]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1236,9 +1214,9 @@ Overfull \hbox (15.59825pt too wide) in paragraph at lines 148--149
 
 
 
-[118]
+[115]
 
-[119]
+[116]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1247,7 +1225,7 @@ LaTeX Font Info:    Trying to load font information for U+bbm on input line 227.
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
 
-[120]
+[117]
 Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 []\OT1/cmr/m/n/12 Assegnare la di-rec-to-ry cor-ren-te, cio^^Re la car-tel-la che con-tie-ne il pac-chet-to: [][][][][][][][] 
  []
@@ -1256,27 +1234,26 @@ Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 
 (./main.listing)
 
+[118]
+\openout7 = `main.listing'.
+
+ (./main.listing)
+\openout7 = `main.listing'.
+
+ (./main.listing)
+
+[119])
+
+[120] (./esercizi/automi.tex
+Package hyperref Info: bookmark level for unknown ex defaults to 0 on input line 1.
+Package hyperref Info: bookmark level for unknown sol defaults to 0 on input line 8.
+
+
 [121]
-\openout7 = `main.listing'.
 
- (./main.listing)
-\openout7 = `main.listing'.
+[122]
 
- (./main.listing)
-
-[122])
-
-[123] (./esercizi/automi.tex
-pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.2 F
-     issiamo l'alfabeto binario $A=\{0,1\}$, dimostrare che l'insieme
-pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.8 \begin{sol} S
-                 i richiede di mostrare un automa il cui algoritmo associato...
+[123]
 
 [124]
 
@@ -1295,302 +1272,181 @@ l.8 \begin{sol} S
 [131]
 
 [132]
+Underfull \hbox (badness 10000) in paragraph at lines 976--977
+
+ []
+
+
 
 [133]
+Overfull \hbox (2.99716pt too wide) detected at line 1146
+[][]
+ []
+
+
 
 [134]
 
-[135])
+[135]
 
-[136] (./esercizi/macchineturing.tex
-pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.2 D
-     are la macchina di Turing che complementa una sequenza binaria e si rip...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.5 L
-     a macchina di turing è la seguente
-\openout7 = `main.listing'.
+[136])
 
- (./main.listing)
-
-[137]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.47 C
-      ome l'esercizio precedente, con l'unica differenza che la computazione...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.51 L
-      a macchina di turing è la seguente
+[137] (./esercizi/macchineturing.tex
 \openout7 = `main.listing'.
 
  (./main.listing)
 
 [138]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.108     D
-           imostrare:
-pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.115 \begin{sol}\
-                  
+\openout7 = `main.listing'.
+
+ (./main.listing)
 
 [139]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.154     D
-           imostrare:
+
+[140]
 Overfull \hbox (14.85197pt too wide) in paragraph at lines 158--161
 []\OT1/cmr/m/n/12 Se $\OML/cmm/m/it/12 X \OMS/cmsy/m/n/12 2 [][]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ))$ e $\OML/cmm/m/it/12 Y \OMS/cmsy/m/n/12 2 []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ))$ al-lo-ra $\OML/cmm/m/it/12 X \OMS/cmsy/m/n/12 \ \OML/cmm/m/it/12 Y \OMS/cmsy/m/n/12 2 []\OT1/cmr/m/n/12 ([](\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )))$. 
  []
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{sol.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.165     \
-           
-
-[140]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.196 D
-       ata una parola $w_1$, fornire la macchina
-pdfTeX warning (ext4): destination with the same identifier (name{sol.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.201 \[
-        
 
 [141]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.290 D
-       ata una parola $w_1$
-pdfTeX warning (ext4): destination with the same identifier (name{sol.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.296 \[
-        
 
 [142]
 
-[143])
+[143]
 
-[144] (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
-pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.4 S
-     ia $A:=\{0,1\}$ l'alfabeto binario. Stabilire se, per ogni dato $n$ int...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.12 L
-      'insieme $X_n$ è DFA-decidibile per ogni $n$. Per decidere il primo p...
+[144]
 
-[145]
+[145])
 
-[146]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.152 C
-       on $X_n$ come nell'esercizio precedente,
-pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.161 P
-       oiché $X_n$ è la concatenazione di $\{a^ib^j \mid i+j\geq 3\}$ con ...
+[146] (./esercizi/pumpinglemma.tex
 
 [147]
+Overfull \hbox (3.19432pt too wide) detected at line 48
+\OML/cmm/m/it/12 X[] \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 w \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 a; b\OMS/cmsy/m/n/12 g[] j \OML/cmm/m/it/12 w \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 a[]b[] [] a[]b[];  n \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OML/cmm/m/it/12 ;  k[] \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;  X[] \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 a[]b[]c[] \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 n; m \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 :
+ []
+
+
 
 [148]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.326 {S
-        ia $X \in \operatorname{DTIME}_1^A(c \cdot n^2)$ e sia $X' \subset X...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.334     S
-           ia $\alpha$ una macchina du Turing mononastro
 
-[149])
+[149]
 
-[150] (./esercizi/APPELLI_ESONERI/esonero1_10_11_23.tex
-pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.2 S
-     ia $A:=\{0,1\}$ l'alfabeto binario. Stabilire se, per ogni dato $n$ int...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.9     G
-         uarda in \ref{esonero1:13_11_24}
+[150]
+Overfull \hbox (47.89896pt too wide) detected at line 167
+\OT1/cmss/m/n/12 A \OT1/cmr/m/n/12 := [][][]([]\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 E\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];  \OT1/cmss/m/n/12 B \OT1/cmr/m/n/12 := [][][]([]\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][]:
+ []
 
-[151]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.15 C
-      on $X_n$ come nell'esercizio precedente,
-pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.23     G
-          uarda in \ref{esonero1:13_11_24}
 
-[152]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.29 D
-      ati $X := \{0^k 1^{2k} \mid k \geq 0\}$ e $A := \{0,1\}$.
-pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.39 \begin{sol}\
-                 
 
-[153])
+[151])
 
-[154] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
-pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.3 S
-     i consideri il seguente automa di alfabeto $A=\{a,b\}$ e insieme degli ...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.30 \begin{sol}\
-                 
+[152] (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
+
+[153]
+
+[154]
 
 [155]
 
 [156]
 
-[157]
+[157])
 
-[158]
+[158] (./esercizi/APPELLI_ESONERI/esonero1_10_11_23.tex
+
+[159]
+
+[160]
+
+[161])
+
+[162] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
+
+[163]
+
+[164]
+
+[165]
+
+[166]
 Overfull \hbox (16.3123pt too wide) detected at line 308
 \OML/cmm/m/it/12 X \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 w \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 a; b\OMS/cmsy/m/n/12 g[] j \OML/cmm/m/it/12 w \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 u[] [] u[]v;  k \OMS/cmsy/m/n/12 ^^U \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 ;  u[] \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 aab; bb\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;  v \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 aa; b\OMS/cmsy/m/n/12 gg \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 aab; bb\OMS/cmsy/m/n/12 g[]f\OML/cmm/m/it/12 aa; b\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;
  []
 
 
 
-[159]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.316 F
-       ornire una macchina di Turing $\mu$ di alfabeto $A=\{1\}$ (unario) ch...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.322 S
-       ia $\alpha$ la macchina che, partendo da $1^m$, scrive $1^{2m}$ (radd...
+[167]
 
-[160]
+[168]
 
-[161]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.408 S
-       ia $A=\{0,1\}$ l'alfabeto binario; per $w\in A^*$ sia $|w|_0$ (rispet...
-pdfTeX warning (ext4): destination with the same identifier (name{sol.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.421 \begin{sol}\
-                  
+[169]
 
-[162]
+[170]
 
-[163])
+[171])
 
-[164] (./esercizi/APPELLI_ESONERI/esonero1_08_11_18.tex
-pdfTeX warning (ext4): destination with the same identifier (name{ex.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.2 U
-     n intero $x$ si scrive in base $b>1$ se vale l'uguaglianza
-pdfTeX warning (ext4): destination with the same identifier (name{sol.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.26 \begin{sol}\
-                 
+[172] (./esercizi/APPELLI_ESONERI/esonero1_11_11_19.tex
 
-[165]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.139 D
-       opo aver ricordato la definizione della formula di esecuzione per un ...
+[173]
 
-[166]
-pdfTeX warning (ext4): destination with the same identifier (name{ex.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.177 S
-       i consideri una macchina di Turing $\mu$ di alfabeto $A=\{0,1\}$ e sia
-pdfTeX warning (ext4): destination with the same identifier (name{sol.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.188 F
-       issata $\mu$, sia $Y=\{y\in A^*\mid \text{la computazione di }\mu\tex...
-Overfull \hbox (59.08655pt too wide) in paragraph at lines 188--191
-[][]\OT1/cmr/bx/n/12 Soluzione eser-ci-zio 14.4.2. []\OT1/cmr/m/n/12 Fis-sa-ta $\OML/cmm/m/it/12 ^^V$\OT1/cmr/m/n/12 , sia $\OML/cmm/m/it/12 Y \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 y \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 A[] \OMS/cmsy/m/n/12 j []\OML/cmm/m/it/12 ^^V[]y[]\OMS/cmsy/m/n/12 g$\OT1/cmr/m/n/12 ,
+[174]
+
+[175]
+
+[176])
+
+[177] (./esercizi/APPELLI_ESONERI/esonero1_08_11_18.tex
+
+[178]
+
+[179]
+
+[180]
+
+[181]
+Overfull \hbox (59.08655pt too wide) in paragraph at lines 257--260
+[][]\OT1/cmr/bx/n/12 Soluzione eser-ci-zio 14.5.3. []\OT1/cmr/m/n/12 Fis-sa-ta $\OML/cmm/m/it/12 ^^V$\OT1/cmr/m/n/12 , sia $\OML/cmm/m/it/12 Y \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 y \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 A[] \OMS/cmsy/m/n/12 j []\OML/cmm/m/it/12 ^^V[]y[]\OMS/cmsy/m/n/12 g$\OT1/cmr/m/n/12 ,
  []
 
 
-Overfull \hbox (134.38701pt too wide) in paragraph at lines 192--195
+Overfull \hbox (134.38701pt too wide) in paragraph at lines 261--264
 \OT1/cmr/m/n/12 sul na-stro $2$. Le sue tran-si-zio-ni, con $\OML/cmm/m/it/12 b \OMS/cmsy/m/n/12 2 f\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1\OMS/cmsy/m/n/12 g$ \OT1/cmr/m/n/12 e nel-la for-ma $([]1\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 2)\OML/cmm/m/it/12 =\OT1/cmr/m/n/12 ([]1\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 2)\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 ([]1\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 2)$,
  []
 
 
-Overfull \hbox (30.80919pt too wide) detected at line 222
+Overfull \hbox (30.80919pt too wide) detected at line 291
 []
  []
 
 ))
 
-[167] (./main.aux)
+[182] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 56FF650227A2DA2B1E6FE57EDCDFE039;11875.
+(rerunfilecheck)             Checksum: FDE2E77823E775B905962A0A9334DFFD;12439.
  ) 
 Here is how much of TeX's memory you used:
- 37625 strings out of 473190
- 758401 string characters out of 5715800
- 1226083 words of memory out of 5000000
- 59151 multiletter control sequences out of 15000+600000
- 579180 words of font info for 120 fonts, out of 8000000 for 9000
+ 37808 strings out of 473190
+ 761138 string characters out of 5715800
+ 1228127 words of memory out of 5000000
+ 59193 multiletter control sequences out of 15000+600000
+ 579311 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1992b,1646s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (167 pages, 878807 bytes).
+Output written on main.pdf (182 pages, 918304 bytes).
 PDF statistics:
- 2334 PDF objects out of 2487 (max. 8388607)
- 2062 compressed objects within 21 object streams
- 1037 named destinations out of 1200 (max. 500000)
- 677 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2562 PDF objects out of 2984 (max. 8388607)
+ 2273 compressed objects within 23 object streams
+ 1171 named destinations out of 1200 (max. 500000)
+ 701 words of extra memory for PDF output out of 10000 (max. 10000000)
 

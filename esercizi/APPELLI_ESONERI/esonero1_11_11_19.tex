@@ -1,0 +1,254 @@
+\begin{ex}
+Siano $X_1$ e $X_2\subseteq A^*$ due insiemi decidibili per macchina di Turing.
+\begin{enumerate}
+    \item Mostrare che anche gli insiemi $X_1\cup X_2$ e $X_1\cap X_2$ lo sono.
+    \item Mostrare che in modo analogo si ha la stessa proprietà per la semidecidibilità: se $X_1$ e $X_2$ sono semidecidibili allora anche $X_1\cup X_2$ e $X_1\cap X_2$ sono semidecidibili.
+    \item Mostrare che se $X$ è decidibile anche $\overline{X}$ è decidibile (in questo caso la notazione $\overline{X}$ indica l'insieme complementare rispetto all'insieme di tutte le parole con stesso alfabeto).
+    \item Mostrare infine che $X$ semidecidibile non implica che $\overline{X}$ semidecidibile.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+    \item Siano $M_1$, $M_2$ le macchine che decidono rispettivamente $X_1$ e $X_2$, con alfabeto $A$ e insiemi di stati $P$ e $Q$.
+
+    Definiamo la macchina $\alpha$ a due nastri, con insieme di stati $\overline{Q}$, che copia sul secondo nastro la parola scritta sul nastro $1$ e riposiziona i puntatori sulla prima colonna.
+
+    Definiamo poi la macchina $\beta$, con insieme di stati $P\times Q$, che simula in parallelo $M_1$ sul primo nastro e $M_2$ sul secondo. Poniamo
+    \[
+    M_1(a,p)=(\bar a,\bar p,m_1),\qquad M_2(b,q)=(\bar b,\bar q,m_2),
+    \]
+    e indichiamo con $F_P=\{p_F^0,p_F^1\}$ e $F_Q=\{q_F^0,q_F^1\}$ gli stati finali di $M_1$ e $M_2$. Allora la funzione di transizione di $\beta$ è
+    \[
+    ((a,b),(p,q))\longmapsto
+    \begin{cases}
+    ((\bar a,\bar b),(\bar p,\bar q),(m_1,m_2)) & \text{se } p\notin F_P \text{ e } q\notin F_Q,\\
+    ((\bar a,b),(\bar p,q),(m_1,0)) & \text{se } p\notin F_P \text{ e } q\in F_Q,\\
+    ((a,\bar b),(p,\bar q),(0,m_2)) & \text{se } p\in F_P \text{ e } q\notin F_Q,\\
+    ((a,b),Q_F^0,(0,0)) & \text{se } (p,q)=(p_F^0,q_F^0),\\
+    ((a,b),Q_F^1,(0,0)) & \text{altrimenti.}
+    \end{cases}
+    \]
+    Gli stati finali di $\beta$ sono $Q_F^0$ e $Q_F^1$, e l'unico accettante è $Q_F^1$.
+
+    La macchina $\mu$ che decide $X_1\cup X_2$ è la concatenazione di $\alpha$ e $\beta$.
+
+    Usando il teorema visto a lezione
+    \[
+    \mathrm{DTIME}_k^A(T(n))\subseteq \mathrm{DTIME}_1^A(c\,T(n)^2)
+    \]
+    abbiamo che $X_1\cup X_2\in\mathrm{DTIME}_1^A$.
+
+    Per l'intersezione basta modificare le ultime due condizioni della macchina $\mu$:
+    \[
+    \begin{cases}
+    ((a,b),Q_F^1,(0,0)) & \text{se } (p,q)=(p_F^1,q_F^1),\\
+    ((a,b),Q_F^0,(0,0)) & \text{se } (p,q)\in\{(p_F^0,q_F^1),(p_F^1,q_F^0),(p_F^0,q_F^0)\}.
+    \end{cases}
+    \]
+
+    \item Basta modificare le macchine precedenti nel seguente modo: ogni volta che nella macchina vecchia si arriva nello stato $q_F^0$, si modifica la transizione e la si fa entrare in uno stato aggiuntivo $q_{loop}$, e si aggiungono le transizioni
+    \[
+    \mu'(x,q_{loop})=(x,q_{loop},+1).
+    \]
+    In questo modo, dove le macchine rifiutavano, questa computa all'infinito. Con questa modifica la costruzione per l'intersezione resta invariata: si accetta se e solo se entrambe le macchine arrivano in $p_F^1$ e $q_F^1$.
+
+    Per l'unione, invece, non si può aspettare che entrambe le simulazioni terminino: se $M_2$ cicla ma $M_1$ accetta, la macchina $\beta$ non si fermerebbe mai. Aggiungiamo quindi a $\beta$ la regola
+    \[
+    ((a,b),(p,q))\longmapsto ((a,b),Q_F^1,(0,0))\qquad\text{se } p=p_F^1 \text{ oppure } q=q_F^1,
+    \]
+    che ha la precedenza sulle altre. Se invece una delle due macchine entra in $q_{loop}$, l'altra continua la sua simulazione. Così $\beta$ accetta se e solo se almeno una delle due accetta.
+
+    \item Sia $\mu$ la macchina che decide $X$. La macchina
+    \[
+    \mu'\colon Q\times\widetilde{A}\longrightarrow Q'\times\widetilde{A}\times\{+1,-1\}
+    \]
+    è definita da
+    \[
+    (q,a)\longmapsto
+    \begin{cases}
+    \mu(q,a) & \text{se } p\notin\{q_F^0,q_F^1\},\\
+    (q_F^0,b,i) & \text{se } p=q_F^1,\\
+    (q_F^1,b,i) & \text{se } p=q_F^0,
+    \end{cases}
+    \]
+    dove $\mu(q,a)=(p,b,i)$. Questa decide $\overline{X}$, perché scambia gli stati finali accettante e rifiutante.
+
+    \item Supponiamo per assurdo che valga l'implicazione: allora esistono $X$ semidecidibile non decidibile (ad esempio l'insieme dell'arresto) tale che anche $\overline{X}$ è semidecidibile. Siano $M$ e $M'$ le macchine che semidecidono $X$ e $\overline{X}$. Costruiamo la macchina che, su input $x$, simula in parallelo $M$ e $M'$ passo per passo. Poiché $x\in X$ oppure $x\in\overline{X}$, una delle due accetta in tempo finito: se accetta $M$ la nuova macchina accetta, se accetta $M'$ rifiuta. Allora $X$ sarebbe decidibile, contro l'ipotesi.
+
+    Dunque, per $X$ semidecidibile ma non decidibile, $\overline{X}$ non è semidecidibile.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Dimostrare che la funzione $n!$ è una funzione ricorsiva.
+\end{ex}
+
+\begin{sol}
+Si ha
+\[
+n!=
+\begin{cases}
+1 & n=0,\\
+n\,(n-1)! & n>0.
+\end{cases}
+\]
+Basta osservare che
+\[
+F(n,m):=
+\begin{cases}
+G(n) & m=0,\\
+H(n,m,F(n,m-1)) & m>0,
+\end{cases}
+\]
+con $G(n):=\mathsf C_{1,1}$ e
+\[
+H(n,m,F(n,m-1))=m\cdot F(n,m-1)=P_{2,3}\cdot P_{3,3}.
+\]
+Otteniamo l'espressione
+\[
+\texttt{ENNEFATT}:=\mathsf{REC}(\texttt{GI},\texttt{ACCA}),
+\]
+dove
+\[
+\begin{cases}
+\texttt{GI}=\mathsf C_{1,1},\\
+\texttt{ACCA}=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,3},\mathsf P_{3,3}),\texttt{MULT}).
+\end{cases}
+\]
+Osserviamo però che $\texttt{ENNEFATT}$ ha arità $2$: la sua interpretazione è la funzione $F(n,m)=m!$, che dipende da due variabili. Per ottenere un'espressione la cui interpretazione sia esattamente $n!$ (funzione di una sola variabile) definiamo
+\[
+\texttt{FATT}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf P_{1,1}),\,\texttt{ENNEFATT}\big).
+\]
+Infatti l'interpretazione di $\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf P_{1,1})$ è la funzione $\mathbb N\to\mathbb N^2$ che manda $n\mapsto(n,n)$, e componendola con $\texttt{ENNEFATT}$ si ottiene
+\[
+n\ \longmapsto\ (n,n)\ \longmapsto\ F(n,n)=n!.
+\]
+Anche le arità sono compatibili: $\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf P_{1,1})\colon\mathbb N\to\mathbb N^2$ e $\texttt{ENNEFATT}\colon\mathbb N^2\to\mathbb N$. Dunque $n!$ è una funzione ricorsiva.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Dato il seguente automa non-deterministico:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)     {$q_0$};
+\node[state]            (q1) at (2.5,0)   {$q_1$};
+\node[state, accepting] (q2) at (5,0)     {$q_2$};
+\node[state]            (q3) at (7.5,0)   {$q_3$};
+\node[state, accepting] (q4) at (10,0)    {$q_4$};
+\node[state, accepting] (q5) at (12.5,0)  {$q_5$};
+\node[state]            (q7) at (7.5,-2.8) {$q_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni lungo la riga principale
+\draw[->] (q0) to[bend left=20]  node {$0$} (q1);
+\draw[->] (q1) to[bend left=20]  node {$1$} (q0);
+\draw[->] (q1) -- node {$\varepsilon$} (q2);
+\draw[->] (q2) -- node {$\varepsilon$} (q3);
+\draw[->] (q3) -- node {$0$} (q4);
+\draw[->] (q4) -- node {$0$} (q5);
+
+% Cappi
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+
+% Transizioni da e verso q_7
+\draw[->] (q2) -- node[swap] {$0$} (q7);
+\draw[->] (q7) to[bend right=15] node[swap] {$1$} (q2);
+\draw[->] (q4) -- node {$1$} (q7);
+\path[->] (q7) edge[out=240,in=190,looseness=8] node[below left]  {$0$} (q7)
+              edge[out=350,in=300,looseness=8] node[below right] {$1$} (q7);
+
+% Ritorni a q_1
+\draw[->, rounded corners=8pt]
+    (q3.100) -- (q3.100 |- 0,1.7) -- node[swap] {$1$} (q1.80 |- 0,1.7) -- (q1.80);
+\draw[->, rounded corners=8pt]
+    (q5.80) -- (q5.80 |- 0,2.5) -- node[swap] {$1$} (q1.100 |- 0,2.5) -- (q1.100);
+\end{tikzpicture}
+\]
+fornire un automa deterministico equivalente (ovvero, che riconosce lo stesso insieme).
+\end{ex}
+
+\begin{sol}
+Applichiamo la costruzione per sottoinsiemi, partendo dalla $\varepsilon$-chiusura dello stato iniziale. Otteniamo la tabella
+\[
+\begin{array}{c|c|c|c}
+ & \text{insieme} & 0 & 1\\ \hline
+S_0 & \{q_0\} & S_1 & S_0\\
+S_1 & \{q_1,q_2,q_3\} & S_2 & S_3\\
+S_2 & \{q_4,q_7\} & S_4 & S_5\\
+S_3 & \{q_0,q_1,q_2,q_3\} & S_6 & S_3\\
+S_4 & \{q_5,q_7\} & S_7 & S_8\\
+S_5 & \{q_2,q_3,q_7\} & S_2 & S_8\\
+S_6 & \{q_1,q_2,q_3,q_4,q_7\} & S_9 & S_{10}\\
+S_7 & \{q_7\} & S_7 & S_5\\
+S_8 & \{q_1,q_2,q_3,q_7\} & S_2 & S_{10}\\
+S_9 & \{q_4,q_5,q_7\} & S_4 & S_8\\
+S_{10} & \{q_0,q_1,q_2,q_3,q_7\} & S_6 & S_{10}
+\end{array}
+\]
+Sono finali tutti i sottoinsiemi che contengono almeno uno tra $q_2$, $q_4$, $q_5$, cioè tutti tranne $S_0$ e $S_7$. L'automa deterministico è
+\[
+\begin{tikzpicture}[
+    scale=0.7, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (S0)  at (0,0)      {$S_0$};
+\node[state, accepting] (S1)  at (3,0)      {$S_1$};
+\node[state, accepting] (S2)  at (6,0)      {$S_2$};
+\node[state, accepting] (S4)  at (10,2)     {$S_4$};
+\node[state, accepting] (S5)  at (9,-1.8)   {$S_5$};
+\node[state]            (S7)  at (12,0)     {$S_7$};
+\node[state, accepting] (S8)  at (14.5,2)   {$S_8$};
+\node[state, accepting] (S3)  at (3,-3.5)   {$S_3$};
+\node[state, accepting] (S6)  at (6.5,-3.5) {$S_6$};
+\node[state, accepting] (S9)  at (14.5,-3.5) {$S_9$};
+\node[state, accepting] (S10) at (9.5,-6)   {$S_{10}$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]S0.center) -- (S0);
+
+% Transizioni
+\draw[->] (S0) -- node {$0$} (S1);
+\draw[->] (S1) -- node {$0$} (S2);
+\draw[->] (S1) -- node {$1$} (S3);
+\draw[->] (S2) to[bend left=10]  node {$0$} (S4);
+\draw[->] (S2) to[bend right=15] node[swap] {$1$} (S5);
+\draw[->] (S5) to[bend right=15] node[swap] {$0$} (S2);
+\draw[->] (S4) -- node {$1$} (S8);
+\draw[->] (S4) to[bend left=15] node {$0$} (S7);
+\draw[->] (S7) -- node[swap] {$1$} (S5);
+\draw[->] (S5) to[bend right=40] node[swap] {$1$} (S8);
+\draw[->] (S3) -- node {$0$} (S6);
+\draw[->] (S6) -- node {$0$} (S9);
+\draw[->] (S6) to[bend left=15]  node {$1$} (S10);
+\draw[->] (S10) to[bend left=15] node {$0$} (S6);
+\draw[->] (S9) -- node {$1$} (S8);
+\draw[->] (S9) to[bend left=20] node {$0$} (S4);
+
+% Cappi
+\path[->] (S0)  edge[loop above] node {$1$} (S0);
+\path[->] (S3)  edge[loop left]  node {$1$} (S3);
+\path[->] (S7)  edge[loop above] node {$0$} (S7);
+\path[->] (S10) edge[loop below] node {$1$} (S10);
+
+% Ritorni lunghi
+\draw[->, rounded corners=8pt]
+    (S8.90) -- (S8.90 |- 0,4.5) -- node {$0$} (S2.90 |- 0,4.5) -- (S2.90);
+\draw[->, rounded corners=8pt]
+    (S8.0) -- (16.5,2) -- node[swap] {$1$} (16.5,-6) -- (S10.0);
+\end{tikzpicture}
+\]
+\end{sol}

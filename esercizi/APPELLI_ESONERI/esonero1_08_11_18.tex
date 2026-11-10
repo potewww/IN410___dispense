@@ -132,8 +132,12 @@ Mostrare che:
     \path[->] (qz) edge[loop below] node {$0,1$} (qz);
     \end{tikzpicture}
     \]
+
+    \item 
 \end{enumerate}
 \end{sol}
+
+\newpage
 
 \begin{ex}
 Dopo aver ricordato la definizione della formula di esecuzione per un automa, dare la
@@ -172,6 +176,71 @@ S=M^0+M^1+M^2
 \end{tikzpicture}
 \]
 \end{ex}
+\begin{sol}
+Sia $\mathcal{A}$ un automa con $n$ stati, $M$ la sua matrice di adiacenza (a coefficienti in $\mathbb{N}\langle\langle A^*\rangle\rangle$, con $\bot$ per l'assenza di transizione, cioè la serie nulla), $I$ il vettore riga degli stati iniziali e $F$ il vettore colonna degli stati finali. La \emph{formula di esecuzione} è
+\[
+S_{\mathcal{A}}=I\cdot M^*\cdot F=I\Bigl(\sum_{k\ge 0}M^k\Bigr)F,
+\]
+dove il coefficiente della parola $w$ in $S_{\mathcal{A}}$ conta i cammini accettanti di etichetta $w$. Le $\varepsilon$-mosse si inseriscono in $M$ con il simbolo $\varepsilon$, interpretato come la serie formale della parola vuota.
+
+\begin{enumerate}
+\item Con gli stati ordinati $q_0,\dots,q_4$ la matrice associata è
+\[
+M=
+\begin{array}{c|ccccc}
+ & q_0 & q_1 & q_2 & q_3 & q_4\\
+\hline
+q_0 & \bot & \varepsilon & \bot & \varepsilon & \bot\\
+q_1 & \bot & a & a & b & \bot\\
+q_2 & \bot & \bot & \bot & \bot & b\\
+q_3 & \bot & \bot & \bot & \bot & a\\
+q_4 & \bot & b & \bot & \bot & b
+\end{array}
+\]
+mentre
+\[
+I=\begin{pmatrix}\varepsilon&\bot&\bot&\bot&\bot\end{pmatrix},
+\qquad
+F=\begin{pmatrix}\bot&\varepsilon&\varepsilon&\bot&\bot\end{pmatrix}^{T}.
+\]
+
+\item Calcoliamo le potenze. $M^0$ è la matrice identità, con $\varepsilon$ sulla diagonale:
+\[
+M^0=
+\begin{pmatrix}
+\varepsilon & \bot & \bot & \bot & \bot\\
+\bot & \varepsilon & \bot & \bot & \bot\\
+\bot & \bot & \varepsilon & \bot & \bot\\
+\bot & \bot & \bot & \varepsilon & \bot\\
+\bot & \bot & \bot & \bot & \varepsilon
+\end{pmatrix},
+\]
+\[
+M^2=
+\begin{pmatrix}
+\bot & a & a & b & a\\
+\bot & aa & aa & ab & ab+ba\\
+\bot & bb & \bot & \bot & bb\\
+\bot & ab & \bot & \bot & ab\\
+\bot & ba+bb & ba & bb & bb
+\end{pmatrix}.
+\]
+
+\item Sommando le tre matrici si ottiene
+\[
+S=M^0+M^1+M^2=
+\begin{pmatrix}
+\varepsilon & \varepsilon+a & a & \varepsilon+b & a\\
+\bot & \varepsilon+a+aa & a+aa & b+ab & ab+ba\\
+\bot & bb & \varepsilon & \bot & b+bb\\
+\bot & ab & \bot & \varepsilon & a+ab\\
+\bot & b+ba+bb & ba & bb & \varepsilon+b+bb
+\end{pmatrix}.
+\]
+\end{enumerate}
+\end{sol}
+
+\newpage
 
 \begin{ex}
 Si consideri una macchina di Turing $\mu$ di alfabeto $A=\{0,1\}$ e sia

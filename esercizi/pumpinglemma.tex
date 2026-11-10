@@ -1,0 +1,241 @@
+\begin{ex}
+Sia $A=\{a,b\}$ e siano
+\[
+X_1=\{a^n\mid n\in\mathbb N\},\qquad X_2=\{a^nb^n\mid n\in\mathbb N\}.
+\]
+\begin{enumerate}
+\item Mostrare che $X_1$ è regolare.
+\item Mostrare che $X_1\cup X_2$ non è regolare.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+\item $X_1$ è decidibile dal seguente DFA, dunque è regolare.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state, accepting] (q0) at (0,0) {$q_0$};
+\node[state]            (q1) at (3,0) {$q_1$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) to[loop above, looseness=8] node {$a$} (q0);
+\draw[->] (q0) -- node {$b$} (q1);
+\draw[->] (q1) to[loop above, looseness=8] node {$a$} (q1);
+\draw[->] (q1) to[loop below, looseness=8] node {$b$} (q1);
+\end{tikzpicture}
+\]
+\item Poniamo $X=X_1\cup X_2$ e supponiamo per assurdo che $X$ sia regolare. Sia $p>0$ la costante del pumping lemma e consideriamo $w=a^pb^p\in X_2\subseteq X$, che ha lunghezza $\ge p$. Allora $w=uxv$ con $|ux|\le p$ e $|x|\ge1$, per cui $ux=a^k$ con $k\le p$ e $x=a^t$ con $t\ge1$.
+
+Per il pumping lemma si avrebbe $ux^0v=uv\in X$. Ma
+\[
+uv=a^{p-t}b^p\notin X,
+\]
+perché contiene almeno una $b$ (quindi $uv\notin X_1$) e ha $p-t\neq p$ lettere $a$ (quindi $uv\notin X_2$). Assurdo, quindi $X_1\cup X_2$ non è regolare.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $A=\{a,b,c\}$ e siano
+\[
+X_1=\{w\in\{a,b\}^*\mid w=a^{k_1}b^{k_2}\cdots a^{k_{2n-1}}b^{k_{2n}},\ n\in\mathbb N,\ k_i\in\mathbb N\},
+\qquad
+X_2=\{a^nb^nc^m\mid n,m\in\mathbb N\}.
+\]
+\begin{enumerate}
+\item Mostrare che $X_1$ è regolare.
+\item Mostrare che $X_1\cup X_2$ non è regolare.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+\item $X_1$ è decidibile da un DFA, e la sua espressione regolare è $(a+b)^*$.
+\item Poniamo $X=X_1\cup X_2$ e supponiamo per assurdo che $X$ sia regolare. Sia $p>0$ la costante del pumping lemma e consideriamo $w=a^pb^pc\in X_2\subseteq X$. Allora $w=uxv$ con $|ux|\le p$ e $|x|\ge1$, per cui $ux=a^k$ con $k\le p$ e $x=a^t$ con $t\ge1$.
+
+Si avrebbe $ux^0v\in X$, ma
+\[
+ux^0v=a^{p-t}b^pc\notin X,
+\]
+perché contiene la lettera $c$ (quindi non sta in $X_1$) e ha $p-t\neq p$ lettere $a$ (quindi non sta in $X_2$). Assurdo, quindi $X$ non è regolare.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $A=\{a,b\}$ e sia
+\[
+X_2=\{a^nb^na^m\mid n,m\ge1\}.
+\]
+Trovare un linguaggio $X_1$ tale che $X=X_1\cup X_2$ non sia regolare, ma $X_1$ lo sia. Dedurre che $X_2$ non è regolare.
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+\item Prendiamo
+\[
+X_1=\{a^nb^m\mid n,m\ge1\},
+\]
+che è regolare, essendo descritto dall'espressione regolare $aa^*bb^*$.
+\item Mostriamo che $X=X_1\cup X_2$ non è regolare. Supponiamo per assurdo che lo sia e sia $p>0$ la costante del pumping lemma. Consideriamo $w=a^pb^pa\in X_2\subseteq X$. Allora $w=uxv$ con $|ux|\le p$ e $|x|\ge1$, per cui $x=a^t$ con $t\ge1$.
+
+Si avrebbe $ux^0v\in X$, ma
+\[
+ux^0v=a^{p-t}b^pa\notin X,
+\]
+perché termina con $a$ (quindi non sta in $X_1$) e ha $p-t\neq p$ lettere $a$ iniziali (quindi non sta in $X_2$). Assurdo.
+\item Se $X_2$ fosse regolare, allora $X_1\cup X_2$ sarebbe regolare, perché i linguaggi regolari sono chiusi per unione e $X_1$ è regolare. Per il punto precedente questo è assurdo, quindi $X_2$ non è regolare.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $A=\{a,b,c\}$ e siano
+\[
+X_1=\{w\in A^*\mid |w|_c\text{ è pari}\},\qquad X_2=\{a^nb^nc^{2m+1}\mid n,m\in\mathbb N\}.
+\]
+\begin{enumerate}
+\item $X_1$ è regolare?
+\item $X=X_1\cup X_2$ è regolare?
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+\item Sì, $X_1$ è regolare: è decidibile dal seguente DFA, che tiene traccia della parità del numero di $c$ letti.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state, accepting] (q0) at (0,0) {$q_0$};
+\node[state]            (q1) at (3,0) {$q_1$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) to[loop above, looseness=8] node {$a,b$} (q0);
+\draw[->] (q1) to[loop above, looseness=8] node {$a,b$} (q1);
+\draw[->] (q0) to[bend left=25] node {$c$} (q1);
+\draw[->] (q1) to[bend left=25] node {$c$} (q0);
+\end{tikzpicture}
+\]
+\item No. Supponiamo per assurdo che $X$ sia regolare e sia $p>0$ la costante del pumping lemma. Consideriamo $w=a^pb^pc\in X_2\subseteq X$. Allora $w=uxv$ con $|ux|\le p$ e $|x|\ge1$, per cui $x=a^t$ con $t\ge1$.
+
+Si avrebbe $ux^0v\in X$, ma
+\[
+ux^0v=a^{p-t}b^pc\notin X,
+\]
+perché $|ux^0v|_c=1$ è dispari (quindi non sta in $X_1$) e $p-t\neq p$ (quindi non sta in $X_2$). Assurdo, quindi $X$ non è regolare.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}\label{ex:collatz}
+Sia $f\colon\mathbb N\to\mathbb N$ la funzione
+\[
+f(x)=
+\begin{cases}
+3x+1 & \text{se $x$ è dispari},\\[2pt]
+\dfrac{x}{2} & \text{se $x$ è pari}.
+\end{cases}
+\]
+Mostrare che $f$ è ricorsiva.
+\end{ex}
+
+\begin{sol}
+Indicando con $\mathbb 1_{\mathrm{odd}}$ e $\mathbb 1_{\mathrm{even}}$ le funzioni caratteristiche dei numeri dispari e pari, possiamo scrivere
+\[
+f(x)=\mathbb 1_{\mathrm{odd}}(x)\cdot(3x+1)+\mathbb 1_{\mathrm{even}}(x)\cdot\left\lfloor\frac{x}{2}\right\rfloor .
+\]
+Usiamo le funzioni ricorsive primitive \texttt{ISODD}, \texttt{ISEVEN}, \texttt{FLOOR2} (parte intera di $x/2$), \texttt{SUM} e \texttt{MUL}. Costruiamo l'espressione ricorsiva per $f$ in tre passi.
+\begin{enumerate}
+\item L'espressione per $x\mapsto 3x+1$ è
+\[
+\mathsf{E}:=\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{3,1},\mathsf P_{1,1}),\mathsf{MUL}),\ \mathsf C_{1,1}\big),\ \mathsf{SUM}\big).
+\]
+\item I due addendi sono
+\[
+\mathsf{A}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{ISODD},\mathsf{E}),\ \mathsf{MUL}\big),
+\qquad
+\mathsf{B}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{ISEVEN},\mathsf{FLOOR2}),\ \mathsf{MUL}\big).
+\]
+\item Infine
+\[
+\mathsf{F}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{A},\mathsf{B}),\ \mathsf{SUM}\big),
+\]
+e vale $\llbracket\mathsf{F}\rrbracket=f$. Dunque $f$ è ricorsiva.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $f$ la funzione dell'Esercizio~\ref{ex:collatz} e sia $f^k$ la sua $k$-esima iterata, cioè
+\[
+f^k(x)=
+\begin{cases}
+x & \text{se } k=0,\\
+f\big(f^{k-1}(x)\big) & \text{se } k>0.
+\end{cases}
+\]
+Sia
+\[
+g(x)=
+\begin{cases}
+k & \text{se $k$ è il minimo valore per cui } f^k(x)=1,\\
+\bot & \text{se } f^k(x)\neq1 \text{ per ogni } k.
+\end{cases}
+\]
+Mostrare che $g$ è ricorsiva.
+\end{ex}
+
+\begin{sol}
+Consideriamo la funzione
+\[
+\texttt{TEST}_{=}(a,b):=\Delta(a,b)+\Delta(b,a),
+\]
+dove $\Delta$ è la differenza troncata. Si ha $\texttt{TEST}_{=}(a,b)=0$ se e solo se $a=b$. Procediamo in più passi.
+\begin{enumerate}
+\item Per l'Esercizio~\ref{ex:collatz} la funzione $f$ è ricorsiva, e sia $\mathsf F$ un'espressione con $\llbracket\mathsf F\rrbracket=f$.
+\item Poniamo $\varphi(x,k):=f^k(x)$. Allora
+\[
+\varphi(x,k)=
+\begin{cases}
+G(x) & \text{se } k=0,\\
+H\big(x,k-1,\varphi(x,k-1)\big) & \text{se } k>0,
+\end{cases}
+\]
+con $G(x)=x$ e $H(x,k,y)=f(y)$. Posto
+\[
+\mathsf{BASE}:=\mathsf P_{1,1},\qquad \mathsf{STEP}:=\mathsf{COMP}(\mathsf P_{3,3},\mathsf F),
+\]
+si ha $\llbracket\mathsf{BASE}\rrbracket=G$ e $\llbracket\mathsf{STEP}\rrbracket=H$, quindi
+\[
+\mathsf{PHI}:=\mathsf{REC}(\mathsf{BASE},\mathsf{STEP}),\qquad \llbracket\mathsf{PHI}\rrbracket=\varphi.
+\]
+\item Definiamo l'espressione per $\texttt{TEST}_{=}$:
+\[
+\mathsf{TEST}:=\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf{DIFF},\ \mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{2,1}),\mathsf{DIFF})\big),\ \mathsf{SUM}\big).
+\]
+\item Sia $\sigma(x,k):=\texttt{TEST}_{=}\big(\varphi(x,k),1\big)$. Allora
+\[
+\mathsf{SIGMA}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{PHI},\mathsf C_{1,2}),\ \mathsf{TEST}\big),\qquad \llbracket\mathsf{SIGMA}\rrbracket=\sigma,
+\]
+e $\sigma(x,k)=0$ se e solo se $f^k(x)=1$.
+\item Poniamo
+\[
+\mathsf{G1}:=\mathsf{MIN}(\mathsf{SIGMA}).
+\]
+Poiché $\sigma$ è totale, $\llbracket\mathsf{G1}\rrbracket(x)$ è il minimo $k$ tale che $\sigma(x,k)=0$, cioè tale che $f^k(x)=1$, ed è indefinito se un tale $k$ non esiste. Quindi $\llbracket\mathsf{G1}\rrbracket=g$ e $g$ è ricorsiva.
+\end{enumerate}
+Osserviamo che $g$ è parziale: ad esempio $g(0)=\bot$, perché $f(0)=0$. Per $x\ge1$, la totalità di $g$ è esattamente la congettura di Collatz.
+\end{sol}
+
+
+

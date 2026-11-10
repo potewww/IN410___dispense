@@ -58,7 +58,7 @@
 \newtcblisting{walfram}{wolframbox}
 
 \theoremstyle{definition}
-\newtheorem{theo}{Theorem}[section]
+\newtheorem{theo}{Teorema}[section]
 \newtheorem{defi}[theo]{Definizione}
 \newtheorem{lemm}[theo]{Lemma}
 \newtheorem{rema}[theo]{Osservazione}
@@ -73,6 +73,8 @@
   \@for\@tempa:=defi,lemm,rema,prop,exam,coro\do{%
     \expandafter\def\csname theH\@tempa\endcsname{\thesection.\arabic{theo}}%
   }%
+  \def\theHex{\theHsubsection.\arabic{ex}}%
+  \def\theHsol{\theHsubsection.\arabic{sol}}%
 }
 \makeatother
 
