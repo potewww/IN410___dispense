@@ -2,7 +2,7 @@
 \babel@toc {italian}{}\relax 
 \contentsline {section}{\numberline {1}Introduzione}{3}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Alfabeti e parole}{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Algoritmo e decidibilita'}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.2}Algoritmo e decidibilita'}{4}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Automi a stati finiti}{7}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Definizione di automa a stati finiti.}{7}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Definizione di algoritmo associato ad un automa}{7}{subsection.2.2}%
@@ -62,6 +62,7 @@
 \contentsline {subsection}{\numberline {13.1}Automi ed espressioni}{121}{subsection.13.1}%
 \contentsline {subsection}{\numberline {13.2}Macchine di Turing}{138}{subsection.13.2}%
 \contentsline {subsection}{\numberline {13.3}Pumping lemma}{147}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Funzioni ricorsive}{151}{subsection.13.4}%
 \contentsline {section}{\numberline {14}Esoneri ed esami}{153}{section.14}%
 \contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{153}{subsection.14.1}%
 \contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{159}{subsection.14.2}%

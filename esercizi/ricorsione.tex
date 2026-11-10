@@ -1,0 +1,101 @@
+\begin{ex}\label{ex:collatz}
+Sia $f\colon\mathbb N\to\mathbb N$ la funzione
+\[
+f(x)=
+\begin{cases}
+3x+1 & \text{se $x$ è dispari},\\[2pt]
+\dfrac{x}{2} & \text{se $x$ è pari}.
+\end{cases}
+\]
+Mostrare che $f$ è ricorsiva.
+\end{ex}
+
+\begin{sol}
+Indicando con $\mathbb 1_{\mathrm{odd}}$ e $\mathbb 1_{\mathrm{even}}$ le funzioni caratteristiche dei numeri dispari e pari, possiamo scrivere
+\[
+f(x)=\mathbb 1_{\mathrm{odd}}(x)\cdot(3x+1)+\mathbb 1_{\mathrm{even}}(x)\cdot\left\lfloor\frac{x}{2}\right\rfloor .
+\]
+Usiamo le funzioni ricorsive primitive \texttt{ISODD}, \texttt{ISEVEN}, \texttt{FLOOR2} (parte intera di $x/2$), \texttt{SUM} e \texttt{MUL}. Costruiamo l'espressione ricorsiva per $f$ in tre passi.
+\begin{enumerate}
+\item L'espressione per $x\mapsto 3x+1$ è
+\[
+\mathsf{E}:=\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{3,1},\mathsf P_{1,1}),\mathsf{MUL}),\ \mathsf C_{1,1}\big),\ \mathsf{SUM}\big).
+\]
+\item I due addendi sono
+\[
+\mathsf{A}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{ISODD},\mathsf{E}),\ \mathsf{MUL}\big),
+\qquad
+\mathsf{B}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{ISEVEN},\mathsf{FLOOR2}),\ \mathsf{MUL}\big).
+\]
+\item Infine
+\[
+\mathsf{F}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{A},\mathsf{B}),\ \mathsf{SUM}\big),
+\]
+e vale $\llbracket\mathsf{F}\rrbracket=f$. Dunque $f$ è ricorsiva.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $f$ la funzione dell'Esercizio~\ref{ex:collatz} e sia $f^k$ la sua $k$-esima iterata, cioè
+\[
+f^k(x)=
+\begin{cases}
+x & \text{se } k=0,\\
+f\big(f^{k-1}(x)\big) & \text{se } k>0.
+\end{cases}
+\]
+Sia
+\[
+g(x)=
+\begin{cases}
+k & \text{se $k$ è il minimo valore per cui } f^k(x)=1,\\
+\bot & \text{se } f^k(x)\neq1 \text{ per ogni } k.
+\end{cases}
+\]
+Mostrare che $g$ è ricorsiva.
+\end{ex}
+
+\begin{sol}
+Consideriamo la funzione
+\[
+\texttt{TEST}_{=}(a,b):=\Delta(a,b)+\Delta(b,a),
+\]
+dove $\Delta$ è la differenza troncata. Si ha $\texttt{TEST}_{=}(a,b)=0$ se e solo se $a=b$. Procediamo in più passi.
+\begin{enumerate}
+\item Per l'Esercizio~\ref{ex:collatz} la funzione $f$ è ricorsiva, e sia $\mathsf F$ un'espressione con $\llbracket\mathsf F\rrbracket=f$.
+\item Poniamo $\varphi(x,k):=f^k(x)$. Allora
+\[
+\varphi(x,k)=
+\begin{cases}
+G(x) & \text{se } k=0,\\
+H\big(x,k-1,\varphi(x,k-1)\big) & \text{se } k>0,
+\end{cases}
+\]
+con $G(x)=x$ e $H(x,k,y)=f(y)$. Posto
+\[
+\mathsf{BASE}:=\mathsf P_{1,1},\qquad \mathsf{STEP}:=\mathsf{COMP}(\mathsf P_{3,3},\mathsf F),
+\]
+si ha $\llbracket\mathsf{BASE}\rrbracket=G$ e $\llbracket\mathsf{STEP}\rrbracket=H$, quindi
+\[
+\mathsf{PHI}:=\mathsf{REC}(\mathsf{BASE},\mathsf{STEP}),\qquad \llbracket\mathsf{PHI}\rrbracket=\varphi.
+\]
+\item Definiamo l'espressione per $\texttt{TEST}_{=}$:
+\[
+\mathsf{TEST}:=\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf{DIFF},\ \mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{2,1}),\mathsf{DIFF})\big),\ \mathsf{SUM}\big).
+\]
+\item Sia $\sigma(x,k):=\texttt{TEST}_{=}\big(\varphi(x,k),1\big)$. Allora
+\[
+\mathsf{SIGMA}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{PHI},\mathsf C_{1,2}),\ \mathsf{TEST}\big),\qquad \llbracket\mathsf{SIGMA}\rrbracket=\sigma,
+\]
+e $\sigma(x,k)=0$ se e solo se $f^k(x)=1$.
+\item Poniamo
+\[
+\mathsf{G1}:=\mathsf{MIN}(\mathsf{SIGMA}).
+\]
+Poiché $\sigma$ è totale, $\llbracket\mathsf{G1}\rrbracket(x)$ è il minimo $k$ tale che $\sigma(x,k)=0$, cioè tale che $f^k(x)=1$, ed è indefinito se un tale $k$ non esiste. Quindi $\llbracket\mathsf{G1}\rrbracket=g$ e $g$ è ricorsiva.
+\end{enumerate}
+Osserviamo che $g$ è parziale: ad esempio $g(0)=\bot$, perché $f(0)=0$. Per $x\ge1$, la totalità di $g$ è esattamente la congettura di Collatz.
+\end{sol}
+
