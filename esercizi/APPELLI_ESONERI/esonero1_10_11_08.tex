@@ -1,0 +1,107 @@
+\begin{ex}
+Esibire una macchina di Turing $\mu$ (mononastro) che decide l'insieme $X$ delle parole palindrome sull'alfabeto $\{0,1\}$:
+\[
+X=\{w\in\{0,1\}^{*}\mid w_k=w_{n-k+1}\ \text{per}\ 1\le k\le n=|w|\}.
+\]
+Trovare una funzione di complessità $T(n)$ che maggiori il tempo di arresto della macchina $\mu$.
+\end{ex}
+
+\begin{sol}
+L'idea è cancellare a ogni giro il primo e l'ultimo simbolo della parola rimasta, controllando che coincidano. La macchina $\mu$ ha alfabeto $\{0,1,\square\}$ e la testina parte dal primo simbolo dell'input. Accetta nello stato $q_F^1$ e rifiuta nello stato $q_F^0$. Gli stati hanno il seguente significato.
+\begin{enumerate}
+    \item $q_0$ è lo stato iniziale e legge il primo simbolo rimasto. Se legge $0$ (risp. $1$) lo cancella e passa a $q_1$ (risp. $q_2$). Se legge $\square$ la parola rimasta è vuota e accetta.
+    \item $q_1$ (risp. $q_2$) scorre verso destra fino al $\square$ finale, poi torna indietro di una casella passando a $q_3$ (risp. $q_4$).
+    \item $q_3$ (risp. $q_4$) legge l'ultimo simbolo rimasto. Se è $0$ (risp. $1$) lo cancella e passa a $q_5$. Se è l'altro simbolo rifiuta. Se legge $\square$ la parola rimasta aveva un solo simbolo, già cancellato da $q_0$, quindi accetta.
+    \item $q_5$ torna verso sinistra fino al primo $\square$, poi si sposta a destra e passa a $q_0$ per cominciare un nuovo giro.
+\end{enumerate}
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0)  at (0,0)     {$q_0$};
+\node[state]            (q1)  at (4,-2.4)  {$q_1$};
+\node[state]            (q2)  at (4,2.4)   {$q_2$};
+\node[state]            (q3)  at (9,-2.4)  {$q_3$};
+\node[state]            (q4)  at (9,2.4)   {$q_4$};
+\node[state]            (q5)  at (12.5,0)  {$q_5$};
+\node[state, accepting] (qF1) at (7,0)     {$q_F^1$};
+\node[state, accepting] (qF0) at (10,0)    {$q_F^0$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Primo simbolo: cancellazione e memorizzazione nello stato
+\draw[->] (q0) -- node[above left] {$1/\square,+1$} (q2);
+\draw[->] (q0) -- node[below left] {$0/\square,+1$} (q1);
+\draw[->] (q0) -- node[above]      {$\square/$}     (qF1);
+
+% Scorrimento verso destra
+\draw[->] (q2) to[loop above, looseness=8] node {$1/1,+1$} (q2);
+\draw[->] (q2) to[loop below, looseness=8] node {$0/0,+1$} (q2);
+\draw[->] (q1) to[loop above, looseness=8] node {$1/1,+1$} (q1);
+\draw[->] (q1) to[loop below, looseness=8] node {$0/0,+1$} (q1);
+\draw[->] (q2) -- node            {$\square/\square,-1$} (q4);
+\draw[->] (q1) -- node[swap]      {$\square/\square,-1$} (q3);
+
+% Controllo dell'ultimo simbolo
+\draw[->] (q4) -- node[above right]       {$1/\square,-1$} (q5);
+\draw[->] (q4) -- node[right, pos=0.45]   {$0/$}           (qF0);
+\draw[->] (q4) -- node[left]              {$\square/$}     (qF1);
+\draw[->] (q3) -- node[below right]       {$0/\square,-1$} (q5);
+\draw[->] (q3) -- node[right, pos=0.45]   {$1/$}           (qF0);
+\draw[->] (q3) -- node[left]              {$\square/$}     (qF1);
+
+% Ritorno verso sinistra
+\draw[->] (q5) to[loop above, looseness=8] node {$1/1,-1$} (q5);
+\draw[->] (q5) to[loop below, looseness=8] node {$0/0,-1$} (q5);
+\draw[->, rounded corners=8pt]
+    (q5.0) -- (14,0) -- (14,5)
+    -- node[above] {$\square/\square,+1$} (q0.north |- 0,5) -- (q0.north);
+\end{tikzpicture}
+\]
+Calcoliamo il tempo di arresto su una parola $w$ con $|w|=n$. Consideriamo un giro che parte con $m\ge 2$ simboli rimasti.
+\begin{enumerate}
+    \item $q_0$ cancella il primo simbolo e si sposta a destra: $1$ passo.
+    \item Si scorre fino al $\square$ finale: $m-1$ passi.
+    \item Si torna sull'ultimo simbolo: $1$ passo.
+    \item Si cancella l'ultimo simbolo e ci si sposta a sinistra: $1$ passo.
+    \item $q_5$ scorre a sinistra fino al primo $\square$: $m-2$ passi, poi $1$ passo per tornare in $q_0$.
+\end{enumerate}
+In totale un giro costa al più $2m+1$ passi e cancella due simboli. Se $m=1$ servono $3$ passi, e per $m=0$ ne serve $1$ solo. Se $n$ è pari e $w$ è palindroma, i giri hanno $m=n,n-2,\dots,2$ e, contando il passo finale in cui $q_0$ legge $\square$ e accetta, il tempo è
+\[
+\sum_{j=0}^{n/2-1}\big(2(n-2j)+1\big)+1=\frac{n^2}{2}+\frac{3n}{2}+1 .
+\]
+Per una parola qualsiasi la macchina compie al più $\lceil n/2\rceil$ giri, ciascuno di al più $2n+1$ passi, più al più un passo finale. Quindi
+\[
+T_\mu(n)\le \Big\lceil \frac n2\Big\rceil(2n+1)+1\le\Big(\frac n2+1\Big)(2n+1)=n^2+\frac{5n}{2}+1=:T(n),
+\]
+che è una funzione quadratica.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Siano $X_1$ ed $X_2$ due insiemi decidibili per macchina di Turing.
+\begin{enumerate}
+    \item Mostrare che anche gli insiemi $X_1\cup X_2$ e $X_1\cap X_2$ lo sono.
+    \item Mostrare che in modo analogo si ha la stessa proprietà per la semidecidibilità: se $X_1$ ed $X_2$ sono semidecidibili allora anche $X_1\cup X_2$ e $X_1\cap X_2$ sono semidecidibili.
+    \item Mostrare che se $X$ è decidibile anche $\overline{X}$ è decidibile (in questo caso la notazione $\overline{X}$ indica l'insieme complementare rispetto all'insieme di tutte le parole con stesso alfabeto).
+    \item Mostrare infine che $X$ semidecidibile non implica che $\overline{X}$ sia semidecidibile.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+    Guarda soluzione dell'esercizio \ref{ex:semidicibilità non è chiuso rispetto complementare}.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Considerando solo macchine che hanno spazio di arresto $S(n)=n$, valutare di quanti simboli è necessario aumentare un alfabeto $A$ affinché sia possibile che il tempo di arresto di macchine con uguale numero di stati raddoppi.
+\end{ex}
+\begin{sol}
+\textcolor{red}{???}
+\end{sol}

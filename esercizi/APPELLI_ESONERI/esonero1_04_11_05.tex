@@ -1,0 +1,134 @@
+\begin{ex}
+Sia $A=\{0,1\}$ e sia $X\subseteq\widetilde A^{*}$, con $\widetilde A=A\cup\{\square\}$, così definito:
+\[
+X=\{w_1\square w_2\square w_3\mid w_i\in A^{*},\ i=1,\dots,3\},
+\]
+dove per ogni $w_1,w_2\in A^{*}$ si ha che $w_3$ è la rappresentazione binaria del prodotto del numero rappresentato in binario da $w_1$ moltiplicato il numero rappresentato in binario da $w_2$ (ovvero $X$ è il grafico della funzione prodotto tra interi rappresentati in binario).
+
+Dimostrare che per ogni $c>0$, $X\notin\mathrm{DTIME}^{\widetilde A}_1(cn)$.
+\end{ex}
+
+
+
+
+\begin{sol}
+Supponiamo per assurdo che $X\in\mathrm{DTIME}^{\widetilde A}_1(cn)$ per qualche $c>0$. Allora $X$ è regolare, quindi vale il pumping lemma. Sia $p>0$ la lunghezza di pumping e consideriamo
+\[
+w=10^{p-1}\,\square\,10^{p-1}\,\square\,10^{2p-2}.
+\]
+Si ha $w\in X$, perché $[10^{p-1}]_2\cdot[10^{p-1}]_2=2^{p-1}\cdot 2^{p-1}=2^{2p-2}=[10^{2p-2}]_2$, e $|w|>p$.
+
+Sia $w=uxv$ con $|x|>0$ e $|ux|\le p$. Poiché il primo blocco $10^{p-1}$ ha lunghezza $p$, $ux$ è un prefisso di $10^{p-1}$. Sia $s=|x|\geq 1$. Mostriamo che $ux^0v=uv\notin X$, distinguendo due casi.
+\begin{enumerate}
+    \item $u=\varepsilon$. Allora $x$ contiene l'$1$ iniziale e il primo fattore di $uv$ è $0^{p-s}$ (vuoto o formato da soli zeri), che rappresenta $0$. Il prodotto dovrebbe quindi essere $0$, ma il terzo fattore $10^{2p-2}$ rappresenta $2^{2p-2}\neq 0$.
+    \item $u\neq\varepsilon$. Allora $u=10^{t}$ e $x=0^{s}$ con $s\ge 1$ e $t+s\le p-1$, quindi
+    \[
+    uv=10^{p-1-s}\,\square\,10^{p-1}\,\square\,10^{2p-2}.
+    \]
+    Ma $[10^{p-1-s}]_2\cdot[10^{p-1}]_2=2^{p-1-s}\cdot 2^{p-1}=2^{2p-2-s}\neq 2^{2p-2}$, perché $s\ge1$.
+\end{enumerate}
+In entrambi i casi $uv\notin X$, quindi il pumping lemma non vale per $X$. Assurdo.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Dimostrare che se lo spazio di arresto per una macchina di Turing di alfabeto $A$ con input $w\in A^{*}$ è $k\log_2|w|$ allora la macchina necessariamente appartiene alla classe $\mathrm{DTIME}^{A}_1(cn^{k_0})$, stimare le costanti $c$ e $k_0$ in funzione dei parametri della macchina.
+\end{ex}
+
+\begin{sol}
+Sia $\mu$ la macchina, con $d=|Q|$ stati e alfabeto di cardinalità $a=|A|\geq 2$ (indico la cardinalità con $a$ per non confonderla con la $k$ dell'esercizio). Lo spazio di arresto è la funzione
+\[
+s\colon \mathbb N\to\mathbb N,\qquad n\mapsto k\log_2 n .
+\]
+Usiamo la stessa strategia della dimostrazione della relazione tra $\mathrm{DTIME}$ e $\mathrm{DSPACE}$. Su un input di lunghezza $n$ la testina visita al più $s(n)$ caselle; poiché può spostarsi sia a destra sia a sinistra della casella zero, le caselle rilevanti sono al più $2s(n)+1$. Il numero massimo di configurazioni possibili è quindi
+\[
+N_{\mathrm{config}}(n)=(2s(n)+1)\cdot a^{\,2s(n)+1}\cdot d .
+\]
+Se la macchina computasse per un numero di passi maggiore di $N_{\mathrm{config}}(n)$, ripeterebbe una configurazione ed entrerebbe in un loop, il che è assurdo poiché la macchina si arresta. Dunque $T_\mu(n)\le N_{\mathrm{config}}(n)$.
+
+Poiché $x\le a^{x}$ per ogni $x\ge 1$ (essendo $a\geq 2$), si ha $2s(n)+1\le a^{2s(n)+1}$ e quindi
+\[
+T_\mu(n)\le a^{2(2s(n)+1)}\cdot d=a^{4s(n)+2}\cdot d=a^{2}d\cdot a^{4k\log_2 n}=a^{2}d\cdot n^{4k\log_2 a}.
+\]
+Quindi la macchina termina la computazione in tempo $cn^{k_0}$, con
+\[
+c=a^{2}d,\qquad k_0=\lceil 4k\log_2 a\rceil .
+\]
+\end{sol}
+
+\newpage
+
+\begin{ex}
+
+    \item Dimostrare che la funzione $\texttt{log}_2\colon\mathbb N\to\mathbb N$ definita come
+    \[
+    \texttt{log}_2(x)=\begin{cases} y & \text{se } x=2^{y},\\ \bot & \text{negli altri casi,}\end{cases}
+    \]
+    che computa il logaritmo con base $2$ ristretto ai naturali, è una funzione ricorsiva.
+
+\end{ex}
+
+\begin{sol}
+    \item Vogliamo trovare un'espressione $\mathsf G$ tale che $\llbracket \mathsf G\rrbracket=\texttt{log}_2$. Basta scrivere $\mathsf G=\mathsf{MIN}(\mathsf{SIGMA})$ per un'opportuna espressione $\mathsf{SIGMA}$ che rappresenti una funzione $\sigma(x,i)$ totale che si annulla esattamente quando $2^{i}=x$.
+
+    Supponiamo note le espressioni $\mathsf{SUM}$, $\mathsf{DIFF}$ ed $\mathsf E$ per la somma, la differenza troncata e l'esponenziale $(a,b)\mapsto a^{b}$. Sia $\mathsf{TEST}$ l'espressione di $\texttt{test}(a,b):=\texttt{diff}(a,b)+\texttt{diff}(b,a)=|a-b|$, cioè
+    \[
+    \mathsf{TEST}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{DIFF},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{2,1}),\mathsf{DIFF})),\mathsf{SUM}\big),
+    \]
+    e sia $\mathsf{POW}$ l'espressione di $\texttt{pow}(x,i)=2^{i}$, cioè
+    \[
+    \mathsf{POW}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf C_{2,2},\mathsf P_{2,2}),\mathsf E\big),
+    \]
+    dove $C_{2,2}$ è la funzione costante $2$ di arità $2$. In questo modo possiamo definire
+    \[
+    \mathsf{SIGMA}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{POW},\mathsf P_{2,1}),\mathsf{TEST}\big),
+    \]
+    che rappresenta $\sigma(x,i)=|2^{i}-x|$.
+
+    La funzione $\sigma$ è totale e $\sigma(x,i)=0$ se e solo se $x=2^{i}$. Quindi $\llbracket\mathsf{MIN}(\mathsf{SIGMA})\rrbracket(x)$ è il minimo $i$ con $2^{i}=x$, se esiste, ed è indefinito altrimenti (in particolare se $x=0$ o se $x$ non è una potenza di $2$). Dunque
+    \[
+    \llbracket\mathsf{MIN}(\mathsf{SIGMA})\rrbracket=\texttt{log}_2 .
+    \]
+\end{sol}
+
+\newpage
+
+\begin{ex}\textcolor{red}{???}
+Si fissi l'alfabeto $A=\{0,1\}$ e siano $\texttt{F}\colon\mathbb N^2\to\mathbb N$ e $\texttt{G}\colon\mathbb N^2\to\mathbb N$. Si definisca
+\[
+\texttt{H}(x,y)=\texttt{F}\big(\texttt{G}(\texttt{H}(x_0,y_0),c_1),\,\texttt{G}(\texttt{H}(x_1,y_1),c_2)\big)
+\]
+con $x=x_0+2^{n/2}x_1$ e $y=y_0+2^{n/2}y_1$, ed $n$ è il massimo delle lunghezze delle rappresentazioni binarie di $x$ ed $y$, e dove $\texttt{F}\in\mathrm{DTIME}^{A}_1(k_1n)$ e $\texttt{G}\in\mathrm{DTIME}^{A}_1(k_2n^2)$ sono funzioni computabili a partire dalle rappresentazioni binarie dell'input.
+
+Dimostrare che $\texttt{H}\in\mathrm{DTIME}^{A}_1(cn^{k})$, stimare le costanti $c$ e $k$.
+\end{ex}
+
+\begin{sol}
+Indichiamo con $T(n)$ il massimo numero di passi per calcolare $\texttt{H}(x,y)$ con $x,y$ di lunghezza al più $n$. Facciamo le seguenti convenzioni.
+\begin{enumerate}
+    \item $n$ è pari a ogni livello della ricorsione (ad esempio $n$ potenza di $2$), così che $x_0,x_1,y_0,y_1$ abbiano lunghezza al più $n/2$.
+    \item Per $n\le 1$ la funzione $\texttt{H}$ è calcolata in tempo al più $\beta$, costante (caso base).
+    \item $c_1,c_2$ sono costanti naturali, scritte in binario con un numero costante di cifre.
+    \item Gli argomenti con cui vengono chiamate $\texttt{F}$ e $\texttt{G}$ hanno lunghezza al più $n$ (si veda l'osservazione sotto).
+\end{enumerate}
+Per $n\ge 2$ la macchina esegue, nell'ordine, i seguenti passi.
+\begin{enumerate}
+    \item Spezza $x$ e $y$ e riorganizza il nastro in $x_0\,2\,y_0$ e $x_1\,2\,y_1$. Su un solo nastro costa al più $sn^2$, con $s$ costante.
+    \item Calcola ricorsivamente $\texttt{H}(x_0,y_0)$ e $\texttt{H}(x_1,y_1)$, per un costo $2T(n/2)$.
+    \item Calcola le due applicazioni di $\texttt{G}$, per un costo al più $2k_2n^2$.
+    \item Calcola $\texttt{F}$ sui due risultati, per un costo al più $k_1n\le k_1n^2$.
+\end{enumerate}
+Posto $a=s+2k_2+k_1$ si ottiene
+\[
+T(n)\le 2T(n/2)+an^2\quad(n\ge2),\qquad T(1)\le\beta .
+\]
+Mostriamo per induzione su $n$ che $T(n)\le cn^2$ con $c=\max\{2a,\beta\}$. Per $n=1$ si ha $T(1)\le\beta\le c$. Per $n\ge2$, per ipotesi induttiva,
+\[
+T(n)\le 2c\Big(\frac n2\Big)^2+an^2=\Big(\frac c2+a\Big)n^2\le cn^2,
+\]
+dove l'ultima disuguaglianza segue da $a\le c/2$. Quindi $\texttt{H}\in\mathrm{DTIME}^{A}_1(cn^{k})$ con
+\[
+k=2,\qquad c=\max\{\,2(s+2k_2+k_1),\ \beta\,\}.
+\]
+\end{sol}

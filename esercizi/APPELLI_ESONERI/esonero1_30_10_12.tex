@@ -1,0 +1,231 @@
+
+\begin{ex}
+Dato il seguente automa a stati finiti non deterministico (contenente transizioni $\varepsilon$)
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)     {$q_0$};
+\node[state]            (q1) at (2.5,0)   {$q_1$};
+\node[state]            (q2) at (4.5,1.5) {$q_2$};
+\node[state]            (q3) at (4.5,-1.5){$q_3$};
+\node[state]            (q4) at (7.5,1.5) {$q_4$};
+\node[state]            (q5) at (7.5,-1.5){$q_5$};
+\node[state, accepting] (q6) at (10,0)    {$q_6$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,-0.7)}]q0.center) -- (q0);
+
+% Transizioni
+\draw[->] (q0) to[loop above, looseness=8] node {$0,1$} (q0);
+\draw[->] (q0) -- node {$\varepsilon$} (q1);
+\draw[->] (q1) to[loop below, looseness=8] node {$0,1$} (q1);
+\draw[->] (q1) -- node {$\varepsilon$} (q2);
+\draw[->] (q1) -- node[swap] {$0$} (q3);
+\draw[->] (q3) -- node[swap] {$0$} (q2);
+\draw[->] (q3) to[loop below, looseness=8] node {$1$} (q3);
+\draw[->] (q3) -- node[swap] {$0$} (q5);
+\draw[->] (q2) -- node {$1$} (q4);
+\draw[->] (q4) -- node {$0$} (q6);
+\draw[->] (q5) -- node[swap] {$1$} (q6);
+\draw[->] (q4) to[bend left=20]  node {$1$} (q5);
+\draw[->] (q5) to[bend left=20]  node {$1$} (q4);
+\draw[->] (q5) to[loop below, looseness=8] node {$0$} (q5);
+\draw[->, rounded corners=8pt]
+    (q4.90) -- (q4.90 |- 0,3.2) -- node {$0$} (q1.90 |- 0,3.2) -- (q1.90);
+\end{tikzpicture}
+\]
+applicando la procedura di conversione da NDFA a DFA fornire l'automa deterministico che decide lo stesso insieme.
+\end{ex}
+
+\begin{sol}
+Lo stato iniziale del DFA è la $\varepsilon$-chiusura di $\{q_0\}$, cioè $S_0=\{q_0,q_1,q_2\}$. Per ogni stato $S$ già costruito e ogni $a\in\{0,1\}$ si calcola l'insieme degli stati raggiungibili da $S$ leggendo $a$ e se ne prende la $\varepsilon$-chiusura. Si procede finché non compaiono nuovi insiemi. Si ottengono i seguenti stati.
+\[
+\begin{array}{lll}
+S_0=\{q_0,q_1,q_2\} & S_1=\{q_0,q_1,q_2,q_3\} & S_2=\{q_0,q_1,q_2,q_4\}\\
+S_3=\{q_0,q_1,q_2,q_3,q_5\} & S_4=\{q_0,q_1,q_2,q_3,q_4\} & S_5=\{q_0,q_1,q_2,q_3,q_6\}\\
+S_6=\{q_0,q_1,q_2,q_4,q_5\} & S_7=\{q_0,q_1,q_2,q_3,q_4,q_6\} & S_8=\{q_0,q_1,q_2,q_3,q_5,q_6\}\\
+S_9=\{q_0,q_1,q_2,q_3,q_4,q_5\} & S_{10}=\{q_0,q_1,q_2,q_4,q_5,q_6\} & S_{11}=\{q_0,q_1,q_2,q_3,q_4,q_5,q_6\}
+\end{array}
+\]
+La funzione di transizione è la seguente.
+\[
+\begin{array}{c|cc}
+    & 0 & 1\\
+\hline
+S_0    & S_1 & S_2\\
+S_1    & S_3 & S_4\\
+S_2    & S_5 & S_6\\
+S_3    & S_3 & S_7\\
+S_4    & S_8 & S_9\\
+S_5    & S_3 & S_4\\
+S_6    & S_8 & S_{10}\\
+S_7    & S_8 & S_9\\
+S_8    & S_3 & S_7\\
+S_9    & S_8 & S_{11}\\
+S_{10} & S_8 & S_{10}\\
+S_{11} & S_8 & S_{11}
+\end{array}
+\]
+Gli stati finali sono quelli che contengono $q_6$, cioè $S_5,S_7,S_8,S_{10},S_{11}$. L'automa deterministico è il seguente.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (s0)  at (0,0)     {$S_0$};
+\node[state]            (s1)  at (2.5,2.5) {$S_1$};
+\node[state]            (s2)  at (2.5,-2.5){$S_2$};
+\node[state]            (s3)  at (5.5,5)   {$S_3$};
+\node[state]            (s4)  at (5.5,2)   {$S_4$};
+\node[state, accepting] (s5)  at (5.5,-2)  {$S_5$};
+\node[state]            (s6)  at (5.5,-5)  {$S_6$};
+\node[state, accepting] (s7)  at (9,5)     {$S_7$};
+\node[state]            (s9)  at (9,2)     {$S_9$};
+\node[state, accepting] (s8)  at (9,-1)    {$S_8$};
+\node[state, accepting] (s10) at (9,-5)    {$S_{10}$};
+\node[state, accepting] (s11) at (12.5,0.5){$S_{11}$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]s0.center) -- (s0);
+
+% Transizioni
+\draw[->] (s0) -- node {$0$} (s1);
+\draw[->] (s0) -- node[swap] {$1$} (s2);
+\draw[->] (s1) -- node {$0$} (s3);
+\draw[->] (s1) -- node[swap] {$1$} (s4);
+\draw[->] (s2) -- node {$0$} (s5);
+\draw[->] (s2) -- node[swap] {$1$} (s6);
+\draw[->] (s3) to[loop above, looseness=8] node {$0$} (s3);
+\draw[->] (s3) -- node {$1$} (s7);
+\draw[->] (s4) -- node[pos=0.3] {$0$} (s8);
+\draw[->] (s4) -- node {$1$} (s9);
+\draw[->] (s5) to[bend left=40] node {$0$} (s3);
+\draw[->] (s5) -- node[swap] {$1$} (s4);
+\draw[->] (s6) -- node[pos=0.35] {$0$} (s8);
+\draw[->] (s6) -- node[swap] {$1$} (s10);
+\draw[->] (s7) to[bend left=35] node {$0$} (s8);
+\draw[->] (s7) -- node {$1$} (s9);
+\draw[->] (s8) to[bend left=35] node {$1$} (s7);
+\draw[->] (s8) to[bend left=15] node {$0$} (s3);
+\draw[->] (s9) -- node {$0$} (s8);
+\draw[->] (s9) -- node[swap] {$1$} (s11);
+\draw[->] (s10) -- node {$0$} (s8);
+\draw[->] (s10) to[loop below, looseness=8] node {$1$} (s10);
+\draw[->] (s11) -- node[swap] {$0$} (s8);
+\draw[->] (s11) to[loop right, looseness=8] node {$1$} (s11);
+\end{tikzpicture}
+\]
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Fissato l'insieme degli stati $Q=\{q_0,q_1,q_2\}$, si consideri un automa di alfabeto $A=\{0,1\}$ e insieme degli stati $Q$: $\mathcal A=(T,q_0,F)$.
+
+Ricordare la definizione di matrice $M$ associata all'automa $\mathcal A$ e la definizione di esecuzione
+\[
+E(M)=\Pi\Big(\sum_{k=0}^{\infty}M^k\Big).
+\]
+Definire in termini matriciali la trasformazione $\Pi$ che a partire dalla serie delle potenze successive di $M$ restituisce l'insieme deciso dall'automa $\mathcal A$.
+\end{ex}
+
+\begin{sol}
+Lavoriamo con matrici a coefficienti in $\mathbb B[A^*]$, dove la somma è l'unione di insiemi di parole, il prodotto è la concatenazione, lo zero è $\bot$ e l'unità è $\varepsilon$. La matrice $M$ associata a $\mathcal A$ è la matrice $3\times3$ di coefficienti
+\[
+(M)_{ij}=\sum_{\substack{a\in A\\ T(q_i,a)=q_j}}a ,
+\]
+dove la somma vuota vale $\bot$. In particolare $(M)_{ij}=a$ se $a$ è l'unica lettera con $T(q_i,a)=q_j$, e $(M)_{ij}=\bot$ se nessuna lettera porta $q_i$ in $q_j$.
+
+Per induzione su $k$, $(M^k)_{ij}$ è l'insieme delle parole di lunghezza $k$ che portano l'automa da $q_i$ a $q_j$. Quindi $\big(\sum_{k}M^k\big)_{ij}$ è l'insieme di tutte le parole che portano $q_i$ in $q_j$.
+
+Basta allora definire
+\[
+\Pi\colon \mathrm{Mat}_3(\mathbb B[A^*])\to\mathbb B[A^*],\qquad N\longmapsto \begin{pmatrix}\varepsilon&\bot&\bot\end{pmatrix}\cdot N\cdot V_F ,
+\]
+dove
+\[
+(V_F)_i=\begin{cases}\varepsilon & \text{se } q_i\in F,\\ \bot & \text{altrimenti.}\end{cases}
+\]
+Il vettore riga seleziona la riga di $q_0$ e $V_F$ seleziona le colonne degli stati finali, quindi
+\[
+E(M)=\Pi\Big(\sum_{k=0}^{\infty}M^k\Big)=\sum_{q_j\in F}\Big(\sum_{k=0}^{\infty}M^k\Big)_{0j},
+\]
+che è l'insieme delle parole che portano l'automa da $q_0$ a uno stato finale, cioè l'insieme deciso da $\mathcal A$.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Fornire una macchina di Turing di alfabeto $A=\{0,1\}$ che presa in ingresso la rappresentazione in binario di un numero naturale $n$ lo trasforma nella rappresentazione in binario del successore: $n+1$.
+\end{ex}
+
+\begin{sol}
+La testina parte dalla prima cifra dell'input. La macchina scorre fino alla fine della parola, poi somma $1$ partendo dall'ultima cifra, propagando il riporto verso sinistra. Gli stati hanno il seguente significato.
+\begin{enumerate}
+    \item $q_0$ scorre verso destra fino al primo $\square$ e poi torna sull'ultima cifra.
+    \item $q_1$ legge l'ultima cifra. Se è $0$ la sostituisce con $1$ e termina. Se è $1$ la sostituisce con $0$ e passa a $q_2$ (riporto). Se legge $\square$ l'input è vuoto, e scrive $1$ e termina.
+    \item $q_2$ propaga il riporto. Finché legge $1$ lo sostituisce con $0$ e va a sinistra. Quando legge $0$ lo sostituisce con $1$ e termina, e quando legge $\square$ (tutte cifre $1$) scrive $1$ nella nuova cifra più significativa e termina.
+\end{enumerate}
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (4,0)    {$q_1$};
+\node[state]            (q2) at (8,0)    {$q_2$};
+\node[state, accepting] (qF) at (6,-4)   {$q_F$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,-0.7)}]q0.center) -- (q0);
+
+% Scorrimento verso destra
+\draw[->] (q0) to[loop above, looseness=8] node {$0/0,+1$} (q0);
+\draw[->] (q0) to[loop below, looseness=8] node {$1/1,+1$} (q0);
+\draw[->] (q0) -- node {$\square/\square,-1$} (q1);
+
+% Somma di 1 e riporto
+\draw[->] (q1) -- node {$1/0,-1$} (q2);
+\draw[->] (q2) to[loop above, looseness=8] node {$1/0,-1$} (q2);
+
+% Terminazione (da q_1)
+\draw[->] (q1) to[bend right=25] node[swap, pos=0.45] {$0/1,-1$} (qF);
+\draw[->] (q1) -- node[sloped, above, pos=0.45] {$\square/\square,-1$} (qF);
+
+% Terminazione (da q_2)
+\draw[->] (q2) -- node[sloped, above, pos=0.45] {$0/1,-1$} (qF);
+\draw[->] (q2) to[bend left=25] node[pos=0.45] {$\square/1,-1$} (qF);
+\end{tikzpicture}
+\]
+Ad esempio, su $011$ la macchina scorre fino alla fine e poi scrive $011\to010\to000\to100$, e infine $q_2$ legge $0$, lo sostituisce con $1$ e termina. Il risultato è $100$, cioè $3+1=4$.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Utilizzare il \emph{pumping lemma} per mostrare che il seguente insieme non è regolare:
+\[
+X=\{1^p\mid p \text{ è un numero primo}\}.
+\]
+\end{ex}
+
+\begin{sol}
+Supponiamo per assurdo che $X$ sia regolare e sia $p>0$ la lunghezza di pumping. Poiché i numeri primi sono infiniti, sia $q$ un primo con $q\ge p+2$. Allora $w=1^q\in X$ e $|w|\ge p$.
+
+Sia $w=uxv$ con $|ux|\le p$ e $|x|>0$. Quindi $u=1^a$, $x=1^b$, $v=1^t$ con $b>0$ e $a+b+t=q$. Poiché $b\le|ux|\le p$, si ha
+\[
+a+t=q-b\ge q-p\ge 2 .
+\]
+Scegliamo $m=a+t$. Allora
+\[
+ux^mv=1^{a}\,(1^{b})^{a+t}\,1^{t}=1^{a+(a+t)b+t}=1^{(a+t)(1+b)} .
+\]
+Poiché $a+t\ge2$ e $1+b\ge 2$, il numero $(a+t)(1+b)$ è prodotto di due interi maggiori di $1$, quindi non è primo. Dunque $ux^mv\notin X$, in contraddizione con il pumping lemma. Quindi $X$ non è regolare.
+\end{sol}
