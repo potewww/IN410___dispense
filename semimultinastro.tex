@@ -731,11 +731,24 @@ visto che vale le seguenti relazioni
 (abbiamo usato $n\leq T(n)$ dalla definizione di funzione di complessità, e $T(n)\leq T^2(n)$
 visto che $T(n)$,
 sempre dalla definziione di funzione di complesità, deve essere non decrescente).
+\noindent
+\\
+Data l'equivalenza appena mostrata, ha senso dare
+la seguente definizione
+\begin{defi}
+Sia $A$ un alfabeto. Un insieme $X \subseteq A^*$ si dice \emph{TM-decidibile} se esistono un insieme finito di stati $Q$, un intero $k \ge 1$ e una macchina di Turing a $k$ nastri su alfabeto $A$ con insieme di stati $Q$ tale che decide $X$.
+\end{defi}
 
 \subsection{Cambiamenti di alfabeto}
-In questa sezione, vogliamo studiare
-le cosneguenze relativo al cambiamento dell'alfabeto:
-la classe di insiemi decisi rimane invariata? come cambiano le classi di complessità?
+In questa sezione vogliamo studiare le conseguenze relative al cambiamento dell'alfabeto: la classe degli insiemi decisi rimane invariata? Come cambiano le classi di complessità?
+
+\begin{defi}
+Fissato un alfabeto $A$ e una funzione $T: \mathbb{N} \to \mathbb{N}$, definiamo
+\[
+\mathrm{DTIME}^A(T(n)) := \bigcup_{k=1}^{\infty} \bigcup_{Q \text{ finito}} \mathrm{DTIME}_k^{A,Q}(T(n)).
+\]
+In particolare, un insieme $X \subseteq A^*$ è TM-decidibile se e solo se $X \in \mathrm{DTIME}^A(T(n))$ per qualche funzione totale $T: \mathbb{N} \to \mathbb{N}$.
+\end{defi}
 \begin{defi}
     Definiamo
      $\mathrm{DTIME}^{A,Q}(T(n)):=\cup_{k=1}^\infty\mathrm{DTIME}^{A,Q}_k(T(n))$.
@@ -1412,6 +1425,10 @@ $\mu'$ che la simula.
 \end{enumerate}
 \end{proof}
 \end{coro}
+
+
+
+
 
 \subsection{Rappresentazione degli interi}
 

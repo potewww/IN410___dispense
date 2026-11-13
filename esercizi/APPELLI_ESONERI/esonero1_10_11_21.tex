@@ -1,0 +1,319 @@
+% ==========================================================
+% Esonero del 10/11/2021 -- IN410 (Prof. Pedicini)
+% ==========================================================
+
+% ---------------------------- Esercizio 1 ----------------------------
+\begin{ex}
+Introduciamo la nozione di \emph{derivata} per un qualsiasi insieme regolare $X\subset A^*$ rispetto ad una parola $u\in A^*$ come
+\[
+\partial_uX:=\{v\mid u\cdot v\in X\}.
+\]
+In pratica, è l'insieme delle parole $v\in A^*$ che concatenate ad $u$ forniscono una parola di $X$.
+\begin{enumerate}
+\item Dimostrare che se $X$ è DFA-decidibile allora $\partial_aX$ con $a\in A$ è DFA-decidibile (costruire l'automa per $\partial_aX$ a partire da quello per $X$).
+\item Dimostrare che se $X$ è DFA-decidibile allora $\partial_\varepsilon X$ è DFA-decidibile ($\varepsilon$ indica la parola vuota).
+\item Dimostrare che se $X$ è DFA-decidibile allora anche $\partial_uX$ è DFA-decidibile per ogni $u\in A^*$ (per induzione sulla lunghezza di $u$).
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\begin{enumerate}
+\item Sia $a\in A$ e sia $\mathcal A=(Q,T,q_0,F)$ un DFA che decide $X$, con $T\colon Q\times A\to Q$; indichiamo con $T^*\colon Q\times A^*\to Q$ la sua estensione alle parole. Se $\mathcal A$ ha la forma
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state] (q0) at (0,0)    {$q_0$};
+\node[state] (qa) at (3,0.9)  {$q_a$};
+\node[state] (qb) at (3,-0.9) {$q_b$};
+\node at (5,0.9)  {$\cdots$};
+\node at (5,-0.9) {$\cdots$};
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) -- node {$a$} (qa);
+\draw[->] (q0) -- node[swap] {$b$} (qb);
+\draw[->] (qa) -- (4.5,0.9);
+\draw[->] (qb) -- (4.5,-0.9);
+\end{tikzpicture}
+\]
+vogliamo costruire un DFA della forma
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state] (q0) at (0,0)    {$q_0$};
+\node[state] (qa) at (3,0.9)  {$q_a$};
+\node[state] (qb) at (3,-0.9) {$q_b$};
+\node at (5,0.9)  {$\cdots$};
+\node at (5,-0.9) {$\cdots$};
+\draw[->, very thick] ([shift={(-0.7,0.7)}]qa.center) -- (qa);
+\draw[->] (q0) -- node {$a$} (qa);
+\draw[->] (q0) -- node[swap] {$b$} (qb);
+\draw[->] (qa) -- (4.5,0.9);
+\draw[->] (qb) -- (4.5,-0.9);
+\end{tikzpicture}
+\]
+cioè lo stesso automa in cui lo stato iniziale diventa $q_a=T(q_0,a)$, mantenendo soltanto gli stati raggiungibili da esso. Formalmente definiamo
+\[
+\mathcal A_a:=(Q',\,T',\,q_0',\,F')
+\]
+dove
+\[
+q_0':=T(q_0,a),\qquad Q':=\{q_0'\}\cup\bigcup_{n\ge1}Q_n,\qquad F':=Q'\cap F,\qquad T':=T|_{Q'\times A},
+\]
+e
+\[
+\begin{aligned}
+Q_1&:=\{q\in Q\mid \exists x\in A\ \ T(q_0',x)=q\},\\
+Q_n&:=\{q\in Q\mid \exists\bar q\in Q_{n-1}\ \exists x\in A\ \ T(\bar q,x)=q\}\qquad(n\ge2).
+\end{aligned}
+\]
+In altre parole $Q_n$ è l'insieme degli stati raggiungibili da $q_0'$ in esattamente $n$ passi, e $Q'$ quello degli stati raggiungibili da $q_0'$.
+
+L'insieme $Q'$ è chiuso rispetto a $T$: se $q=q_0'$ allora $T(q,x)\in Q_1$, e se $q\in Q_n$ allora $T(q,x)\in Q_{n+1}$. Quindi $T'$ è una funzione totale $Q'\times A\to Q'$ e $\mathcal A_a$ è un DFA.
+
+Per ogni $v\in A^*$ vale
+\[
+T'^*(q_0',v)=T^*(q_0',v)=T^*(T(q_0,a),v)=T^*(q_0,av),
+\]
+quindi $\mathcal A_a$ accetta $v$ se e solo se $T^*(q_0,av)\in F$, cioè se e solo se $av\in X$, ovvero $v\in\partial_aX$. Dunque $\mathcal A_a$ decide $\partial_aX$.
+
+\item Si ha
+\[
+\partial_\varepsilon X=\{v\mid \varepsilon\cdot v\in X\}=\{v\mid v\in X\}=X,
+\]
+quindi $\partial_\varepsilon X$ è decidibile dallo stesso DFA che decide $X$.
+
+\item Per induzione su $n=|u|$. Il caso $n=0$ è il punto (2) e il caso $n=1$ è il punto (1).
+
+Supponiamo che la tesi valga per le parole di lunghezza $n$ e sia $u=w\cdot a$ con $|w|=n$ e $a\in A$. Per ipotesi induttiva esiste un DFA che decide $\partial_wX$; applicando ad esso la costruzione del punto (1) otteniamo un DFA che decide $\partial_a(\partial_wX)$. Resta da vedere che
+\[
+\partial_a(\partial_wX)=\{v\mid a\cdot v\in\partial_wX\}=\{v\mid w\cdot a\cdot v\in X\}=\{v\mid u\cdot v\in X\}=\partial_uX.
+\]
+Quindi $\partial_uX$ è DFA-decidibile.
+\end{enumerate}
+\end{sol}
+
+\newpage
+
+% ---------------------------- Esercizio 2 ----------------------------
+\begin{ex}
+Dato il seguente automa non-deterministico:
+\[
+\begin{tikzpicture}[
+    scale=0.9, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (2.2,0)  {$q_1$};
+\node[state, accepting] (q2) at (4.4,0)  {$q_2$};
+\node[state]            (q3) at (6.6,0)  {$q_3$};
+\node[state, accepting] (q4) at (8.8,0)  {$q_4$};
+\node[state]            (q5) at (11,0)   {$q_5$};
+\node[state]            (q7) at (6.6,-2.6) {$q_7$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+\path[->] (q0) edge[loop above] node {$1$} (q0);
+\draw[->] (q0) to[bend left=20] node {$1$} (q1);
+\draw[->] (q1) to[bend left=20] node {$0$} (q0);
+\draw[->] (q1) -- node {$\varepsilon$} (q2);
+\path[->] (q2) edge[loop above] node {$1$} (q2);
+\draw[->] (q2) -- node {$\varepsilon$} (q3);
+\draw[->] (q3) -- node {$0$} (q4);
+\draw[->] (q4) -- node {$\varepsilon$} (q5);
+\draw[->] (q3) -- node[swap] {$0$} (q7);
+\draw[->] (q7) -- node[swap] {$1$} (q2);
+\draw[->] (q7) -- node {$1$} (q4);
+\path[->] (q7) edge[loop below] node {$0,1$} (q7);
+
+\draw[->, rounded corners=8pt]
+    (q3.100) -- (q3.100 |- 0,1.6) -- node[swap] {$1$} (q1.80 |- 0,1.6) -- (q1.80);
+\draw[->, rounded corners=8pt]
+    (q5.90) -- (q5.90 |- 0,2.4) -- node[swap] {$1$} (q1.100 |- 0,2.4) -- (q1.100);
+\draw[->, rounded corners=8pt]
+    (q5.120) -- (q5.120 |- 0,1.2) -- node {$\varepsilon$} (q2.60 |- 0,1.2) -- (q2.60);
+\end{tikzpicture}
+\]
+fornire un automa deterministico equivalente (ovvero, che riconosce lo stesso insieme).
+\end{ex}
+
+\begin{sol}
+Applichiamo la costruzione per sottoinsiemi. Le $\varepsilon$-chiusure degli stati sono
+\[
+\begin{aligned}
+&E(q_0)=\{q_0\}, &&E(q_1)=\{q_1,q_2,q_3\}, &&E(q_2)=\{q_2,q_3\}, &&E(q_3)=\{q_3\},\\
+&E(q_4)=\{q_2,q_3,q_4,q_5\}, &&E(q_5)=\{q_2,q_3,q_5\}, &&E(q_7)=\{q_7\}.
+\end{aligned}
+\]
+Lo stato iniziale è $E(q_0)=\{q_0\}$ e gli stati finali sono quelli che contengono $q_2$ o $q_4$. Posto
+\[
+\begin{aligned}
+P_0&=\{q_0\}, &P_1&=\varnothing, &P_2&=\{q_0,q_1,q_2,q_3\},\\
+P_3&=\{q_0,q_2,q_3,q_4,q_5,q_7\}, &P_4&=\{q_2,q_3,q_4,q_5,q_7\},\\
+P_5&=\{q_0,q_1,q_2,q_3,q_4,q_5,q_7\}, &P_6&=\{q_1,q_2,q_3,q_4,q_5,q_7\},
+\end{aligned}
+\]
+la tabella di transizione è
+\[
+\begin{array}{c|c|c}
+ & 0 & 1\\ \hline
+P_0 & P_1 & P_2\\
+P_1 & P_1 & P_1\\
+P_2 & P_3 & P_2\\
+P_3 & P_4 & P_5\\
+P_4 & P_4 & P_6\\
+P_5 & P_3 & P_5\\
+P_6 & P_3 & P_6
+\end{array}
+\]
+e l'automa deterministico equivalente è
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (P0) at (0,0)      {$P_0$};
+\node[state]            (P1) at (2.5,2.4)  {$P_1$};
+\node[state, accepting] (P2) at (3,0)      {$P_2$};
+\node[state, accepting] (P3) at (6.5,0)    {$P_3$};
+\node[state, accepting] (P4) at (10,0)     {$P_4$};
+\node[state, accepting] (P5) at (6.5,-3)   {$P_5$};
+\node[state, accepting] (P6) at (10,-3)    {$P_6$};
+
+\draw[->] ([shift={(-0.7,0.7)}]P0.center) -- (P0);
+
+\draw[->] (P0) -- node {$0$} (P1);
+\draw[->] (P0) -- node[swap] {$1$} (P2);
+\path[->] (P1) edge[loop above] node {$0,1$} (P1);
+\path[->] (P2) edge[loop above] node {$1$} (P2);
+\draw[->] (P2) -- node {$0$} (P3);
+\draw[->] (P3) -- node {$0$} (P4);
+\path[->] (P4) edge[loop above] node {$0$} (P4);
+\draw[->] (P3) to[bend left=15] node {$1$} (P5);
+\draw[->] (P5) to[bend left=15] node {$0$} (P3);
+\path[->] (P5) edge[loop below] node {$1$} (P5);
+\draw[->] (P4) -- node {$1$} (P6);
+\path[->] (P6) edge[loop below] node {$1$} (P6);
+\draw[->] (P6) -- node[swap] {$0$} (P3);
+\end{tikzpicture}
+\]
+Osserviamo che tutti gli stati $P_2,\dots,P_6$ sono finali e non si può più uscire da essi, quindi sono tutti equivalenti: l'insieme riconosciuto è $\{1v\mid v\in A^*\}$ e l'automa minimo ha solo tre stati.
+\end{sol}
+
+\newpage
+% ---------------------------- Esercizio 3 ----------------------------
+% NB: nel testo originale pari e dispari erano scambiati (x/2 per x dispari non è intero)
+\begin{ex}
+Sia $f$ la seguente funzione
+\[
+f(x):=
+\begin{cases}
+x/2 & \text{se } x \text{ è pari}\\
+3x+1 & \text{se } x \text{ è dispari.}
+\end{cases}
+\]
+\begin{enumerate}
+\item Mostrare che $f$ è una funzione ricorsiva (dare l'espressione ricorsiva corrispondente).
+\item Definiamo $g(x)$ nel modo seguente:
+\[
+g(x):=
+\begin{cases}
+k & \text{se } k \text{ è il primo valore per cui } f^k(x)=1\\
+\bot & \text{se } f^k(x)\neq 1 \text{ per ogni } k.
+\end{cases}
+\]
+Dimostrare che $g$ è una funzione ricorsiva.
+\item Dimostrare che $g$ non è ricorsiva primitiva.
+\end{enumerate}
+\end{ex}
+
+
+\newpage
+% ---------------------------- Esercizio 4 ----------------------------
+\begin{ex}
+Sia $X$ il seguente insieme di alfabeto binario $A=\{0,1\}$:
+\[
+X=\{u\cdot\overline u\mid u\in A^*\}\qquad\text{dove}\qquad
+\overline u:=
+\begin{cases}
+\varepsilon & \text{se } u=\varepsilon\\
+\overline v\,a & \text{se } u=a\cdot v.
+\end{cases}
+\]
+\begin{enumerate}
+\item Fornire una macchina di Turing a due nastri che decide $X$.
+\item Dare una funzione di complessità che maggiora il tempo di arresto della macchina trovata.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\begin{enumerate}
+\item $\overline u$ è la parola $u$ scritta al contrario, quindi $X$ è l'insieme delle parole palindrome di lunghezza pari. La macchina (che usa soltanto il primo nastro, e dunque è in particolare una macchina a due nastri) a ogni giro cancella la prima e l'ultima lettera, verificando che coincidano: se la prima lettera è $1$ si passa per $q_1,q_2,q_3$, se è $0$ per $q_1',q_2',q_3'$. Si accetta in $q_F^1$ quando il nastro è vuoto, si rifiuta in $q_F^0$ se le due lettere sono diverse oppure se resta una sola lettera (lunghezza dispari).
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state] (q0)  at (0,0)      {$q_0$};
+\node[state] (q1)  at (3.5,4.2)  {$q_1$};
+\node[state] (q2)  at (7.5,4.2)  {$q_2$};
+\node[state] (q3)  at (11.5,4.2) {$q_3$};
+\node[state] (q1p) at (3.5,-4.2) {$q_1'$};
+\node[state] (q2p) at (7.5,-4.2) {$q_2'$};
+\node[state] (q3p) at (11.5,-4.2) {$q_3'$};
+\node[state, accepting] (qF0) at (15.5,0) {$q_F^0$};
+\node[state, accepting] (qF1) at (-3.2,0) {$q_F^1$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Ramo della prima lettera 1
+\draw[->] (q0) -- node {$1/\square,+1$} (q1);
+\path[->] (q1) edge[loop above, looseness=8] node {$0/0,+1$} (q1)
+               edge[loop below, looseness=8] node {$1/1,+1$} (q1);
+\draw[->] (q1) -- node {$\square/\square,-1$} (q2);
+\draw[->] (q2) -- node {$1/\square,-1$} (q3);
+\path[->] (q3) edge[loop above, looseness=8] node {$1/1,-1$} (q3)
+               edge[loop below, looseness=8] node {$0/0,-1$} (q3);
+\draw[->, rounded corners=8pt]
+    (q3.0) -- (13.3,4.2) -- (13.3,6.6) -- node {$\square/\square,+1$} (q0.110 |- 0,6.6) -- (q0.110);
+
+% Ramo della prima lettera 0
+\draw[->] (q0) -- node[swap] {$0/\square,+1$} (q1p);
+\path[->] (q1p) edge[loop above, looseness=8] node {$1/1,+1$} (q1p)
+                edge[loop below, looseness=8] node {$0/0,+1$} (q1p);
+\draw[->] (q1p) -- node[swap] {$\square/\square,-1$} (q2p);
+\draw[->] (q2p) -- node[swap] {$0/\square,-1$} (q3p);
+\path[->] (q3p) edge[loop above, looseness=8] node {$1/1,-1$} (q3p)
+                edge[loop below, looseness=8] node {$0/0,-1$} (q3p);
+\draw[->, rounded corners=8pt]
+    (q3p.0) -- (13.3,-4.2) -- (13.3,-6.6) -- node[swap] {$\square/\square,+1$} (q0.250 |- 0,-6.6) -- (q0.250);
+
+% Rifiuto
+\draw[->] (q2)  to[bend right=10] node[pos=0.3, above] {$0/$}       (qF0);
+\draw[->] (q2)  to[bend right=24] node[pos=0.3, below] {$\square/$} (qF0);
+\draw[->] (q2p) to[bend left=10]  node[pos=0.3, below] {$1/$}       (qF0);
+\draw[->] (q2p) to[bend left=24]  node[pos=0.3, above] {$\square/$} (qF0);
+
+% Accettazione
+\draw[->] (q0) -- node[swap] {$\square/$} (qF1);
+\end{tikzpicture}
+\]
+
+\item Sia $n=|w|$. In ogni giro la macchina cancella la prima e l'ultima lettera. Se all'inizio del giro la parola rimasta ha lunghezza $m$, il giro richiede $2m+1$ passi: $1$ per cancellare la prima lettera, $m-1$ per raggiungere la fine, $1$ per tornare sull'ultima lettera, $1$ per cancellarla, $m-2$ per tornare all'inizio e $1$ per ripartire. Dunque, per $w\in X$ con $n=2k$, la macchina accetta in
+\[
+\sum_{j=0}^{k-1}\bigl[2(n-2j)+1\bigr]+1
+\]
+passi. Per $w$ arbitraria la macchina esegue al più $\lceil n/2\rceil+1$ giri, e ciascuno richiede al più $2n+1$ passi. Quindi
+\[
+T_{\mathcal M}(n)\le\Bigl(\Bigl\lceil\frac n2\Bigr\rceil+1\Bigr)(2n+1)\le(n+1)(2n+1)=2n^2+3n+1,
+\]
+cioè $T_{\mathcal M}(n)\in O(n^2)$.
+\end{enumerate}
+\end{sol}

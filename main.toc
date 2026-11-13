@@ -33,7 +33,7 @@
 \contentsline {subsection}{\numberline {9.3}Macchine multinastro}{67}{subsection.9.3}%
 \contentsline {subsection}{\numberline {9.4}Equivalenza tra macchine a multinastro e macchine a nastro singolo}{70}{subsection.9.4}%
 \contentsline {subsection}{\numberline {9.5}Cambiamenti di alfabeto}{74}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{80}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.6}Teorema di Speed-up}{81}{subsection.9.6}%
 \contentsline {subsection}{\numberline {9.7}Macchine Speciali}{85}{subsection.9.7}%
 \contentsline {subsection}{\numberline {9.8}Rappresentazione degli interi}{86}{subsection.9.8}%
 \contentsline {section}{\numberline {10}Funzioni ricorsive}{90}{section.10}%
@@ -43,33 +43,34 @@
 \contentsline {subsection}{\numberline {10.4}Turing calcolabilità delle funzioni base}{97}{subsection.10.4}%
 \contentsline {subsection}{\numberline {10.5}Equivalenza tra turing calcolibilità e ricorsività}{99}{subsection.10.5}%
 \contentsline {subsection}{\numberline {10.6}Teorema}{105}{subsection.10.6}%
-\contentsline {section}{\numberline {11}Prerequisiti}{106}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{106}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{106}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{107}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{107}{subsection.11.4}%
-\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{109}{subsection.11.5}%
-\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{110}{subsection.11.6}%
-\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{110}{subsubsection.11.6.1}%
-\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{110}{subsubsection.11.6.2}%
-\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{112}{subsubsection.11.6.3}%
-\contentsline {section}{\numberline {12}Wolfram}{113}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Introduzione}{113}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Entropia}{116}{subsection.12.2}%
-\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{118}{subsection.12.3}%
-\contentsline {subsection}{\numberline {12.4}Automi}{119}{subsection.12.4}%
-\contentsline {section}{\numberline {13}Esercizi}{121}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Automi ed espressioni}{121}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{138}{subsection.13.2}%
-\contentsline {subsection}{\numberline {13.3}Pumping lemma}{147}{subsection.13.3}%
-\contentsline {subsection}{\numberline {13.4}Funzioni ricorsive}{151}{subsection.13.4}%
-\contentsline {section}{\numberline {14}Esoneri ed esami}{153}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{153}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{159}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Esonero 1 - 08/11/2022}{163}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Esonero 1 - 11/11/2019}{173}{subsection.14.4}%
-\contentsline {subsection}{\numberline {14.5}Esonero 1 - 08/11/2018}{178}{subsection.14.5}%
-\contentsline {subsection}{\numberline {14.6}Esonero 1 - 10/11/2017}{183}{subsection.14.6}%
-\contentsline {subsection}{\numberline {14.7}Esonero 1 - 30/10/2012}{188}{subsection.14.7}%
-\contentsline {subsection}{\numberline {14.8}Esonero 1 - 10/11/2008}{193}{subsection.14.8}%
-\contentsline {subsection}{\numberline {14.9}Esonero 1 - 04/11/2005}{197}{subsection.14.9}%
+\contentsline {section}{\numberline {11}Prerequisiti}{107}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Definizioni Preliminari}{107}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Grafi e Matrici di Adiacenza}{107}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Grafi Etichettati}{108}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Semianelli e Serie Formali}{108}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Matrici su Semianelli}{110}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Monoidi, Serie Formali e Algebre di Kleene}{111}{subsection.11.6}%
+\contentsline {subsubsection}{\numberline {11.6.1}Monoidi}{111}{subsubsection.11.6.1}%
+\contentsline {subsubsection}{\numberline {11.6.2}Serie formali}{111}{subsubsection.11.6.2}%
+\contentsline {subsubsection}{\numberline {11.6.3}Algebra di Kleene}{113}{subsubsection.11.6.3}%
+\contentsline {section}{\numberline {12}Wolfram}{114}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Introduzione}{114}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Entropia}{117}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Libreria TM-lib}{119}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Automi}{120}{subsection.12.4}%
+\contentsline {section}{\numberline {13}Esercizi}{122}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Automi ed espressioni}{122}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{139}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Pumping lemma}{148}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Funzioni ricorsive}{152}{subsection.13.4}%
+\contentsline {section}{\numberline {14}Esoneri ed esami}{154}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{154}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{160}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Esonero 1 - 08/11/2022}{164}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Esonero 1 - 10/11/2021}{174}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Esonero 1 - 11/11/2019}{181}{subsection.14.5}%
+\contentsline {subsection}{\numberline {14.6}Esonero 1 - 08/11/2018}{186}{subsection.14.6}%
+\contentsline {subsection}{\numberline {14.7}Esonero 1 - 10/11/2017}{191}{subsection.14.7}%
+\contentsline {subsection}{\numberline {14.8}Esonero 1 - 30/10/2012}{196}{subsection.14.8}%
+\contentsline {subsection}{\numberline {14.9}Esonero 1 - 10/11/2008}{201}{subsection.14.9}%
+\contentsline {subsection}{\numberline {14.10}Esonero 1 - 04/11/2005}{205}{subsection.14.10}%

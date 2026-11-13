@@ -150,7 +150,7 @@ funzioni base:
 
 % ---------- Ricorsione primitiva e minimalizzazione ----------
 \begin{defi}
-Supponiamo che $G$ e $H$ siano due funzioni rispettivamente da $\mathbb N^{r+1}$ a $\mathbb N$ e da $\mathbb N^{r+2}$ a $\mathbb N$. 
+Supponiamo che $G$ e $H$ siano due funzioni rispettivamente da $\mathbb N^{r}$ a $\mathbb N$ e da $\mathbb N^{r+2}$ a $\mathbb N$. 
 La \textit{funzione definita per ricorsione primitiva di base $G$ e passo $H$} è la funzione $F$ da $\mathbb N^{r+1}$ a $\mathbb N$ tale che
 \[
 F(x_1,\dots,x_r,m)=
@@ -194,6 +194,21 @@ Le funzioni ricorsive sono gli elementi dell'insieme precedente. Gli \emph{insie
 Un insieme $A$ si dice \textit{ricorsivo}
 se la sua funzione caratteristica $\mathbb 1_A$ è ricorsiva.
 \end{defi}
+
+\begin{defi}\label{defi: funzioni ricorsive primitive}
+L'insieme delle \emph{funzioni ricorsive primitive} è il più piccolo insieme di funzioni sui numeri interi:
+\begin{itemize}
+    \item che contiene la funzione ``somma'', la funzione ``predecessore'', le funzioni costanti e le funzioni proiezione,
+    \item e che è chiuso per concatenazione, composizione e ricorsione primitiva.
+\end{itemize}
+In altre parole, la classe delle funzioni ricorsive primitive è definita esattamente come l'insieme $\mathcal R$ (Definizione \ref{defi: funzioni ricorsive}), ma escludendo l'operatore di minimalizzazione.
+\end{defi}
+
+\begin{rema}
+Una proprietà fondamentale delle funzioni ricorsive primitive è la loro \emph{totalità}. Poiché le funzioni base sono definite ovunque su $\mathbb{N}$ e gli operatori di composizione, concatenazione e ricorsione primitiva preservano la totalità del dominio, ogni funzione ricorsiva primitiva è una funzione totale. Dal punto di vista algoritmico, la ricorsione primitiva corrisponde all'esecuzione di un ciclo iterativo in cui il numero massimo di iterazioni è noto a priori (un ciclo \texttt{for}), garantendo sempre la terminazione.
+
+L'introduzione dell'operatore di minimalizzazione nell'insieme $\mathcal R$ è ciò che estende la classe includendo le funzioni \emph{parziali}. La minimalizzazione cerca il minimo intero $k$ che annulla una funzione testando i valori in sequenza; se tale $k$ non esiste, il processo diverge, modellando esattamente il comportamento di un ciclo \texttt{while} che potrebbe non terminare mai (condizione necessaria per equivalere alla Turing calcolabilità, come visto per i problemi semi-decidibili).
+\end{rema}
 
 \subsection{Espressioni ricorsive e interpretazioni}
 % ---------- Espressioni ricorsive e interpretazione ----------
