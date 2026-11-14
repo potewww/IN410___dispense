@@ -60,17 +60,18 @@
 \contentsline {subsection}{\numberline {12.4}Automi}{120}{subsection.12.4}%
 \contentsline {section}{\numberline {13}Esercizi}{122}{section.13}%
 \contentsline {subsection}{\numberline {13.1}Automi ed espressioni}{122}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{139}{subsection.13.2}%
-\contentsline {subsection}{\numberline {13.3}Pumping lemma}{148}{subsection.13.3}%
-\contentsline {subsection}{\numberline {13.4}Funzioni ricorsive}{152}{subsection.13.4}%
-\contentsline {section}{\numberline {14}Esoneri ed esami}{154}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{154}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{160}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Esonero 1 - 08/11/2022}{164}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Esonero 1 - 10/11/2021}{174}{subsection.14.4}%
-\contentsline {subsection}{\numberline {14.5}Esonero 1 - 11/11/2019}{181}{subsection.14.5}%
-\contentsline {subsection}{\numberline {14.6}Esonero 1 - 08/11/2018}{186}{subsection.14.6}%
-\contentsline {subsection}{\numberline {14.7}Esonero 1 - 10/11/2017}{191}{subsection.14.7}%
-\contentsline {subsection}{\numberline {14.8}Esonero 1 - 30/10/2012}{196}{subsection.14.8}%
-\contentsline {subsection}{\numberline {14.9}Esonero 1 - 10/11/2008}{201}{subsection.14.9}%
-\contentsline {subsection}{\numberline {14.10}Esonero 1 - 04/11/2005}{205}{subsection.14.10}%
+\contentsline {subsection}{\numberline {13.2}Macchine di Turing}{143}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Pumping lemma}{152}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Funzioni ricorsive}{156}{subsection.13.4}%
+\contentsline {section}{\numberline {14}Esoneri ed esami}{162}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Esonero 1 - 13/11/2024}{162}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Esonero 1 - 10/11/2023}{168}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Esonero 1 - 08/11/2022}{172}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Esonero 1 - 10/11/2021}{182}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Esonero 1 - 11/11/2019}{189}{subsection.14.5}%
+\contentsline {subsection}{\numberline {14.6}Esonero 1 - 08/11/2018}{194}{subsection.14.6}%
+\contentsline {subsection}{\numberline {14.7}Esonero 1 - 10/11/2017}{199}{subsection.14.7}%
+\contentsline {subsection}{\numberline {14.8}Esonero 1 - 30/10/2012}{204}{subsection.14.8}%
+\contentsline {subsection}{\numberline {14.9}Esonero 1 - 10/11/2008}{209}{subsection.14.9}%
+\contentsline {subsection}{\numberline {14.10}Esonero 1 - 04/11/2005}{213}{subsection.14.10}%
+\contentsline {subsection}{\numberline {14.11}Lavoro individuale 1 - Consegna 30/10/2012}{217}{subsection.14.11}%

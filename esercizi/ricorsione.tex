@@ -99,3 +99,185 @@ Poiché $\sigma$ è totale, $\llbracket\mathsf{G1}\rrbracket(x)$ è il minimo $k
 Osserviamo che $g$ è parziale: ad esempio $g(0)=\bot$, perché $f(0)=0$. Per $x\ge1$, la totalità di $g$ è esattamente la congettura di Collatz.
 \end{sol}
 
+
+
+\newpage 
+
+\begin{ex}
+Sia $f(x_1,x_2)$ la funzione parziale definita sui naturali come $2x_1-x_2$ se $x_1\geq\sqrt{x_2}$ e indefinita, altrimenti.
+
+Mostrare che $f$ è una funzione ricorsiva, esprimendola nei termini degli schemi e delle funzioni base della definizione di classe delle funzioni ricorsive.
+\end{ex}
+
+\begin{ex}
+Sia $f(x_1,x_2)$ la funzione parziale definita sui naturali come $2x_1-x_2$ se $x_1\geq\sqrt{x_2}$ e indefinita, altrimenti. Mostrare che $f$ è una funzione ricorsiva, esprimendola nei termini degli schemi e delle funzioni base della definizione di classe delle funzioni ricorsive.
+\end{ex}
+
+\begin{sol}
+Si ha
+\[
+    f(x_1,x_2)=
+    \begin{cases}
+        2x_1-x_2 & x_1\geq\sqrt{x_2},\\
+        \bot & \text{altrimenti.}
+    \end{cases}
+\]
+Vogliamo scrivere $f$ come
+\[
+    f=\texttt{tau}+\min(\texttt{sigma}),
+\]
+dove $\texttt{tau}(x_1,x_2)=2x_1-x_2$ (differenza parziale) e $\texttt{sigma}$ è una funzione tale che $\min(\texttt{sigma})$ sia definita, e valga $0$, esattamente quando $x_1\geq\sqrt{x_2}$. In termini di espressioni
+\[
+    \mathsf F:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf{TAU},\mathsf{MIN}(\mathsf{SIGMA})),\mathsf{SUM}\bigr).
+\]
+
+\medskip
+\textbf{La funzione $\texttt{sigma}$.} Usiamo che per ogni $x_1,x_2\in\mathbb N$ vale
+\[
+    x_1\geq\sqrt{x_2}\iff x_1^2\geq x_2,
+\]
+quindi cerchiamo la condizione $x_1^2\geq x_2$. Sia
+\[
+    \texttt{sigma}\colon\mathbb N^3\to\mathbb N,\qquad (x_1,x_2,i)\longmapsto 0\cdot\texttt{meno}(x_1^2,x_2).
+\]
+Essendo $\texttt{meno}$ una differenza parziale, $\texttt{sigma}(x_1,x_2,i)$ è definita se e solo se $x_1^2\geq x_2$, e in tal caso vale $0$. Quindi $\min\texttt{sigma}\colon\mathbb N^2\to\mathbb N$ è
+\[
+    (x_1,x_2)\longmapsto
+    \begin{cases}
+        0 & \text{se } x_1^2\geq x_2,\\
+        \bot & \text{altrimenti,}
+    \end{cases}
+\]
+e abbiamo
+\[
+\begin{aligned}
+    \mathsf{SIGMA}=\mathsf{COMP}\Bigl(
+    &\mathsf{CONCAT}\Bigl(\\
+    &\quad\mathsf C_{0,3},\\
+    &\quad\mathsf{COMP}\Bigl(\\
+    &\qquad\mathsf{CONCAT}\Bigl(\\
+    &\qquad\quad\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf P_{3,1},\mathsf P_{3,1}),\mathsf{MULT}\bigr),\\
+    &\qquad\quad\mathsf P_{3,2}\\
+    &\qquad\Bigr),\\
+    &\qquad\mathsf{MENO}\\
+    &\quad\Bigr)\\
+    &\Bigr),\\
+    &\mathsf{MULT}\Bigr).
+\end{aligned}
+\]
+Si ha $\texttt{tau}(x_1,x_2)=\texttt{meno}(x_1+x_1,x_2)$, quindi
+\[
+\begin{aligned}
+    \mathsf{TAU}=\mathsf{COMP}\Bigl(
+    &\mathsf{CONCAT}\Bigl(\\
+    &\quad\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf P_{2,1},\mathsf P_{2,1}),\mathsf{SUM}\bigr),\\
+    &\quad\mathsf P_{2,2}\\
+    &\Bigr),\\
+    &\mathsf{MENO}\Bigr).
+\end{aligned}
+\]
+Sia
+\[
+    \texttt{meno}\colon\mathbb N^2\to\mathbb N,\qquad (a,b)\longmapsto
+    \begin{cases}
+        a-b & \text{se } a\geq b,\\
+        \bot & \text{altrimenti.}
+    \end{cases}
+\]
+Definiamo
+\[
+    \texttt{eta}\colon\mathbb N^3\to\mathbb N,\qquad (x,y,i)\longmapsto
+    \begin{cases}
+        1 & i=0,\\
+        \texttt{diff}\bigl(1,\texttt{lesser}_{<}(y,x)\bigr) & i>0,
+    \end{cases}
+\]
+cioè
+\[
+    \texttt{eta}(x,y,i)=\texttt{uno}_{\mathbb N\times\mathbb N\times\{0\}}(x,y,i)+\texttt{uno}_{\mathbb N\times\mathbb N\times(\mathbb N\setminus\{0\})}(x,y,i)\cdot\texttt{diff}\bigl(1,\texttt{lesser}_{<}(y,x)\bigr).
+\]
+Abbiamo che
+\[
+    \texttt{eta}(x,y,i)=0\iff i>0 \text{ e } \texttt{lesser}_{<}(y,x)=1\iff i>0 \text{ e } y\leq x.
+\]
+Inoltre, se esiste $i$ tale che $\texttt{eta}(x,y,i)=0$, cioè se $x\geq y$, il minimo è $i=1$. Quindi $\min(\texttt{eta})(x,y)=1$ se $x\geq y$ ed è indefinito altrimenti, e
+\[
+    \texttt{meno}(a,b)=\texttt{diff}(a,b)\cdot\min(\texttt{eta})(a,b).
+\]
+In termini di espressioni
+\[
+    \mathsf{MENO}=\mathsf{COMP}\bigl(\mathsf{CONCAT}\bigl(\mathsf{DIFF},\mathsf{MIN}(\mathsf{ETA})\bigr),\mathsf{MULT}\bigr),
+\]
+dove
+\[
+\begin{aligned}
+    \mathsf{ETA}=\mathsf{COMP}\Bigl(
+    &\mathsf{CONCAT}\Bigl(\\
+    &\quad\mathsf{UNO}_{\mathbb N\times\mathbb N\times\{0\}},\\
+    &\quad\mathsf{COMP}\Bigl(\\
+    &\qquad\mathsf{CONCAT}\Bigl(\\
+    &\qquad\quad\mathsf{UNO}_{\mathbb N\times\mathbb N\times(\mathbb N\setminus\{0\})},\\
+    &\qquad\quad\mathsf{COMP}\Bigl(\\
+    &\qquad\qquad\mathsf{CONCAT}\Bigl(\\
+    &\qquad\qquad\quad\mathsf C_{1,3},\\
+    &\qquad\qquad\quad\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf P_{3,2},\mathsf P_{3,1}),\mathsf{LESSER}_{<}\bigr)\\
+    &\qquad\qquad\Bigr),\\
+    &\qquad\qquad\mathsf{DIFF}\\
+    &\qquad\quad\Bigr)\\
+    &\qquad\Bigr),\\
+    &\qquad\mathsf{MULT}\\
+    &\quad\Bigr)\\
+    &\Bigr),\\
+    &\mathsf{SUM}\Bigr).
+\end{aligned}
+\]
+
+\medskip
+Poiché $\mathsf{SIGMA}$, $\mathsf{TAU}$, $\mathsf{MENO}$ e $\mathsf{ETA}$ sono costruite a partire dalle funzioni base con $\mathsf{COMP}$, $\mathsf{CONCAT}$ e $\mathsf{MIN}$, l'espressione $\mathsf F$ è una funzione ricorsiva, e per costruzione
+\[
+    \mathsf F(x_1,x_2)=\texttt{tau}(x_1,x_2)+\min(\texttt{sigma})(x_1,x_2)=
+    \begin{cases}
+        2x_1-x_2 & x_1\geq\sqrt{x_2},\\
+        \bot & \text{altrimenti,}
+    \end{cases}
+\]
+cioè $\mathsf F$ rappresenta $f$.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $f\colon\mathbb N^k\to\mathbb N$ una funzione ricorsiva. Dimostrare che l'insieme
+\[
+    X=\Bigl\{(x_1,\dots,x_k)\;\Big|\;\sum_{i=1}^{k}x_i>f(x_1,\dots,x_k)\Bigr\}
+\]
+è ricorsivo.
+\end{ex}
+
+\begin{sol}
+Mostriamo che
+\[
+    \mathbb 1_X\colon\mathbb N^k\to\mathbb N,\qquad (x_1,\dots,x_k)\longmapsto
+    \begin{cases}
+        1 & (x_i)\in X,\\
+        0 & \text{altrimenti}
+    \end{cases}
+\]
+è ricorsiva. Si ha
+\[
+    (x_i)\in X\iff\sum_{i=1}^{k}x_i>f(x_1,\dots,x_k)\iff\mathbb 1_{>}\Bigl(\sum_{i=1}^{k}x_i,\;f(x_1,\dots,x_k)\Bigr).
+\]
+Definiamo
+\[
+    \texttt{PLUS}^k:=
+    \begin{cases}
+        \mathsf P_{1,1} & k=1,\\[2pt]
+        \mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf P_{2,1},\mathsf P_{2,2}),\texttt{SUM}\bigr) & k=2,\\[2pt]
+        \mathsf{COMP}\Bigl(\mathsf{CONCAT}\bigl(\mathsf P_{k,1},\,\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{k,2},\dots,\mathsf P_{k,k}),\texttt{PLUS}^{k-1})\bigr),\texttt{SUM}\Bigr) & k>2.
+    \end{cases}
+\]
+Quindi
+\[
+    \texttt{ID}_X:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\texttt{PLUS}^k,f),\texttt{LESSER}\bigr).
+\]
+\end{sol}

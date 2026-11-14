@@ -1,0 +1,613 @@
+\begin{ex}
+Dato l'insieme $A=\{0,1\}$, si considerino i seguenti sottoinsiemi di $A^*$:
+\[
+X_1=\{01^n001^m\mid n\geq 0,\ m>4\}
+\]
+\[
+X_2=\{a_1\dots a_n\mid n=3k \text{ inizia con } 010 \text{ e termina con } 1011\}
+\]
+\ \begin{enumerate}
+    \item per ognuno dei due insiemi $X_1$ e $X_2$ fornire un automa (deterministico o non deterministico) che lo decide;
+    \item costruire a partire dagli automi trovati al punto precedente, l'automa che decide $Y_1=X_1X_2$ e l'automa che decide $Y_2=X_1+X_2$;
+    \item fornire l'espressione regolare associata a $Y_1$;
+    \item dare la matrice $M$ associata all'automa $Y_2$;
+    \item calcolare i primi $3$ termini dell'esecuzione $E(M)$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\ \begin{enumerate}
+    \item L'insieme $X_1$ è deciso dall'automa $\mathcal{A}$:
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Prima riga
+    \node[state] (q0) at (0,0)  {$q_0$};
+    \node[state] (q1) at (2,0)  {$q_1$};
+    \node[state] (q2) at (4,0)  {$q_2$};
+    \node[state] (q3) at (6,0)  {$q_3$};
+    \node[state] (q4) at (8,0)  {$q_4$};
+    \node[state] (q5) at (10,0) {$q_5$};
+    % Seconda riga
+    \node[state]            (q6) at (10,-2.5) {$q_6$};
+    \node[state]            (q7) at (8,-2.5)  {$q_7$};
+    \node[state, accepting] (q8) at (6,-2.5)  {$q_8$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Transizioni
+    \draw[->] (q0) -- node {$0$} (q1);
+    \draw[->] (q1) to[loop above, looseness=8] node {$1$} (q1);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$1$} (q5);
+    \draw[->] (q5) -- node {$1$} (q6);
+    \draw[->] (q6) -- node {$1$} (q7);
+    \draw[->] (q7) -- node {$1$} (q8);
+    \draw[->] (q8) to[loop below, looseness=8] node {$1$} (q8);
+    \end{tikzpicture}
+    \]
+    L'insieme $X_2$ è deciso dall'automa $\mathcal{B}$:
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Prima riga
+    \node[state] (q0) at (0,0)    {$q_0$};
+    \node[state] (q1) at (2.5,0)  {$q_1$};
+    \node[state] (q2) at (5,0)    {$q_2$};
+    \node[state] (q3) at (7.5,0)  {$q_3$};
+    \node[state] (q4) at (10,0)   {$q_4$};
+    % Seconda riga
+    \node[state]            (q5) at (10,-2.5)  {$q_5$};
+    \node[state]            (q6) at (7.5,-2.5) {$q_6$};
+    \node[state]            (q7) at (5,-2.5)   {$q_7$};
+    \node[state]            (q8) at (2.5,-2.5) {$q_8$};
+    \node[state, accepting] (qF) at (0,-2.5)   {$q_F$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Transizioni
+    \draw[->] (q0) -- node {$0$} (q1);
+    \draw[->] (q1) -- node {$1$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$0,1$} (q4);
+    \draw[->] (q4) -- node {$0,1$} (q5);
+    \draw[->] (q5) -- node {$0,1$} (q3);
+    \draw[->] (q5) -- node {$1$} (q6);
+    \draw[->] (q6) -- node {$0$} (q7);
+    \draw[->] (q7) -- node {$1$} (q8);
+    \draw[->] (q8) -- node {$1$} (qF);
+    \end{tikzpicture}
+    \]
+    \item L'automa che decide $Y_1=X_1X_2$ si ottiene collegando con una $\varepsilon$-mossa lo stato finale di $\mathcal{A}$ allo stato iniziale di $\mathcal{B}$:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Rettangoli di A e B
+    \draw[-, line width=2.5pt, rounded corners=3pt] (0,-1.2) rectangle (3.5,1.2);
+    \node at (1.75,0) {$\mathcal{A}$};
+    \draw[-, line width=2.5pt, rounded corners=3pt] (6.5,-1.2) rectangle (10,1.2);
+    \node at (8.25,0) {$\mathcal{B}$};
+
+    % Stati
+    \node[state]            (a0) at (0,0)   {$q_0$};
+    \node[state]            (aF) at (3.5,0) {$q_F$};
+    \node[state]            (b0) at (6.5,0) {$q_0$};
+    \node[state, accepting] (bF) at (10,0)  {$q_F$};
+
+    % Freccia d'ingresso e epsilon-mossa
+    \draw[->] ([shift={(-0.7,0.7)}]a0.center) -- (a0);
+    \draw[->] (aF) -- node {$\varepsilon$} (b0);
+    \end{tikzpicture}
+    \]
+    L'automa che decide $Y_2=X_1+X_2$ si ottiene aggiungendo un nuovo stato iniziale con due $\varepsilon$-mosse verso gli stati iniziali di $\mathcal{A}$ e $\mathcal{B}$:
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Rettangoli di A e B
+    \draw[-, line width=2.5pt, rounded corners=3pt] (3.5,0.5) rectangle (7.5,3.1);
+    \node at (5.5,1.8) {$\mathcal{A}$};
+    \draw[-, line width=2.5pt, rounded corners=3pt] (3.5,-3.1) rectangle (7.5,-0.5);
+    \node at (5.5,-1.8) {$\mathcal{B}$};
+
+    % Stati
+    \node[state]            (n0) at (0,0)      {$q_0'$};
+    \node[state]            (a0) at (3.5,1.8)  {$q_0$};
+    \node[state, accepting] (aF) at (7.5,1.8)  {$q_F$};
+    \node[state]            (b0) at (3.5,-1.8) {$q_0$};
+    \node[state, accepting] (bF) at (7.5,-1.8) {$q_F$};
+
+    % Freccia d'ingresso e epsilon-mosse
+    \draw[->] ([shift={(-0.7,0.7)}]n0.center) -- (n0);
+    \draw[->] (n0) -- node {$\varepsilon$} (a0);
+    \draw[->] (n0) -- node[swap] {$\varepsilon$} (b0);
+    \end{tikzpicture}
+    \]
+    \item L'espressione regolare associata a $Y_1$ è
+    \[
+    01^*00\,11111\,1^*\,010\big((0+1)^3\big)^*(0+1)(0+1)1011.
+    \]
+\end{enumerate}
+\end{sol}
+\newpage
+
+\begin{ex}
+Sia $A=\{0,1\}$.
+\ \begin{enumerate}
+    \item Dimostrare che l'insieme
+    \[
+    X=\{ww\mid w\in A^*\}
+    \]
+    non è DFA-decidibile.
+    \item Dimostrare che $X$ è TM-decidibile e che $X\notin \mathrm{DTIME}_1(cn)$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\ \begin{enumerate}
+    \item Supponiamo per assurdo che $X$ sia DFA-decidibile e sia $p>0$ la costante del pumping lemma. Consideriamo
+    \[
+    w=0^p1^p0^p1^p=(0^p1^p)(0^p1^p)\in X.
+    \]
+    Sia $w=uxv$ con $|x|>0$ e $|ux|\leq p$. Allora $x=0^t$ con $0<t\leq p$, e quindi per $i=0$
+    \[
+    ux^0v=0^{p-t}1^p0^p1^p\notin X.
+    \]
+    Infatti, se fosse $zz$, ognuna delle due metà conterrebbe $p$ uni, quindi $z=0^{p-t}1^p0^s$. Poiché la parola termina con $1$, deve essere $s=0$, da cui $0^p1^p=0^{p-t}1^p$, cioè $t=0$: assurdo.
+    \item Usiamo una macchina di Turing a due nastri (bi-infiniti), con $a,b\in\{0,1\}$ nelle etichette. In $q_0$ si copia $w$ sul secondo nastro; in $q_1,q_2$ la testina del secondo nastro si muove il doppio più velocemente di quella del primo, così da portare la prima a metà di $w$ e la seconda all'inizio della copia (se $|w|$ è dispari si rifiuta); in $q_3$ si confrontano le due metà.
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    % Stati
+    \node[state]            (q0)  at (0,0)     {$q_0$};
+    \node[state]            (q1)  at (5,0)     {$q_1$};
+    \node[state]            (q2)  at (10,0)    {$q_2$};
+    \node[state]            (q3)  at (5,-3.5)  {$q_3$};
+    \node[state, accepting] (qF1) at (0,-3.5)  {$q_F^1$};
+    \node[state, accepting] (qF0) at (10,-3.5) {$q_F^0$};
+
+    % Freccia d'ingresso
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+    % Copia di w sul secondo nastro
+    \draw[->] (q0) to[loop above, looseness=8] node {$0,\square/0,0\;(+1,+1)$} (q0);
+    \draw[->] (q0) to[loop below, looseness=8] node {$1,\square/1,1\;(+1,+1)$} (q0);
+    \draw[->] (q0) -- node {$\square,\square/\square,\square\;(-1,-1)$} (q1);
+
+    % Ricerca della metà
+    \draw[->] (q1) to[bend left=15] node {$a,b/a,b\;(0,-1)$} (q2);
+    \draw[->] (q2) to[bend left=15] node {$a,b/a,b\;(-1,-1)$} (q1);
+    \draw[->] (q2) -- node {$a,\square/$} (qF0);
+    \draw[->] (q1) -- node {$a,\square/a,\square\;(+1,+1)$} (q3);
+    \draw[->] (q1) -- node {$\square,\square/$} (qF1);
+
+    % Confronto delle due metà
+    \draw[->] (q3) to[loop below, looseness=8] node {$a,a/a,a\;(+1,+1)$} (q3);
+    \draw[->] (q3) -- node {$\square,b/$} (qF1);
+    \draw[->] (q3) -- node {$a,b/\;(a\neq b)$} (qF0);
+    \end{tikzpicture}
+    \]
+\end{enumerate}
+\end{sol}
+\newpage
+
+\begin{ex}
+Definire a piacere una classe astratta $A$ da cui derivarne una $B$ allo scopo di illustrare i concetti di \emph{inheritance}, \emph{overloading} e di classi astratte.
+\end{ex}
+
+\newpage
+
+\begin{ex}
+Dato l'automa a stati finiti deterministico $\mathcal{A}$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)     {$q_0$};
+\node[state]            (q1) at (2.2,0)   {$q_1$};
+\node[state, accepting] (q2) at (4.4,0)   {$q_2$};
+\node[state]            (q3) at (6.6,0)   {$q_3$};
+\node[state, accepting] (q4) at (8.8,0)   {$q_4$};
+\node[state]            (q5) at (11,0)    {$q_5$};
+\node[state]            (q7) at (7.7,-2.6) {$q_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni
+\draw[->] (q0) to[bend left=20] node {$0$} (q1);
+\draw[->] (q1) to[bend left=20] node {$1$} (q0);
+\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+\draw[->] (q1) -- node {$0$} (q2);
+\draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q3) -- node {$1$} (q4);
+\draw[->] (q4) -- node {$0$} (q5);
+\draw[->] (q3) -- node[swap] {$0$} (q7);
+\draw[->] (q4) -- node {$1$} (q7);
+\draw[->] (q5) to[bend right=55] node[swap] {$1$} (q1);
+\draw[->] (q5) to[bend right=35] node[swap] {$0$} (q2);
+\path[->] (q7) edge[out=200,in=250,looseness=8] node[below left]  {$0$} (q7)
+              edge[out=290,in=340,looseness=8] node[below right] {$1$} (q7);
+\end{tikzpicture}
+\]
+\ \begin{enumerate}
+    \item calcolare l'espressione regolare associata all'automa $\mathcal{A}$;
+    \item a partire dall'espressione regolare trovata al punto precedente, fornire un automa non-deterministico equivalente ad $\mathcal{A}$.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+Dato l'automa a stati finiti deterministico $\mathcal{A}$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state]            (q0) at (0,0)     {$q_0$};
+\node[state]            (q1) at (2.2,0)   {$q_1$};
+\node[state, accepting] (q2) at (4.4,0)   {$q_2$};
+\node[state]            (q3) at (6.6,0)   {$q_3$};
+\node[state, accepting] (q4) at (8.8,0)   {$q_4$};
+\node[state]            (q5) at (11,0)    {$q_5$};
+\node[state]            (q7) at (7.7,-2.6) {$q_7$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni
+\draw[->] (q0) to[bend left=20] node {$0$} (q1);
+\draw[->] (q1) to[bend left=20] node {$1$} (q0);
+\draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+\draw[->] (q1) -- node {$0$} (q2);
+\draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q3) -- node {$1$} (q4);
+\draw[->] (q4) -- node {$0$} (q5);
+\draw[->] (q3) -- node[swap] {$0$} (q7);
+\draw[->] (q4) -- node {$1$} (q7);
+\draw[->] (q5) to[bend right=55] node[swap] {$1$} (q1);
+\draw[->] (q5) to[bend right=35] node[swap] {$0$} (q2);
+\path[->] (q7) edge[out=200,in=250,looseness=8] node[below left]  {$0$} (q7)
+              edge[out=290,in=340,looseness=8] node[below right] {$1$} (q7);
+\end{tikzpicture}
+\]
+\ \begin{enumerate}
+    \item calcolare l'espressione regolare associata all'automa $\mathcal{A}$;
+    \item a partire dall'espressione regolare trovata al punto precedente, fornire un automa non-deterministico equivalente ad $\mathcal{A}$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+    \
+    \begin{enumerate}
+    \item Per calcolare l'espressione regolare associata ad $\mathcal{A}$ applichiamo l'algoritmo di eliminazione degli stati, eliminandone uno alla volta. In ogni passo le transizioni nuove sono in grassetto.
+
+    \medskip
+    \textbf{Passo 1.} Costruiamo l'automa generalizzato: aggiungiamo un nuovo stato iniziale $q_0^*$ con una $\varepsilon$-mossa verso $q_0$ e un nuovo stato finale $q_F^*$, raggiunto con $\varepsilon$-mosse dagli stati che erano finali ($q_2$ e $q_4$), che smettono di essere finali.
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (-2,0)     {$q_0^*$};
+    \node[state]            (q0)  at (0,0)      {$q_0$};
+    \node[state]            (q1)  at (2.2,0)    {$q_1$};
+    \node[state]            (q2)  at (4.4,0)    {$q_2$};
+    \node[state]            (q3)  at (6.6,0)    {$q_3$};
+    \node[state]            (q4)  at (8.8,0)    {$q_4$};
+    \node[state]            (q5)  at (11,0)     {$q_5$};
+    \node[state]            (q7)  at (7.7,-2.6) {$q_7$};
+    \node[state, accepting] (qF)  at (11,2.5)   {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->, very thick] (q0s) -- node {$\varepsilon$} (q0);
+    \draw[->, very thick] (q2) to[bend left=15] node {$\varepsilon$} (qF);
+    \draw[->, very thick] (q4) -- node {$\varepsilon$} (qF);
+
+    \draw[->] (q0) to[bend left=20] node {$0$} (q1);
+    \draw[->] (q1) to[bend left=20] node {$1$} (q0);
+    \draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q3) -- node[swap] {$0$} (q7);
+    \draw[->] (q4) -- node {$1$} (q7);
+    \draw[->] (q5) to[bend right=55] node[swap] {$1$} (q1);
+    \draw[->] (q5) to[bend right=35] node[swap] {$0$} (q2);
+    \path[->] (q7) edge[out=200,in=250,looseness=8] node[below left]  {$0$} (q7)
+                  edge[out=290,in=340,looseness=8] node[below right] {$1$} (q7);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 2.} Eliminiamo $q_7$. Da $q_7$ non si raggiunge $q_F^*$ (è uno stato pozzo), quindi nessun cammino accettante passa per $q_7$: si elimina insieme a tutti gli archi che entrano o escono da esso, senza creare transizioni nuove.
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (-2,0)   {$q_0^*$};
+    \node[state]            (q0)  at (0,0)    {$q_0$};
+    \node[state]            (q1)  at (2.2,0)  {$q_1$};
+    \node[state]            (q2)  at (4.4,0)  {$q_2$};
+    \node[state]            (q3)  at (6.6,0)  {$q_3$};
+    \node[state]            (q4)  at (8.8,0)  {$q_4$};
+    \node[state]            (q5)  at (11,0)   {$q_5$};
+    \node[state, accepting] (qF)  at (11,2.5) {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->] (q0s) -- node {$\varepsilon$} (q0);
+    \draw[->] (q2) to[bend left=15] node {$\varepsilon$} (qF);
+    \draw[->] (q4) -- node {$\varepsilon$} (qF);
+
+    \draw[->] (q0) to[bend left=20] node {$0$} (q1);
+    \draw[->] (q1) to[bend left=20] node {$1$} (q0);
+    \draw[->] (q0) to[loop below, looseness=8] node {$1$} (q0);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q5) to[bend right=55] node[swap] {$1$} (q1);
+    \draw[->] (q5) to[bend right=35] node[swap] {$0$} (q2);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 3.} Eliminiamo $q_0$. Gli archi entranti sono $q_0^*\xrightarrow{\varepsilon}q_0$ e $q_1\xrightarrow{1}q_0$, il cappio su $q_0$ è $1$ e l'unico arco uscente è $q_0\xrightarrow{0}q_1$. I nuovi archi sono
+    \begin{itemize}
+        \item $q_0^*\to q_1$: $\varepsilon\cdot1^*\cdot0=1^*0$;
+        \item $q_1\to q_1$: $1\cdot1^*\cdot0=11^*0$.
+    \end{itemize}
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (0,0)    {$q_0^*$};
+    \node[state]            (q1)  at (2.2,0)  {$q_1$};
+    \node[state]            (q2)  at (4.4,0)  {$q_2$};
+    \node[state]            (q3)  at (6.6,0)  {$q_3$};
+    \node[state]            (q4)  at (8.8,0)  {$q_4$};
+    \node[state]            (q5)  at (11,0)   {$q_5$};
+    \node[state, accepting] (qF)  at (11,2.5) {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->, very thick] (q0s) -- node {$1^*0$} (q1);
+    \path[->, very thick] (q1) edge[loop above, looseness=8] node {$11^*0$} (q1);
+
+    \draw[->] (q2) to[bend left=15] node {$\varepsilon$} (qF);
+    \draw[->] (q4) -- node {$\varepsilon$} (qF);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+    \draw[->] (q2) -- node {$0$} (q3);
+    \draw[->] (q3) -- node {$1$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q5) to[bend right=55] node[swap] {$1$} (q1);
+    \draw[->] (q5) to[bend right=35] node[swap] {$0$} (q2);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 4.} Eliminiamo $q_3$. L'unico arco entrante è $q_2\xrightarrow{0}q_3$ e l'unico uscente è $q_3\xrightarrow{1}q_4$ (non ci sono cappi). Il nuovo arco è $q_2\to q_4$: $0\cdot1=01$.
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (0,0)    {$q_0^*$};
+    \node[state]            (q1)  at (2.2,0)  {$q_1$};
+    \node[state]            (q2)  at (4.4,0)  {$q_2$};
+    \node[state]            (q4)  at (8.8,0)  {$q_4$};
+    \node[state]            (q5)  at (11,0)   {$q_5$};
+    \node[state, accepting] (qF)  at (11,2.5) {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->] (q0s) -- node {$1^*0$} (q1);
+    \path[->] (q1) edge[loop above, looseness=8] node {$11^*0$} (q1);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+    \draw[->, very thick] (q2) -- node {$01$} (q4);
+    \draw[->] (q4) -- node {$0$} (q5);
+    \draw[->] (q2) to[bend left=15] node {$\varepsilon$} (qF);
+    \draw[->] (q4) -- node {$\varepsilon$} (qF);
+    \draw[->] (q5) to[bend right=55] node[swap] {$1$} (q1);
+    \draw[->] (q5) to[bend right=35] node[swap] {$0$} (q2);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 5.} Eliminiamo $q_5$. L'unico arco entrante è $q_4\xrightarrow{0}q_5$, gli uscenti sono $q_5\xrightarrow{1}q_1$ e $q_5\xrightarrow{0}q_2$. I nuovi archi sono
+    \begin{itemize}
+        \item $q_4\to q_1$: $0\cdot1=01$;
+        \item $q_4\to q_2$: $0\cdot0=00$.
+    \end{itemize}
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (0,0)    {$q_0^*$};
+    \node[state]            (q1)  at (2.2,0)  {$q_1$};
+    \node[state]            (q2)  at (4.4,0)  {$q_2$};
+    \node[state]            (q4)  at (8.8,0)  {$q_4$};
+    \node[state, accepting] (qF)  at (11,2.5) {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->] (q0s) -- node {$1^*0$} (q1);
+    \path[->] (q1) edge[loop above, looseness=8] node {$11^*0$} (q1);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+    \draw[->] (q2) -- node {$01$} (q4);
+    \draw[->] (q2) to[bend left=15] node {$\varepsilon$} (qF);
+    \draw[->] (q4) -- node {$\varepsilon$} (qF);
+    \draw[->, very thick] (q4) to[bend right=55] node[swap] {$01$} (q1);
+    \draw[->, very thick] (q4) to[bend right=35] node[swap] {$00$} (q2);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 6.} Eliminiamo $q_4$. L'unico arco entrante è $q_2\xrightarrow{01}q_4$ e gli uscenti sono $q_4\xrightarrow{\varepsilon}q_F^*$, $q_4\xrightarrow{01}q_1$ e $q_4\xrightarrow{00}q_2$ (non ci sono cappi). I nuovi archi sono
+    \begin{itemize}
+        \item $q_2\to q_F^*$: $01\cdot\varepsilon=01$;
+        \item $q_2\to q_1$: $01\cdot01=0101$;
+        \item $q_2\to q_2$ (cappio): $01\cdot00=0100$.
+    \end{itemize}
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (0,0)    {$q_0^*$};
+    \node[state]            (q1)  at (4,0)    {$q_1$};
+    \node[state]            (q2)  at (8,0)    {$q_2$};
+    \node[state, accepting] (qF)  at (12,0)   {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->] (q0s) -- node {$1^*0$} (q1);
+    \path[->] (q1) edge[loop above, looseness=8] node {$11^*0$} (q1);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[loop below, looseness=8] node {$1$} (q2);
+    \draw[->] (q2) to[bend left=30] node {$\varepsilon$} (qF);
+
+    \draw[->, very thick] (q2) -- node {$01$} (qF);
+    \path[->, very thick] (q2) edge[loop above, looseness=8] node {$0100$} (q2);
+    \draw[->, very thick] (q2) to[bend left=30] node {$0101$} (q1);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 7.} Uniamo gli archi paralleli: i due cappi su $q_2$ diventano un solo cappio $1+0100$ e i due archi da $q_2$ a $q_F^*$ diventano un solo arco $\varepsilon+01$.
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (0,0)    {$q_0^*$};
+    \node[state]            (q1)  at (4,0)    {$q_1$};
+    \node[state]            (q2)  at (8,0)    {$q_2$};
+    \node[state, accepting] (qF)  at (12,0)   {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->] (q0s) -- node {$1^*0$} (q1);
+    \path[->] (q1) edge[loop above, looseness=8] node {$11^*0$} (q1);
+    \draw[->] (q1) -- node {$0$} (q2);
+    \draw[->] (q2) to[bend left=30] node {$0101$} (q1);
+
+    \path[->, very thick] (q2) edge[loop below, looseness=8] node {$1+0100$} (q2);
+    \draw[->, very thick] (q2) -- node {$\varepsilon+01$} (qF);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 8.} Eliminiamo $q_2$. L'unico arco entrante è $q_1\xrightarrow{0}q_2$, il cappio è $1+0100$ e gli uscenti sono $q_2\xrightarrow{0101}q_1$ e $q_2\xrightarrow{\varepsilon+01}q_F^*$. I nuovi archi sono
+    \begin{itemize}
+        \item $q_1\to q_1$ (cappio): $0(1+0100)^*0101$;
+        \item $q_1\to q_F^*$: $0(1+0100)^*(\varepsilon+01)$.
+    \end{itemize}
+    \[
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (q0s) at (0,0)    {$q_0^*$};
+    \node[state]            (q1)  at (5,0)    {$q_1$};
+    \node[state, accepting] (qF)  at (11.5,0) {$q_F^*$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]q0s.center) -- (q0s);
+    \draw[->] (q0s) -- node {$1^*0$} (q1);
+    \draw[->] (q1) to[loop below, looseness=8] node {$11^*0$} (q1);
+
+    \draw[->, very thick] (q1) to[loop above, looseness=8] node {$0(1+0100)^*0101$} (q1);
+    \draw[->, very thick] (q1) -- node {$0(1+0100)^*(\varepsilon+01)$} (qF);
+    \end{tikzpicture}
+    \]
+
+    \medskip
+    \textbf{Passo 9.} Eliminiamo $q_1$: i due cappi si uniscono in $11^*0+0(1+0100)^*0101$ e si ottiene la concatenazione dell'arco entrante, del cappio iterato e dell'arco uscente:
+    \[
+    1^*0\big(11^*0+0(1+0100)^*0101\big)^*0(1+0100)^*(\varepsilon+01).
+    \]
+
+    \item Costruiamo un NDFA \emph{senza} $\varepsilon$-mosse seguendo i blocchi dell'espressione
+    \[
+        \underbrace{1^*0}_{\text{(a)}}\;\bigl(\underbrace{11^*0}_{\text{(b)}}+\underbrace{0(1+0100)^*0101}_{\text{(c)}}\bigr)^*\;\underbrace{0(1+0100)^*(\varepsilon+01)}_{\text{(d)}}.
+    \]
+    \begin{itemize}
+        \item (a): $p_0$ iniziale con cappio $1$ e arco $0$ verso $p_1$; $p_1$ fa da ``nodo'' del ciclo esterno.
+        \item (b): $p_1\xrightarrow{1}p_2$, cappio $1$ su $p_2$, $p_2\xrightarrow{0}p_1$.
+        \item (c) e (d): iniziano entrambi con $0(1+0100)^*$, quindi li facciamo partire dallo stesso stato: $p_1\xrightarrow{0}p_3$, cappio $1$ su $p_3$ e il cammino $0100$ come $p_3\xrightarrow{0}p_4\xrightarrow{1}p_5\xrightarrow{0}p_6\xrightarrow{0}p_3$. Da $p_3$ si può poi chiudere (c) con $0101$, cioè $p_6\xrightarrow{1}p_1$, oppure uscire per (d).
+        \item Uscita (d): la parte $\varepsilon$ si realizza rendendo $p_3$ finale; la parte $01$ con $p_4\xrightarrow{1}p_F$, dove $p_F$ è finale.
+    \end{itemize}
+    Eliminazione delle $\varepsilon$-mosse: l'unica $\varepsilon$-mossa sarebbe $p_3\xrightarrow{\varepsilon}p_F$, ma $p_F$ non ha archi uscenti. Basta quindi rendere $p_3$ finale e cancellare l'$\varepsilon$-arco. L'automa è non deterministico perché da $p_4$, leggendo $1$, si può andare sia in $p_5$ sia in $p_F$.
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state]            (p0) at (0,0)     {$p_0$};
+    \node[state]            (p1) at (2.5,0)   {$p_1$};
+    \node[state]            (p2) at (2.5,2.5) {$p_2$};
+    \node[state, accepting] (p3) at (5.5,0)   {$p_3$};
+    \node[state]            (p4) at (8,0)     {$p_4$};
+    \node[state]            (p5) at (10.5,0)  {$p_5$};
+    \node[state]            (p6) at (8,-2.5)  {$p_6$};
+    \node[state, accepting] (pF) at (8,2.5)   {$p_F$};
+
+    \draw[->] ([shift={(-0.7,0.7)}]p0.center) -- (p0);
+
+    % Blocco (a)
+    \draw[->] (p0) edge[loop above] node {$1$} (p0);
+    \draw[->] (p0) -- node {$0$} (p1);
+
+    % Blocco (b)
+    \draw[->] (p1) to[bend left=20] node {$1$} (p2);
+    \draw[->] (p2) edge[loop above] node {$1$} (p2);
+    \draw[->] (p2) to[bend left=20] node {$0$} (p1);
+
+    % Blocchi (c) e (d)
+    \draw[->] (p1) -- node {$0$} (p3);
+    \draw[->] (p3) edge[loop above] node {$1$} (p3);
+    \draw[->] (p3) -- node {$0$} (p4);
+    \draw[->] (p4) -- node {$1$} (p5);
+    \draw[->] (p5) -- node {$0$} (p6);
+    \draw[->] (p6) -- node[swap] {$0$} (p3);
+    \draw[->, rounded corners=8pt]
+        (p6.270) -- (p6.270 |- 0,-3.6) -- node[swap] {$1$} (p1.270 |- 0,-3.6) -- (p1.270);
+
+    % Uscita (d)
+    \draw[->] (p4) -- node {$1$} (pF);
+    \end{tikzpicture}
+    \]
+\end{enumerate}
+\end{sol}
