@@ -172,3 +172,75 @@ X = \{x \in A^* \mid \text{la computazione di } \mu \text{ associata a } xx \tex
 Mostrare che $X$ è un insieme semidecidibile definendo esplicitamente la macchina $\mu'$ che semidecide $X$ in funzione della macchina $\mu$.
 \end{ex}
 
+\begin{ex}
+Si consideri una macchina di Turing $\mu$ di alfabeto $A=\{0,1\}$ e sia
+\[
+X=\{x\in A^*\mid \text{la computazione di }\mu\text{ associata a }xx\text{ termina}\}.
+\]
+Mostrare che $X$ è un insieme semidecidibile definendo esplicitamente la macchina $\mu'$ che semidecide $X$ in funzione della macchina $\mu$.
+\end{ex}
+
+\begin{sol}
+Basta costruire la macchina $\mu'$ a due nastri nel seguente modo, dove $a\in A$ e le testine partono entrambe sul primo simbolo dei rispettivi nastri, con $x$ sul nastro 1 e il nastro 2 vuoto.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state] (q0) at (0,0)     {$q_0$};
+\node[state] (q1) at (5.5,0)   {$q_1$};
+\node[state] (q2) at (11,0)    {$q_2$};
+\node[state] (q3) at (11,-3.8) {$q_3$};
+\node[state] (qm) at (5.5,-3.8) {$q_0^{\mu}$};
+
+% Blocco della macchina mu^*
+\draw[-, line width=1pt] (0.5,-4.8) rectangle (3.5,-2.8);
+\node at (2,-3.8) {$\mu^*$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Fase 1: copia di x sul nastro 2
+\draw[->] (q0) to[loop above, looseness=8] node {$\frac{a,\square}{a,a},(+1,+1)$} (q0);
+\draw[->] (q0) -- node {$\frac{\square,\square}{\square,\square},(-1,0)$} (q1);
+
+% Fase 2: ritorno all'inizio di x sul nastro 1
+\draw[->] (q1) to[loop above, looseness=8] node {$\frac{a,\square}{a,\square},(-1,0)$} (q1);
+\draw[->] (q1) -- node {$\frac{\square,\square}{\square,\square},(+1,0)$} (q2);
+
+% Fase 3: seconda copia di x sul nastro 2
+\draw[->] (q2) to[loop above, looseness=8] node {$\frac{a,\square}{a,a},(+1,+1)$} (q2);
+\draw[->] (q2) -- node {$\frac{\square,\square}{\square,\square},(0,-1)$} (q3);
+
+% Fase 4: ritorno all'inizio di xx sul nastro 2
+\draw[->] (q3) to[loop below, looseness=8] node {$\frac{\square,a}{\square,a},(0,-1)$} (q3);
+\draw[->] (q3) -- node {$\frac{\square,\square}{\square,\square},(0,+1)$} (qm);
+
+% Avvio di mu^*
+\draw[->] (qm) -- (3.5,-3.8);
+\end{tikzpicture}
+\]
+Il funzionamento è il seguente.
+\begin{itemize}
+\item In $q_0$ la macchina copia $x$ sul nastro 2, spostando entrambe le testine a destra. Alla fine la testina 1 legge $\square$, la testina 2 si trova subito dopo la copia e il nastro 2 contiene $x$.
+\item In $q_1$ la testina 1 torna a sinistra fino al blank che precede $x$, poi si sposta di $+1$ sul primo simbolo di $x$. La testina 2 resta ferma.
+\item In $q_2$ la macchina ricopia $x$ sul nastro 2 di seguito alla prima copia. Alla fine il nastro 2 contiene $xx$.
+\item In $q_3$ la testina 2 torna a sinistra fino al blank che precede $xx$, poi si sposta di $+1$ sul primo simbolo di $xx$. Poi si passa allo stato iniziale $q_0^{\mu}$ di $\mu$.
+\end{itemize}
+Il blocco $\mu^*$ è la macchina che opera sul nastro 2 come $\mu$ e lascia ferma la testina 1. Formalmente, posto $A_\square:=A\cup\{\square\}$ e
+\[
+\mu_1:=\pi_1\circ\mu,\qquad \mu_2:=\pi_2\circ\mu,\qquad \mu_3:=\pi_3\circ\mu,
+\]
+si definisce
+\[
+\begin{array}{rcl}
+\mu^*\colon Q\times A_\square^2 &\longrightarrow& Q\times A_\square^2\times\{-1,0,1\}^2\\[2pt]
+(q,(a,b)) &\longmapsto& \bigl(\mu_1(q,b),\,(a,\mu_2(q,b)),\,(0,\mu_3(q,b))\bigr).
+\end{array}
+\]
+Gli stati finali di $\mu'$ sono quelli di $\mu^*$, cioè quelli di $\mu$.
+
+Le prime quattro fasi terminano sempre in un numero finito di passi, e $\mu^*$ simula $\mu$ sul nastro 2 contenente $xx$. Quindi la computazione di $\mu'$ su $x$ termina se e solo se la computazione di $\mu$ su $xx$ termina, cioè se e solo se $x\in X$. Se $x\notin X$, $\mu'$ non termina. Dunque $\mu'$ semidecide $X$, e $X$ è semidecidibile.
+\end{sol}

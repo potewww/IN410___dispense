@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  15 NOV 2026 18:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  16 NOV 2026 00:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -901,25 +901,24 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 11
 \tf@toc=\write6
 \openout6 = `main.toc'.
 
- (./intro.tex
+
+
+[3] (./intro.tex
 Package hyperref Info: bookmark level for unknown defi defaults to 0 on input line 2.
 Package hyperref Info: bookmark level for unknown rema defaults to 0 on input line 22.
-
-
-[3]
 LaTeX Font Info:    Trying to load font information for U+bbold on input line 46.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/bbold/Ubbold.fd)
+
+[4]
 Underfull \hbox (badness 10000) in paragraph at lines 116--122
 
  []
 
 
 
-[4]
+[5]
 Package hyperref Info: bookmark level for unknown prop defaults to 0 on input line 163.
-
-
-[5])
+)
 
 [6] (./automi_finiti.tex
 
@@ -1223,37 +1222,41 @@ Overfull \hbox (46.26624pt too wide) detected at line 794
 
 [116])
 
-[117] (./prerequisiti.tex
+[117] (./timer.tex
 
-[118]
+[118])
 
-[119]
+[119] (./prerequisiti.tex
 
 [120]
 
 [121]
 
 [122]
+
+[123]
+
+[124]
 Overfull \hbox (4.35237pt too wide) in paragraph at lines 246--247
-[][]\OT1/cmr/bx/n/12 Definizione 11.26 \OT1/cmr/m/n/12 (Al-ge-bra di Klee-ne)\OT1/cmr/bx/n/12 . []\OT1/cmr/m/n/12 L'al-ge-bra del-le se-rie for-ma-li $\U/bbold/m/n/12 K\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 M\OT1/cmr/m/n/12 ]$ (De-fi-ni-zio-ne [][]11.23[][])
+[][]\OT1/cmr/bx/n/12 Definizione 12.26 \OT1/cmr/m/n/12 (Al-ge-bra di Klee-ne)\OT1/cmr/bx/n/12 . []\OT1/cmr/m/n/12 L'al-ge-bra del-le se-rie for-ma-li $\U/bbold/m/n/12 K\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 M\OT1/cmr/m/n/12 ]$ (De-fi-ni-zio-ne [][]12.23[][])
  []
 
 
 
-[123])
+[125])
 
-[124] (./wolfram.tex
+[126] (./wolfram.tex
 \g__tcobox_out_iow=\write7
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[125]
+[127]
 \openout7 = `main.listing'.
 
  (./main.listing)
 
-[126]
+[128]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1263,9 +1266,9 @@ Overfull \hbox (15.59825pt too wide) in paragraph at lines 148--149
 
 
 
-[127]
+[129]
 
-[128]
+[130]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1274,7 +1277,7 @@ LaTeX Font Info:    Trying to load font information for U+bbm on input line 227.
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
 
-[129]
+[131]
 Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 []\OT1/cmr/m/n/12 Assegnare la di-rec-to-ry cor-ren-te, cio^^Re la car-tel-la che con-tie-ne il pac-chet-to: [][][][][][][][] 
  []
@@ -1283,7 +1286,7 @@ Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 
 (./main.listing)
 
-[130]
+[132]
 \openout7 = `main.listing'.
 
  (./main.listing)
@@ -1291,16 +1294,12 @@ Overfull \hbox (162.15921pt too wide) in paragraph at lines 246--247
 
  (./main.listing)
 
-[131])
+[133])
 
-[132] (./esercizi/automi.tex
+[134] (./esercizi/automi.tex
 Package hyperref Info: bookmark level for unknown ex defaults to 0 on input line 1.
 Package hyperref Info: bookmark level for unknown sol defaults to 0 on input line 8.
 
-
-[133]
-
-[134]
 
 [135]
 
@@ -1321,22 +1320,22 @@ Package hyperref Info: bookmark level for unknown sol defaults to 0 on input lin
 [143]
 
 [144]
+
+[145]
+
+[146]
 Underfull \hbox (badness 10000) in paragraph at lines 974--975
 
  []
 
 
 
-[145]
+[147]
 Overfull \hbox (2.99716pt too wide) detected at line 1144
 [][]
  []
 
 
-
-[146]
-
-[147]
 
 [148]
 
@@ -1346,78 +1345,78 @@ Overfull \hbox (2.99716pt too wide) detected at line 1144
 
 [151]
 
-[152])
+[152]
 
-[153] (./esercizi/macchineturing.tex
+[153]
+
+[154])
+
+[155] (./esercizi/macchineturing.tex
 \openout7 = `main.listing'.
 
  (./main.listing)
-
-[154]
-\openout7 = `main.listing'.
-
- (./main.listing)
-
-[155]
 
 [156]
+\openout7 = `main.listing'.
+
+ (./main.listing)
+
+[157]
+
+[158]
 Overfull \hbox (14.85197pt too wide) in paragraph at lines 158--161
 []\OT1/cmr/m/n/12 Se $\OML/cmm/m/it/12 X \OMS/cmsy/m/n/12 2 [][]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ))$ e $\OML/cmm/m/it/12 Y \OMS/cmsy/m/n/12 2 []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ))$ al-lo-ra $\OML/cmm/m/it/12 X \OMS/cmsy/m/n/12 \ \OML/cmm/m/it/12 Y \OMS/cmsy/m/n/12 2 []\OT1/cmr/m/n/12 ([](\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )))$. 
  []
 
 
 
-[157]
-
-[158]
-
 [159]
 
 [160]
 
-[161])
+[161]
 
-[162] (./esercizi/pumpinglemma.tex
+[162]
 
-[163]
+[163])
+
+[164] (./esercizi/pumpinglemma.tex
+
+[165]
 Overfull \hbox (3.19432pt too wide) detected at line 48
 \OML/cmm/m/it/12 X[] \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 w \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 a; b\OMS/cmsy/m/n/12 g[] j \OML/cmm/m/it/12 w \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 a[]b[] [] a[]b[];  n \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OML/cmm/m/it/12 ;  k[] \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;  X[] \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 a[]b[]c[] \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 n; m \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 :
  []
 
 
 
-[164]
+[166]
 
-[165])
+[167])
 
-[166] (./esercizi/ricorsione.tex
+[168] (./esercizi/ricorsione.tex
 Overfull \hbox (47.89896pt too wide) detected at line 29
 \OT1/cmss/m/n/12 A \OT1/cmr/m/n/12 := [][][]([]\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 E\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];  \OT1/cmss/m/n/12 B \OT1/cmr/m/n/12 := [][][]([]\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][]:
  []
 
 
 
-[167]
+[169]
 
-[168]
+[170]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 135.
 
 
-[169]
-
-[170]
-
 [171]
+
+[172]
+
+[173]
 Overfull \hbox (0.33955pt too wide) detected at line 278
 [][] \OT1/cmr/m/n/12 := []
  []
 
-) (./timer.tex
-
-[172]
-
-[173])
+)
 
 [174] (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
 
@@ -1526,45 +1525,45 @@ Overfull \hbox (30.80919pt too wide) detected at line 291
 
 [214]
 
-[215])
+[215]
 
-[216] (./esercizi/APPELLI_ESONERI/esonero1_10_11_17.tex
+[216])
 
-[217]
+[217] (./esercizi/APPELLI_ESONERI/esonero1_10_11_17.tex
 
 [218]
 
 [219]
 
-[220])
+[220]
 
-[221] (./esercizi/APPELLI_ESONERI/esonero1_30_10_12.tex
+[221])
 
-[222]
+[222] (./esercizi/APPELLI_ESONERI/esonero1_30_10_12.tex
 
 [223]
 
 [224]
 
-[225])
+[225]
 
-[226] (./esercizi/APPELLI_ESONERI/esonero1_10_11_08.tex
+[226])
 
-[227]
+[227] (./esercizi/APPELLI_ESONERI/esonero1_10_11_08.tex
 
 [228]
 
-[229])
+[229]
 
-[230] (./esercizi/APPELLI_ESONERI/esonero1_04_11_05.tex
+[230])
 
-[231]
+[231] (./esercizi/APPELLI_ESONERI/esonero1_04_11_05.tex
 
 [232]
 
-[233]) (./esercizi/APPELLI_ESONERI/li_30_10_12.tex
+[233]
 
-[234]
+[234]) (./esercizi/APPELLI_ESONERI/li_30_10_12.tex
 
 [235]
 
@@ -1578,29 +1577,31 @@ Overfull \hbox (30.80919pt too wide) detected at line 291
 
 [240]
 
-[241])
+[241]
 
-[242]) (./main.aux)
+[242])
+
+[243]) (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 7D2F0A4D84C29D3B2BC9A0824EFF5EFD;15135.
+(rerunfilecheck)             Checksum: BC9BFAE51BDE60B0C7E21B80DE33841B;15135.
  ) 
 Here is how much of TeX's memory you used:
- 38678 strings out of 473190
- 774825 string characters out of 5715800
- 1239155 words of memory out of 5000000
- 59696 multiletter control sequences out of 15000+600000
+ 38693 strings out of 473190
+ 775045 string characters out of 5715800
+ 1239276 words of memory out of 5000000
+ 59706 multiletter control sequences out of 15000+600000
  578807 words of font info for 118 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1424b,1646s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (242 pages, 1135020 bytes).
+Output written on main.pdf (243 pages, 1139380 bytes).
 PDF statistics:
- 3231 PDF objects out of 3580 (max. 8388607)
- 2872 compressed objects within 29 object streams
- 1512 named destinations out of 1728 (max. 500000)
+ 3242 PDF objects out of 3580 (max. 8388607)
+ 2882 compressed objects within 29 object streams
+ 1517 named destinations out of 1728 (max. 500000)
  797 words of extra memory for PDF output out of 10000 (max. 10000000)
 
