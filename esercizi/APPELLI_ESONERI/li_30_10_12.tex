@@ -560,54 +560,70 @@ Dato l'automa a stati finiti deterministico $\mathcal{A}$:
     \]
 
     \item Costruiamo un NDFA \emph{senza} $\varepsilon$-mosse seguendo i blocchi dell'espressione
-    \[
-        \underbrace{1^*0}_{\text{(a)}}\;\bigl(\underbrace{11^*0}_{\text{(b)}}+\underbrace{0(1+0100)^*0101}_{\text{(c)}}\bigr)^*\;\underbrace{0(1+0100)^*(\varepsilon+01)}_{\text{(d)}}.
-    \]
-    \begin{itemize}
-        \item (a): $p_0$ iniziale con cappio $1$ e arco $0$ verso $p_1$; $p_1$ fa da ``nodo'' del ciclo esterno.
-        \item (b): $p_1\xrightarrow{1}p_2$, cappio $1$ su $p_2$, $p_2\xrightarrow{0}p_1$.
-        \item (c) e (d): iniziano entrambi con $0(1+0100)^*$, quindi li facciamo partire dallo stesso stato: $p_1\xrightarrow{0}p_3$, cappio $1$ su $p_3$ e il cammino $0100$ come $p_3\xrightarrow{0}p_4\xrightarrow{1}p_5\xrightarrow{0}p_6\xrightarrow{0}p_3$. Da $p_3$ si può poi chiudere (c) con $0101$, cioè $p_6\xrightarrow{1}p_1$, oppure uscire per (d).
-        \item Uscita (d): la parte $\varepsilon$ si realizza rendendo $p_3$ finale; la parte $01$ con $p_4\xrightarrow{1}p_F$, dove $p_F$ è finale.
-    \end{itemize}
-    Eliminazione delle $\varepsilon$-mosse: l'unica $\varepsilon$-mossa sarebbe $p_3\xrightarrow{\varepsilon}p_F$, ma $p_F$ non ha archi uscenti. Basta quindi rendere $p_3$ finale e cancellare l'$\varepsilon$-arco. L'automa è non deterministico perché da $p_4$, leggendo $1$, si può andare sia in $p_5$ sia in $p_F$.
-    \[
-    \begin{tikzpicture}[
-        >=stealth', shorten >=1pt, auto,
-        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
-    ]
-    \node[state]            (p0) at (0,0)     {$p_0$};
-    \node[state]            (p1) at (2.5,0)   {$p_1$};
-    \node[state]            (p2) at (2.5,2.5) {$p_2$};
-    \node[state, accepting] (p3) at (5.5,0)   {$p_3$};
-    \node[state]            (p4) at (8,0)     {$p_4$};
-    \node[state]            (p5) at (10.5,0)  {$p_5$};
-    \node[state]            (p6) at (8,-2.5)  {$p_6$};
-    \node[state, accepting] (pF) at (8,2.5)   {$p_F$};
+   \[
+\begin{tikzpicture}[
+    scale=0.85, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati della riga principale
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (3,0)    {$q_1$};
+\node[state, accepting] (q2) at (6.5,0)  {$q_2$};
+\node[state]            (q3) at (9.5,0)  {$q_3$};
+\node[state, accepting] (q4) at (12.5,0) {$q_4$};
 
-    \draw[->] ([shift={(-0.7,0.7)}]p0.center) -- (p0);
+% Ciclo (b): 11^*0
+\node[state] (p1) at (1.5,-3) {$p_1$};
 
-    % Blocco (a)
-    \draw[->] (p0) edge[loop above] node {$1$} (p0);
-    \draw[->] (p0) -- node {$0$} (p1);
+% Ciclo (c): 0(1+0100)^*0101
+\node[state] (p2) at (4.8,-3)   {$p_2$};
+\node[state] (p3) at (4.8,-4.8) {$p_3$};
+\node[state] (p4) at (6.3,-6.2) {$p_4$};
+\node[state] (p5) at (7.8,-4.8) {$p_5$};
+\node[state] (p6) at (5.8,-2.1) {$p_6$};
+\node[state] (p7) at (4.8,-1.3) {$p_7$};
+\node[state] (p8) at (3.8,-0.6) {$p_8$};
 
-    % Blocco (b)
-    \draw[->] (p1) to[bend left=20] node {$1$} (p2);
-    \draw[->] (p2) edge[loop above] node {$1$} (p2);
-    \draw[->] (p2) to[bend left=20] node {$0$} (p1);
+% Ciclo (d): 0100 su q_2
+\node[state] (r1) at (9.5,-3)   {$r_1$};
+\node[state] (r2) at (11.8,-3)  {$r_2$};
+\node[state] (r3) at (9.5,-1.5) {$r_3$};
 
-    % Blocchi (c) e (d)
-    \draw[->] (p1) -- node {$0$} (p3);
-    \draw[->] (p3) edge[loop above] node {$1$} (p3);
-    \draw[->] (p3) -- node {$0$} (p4);
-    \draw[->] (p4) -- node {$1$} (p5);
-    \draw[->] (p5) -- node {$0$} (p6);
-    \draw[->] (p6) -- node[swap] {$0$} (p3);
-    \draw[->, rounded corners=8pt]
-        (p6.270) -- (p6.270 |- 0,-3.6) -- node[swap] {$1$} (p1.270 |- 0,-3.6) -- (p1.270);
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
 
-    % Uscita (d)
-    \draw[->] (p4) -- node {$1$} (pF);
-    \end{tikzpicture}
-    \]
+% Transizioni riga principale
+\path[->] (q0) edge[loop below, looseness=8] node {$1$} (q0);
+\draw[->] (q0) -- node {$0$} (q1);
+\draw[->] (q1) -- node {$0$} (q2);
+\path[->] (q2) edge[loop above, looseness=8] node {$1$} (q2);
+\draw[->] (q2) -- node {$0$} (q3);
+\draw[->] (q3) -- node {$1$} (q4);
+
+% Transizioni ciclo (b)
+\draw[->] (q1) to[bend right=15] node[swap] {$1$} (p1);
+\path[->] (p1) edge[loop below, looseness=8] node {$1$} (p1);
+\draw[->] (p1) to[bend right=15] node[swap] {$0$} (q1);
+
+% Transizioni ciclo (c)
+\draw[->] (q1) -- node[swap] {$0$} (p2);
+\path[->] (p2) edge[loop left, looseness=8] node {$1$} (p2);
+\draw[->] (p2) -- node[swap] {$0$} (p3);
+\draw[->] (p3) -- node[swap] {$1$} (p4);
+\draw[->] (p4) -- node[swap] {$0$} (p5);
+\draw[->] (p5) -- node[swap] {$0$} (p2);
+\draw[->] (p2) -- node[swap] {$0$} (p6);
+\draw[->] (p6) -- node[swap] {$1$} (p7);
+\draw[->] (p7) -- node[swap] {$0$} (p8);
+\draw[->] (p8) -- node[swap] {$1$} (q1);
+
+% Transizioni ciclo (d)
+\draw[->] (q2) -- node[swap] {$0$} (r1);
+\draw[->] (r1) -- node[swap] {$1$} (r2);
+\draw[->] (r2) -- node[swap] {$0$} (r3);
+\draw[->] (r3) -- node[swap] {$0$} (q2);
+\end{tikzpicture}
+\]
 \end{enumerate}
 \end{sol}

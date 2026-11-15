@@ -1,0 +1,174 @@
+
+\begin{ex}
+Dato l'alfabeto $A=\{0,1\}$ si consideri la matrice $M$ associata ad un automa a stati finiti deterministico di alfabeto $A$ e insieme degli stati $Q$.
+\ 
+\begin{enumerate}
+    \item ricordare la definizione di $M$;
+    \item si consideri la matrice trasposta $M^T$, mostrare che in generale $M^T$ non è la matrice associata ad un automa deterministico;
+    \item mostrare che $M^T$ può essere considerata la matrice associata ad un automa a stati finiti non-deterministico;
+    \item descrivere la procedura di costruzione di un automa deterministico a partire da uno non deterministico in termini di operazioni sulla matrice associata all'automa;
+    \item (facoltativo) definire la procedura descritta al punto precedente in termini di operazioni tra matrici e vettori.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\ 
+\begin{enumerate}
+    \item Sia $\mathcal A=(Q,A,T,q_0,F)$ un DFA con $Q=\{q_0,\dots,q_{n-1}\}$ e $T\colon Q\times A\to Q$. La matrice associata è la matrice $n\times n$ data da
+    \[
+    M_{ij}=
+    \begin{cases}
+        \displaystyle\sum_{\substack{a\in A\\ T(q_i,a)=q_j}} a & \text{se esiste } a\in A \text{ con } T(q_i,a)=q_j,\\[3mm]
+        \bot & \text{altrimenti,}
+    \end{cases}
+    \]
+    con la convenzione $\bot+x=x$. Poiché $T$ è una funzione totale, in ogni riga ogni lettera compare esattamente una volta, cioè
+    \[
+    \sum_{j=0}^{n-1}M_{ij}=\sum_{a\in A}a\qquad\text{per ogni } i.
+    \]
+
+    \item Basta un controesempio. Sia $\mathcal A$ il DFA
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state] (q0) at (0,0) {$q_0$};
+    \node[state] (q1) at (3,0) {$q_1$};
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+    \draw[->] (q0) -- node {$0$} (q1);
+    \path[->] (q0) edge[loop above] node {$1$} (q0);
+    \path[->] (q1) edge[loop above] node {$0,1$} (q1);
+    \end{tikzpicture}
+    \]
+    la cui matrice è
+    \[
+    M=\begin{pmatrix} 1 & 0\\ \bot & 0+1\end{pmatrix}
+    \qquad\Longrightarrow\qquad
+    M^T=\begin{pmatrix} 1 & \bot\\ 0 & 0+1\end{pmatrix}.
+    \]
+    L'automa associato a $M^T$ è
+    \[
+    \begin{tikzpicture}[
+        >=stealth', shorten >=1pt, auto,
+        every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+    ]
+    \node[state] (q0) at (0,0) {$q_0$};
+    \node[state] (q1) at (3,0) {$q_1$};
+    \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+    \draw[->] (q1) -- node {$0$} (q0);
+    \path[->] (q0) edge[loop above] node {$1$} (q0);
+    \path[->] (q1) edge[loop above] node {$0,1$} (q1);
+    \end{tikzpicture}
+    \]
+    che non è deterministico: da $q_1$ leggendo $0$ si può andare sia in $q_0$ sia in $q_1$, mentre da $q_0$ leggendo $0$ non si può andare da nessuna parte. Equivalentemente, nessuna riga di $M^T$ ha somma $0+1$ (nella riga $0$ manca $0$, nella riga $1$ la lettera $0$ compare due volte), quindi $M^T$ non è la matrice di un DFA.
+
+    \item Sia $M$ la matrice di un DFA $\mathcal A=(Q,A,T,q_0,F)$. Su $M^T$ si perde la proprietà sulle righe (ogni lettera una sola volta per riga), che diventa una proprietà sulle colonne; possiamo però definire
+    \[
+    \overline T\colon Q\times A\to 2^Q,\qquad \overline T(q,a)=\{p\in Q\mid T(p,a)=q\}.
+    \]
+    Allora $\mathcal N=(Q,A,\overline T,q_0,F)$ è un NDFA e la sua matrice $\overline M$ soddisfa
+    \[
+    \overline M_{ij}=\sum_{\substack{a\in A\\ q_j\in\overline T(q_i,a)}}a=\sum_{\substack{a\in A\\ T(q_j,a)=q_i}}a=M_{ji}=(M^T)_{ij},
+    \]
+    cioè $\mathcal N$ è un NDFA associato a $M^T$.
+    
+
+    \item Sia $\mathcal N=(Q,A,\overline T,q_0,F)$ un NDFA con matrice $\overline M$, dove $\overline M_{ij}$ è la somma delle lettere $a$ con $q_j\in\overline T(q_i,a)$ (oppure $\bot$). Costruiamo gli stati del DFA in modo induttivo, partendo da
+    \[
+    S_0:=\{q_0\}.
+    \]
+    Dato $S_{n-1}$, per ogni $a\in A$ definiamo $S_n^a$ come l'insieme degli stati raggiungibili da un qualsiasi stato di $S_{n-1}$ tramite la lettera $a$, cioè, leggendo la matrice,
+    \[
+    S_n^a:=\{q_j\in Q\mid \exists\, q_i\in S_{n-1}\ \text{tale che } a \text{ compare in } \overline M_{ij}\}.
+    \]
+    La procedura è la seguente.
+    \ 
+    \begin{enumerate}
+        \item Si parte da $S_0=\{q_0\}$.
+        \item Per ogni insieme $S_{n-1}$ già ottenuto e per ogni $a\in A$ si calcola $S_n^a$ guardando nelle righe $i$ con $q_i\in S_{n-1}$ le colonne $j$ in cui compare la lettera $a$.
+        \item Ogni insieme $S_n^a$ così ottenuto che non è già stato costruito diventa un nuovo stato, e si ripete il passo 2 su di esso. Poiché gli stati sono sottoinsiemi di $Q$, il procedimento termina con al più $2^n$ stati (lo stato $\emptyset$, se compare, è uno stato pozzo).
+        \item Detto $Q'$ l'insieme degli stati ottenuti, la matrice $M'$ del DFA ha righe e colonne indicizzate da $Q'$ e
+        \[
+        M'_{S,S'}=\sum_{\substack{a\in A\\ S^a=S'}}a
+        \]
+        (oppure $\bot$ se non ci sono lettere),
+        dove $S^a$ indica l'insieme $S_{n+1}^a$ calcolato a partire da $S=S_{n}$ (infatti, $S$, visto che è in $Q'$, deve essere per forza della forma $S_n$ per qualche $n\in \mathbb N$). 
+        Ogni lettera compare esattamente una volta per riga, quindi $M'$ è la matrice di un DFA.
+        \item Lo stato iniziale è $S_0=\{q_0\}$ e gli stati finali sono gli $S\in Q'$ con $S\cap F\neq\emptyset$.
+    \end{enumerate}
+
+    \item Rappresentiamo $S\subseteq Q$ con il vettore riga caratteristico $v_S\in\{0,1\}^n$, dove $v_S(i)=1$ se e solo se $q_i\in S$. Per ogni $a\in A$ sia $\overline M_a\in\{0,1\}^{n\times n}$ la matrice con
+    \[
+    (\overline M_a)_{ij}=1\iff a \text{ compare in } \overline M_{ij}\iff q_j\in\overline T(q_i,a),
+    \]
+    così che $\overline M=\sum_{a\in A}a\,\overline M_a$. Lavorando in aritmetica booleana ($1+1=1$) si ha
+    \[
+    v_{S_n^a}=v_{S_{n-1}}\,\overline M_a,
+    \]
+    infatti $(v_{S_{n-1}}\overline M_a)_j=1$ se e solo se esiste $q_i\in S_{n-1}$ con $q_j\in\overline T(q_i,a)$. Il DFA si ottiene quindi così:
+    \begin{itemize}
+        \item stato iniziale: il vettore riga $e_0=v_{S_0}$;
+        \item transizione: $T'(v,a)=v\,\overline M_a$;
+        \item stati: $Q'=\{e_0\,\overline M_{w_1}\cdots\overline M_{w_k}\mid w=w_1\cdots w_k\in A^*\}$;
+        \item stati finali: i $v\in Q'$ con $v\,\chi_F=1$, dove $\chi_F$ è il vettore colonna caratteristico di $F$.
+    \end{itemize}
+\end{enumerate}
+\end{sol}
+\newpage
+
+\begin{ex}
+Sia dato un modello di macchina di Turing a $2$ nastri di alfabeto $A$ e insieme degli stati $Q$, che utilizza il primo nastro in sola lettura (il carattere letto sul primo nastro viene sempre riscritto identico) e si definisca lo spazio di arresto considerando solo le posizioni utilizzate sul secondo nastro.
+
+Sia $X$ un insieme decidibile da una macchina con spazio di arresto logaritmico (considerando solo le posizioni visitate sul secondo nastro).
+
+Determinare la funzione di complessità $T^*(n)$ per cui se $X\in\mathrm{DTIME}(T(n))$ allora $T(n)\le T^*(n)$ definitivamente ($T^*$ viene detto l'upper bound).
+\end{ex}
+
+\begin{sol}
+Sia $\mu\colon Q\times A\times A'\to Q\times A'\times\{-1,+1\}^2$ una macchina a due nastri che può scrivere solo sul secondo. Una configurazione è $c=(f,p_1,p_2,q)$, dove $f$ è il contenuto del secondo nastro, $p_1,p_2$ sono le posizioni delle due teste e $q$ è lo stato. Data una computazione $C=(c_0,\dots,c_t)$, il \emph{costo in spazio$^*$} è
+\[
+\big|\{p_2\mid (f,p_1,p_2,q)\in C\}\big|,
+\]
+cioè il numero di posizioni visitate sul secondo nastro. Diciamo che $\mu$ si arresta in spazio $s$ su $w$ se la computazione $C$ con $c_0$ configurazione iniziale per $w$ raggiunge la configurazione terminale e il costo in spazio$^*$ è $s$. Indichiamo con
+\[
+S_{\mu^*}\colon A^*\to\mathbb N
+\]
+la funzione che associa a ogni $w$ l'intero $s$ tale che $\mu$ si arresta in spazio $s$ su $w$.
+
+Sia $X\in\mathrm{DSPACE}(c\log_2 n)$, decisa da $\mu$ (cambiando la costante $c$ si può usare $\log_2$, perché $\log_b n=\log_b 2\cdot\log_2 n$, e si può supporre $c\ge 1$). Consideriamo gli input di lunghezza $n\ge2$, in modo che $s=c\log_2 n\ge 1$, e poniamo $d=|Q|$, $k=|A'|$. Come nella dimostrazione della proposizione, contiamo le possibili configurazioni su un input $w$ con $|w|=n$:
+\begin{itemize}
+    \item il contenuto del primo nastro è fisso ($=w$) e la testa $p_1$ assume al più $n+2$ valori;
+    \item sul secondo nastro la testa $p_2$ assume al più $2s+1$ valori e il contenuto delle celle visitate può essere scelto in $k^{2s+1}$ modi;
+    \item lo stato può essere scelto in $d$ modi.
+\end{itemize}
+Quindi
+\[
+N_{config}\le (n+2)\,(2s+1)\,k^{2s+1}\,d.
+\]
+Poiché $\mu$ è deterministica e si arresta su ogni input, nessuna configurazione si ripete, quindi il numero di passi $t$ soddisfa $t\le N_{config}$.
+Il fattore $(2s+1)\,k^{2s+1}\,d$ è lo stesso della proposizione vista in classe, quindi, con la stessa costante
+\[
+\epsilon=2+3\log_2 k+\log_2 d,
+\]
+si ha $(2s+1)\,k^{2s+1}\,d\le 2^{\epsilon s}$. Sostituendo $s=c\log_2 n$ e usando $n+2\le 2n$ per $n\ge 2$,
+\[
+t\le (n+2)\,2^{\epsilon c\log_2 n}=(n+2)\,n^{\epsilon c}\le 2\,n^{\epsilon c+1}.
+\]
+Quindi $X\in\mathrm{DTIME}(T^*(n))$ con
+\[
+T^*(n)=2\,n^{\epsilon c+1},\qquad \epsilon=2+3\log_2 k+\log_2 d,
+\]
+valida per ogni $n\ge 2$. In particolare $T^*$ è polinomiale.
+\end{sol}
+\newpage
+
+
+\begin{ex}
+Si consideri una macchina di Turing $\mu$ di alfabeto $A=\{0,1\}$ e sia
+\[
+X = \{x \in A^* \mid \text{la computazione di } \mu \text{ associata a } xx \text{ termina}\}.
+\]
+Mostrare che $X$ è un insieme semidecidibile definendo esplicitamente la macchina $\mu'$ che semidecide $X$ in funzione della macchina $\mu$.
+\end{ex}
+

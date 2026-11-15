@@ -468,18 +468,32 @@ Sia $T : \mathbb{N} \to \mathbb{N}$ una funzione di complessità; le inclusioni 
     \[
     t \leq (2s+1) \cdot k^{2s+1} \cdot d
     \]
-    Passando in base $2$, possiamo riscrivere il limite superiore come:
+     Passando in base $2$, possiamo riscrivere il limite superiore come:
     \[
-    t \leq 2^{\log_2(2s+1) + (2s+1)\log_2(k) + \log_2(d)}
+    \log_2 t \leq \log_2(2s+1) + (2s+1)\log_2(k) + \log_2(d).
     \]
-    Poiché $\log_2(2s+1)$ cresce molto più lentamente di $s$, e i termini associati a $k$ e $d$ sono costanti dipendenti dalla macchina, per un $s$ sufficientemente grande l'intero esponente cresce asintoticamente in modo lineare rispetto a $s$. Esisterà quindi certamente una costante $c > 0$ tale per cui l'esponente sia maggiorato da $c \cdot s$.
-    Da cui si ottiene:
+    Stimiamo i singoli termini per $s\ge 1$:
+    \begin{itemize}
+        \item per la disuguaglianza di Bernoulli $4^s=(1+3)^s\ge 1+3s\ge 2s+1$, quindi $\log_2(2s+1)\le 2s$;
+        \item $(2s+1)\log_2 k=2s\log_2 k+\log_2 k\le 3s\log_2 k$, perché $\log_2 k\le s\log_2 k$;
+        \item $\log_2 d\le s\log_2 d$.
+    \end{itemize}
+    Sommando si ottiene
     \[
-    t \leq 2^{cs}
+    \log_2 t\le s\,\bigl(2+3\log_2 k+\log_2 d\bigr).
     \]
-    Sostituendo $s = T$ e ricordando che $\mu$ è arbitraria, si conclude che la classe spaziale è contenuta nell'unione delle classi temporali delimitate da $2^{cT}$, ovvero $2^{\epsilon T}$ per un opportuno $\epsilon > 0$.
-    Quindi, dato un $X \in \mathrm{DSPACE}_1^{A,Q}(T)$
-    dovrà esistere un $\epsilon \in \mathbb N$ tale che $X \in  \mathrm{DTIME}_1^{A,Q}(2^{\epsilon T})$.
+    Poniamo allora
+    \[
+    \epsilon:=2+3\log_2 k+\log_2 d,
+    \]
+    che dipende soltanto dalla macchina $\mu$ (tramite $k=|A|$ e $d=|Q|$). Si ha quindi
+    \[
+    t\le 2^{\epsilon s}.
+    \]
+    Sostituendo $s=T(n)$ (per gli $n$ per cui $T(n)\ge 1$, cioè definitivamente) si conclude che $\mu$ decide $X$ in tempo $2^{\epsilon T(n)}$, cioè
+    \[
+    X\in\mathrm{DTIME}_1^{A,Q}(2^{\epsilon T}),\qquad \epsilon=2+3\log_2 k+\log_2 d>0.
+    \]
     Da cui segue la tesi.
 \end{proof}
 

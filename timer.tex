@@ -1,0 +1,67 @@
+% ======================================================================
+% Funzioni costruibili in tempo (da inserire nell'altro capitolo)
+% ======================================================================
+\subsection{Funzioni costruibili in tempo}
+
+Lo scopo di questa sezione è di stabilire una proprietà di natura tecnica soddisfatta dalla maggior parte delle funzioni di complessità che vengono utilizzate abitualmente per situare i problemi nella classe di complessità che gli compete. La proprietà in questione è la possibilità di costruire una macchina di Turing che per ogni input abbia tempo di arresto, espresso in funzione della lunghezza dell'input, pari al valore della funzione di complessità in questione. Queste macchine, qualora esistano, possono essere utilizzate per limitare il tempo di esecuzione di una qualsiasi altra macchina di Turing.
+
+Le macchine che hanno tempo di arresto $f(n)$ per un input di lunghezza $n$ possono essere utilizzate come ``timer'' di una qualsiasi computazione che vogliamo limitare ad una certa complessità.
+
+\begin{defi}
+Sia $T\colon\mathbb N\to\mathbb N$.
+\begin{enumerate}
+\item Una macchina di Turing $\mu_T$ di alfabeto $A\supseteq\{0,1\}$ si dice \emph{$T$-timer} se è tale che per ogni $w\in\{0,1\}^*$ la computazione di $\mu_T$ a partire da $w$ termina in esattamente $T(|w|)$ passi.
+\item La funzione $T$ si dice \emph{costruibile in tempo} quando esiste un $T$-timer.
+\end{enumerate}
+\end{defi}
+
+La scelta dell'alfabeto binario $\{0,1\}$ è solo una delle scelte possibili: funziona bene in questo capitolo poiché siamo nel contesto delle macchine universali per l'alfabeto binario, ma si potrebbero stabilire nozioni e risultati simili per un qualsiasi altro alfabeto, incluso l'alfabeto unario.
+
+\begin{prop}
+\begin{enumerate}
+\item Ogni funzione costruibile in tempo è Turing calcolabile;
+\item Ogni funzione totale Turing calcolabile da $\mathbb N$ in $\mathbb N$ è maggiorabile da una funzione costruibile in tempo, ovvero se $f$ è tale funzione esiste $T$ costruibile in tempo con $f(n)\le T(n)$ per ogni $n$.
+\end{enumerate}
+\end{prop}
+
+\begin{proof}
+\ 
+\begin{enumerate}
+\item Supponiamo di avere un $T$-timer $\mu$ a $k$ nastri. Costruiamo a partire da $\mu$ una macchina $\mu'$ a $k+1$ nastri che, dato l'input $n$ rappresentato in unario (cioè $1^{n+1}$), cancella un $1$ per ottenere una parola di lunghezza $n$ su cui esegue $\mu$, e che ad ogni passo di $\mu$ scrive un $1$ sul $(k+1)$-esimo nastro. Al termine di $\mu$ sono stati scritti $T(n)$ uni; ne aggiungiamo uno, copiamo il risultato $1^{T(n)+1}$ sul primo nastro e ripuliamo gli altri nastri (lemma~\ref{lem: pulizia nastri}). La macchina $\mu'$ termina quindi in una configurazione terminale che rappresenta $T(n)$ in unario, ovvero $\mu'$ calcola $T$.
+\item Supponiamo che $f$ sia una funzione Turing calcolabile totale da $\mathbb N$ in $\mathbb N$ e sia $\mu$ una macchina che calcola $f$ a partire da un input $m$ rappresentato in binario e restituisce il valore $f(m)$ in unario. Sia $\mu'$ la macchina che, a partire da una parola $w\in\{0,1\}^*$ di lunghezza $n$ (di cui ignora il contenuto), esegue la computazione di $\mu$ su ciascuno degli interi $m=0,1,\dots,n$ (rappresentati in binario, generati ad esempio mediante un contatore). Poiché $f$ è totale, ogni computazione termina e la durata totale dipende solo da $n$ e non dal contenuto di $w$: chiamiamo $T(n)$ tale durata, per cui $\mu'$ è un $T$-timer e $T$ è costruibile in tempo. La durata totale è la somma delle durate delle singole computazioni, e dunque maggiora ognuna di queste durate. In particolare maggiora la durata della computazione di $\mu$ su $n$, che è almeno il tempo necessario a scrivere $f(n)$ in unario, cioè almeno $f(n)+1$. Dunque $T(n)\ge f(n)+1>f(n)$.
+\end{enumerate}
+\end{proof}
+
+% NOTA: con la convenzione "la computazione termina quando si raggiunge lo stato finale", un timer esegue
+% sempre almeno un passo (anche su input vuoto) e non può sapere di aver letto l'ultimo carattere
+% senza leggere il blank successivo: la macchina del lemma seguente esegue quindi |w|+1 passi.
+% Se il professore intende "esattamente |w| passi" conviene precisare la convenzione sul conteggio dei passi.
+\begin{lemm}
+La funzione identità è costruibile in tempo.
+\end{lemm}
+
+\begin{proof}
+Prendere come timer la macchina di Turing che corrisponde ad un qualsiasi automa: come abbiamo visto, la computazione di un automa è simulabile passo-passo da una macchina di Turing; dalla definizione di automa la macchina di Turing si fermerà non appena incontrerà un blank, e dunque dopo la lettura di $|w|$ caratteri.
+\end{proof}
+
+\begin{lemm}
+Le funzioni costanti $f(n)=c$ per ogni $n$ sono costruibili in tempo.
+\end{lemm}
+
+\begin{proof}
+Costruire la macchina con stati $q_0,\dots,q_c$ che ad ogni passo cambia stato e si arresta quando raggiunge l'ultimo stato $q_c=q_F$:
+\[
+\mu(q_i,a):=(q_{i+1},a,+1)\qquad\text{per ogni } a \text{ e per } i<c.
+\]
+In questo modo la macchina si ferma dopo esattamente $c$ passi, qualunque sia l'input.
+\end{proof}
+
+\begin{lemm}
+Siano $f_1$ ed $f_2$ due funzioni costruibili in tempo. Allora la funzione somma $f(n)=f_1(n)+f_2(n)$ è costruibile in tempo.
+\end{lemm}
+
+\begin{proof}
+Siano $\mu_1$ un $f_1$-timer ed $\mu_2$ un $f_2$-timer: bisogna concatenare la computazione di $\mu_1$ con quella di $\mu_2$, quindi definiamo $\mu=\mu_1\otimes\mu_2$ (la macchina che esegue prima $\mu_1$ su un suo nastro e poi $\mu_2$ su un secondo nastro, in modo che il numero totale di passi sia $f_1(n)+f_2(n)$). L'unica difficoltà consiste nel preparare l'input di $\mu_2$ mentre $\mu_1$ svolge la sua computazione.
+
+Ma questo è possibile in quanto $\mu_1$ dovrà necessariamente leggere l'intero input (per definizione di $f_1$-timer) --- oppure non leggerlo affatto, come ad esempio nelle funzioni costanti. Nel primo caso, ogni volta che leggeremo un carattere di input che non abbiamo ancora letto dovremo copiarlo sul nastro di $\mu_2$; nel secondo caso basterà riservare l'accesso all'input alla macchina $\mu_2$.
+\end{proof}
