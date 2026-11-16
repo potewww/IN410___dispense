@@ -281,3 +281,202 @@ Quindi
     \texttt{ID}_X:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\texttt{PLUS}^k,f),\texttt{LESSER}\bigr).
 \]
 \end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $\mathbb B=\{0,1\}$ l'insieme dei booleani. Sia $f:\mathbb B^3\to\mathbb B^2$ la funzione che prende in input tre bit e restituisce il risultato dell'addizione dei tre bit (in binario) e l'eventuale riporto per la cifra successiva:
+\[
+f(x,y,z)=(x+y+z,\;xy+xz+yz)
+\]
+dove $+$ è la somma modulo $2$.
+\ 
+\begin{enumerate}
+\item Mostrare che la funzione $f$ è una funzione ricorsiva, se si considera $\mathbb B\subset\mathbb N$.
+
+Sia $n$ un numero fissato per tutto l'esercizio, e si considerino le sequenze binarie di lunghezza $n$. Si ricordi che le sequenze ammettono una funzione di codifica ricorsiva $K_n$ con inversa ricorsiva.
+\item Mostrare la ricorsività della funzione $\texttt{App}^f(y,i)=y'$, dove $y=K_n(x_1,\dots,x_n)$ e $y'=K_n(x_1,\dots,f(x_i),\dots,x_n)$, per una qualsiasi funzione ricorsiva $f:\mathbb N\to\mathbb N$.
+\item Al fine di mostrare che la funzione ``successore'' sulla rappresentazione binaria a $n$ bit di un numero è ricorsiva, mostrare che la funzione
+\[
+\texttt{BinSucc}((x_1,\dots,x_n),z,i)=((x_1,\dots,x_i+z,\dots,x_n),x_iz)
+\]
+è ricorsiva.
+\item Utilizzare l'applicazione iterata della funzione $\texttt{BinSucc}$ per calcolare il successore dell'intero rappresentato da un'$n$-upla di bit.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+Nel seguito $\mathsf{COMP}(\mathsf R_1,\mathsf R_2)$ è la composizione in cui si applica prima $\mathsf R_1$ e poi $\mathsf R_2$.
+\ 
+\begin{enumerate}
+\item Sia $\overline f:\mathbb N^3\to\mathbb N^2$, $\overline f(x,y,z)=(x+y+z,\;xy+xz+yz)$ (somme in $\mathbb N$). Ha espressione
+\[
+\begin{aligned}
+\overline{\mathsf{EFFE}}:=\mathsf{CONCAT}\Big(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,1},\mathsf P_{3,2},\mathsf P_{3,3}),\mathsf{PLUS}^3),\\
+&\mathsf{COMP}\big(\mathsf{CONCAT}(\\
+&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,1},\mathsf P_{3,2}),\mathsf{MULT}),\\
+&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,1},\mathsf P_{3,3}),\mathsf{MULT}),\\
+&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,2},\mathsf P_{3,3}),\mathsf{MULT})\\
+&\big),\mathsf{PLUS}^3\big)\Big).
+\end{aligned}
+\]
+Per $i\in\{1,2\}$ sia
+\[
+\mathsf{EFFE}_i:=\mathsf{COMP}(\mathsf{COMP}(\overline{\mathsf{EFFE}},\mathsf P_{2,i}),\mathsf{ISEVEN}).
+\]
+La funzione $[\mathsf{EFFE}_i]:\mathbb N^3\to\mathbb N$ vale $1$ se $\pi_i(\overline f(x,y,z))$ è pari e $0$ altrimenti. Allora
+\[
+\begin{aligned}
+\mathsf{EFFE}:=\mathsf{CONCAT}\Big(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{3,1},\mathsf{EFFE}_1),\mathsf{DIFF}),\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{3,1},\mathsf{EFFE}_2),\mathsf{DIFF})\Big)
+\end{aligned}
+\]
+calcola $1-[\mathsf{EFFE}_i]$, cioè la parità di $\pi_i(\overline f)$. Su $\mathbb B^3$ coincide con $f$.
+\item Sia $f:\mathbb N\to\mathbb N$ ricorsiva con espressione $\mathsf{EFFE}$. La funzione $\texttt{App}^f:\mathbb N^2\to\mathbb N$ è
+\[
+(y,i)\longmapsto
+\begin{cases}
+K_n\big(\pi_1(K_n^{-1}(y)),\dots,f(\pi_i(K_n^{-1}(y))),\dots,\pi_n(K_n^{-1}(y))\big) & i\in\{1,\dots,n\}\\
+y & \text{altrimenti.}
+\end{cases}
+\]
+Per ogni $j\in\{1,\dots,n\}$ definiamo le funzioni seguenti.
+\ 
+\begin{enumerate}
+\item $(y,b)\mapsto\pi_j(K_n^{-1}(y))$ è ricorsiva con espressione
+\[
+\mathsf A_j:=\mathsf{COMP}(\mathsf{COMP}(\mathsf P_{2,1},\mathsf{KINV}_n),\mathsf P_{n,j}).
+\]
+\item $(y,b)\mapsto f(\pi_j(K_n^{-1}(y)))$ è ricorsiva con espressione $\mathsf B_j:=\mathsf{COMP}(\mathsf A_j,\mathsf{EFFE})$.
+\item $\mathbb 1_{\mathbb N\times\{j\}}:\mathbb N^2\to\mathbb N$ è ricorsiva. Infatti
+\[
+\mathbb 1_{\mathbb N\times\{j\}}(a,b)=\mathrm{iszero}(\Delta(b,j)+\Delta(j,b)),
+\]
+dove $\Delta$ è la differenza troncata, quindi ha espressione $\mathsf{IND}_j:=\mathsf{COMP}(\mathsf{DELTA}_j,\mathsf{ISZERO})$, con
+\[
+\begin{aligned}
+\mathsf{DELTA}'_j&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf C_{2,j}),\mathsf{DIFF}),\\
+\mathsf{DELTA}''_j&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,j},\mathsf P_{2,2}),\mathsf{DIFF}),\\
+\mathsf{DELTA}_j&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{DELTA}'_j,\mathsf{DELTA}''_j),\mathsf{SUM}).
+\end{aligned}
+\]
+\item $\varphi_j:=K_n\big(\pi_1(K_n^{-1}(\cdot)),\dots,f(\pi_j(K_n^{-1}(\cdot))),\dots,\pi_n(K_n^{-1}(\cdot))\big)$ è ricorsiva con espressione
+\[
+\begin{aligned}
+\mathsf{PHI}_j:=\mathsf{COMP}\big(&\mathsf{CONCAT}^n(\mathsf A_1,\dots,\mathsf A_{j-1},\mathsf B_j,\mathsf A_{j+1},\dots,\mathsf A_n),\\
+&\mathsf K_n\big).
+\end{aligned}
+\]
+\item $\psi_j:=\varphi_j\cdot\mathbb 1_{\mathbb N\times\{j\}}$ è ricorsiva con espressione
+\[
+\mathsf{PSI}_j:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{PHI}_j,\mathsf{IND}_j),\mathsf{MULT}).
+\]
+\item $\mathrm{ind}_c(y,b)=1$ se $b\notin\{1,\dots,n\}$ e $0$ altrimenti è ricorsiva con espressione
+\[
+\begin{aligned}
+\mathsf{IND}_c:=\mathsf{COMP}\big(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{IND}_1,\dots,\mathsf{IND}_n),\mathsf{PLUS}^n),\\
+&\mathsf{ISZERO}\big).
+\end{aligned}
+\]
+\item $(y,b)\mapsto y\cdot\mathrm{ind}_c(y,b)$ è ricorsiva con espressione
+\[
+\mathsf{PHI}_c:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,1},\mathsf{IND}_c),\mathsf{MULT}).
+\]
+\end{enumerate}
+Poiché $\texttt{App}^f=\sum_{j=1}^n\psi_j+y\cdot\mathrm{ind}_c$, essa è ricorsiva con espressione
+\[
+\mathsf{APP}_{\mathsf{EFFE}}:=\mathsf{COMP}(\mathsf{CONCAT}^{n+1}(\mathsf{PSI}_1,\dots,\mathsf{PSI}_n,\mathsf{PHI}_c),\mathsf{PLUS}^{n+1}).
+\]
+\item Poniamo $h:\mathbb N^2\to\mathbb N$, $h(x,z)=x+z \bmod 2$. Ripetiamo la costruzione del punto 2 con domini $\mathbb N^3$ nelle variabili $(y,z,i)$, usando la terza variabile come indice e portandosi dietro la seconda come parametro $z$. Tutte le proiezioni e costanti hanno ora arità $3$:
+\[
+\begin{aligned}
+\mathsf A_j&:=\mathsf{COMP}(\mathsf{COMP}(\mathsf P_{3,1},\mathsf{KINV}_n),\mathsf P_{n,j}),\\
+\mathsf B_j&:=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf C_{3,1},\\
+&\qquad\mathsf{COMP}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,2},\mathsf A_j),\mathsf{SUM}),\mathsf{ISEVEN})\big),\\
+&\qquad\mathsf{DIFF}\Big),
+\end{aligned}
+\]
+e $\mathsf{DELTA}'_j,\mathsf{DELTA}''_j$ usano $\mathsf P_{3,3},\mathsf C_{3,j}$. Le espressioni $\mathsf{IND}_j,\mathsf{PHI}_j,\mathsf{PSI}_j,\mathsf{IND}_c$ si ottengono come prima, e
+\[
+\mathsf{PHI}_c:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,1},\mathsf{IND}_c),\mathsf{MULT}).
+\]
+Si ottiene $\mathsf{APP}_h:\mathbb N^3\to\mathbb N$ con
+\[
+\begin{aligned}
+\mathsf{APP}_h(y,z,i)=K_n\big(&\pi_1(K_n^{-1}(y)),\dots,\pi_i(K_n^{-1}(y))+z \bmod 2,\\
+&\dots,\pi_n(K_n^{-1}(y))\big)\quad\text{se }i\in\{1,\dots,n\}.
+\end{aligned}
+\]
+Per il riporto $x_iz$ procediamo come per la prima componente, passando alla parità in modo che il risultato sia sempre un bit anche su ingressi in $\mathbb N$. Sia
+\[
+\begin{aligned}
+\mathsf Q:=\mathsf{COMP}\Big(&\mathsf{CONCAT}^n\big(\\
+&\quad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{IND}_1,\mathsf A_1),\mathsf{MULT}),\\
+&\quad\dots,\\
+&\quad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{IND}_n,\mathsf A_n),\mathsf{MULT})\\
+&\big),\mathsf{PLUS}^n\Big),
+\end{aligned}
+\]
+cioè $\llbracket\mathsf Q]\rrbracket(y,z,i)=\pi_i(K_n^{-1}(y))$ se $i\in\{1,\dots,n\}$ e $0$ altrimenti. Allora
+\[
+\begin{aligned}
+\mathsf{SIGMA}:=\mathsf{COMP}\Big(&\mathsf{CONCAT}\big(\mathsf C_{3,1},\\
+&\quad\mathsf{COMP}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf Q,\mathsf P_{3,2}),\mathsf{MULT}),\mathsf{ISEVEN})\big),\\
+&\mathsf{DIFF}\Big)
+\end{aligned}
+\]
+calcola $(y,z,i)\mapsto\big(\pi_i(K_n^{-1}(y))\cdot z\big)\bmod 2$. Su bit coincide con $x_iz$, e fuori dal range di $i$ vale $0$.
+
+Per ottenere la funzione voluta, definita su $\mathbb N^{n+2}$, ricodifichiamo la tupla con
+\[
+\begin{aligned}
+\mathsf{ACCA}:=\mathsf{CONCAT}^3\Big(&\mathsf{COMP}(\mathsf{CONCAT}^n(\mathsf P_{n+2,1},\dots,\mathsf P_{n+2,n}),\mathsf K_n),\\
+&\mathsf P_{n+2,n+1},\mathsf P_{n+2,n+2}\Big)
+\end{aligned}
+\]
+e poniamo
+\[
+\begin{aligned}
+\mathsf{BINSUCC}:=\mathsf{CONCAT}\Big(&\mathsf{COMP}(\mathsf{COMP}(\mathsf{ACCA},\mathsf{APP}_h),\mathsf{KINV}_n),\\
+&\mathsf{COMP}(\mathsf{ACCA},\mathsf{SIGMA})\Big):\mathbb N^{n+2}\to\mathbb N^{n+1}.
+\end{aligned}
+\]
+\item Il successore si ottiene sommando $1$: si parte con riporto $z=1$ e si propaga il riporto dalla cifra meno significativa $x_n$ fino a $x_1$, cioè applicando $\texttt{BinSucc}$ con indici $i=n,n-1,\dots,1$. Lo stato è $(x_1,\dots,x_n,z)\in\mathbb N^{n+1}$. Definiamo $H:\mathbb N^{n+1}\to\mathbb N^{n+1}$ per ricorsione sul contatore $t$:
+\[
+\begin{aligned}
+H(x_1,\dots,x_n,0)&=(x_1,\dots,x_n,1),\\
+H(\vec x,t+1)&=\texttt{BinSucc}\big(H(\vec x,t),\,n-t\big),
+\end{aligned}
+\]
+dove l'ultimo argomento è l'indice $i=n-t$ e $H(\vec x,t)=(h_1,\dots,h_n,h_{n+1})$ è inteso come $((h_1,\dots,h_n),h_{n+1})$. Il caso base e il passo hanno espressioni
+\[
+\mathsf F:=\mathsf{CONCAT}^{n+1}(\mathsf P_{n,1},\dots,\mathsf P_{n,n},\mathsf C_{n,1}),
+\]
+\[
+\begin{aligned}
+\mathsf G:=\mathsf{COMP}\Big(&\mathsf{CONCAT}^{n+2}\big(\\
+&\quad\mathsf P_{2n+2,n+2},\dots,\mathsf P_{2n+2,2n+2},\\
+&\quad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2n+2,n},\mathsf P_{2n+2,n+1}),\mathsf{DIFF})\\
+&\big),\mathsf{BINSUCC}\Big),
+\end{aligned}
+\]
+dove in $\mathsf G$ le variabili sono $(x_1,\dots,x_n,t,h_1,\dots,h_{n+1})$. Quindi $H$ è ricorsiva con espressione $\mathsf{REC}(\mathsf F,\mathsf G)$. Dopo $n$ passi il riporto ha attraversato tutte le cifre, quindi
+\[
+\begin{aligned}
+\mathsf{SUCC}_n:=\mathsf{COMP}\Big(&\mathsf{COMP}\big(\mathsf{CONCAT}^{n+1}(\mathsf P_{n,1},\dots,\mathsf P_{n,n},\mathsf C_{n,n}),\mathsf{REC}(\mathsf F,\mathsf G)\big),\\
+&\mathsf{CONCAT}^n(\mathsf P_{n+1,1},\dots,\mathsf P_{n+1,n})\Big)
+\end{aligned}
+\]
+è ricorsiva e restituisce l'$n$-upla di bit del successore, scartando il riporto finale (che vale $1$ solo nel caso di overflow $1\cdots1\mapsto0\cdots0$).
+
+Verifica con $n=3$ e $(1,0,1)$, cioè $5$.
+\ 
+\begin{enumerate}
+\item $t=0$, $i=3$: $((1,0,1),1)\mapsto((1,0,0),1)$.
+\item $t=1$, $i=2$: $((1,0,0),1)\mapsto((1,1,0),0)$.
+\item $t=2$, $i=1$: $((1,1,0),0)\mapsto((1,1,0),0)$.
+\end{enumerate}
+Il risultato è $(1,1,0)$, cioè $6$.
+\end{enumerate}
+\end{sol}
+\newpage

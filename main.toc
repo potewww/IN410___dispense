@@ -67,16 +67,17 @@
 \contentsline {subsection}{\numberline {14.2}Macchine di Turing}{156}{subsection.14.2}%
 \contentsline {subsection}{\numberline {14.3}Pumping lemma}{165}{subsection.14.3}%
 \contentsline {subsection}{\numberline {14.4}Funzioni ricorsive}{169}{subsection.14.4}%
-\contentsline {section}{\numberline {15}Esoneri ed esami}{175}{section.15}%
-\contentsline {subsection}{\numberline {15.1}Esonero 1 - 13/11/2024}{175}{subsection.15.1}%
-\contentsline {subsection}{\numberline {15.2}Esonero 1 - 10/11/2023}{181}{subsection.15.2}%
-\contentsline {subsection}{\numberline {15.3}Esonero 1 - 08/11/2022}{185}{subsection.15.3}%
-\contentsline {subsection}{\numberline {15.4}Esonero 1 - 10/11/2021}{195}{subsection.15.4}%
-\contentsline {subsection}{\numberline {15.5}Esonero 1 - 11/11/2019}{202}{subsection.15.5}%
-\contentsline {subsection}{\numberline {15.6}Esonero 1 - 08/11/2018}{207}{subsection.15.6}%
-\contentsline {subsection}{\numberline {15.7}Esonero 1 - 13/04/2017}{212}{subsection.15.7}%
-\contentsline {subsection}{\numberline {15.8}Esonero 1 - 10/11/2017}{218}{subsection.15.8}%
-\contentsline {subsection}{\numberline {15.9}Esonero 1 - 30/10/2012}{223}{subsection.15.9}%
-\contentsline {subsection}{\numberline {15.10}Esonero 1 - 10/11/2008}{228}{subsection.15.10}%
-\contentsline {subsection}{\numberline {15.11}Esonero 1 - 04/11/2005}{232}{subsection.15.11}%
-\contentsline {subsection}{\numberline {15.12}Lavoro individuale 1 - Consegna 30/10/2012}{236}{subsection.15.12}%
+\contentsline {section}{\numberline {15}Esoneri ed esami}{179}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Esonero 1 - 13/11/2024}{179}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Esonero 1 - 10/11/2023}{185}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Esonero 1 - 08/11/2022}{189}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Esonero 1 - 10/11/2021}{199}{subsection.15.4}%
+\contentsline {subsection}{\numberline {15.5}Esonero 1 - 11/11/2019}{206}{subsection.15.5}%
+\contentsline {subsection}{\numberline {15.6}Esonero 1 - 08/11/2018}{211}{subsection.15.6}%
+\contentsline {subsection}{\numberline {15.7}Esonero 1 - 13/04/2017}{216}{subsection.15.7}%
+\contentsline {subsection}{\numberline {15.8}Esonero 1 - 10/11/2017}{222}{subsection.15.8}%
+\contentsline {subsection}{\numberline {15.9}Esonero 1 - 30/10/2012}{227}{subsection.15.9}%
+\contentsline {subsection}{\numberline {15.10}Esonero 1 - 10/11/2008}{232}{subsection.15.10}%
+\contentsline {subsection}{\numberline {15.11}Esonero 1 - 04/11/2005}{236}{subsection.15.11}%
+\contentsline {subsection}{\numberline {15.12}Esonero 2 - 10/01/2023}{240}{subsection.15.12}%
+\contentsline {subsection}{\numberline {15.13}Lavoro individuale 1 - Consegna 30/10/2012}{242}{subsection.15.13}%
