@@ -94,41 +94,63 @@ c=a^{2}d,\qquad k_0=\lceil 4k\log_2 a\rceil .
 
 \newpage
 
-\begin{ex}\textcolor{red}{???}
-Si fissi l'alfabeto $A=\{0,1\}$ e siano $\texttt{F}\colon\mathbb N^2\to\mathbb N$ e $\texttt{G}\colon\mathbb N^2\to\mathbb N$. Si definisca
+\begin{ex}
+Si fissi l'alfabeto $A=\{0,1\}$ e siano $F\colon\mathbb N^2\to\mathbb N$ e $G\colon\mathbb N^2\to\mathbb N$
+funzioni tali che $F\in\mathrm{DTIME}^A_1(k_1 n)$ e $G\in\mathrm{DTIME}^A_1(k_2 n^2)$,
+dove i tempi sono misurati rispetto alla lunghezza della rappresentazione binaria dell'input.
+Supponiamo inoltre che $H(x,y)$ abbia rappresentazione binaria di lunghezza al più $n$
+e che, per ogni coppia $(u,v)$ di lunghezza massima $m$, $F(u,v)$ e $G(u,v)$ abbiano lunghezza al più $m$.
+Siano $c_1,c_2\in\mathbb N$ costanti fissate.
+Per $x,y\in\mathbb N$ sia $n$ il massimo delle lunghezze delle rappresentazioni binarie di $x$ e $y$.
+Scriviamo
 \[
-\texttt{H}(x,y)=\texttt{F}\big(\texttt{G}(\texttt{H}(x_0,y_0),c_1),\,\texttt{G}(\texttt{H}(x_1,y_1),c_2)\big)
+x=x_0+2^{n/2}x_1,\qquad y=y_0+2^{n/2}y_1,
 \]
-con $x=x_0+2^{n/2}x_1$ e $y=y_0+2^{n/2}y_1$, ed $n$ è il massimo delle lunghezze delle rappresentazioni binarie di $x$ ed $y$, e dove $\texttt{F}\in\mathrm{DTIME}^{A}_1(k_1n)$ e $\texttt{G}\in\mathrm{DTIME}^{A}_1(k_2n^2)$ sono funzioni computabili a partire dalle rappresentazioni binarie dell'input.
-
-Dimostrare che $\texttt{H}\in\mathrm{DTIME}^{A}_1(cn^{k})$, stimare le costanti $c$ e $k$.
+con $x_0,y_0<2^{n/2}$ (ossia $x_0,y_0$ sono le metà basse e $x_1,y_1$ le metà alte dei bit),
+e definiamo ricorsivamente
+\[
+H(x,y)=F\big(G(H(x_0,y_0),c_1),\,G(H(x_1,y_1),c_2)\big),
+\]
+con $H(x,y)$ assegnata direttamente per $n\le 1$.
+Dimostrare che $H\in\mathrm{DTIME}^A_1(c\,n^k)$ e stimare le costanti $c$ e $k$.
 \end{ex}
 
 \begin{sol}
-Indichiamo con $T(n)$ il massimo numero di passi per calcolare $\texttt{H}(x,y)$ con $x,y$ di lunghezza al più $n$. Facciamo le seguenti convenzioni.
+Sia $T(n)$ il massimo numero di passi di una macchina a un nastro di alfabeto $A$ che calcola $H(x,y)$
+con $x,y$ di lunghezza al più $n$. Possiamo supporre $T$ non decrescente, e per semplicità $n$ pari
+(altrimenti si usa $\lceil n/2\rceil$ e $T$ monotona). Una chiamata di $H$ su input di lunghezza $n$ esegue:
 \begin{enumerate}
-    \item $n$ è pari a ogni livello della ricorsione (ad esempio $n$ potenza di $2$), così che $x_0,x_1,y_0,y_1$ abbiano lunghezza al più $n/2$.
-    \item Per $n\le 1$ la funzione $\texttt{H}$ è calcolata in tempo al più $\beta$, costante (caso base).
-    \item $c_1,c_2$ sono costanti naturali, scritte in binario con un numero costante di cifre.
-    \item Gli argomenti con cui vengono chiamate $\texttt{F}$ e $\texttt{G}$ hanno lunghezza al più $n$ (si veda l'osservazione sotto).
+  \item \emph{Spezzamento}: si separano $x_0,x_1,y_0,y_1$ (si completano con zeri a sinistra fino a lunghezza $n$).
+  Su un solo nastro bisogna spostare e copiare blocchi di lunghezza $O(n)$ un numero costante di volte,
+  e questo costa al più $a\,n^2$ passi, per una costante $a$.
+  \item \emph{Due chiamate ricorsive}: $H(x_0,y_0)$ e $H(x_1,y_1)$, con input di lunghezza al più $n/2$,
+  per un costo di $2\,T(n/2)$.
+  \item \emph{Due chiamate a $G$}: gli argomenti sono $H(x_i,y_i)$, di lunghezza al più $n/2$, e la costante $c_i$.
+  Per $n$ abbastanza grande ($n/2\geq |c_1|,|c_2|$) l'input ha lunghezza massima $\leq n/2$, quindi
+  ogni chiamata costa al più $k_2 (n/2)^2=\tfrac{k_2}{4}n^2$ e restituisce un valore di lunghezza al più $n/2$.
+  In totale $\tfrac{k_2}{2}n^2$.
+  \item \emph{Una chiamata a $F$}: gli argomenti hanno lunghezza al più $n/2$, quindi il costo è al più $k_1\,n/2$.
 \end{enumerate}
-Per $n\ge 2$ la macchina esegue, nell'ordine, i seguenti passi.
-\begin{enumerate}
-    \item Spezza $x$ e $y$ e riorganizza il nastro in $x_0\,2\,y_0$ e $x_1\,2\,y_1$. Su un solo nastro costa al più $sn^2$, con $s$ costante.
-    \item Calcola ricorsivamente $\texttt{H}(x_0,y_0)$ e $\texttt{H}(x_1,y_1)$, per un costo $2T(n/2)$.
-    \item Calcola le due applicazioni di $\texttt{G}$, per un costo al più $2k_2n^2$.
-    \item Calcola $\texttt{F}$ sui due risultati, per un costo al più $k_1n\le k_1n^2$.
-\end{enumerate}
-Posto $a=s+2k_2+k_1$ si ottiene
+Sommando e usando $n\leq n^2$ si ottiene, per $n$ abbastanza grande,
 \[
-T(n)\le 2T(n/2)+an^2\quad(n\ge2),\qquad T(1)\le\beta .
+T(n)\leq 2\,T(n/2)+b\,n^2,\qquad b:=a+\frac{k_2}{2}+\frac{k_1}{2}.
 \]
-Mostriamo per induzione su $n$ che $T(n)\le cn^2$ con $c=\max\{2a,\beta\}$. Per $n=1$ si ha $T(1)\le\beta\le c$. Per $n\ge2$, per ipotesi induttiva,
+Sia $T_0$ il tempo massimo sul caso base ($n\leq n_0$, con $n_0$ costante, che sono finiti input: si
+decidono memorizzando l'input negli stati). Srotolando la ricorrenza per $j=\log_2(n/n_0)$ livelli:
 \[
-T(n)\le 2c\Big(\frac n2\Big)^2+an^2=\Big(\frac c2+a\Big)n^2\le cn^2,
+T(n)\leq \sum_{i=0}^{j-1}2^i\,b\left(\frac{n}{2^i}\right)^2+2^j\,T_0
+= b\,n^2\sum_{i=0}^{j-1}2^{-i}+\frac{n}{n_0}\,T_0
+\leq 2b\,n^2+T_0\,n .
 \]
-dove l'ultima disuguaglianza segue da $a\le c/2$. Quindi $\texttt{H}\in\mathrm{DTIME}^{A}_1(cn^{k})$ con
+Poiché $n\leq n^2$, si conclude
 \[
-k=2,\qquad c=\max\{\,2(s+2k_2+k_1),\ \beta\,\}.
+T(n)\leq (2b+T_0)\,n^2=\big(2a+k_1+k_2+T_0\big)\,n^2 .
 \]
+Dunque $H\in\mathrm{DTIME}^A_1(c\,n^k)$ con
+\[
+k=2,\qquad c=2a+k_1+k_2+T_0 .
+\]
+Il termine dominante è la ricorsione con costo quadratico a ogni livello: i costi per livello
+diminuiscono geometricamente ($b\,n^2,\ b\,n^2/2,\ b\,n^2/4,\dots$), quindi il livello più alto determina l'esponente.
+Il fatto che le chiamate a $F$ siano lineari non cambia l'ordine di grandezza, perché sono assorbite dal termine $n^2$.
 \end{sol}

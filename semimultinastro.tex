@@ -929,6 +929,11 @@ e, se $k \geq 2$ e $T(n) \geq 3n$ per ogni $n$,
 \[
 2^{A^*} \cap \mathrm{DTIME}^B_k(T(n)) \subseteq \mathrm{DTIME}^A_k\big(4d\,T(n)\big).
 \]
+\footnote{L'ipotesi $T(n)\geq 3n$ non è necessaria per l'inclusione: serve solo a ottenere la costante $4d$. Per $k\geq 2$ la dimostrazione dà, senza ipotesi su $T$,
+\[
+2^{A^*}\cap\mathrm{DTIME}^B_k(T(n))\subseteq\mathrm{DTIME}^A_k\big(3d\,T(n)+3dn\big),
+\]
+dove $3dn$ è il costo della macchina $\mu''$ che riscrive $w$ come $\omega(w)$. Se $T(n)\geq 3n$ si ha $3dn\leq d\,T(n)$ e il totale è $4d\,T(n)$. Se invece $T(n)\geq n$, si ha $3dn\leq 3d\,T(n)$ e si ottiene $6d\,T(n)$ (cfr.\ l'osservazione~\ref{rem: indebolimento T geq 3n}). Il termine $3dn$ non si può eliminare del tutto, perché scrivere $\omega(w)$ richiede almeno $dn$ passi. Per $k=1$ l'ipotesi non compare, perché il costo di $\mu''$ è $2n^2$ e resta come termine additivo.}
 \begin{proof}
 Sia $\square$ il carattere blank, che non appartiene né ad $A$ né a $B$, e
 poniamo $A'=A\cup\{\square\}$ e $B'=B\cup\{\square\}$. Indichiamo con
@@ -1175,6 +1180,8 @@ può essere
 deciso da una macchina ad un nastro
 che utilizza come alfabeto
 un insieme con soli due elementi.
+
+
 
 \subsection{Teorema di Speed-up}
 

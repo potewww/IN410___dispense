@@ -99,10 +99,38 @@ Siano $X_1$ ed $X_2$ due insiemi decidibili per macchina di Turing.
 
 \newpage
 
+
 \begin{ex}
 Considerando solo macchine che hanno spazio di arresto $S(n)=n$, valutare di quanti simboli è necessario aumentare un alfabeto $A$ affinché sia possibile che il tempo di arresto di macchine con uguale numero di stati raddoppi.
 \end{ex}
 
+
 \begin{sol}
-\textcolor{red}{???}
+Siano $k=|A|$ e $d=|Q|$, con $d$ fissato. Una macchina che decide un insieme in spazio $s=n$ si arresta sempre. Per la dimostrazione della Proposizione, il suo tempo di arresto $t$ soddisfa
+\[
+t\;\leq\; N_{\text{config}}(k)=(2n+1)\cdot k^{2n+1}\cdot d ,
+\]
+dove $(2n+1)$ è il numero di posizioni della testina, $k^{2n+1}$ il numero di contenuti possibili delle $2n+1$ celle ed $d$ il numero di stati. Questo è il massimo tempo di arresto ottenibile con alfabeto di $k$ simboli.
+
+Aggiungiamo $a\geq 0$ simboli, così che l'alfabeto abbia $k+a$ elementi. Il massimo diventa $(2n+1)(k+a)^{2n+1}d$. Poiché $d$ e $2n+1$ non cambiano, il tempo massimo può raddoppiare se e solo se
+\[
+(2n+1)(k+a)^{2n+1}d\;\geq\;2\,(2n+1)\,k^{2n+1}d
+\iff \left(1+\frac{a}{k}\right)^{2n+1}\geq 2
+\iff a\;\geq\;k\left(2^{\frac1{2n+1}}-1\right).
+\]
+Dunque il numero minimo di simboli da aggiungere è
+\[
+a=\Big\lceil k\left(2^{\frac1{2n+1}}-1\right)\Big\rceil .
+\]
+Poiché $k\left(2^{\frac1{2n+1}}-1\right)>0$, serve sempre almeno un simbolo. 
+Inoltre 
+$$2^{\frac1{2n+1}}-1\sim\dfrac{\ln 2}{2n+1}\underset{n\to \infty}{\to} 0$$
+quindi $a=1$ basta non appena $\left(1+\frac1k\right)^{2n+1}\geq 2$,
+cioè
+\[
+n\;\geq\;\frac12\left(\frac{\ln 2}{\ln\left(1+\frac1k\right)}-1\right).
+\]
+In particolare è sufficiente $n\geq \dfrac{(k+1)\ln 2-1}{2}$, perché $\ln\left(1+\frac1k\right)\geq\frac1{k+1}$.
+
+Quindi, per $n$ abbastanza grande rispetto a $k$, \textbf{un solo simbolo in più} permette al tempo di arresto di raddoppiare. Per $n$ piccolo possono servirne di più, ma non oltre $\lceil k(2^{1/(2n+1)}-1)\rceil$.
 \end{sol}

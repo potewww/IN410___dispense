@@ -514,3 +514,66 @@ che compare nell'unione di sinistra perché
 $d+2\ge1$.
 \end{enumerate}
 \end{sol}
+
+
+
+\newpage
+
+\begin{ex}
+Sia $A=\{0,1\}$ e sia $B\supseteq A$ un alfabeto con $|B|=10$. Un insieme $X\subseteq A^*$ è deciso da una macchina di Turing a $k\geq 2$ nastri di alfabeto $B$ in tempo $T(n)\geq 3n$. Mostrare che $X$ è deciso anche da una macchina a $k$ nastri di alfabeto $A$, e determinare una costante $c$ tale che il tempo sia al più $c\,T(n)$.
+\end{ex}
+
+\begin{sol}
+Codifichiamo i simboli di $B$ con blocchi di lunghezza $d$ su $A$, e il blank con $\square^d$. Serve che i $|B|+1$ simboli di $B\cup\{\square\}$ abbiano immagini distinte tra le $(|A|+1)^d$ parole di lunghezza $d$ su $A\cup\{\square\}$, cioè $11\leq 3^d$. Poiché $3^2=9<11\leq 27=3^3$, il minimo è $d=3$. Il tempo è quindi al più $4d\,T(n)=12\,T(n)$, e si può prendere $c=12$.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $A=\{0,1\}$ e sia $B\supseteq A$ un alfabeto di lavoro. Si vuole simulare una macchina di alfabeto $B$ con una di alfabeto $A$, codificando ogni simbolo di $B$ (blank incluso) con un blocco di lunghezza fissata $d$ su $A\cup\{\square\}$, in modo che ogni simbolo di $A$ e il blank siano codificati da blocchi costanti ($0\mapsto 0^d$, $1\mapsto 1^d$, $\square\mapsto\square^d$). Per quali valori di $|B|$ basta $d=2$? E per quali serve $d=3$?
+\end{ex}
+
+\begin{sol}
+Le parole di lunghezza $d$ su $A\cup\{\square\}$ sono $3^d$, e i simboli da codificare sono $|B|+1$ (compreso il blank). Basta quindi $d=2$ se $|B|+1\leq 9$ e $d=1$ non basta, cioè $3\leq|B|\leq 8$. Serve $d=3$ se $|B|+1\leq 27$ e $d=2$ non basta, cioè $9\leq|B|\leq 26$. In generale $d$ è il minimo intero con $3^d\geq|B|+1$.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $B\supseteq\{0,1\}$ con $|B|=5$, e sia $X\subseteq\{0,1\}^*$ deciso in tempo $T(n)$ da una macchina a $k\geq 2$ nastri di alfabeto $B$.
+\begin{enumerate}
+  \item Qual è la lunghezza minima $d$ dei blocchi se si vuole una codifica iniettiva di $B$ in $\{0,1\}^d$?
+  \item Qual è la lunghezza minima dei blocchi se si accetta di usare anche il blank nelle parole di codifica, richiedendo che $0,1,\square$ abbiano come immagine un blocco costante? Confrontare i due casi.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}\
+\begin{enumerate}
+  \item Servono almeno $5$ parole distinte di $\{0,1\}^d$, cioè $2^d\geq 5$, quindi $d=3$.
+  \item I simboli da codificare sono $|B|+1=6$ e le parole di lunghezza $d$ su $\{0,1,\square\}$ sono $3^d$, quindi $d=2$ (perché $6\leq 9$).
+\end{enumerate}
+Nel secondo caso il blocco è più corto, quindi la simulazione è più veloce, perché il blank dà un simbolo in più per ogni cella del blocco.
+\end{sol}
+
+\newpage
+
+\begin{ex}
+Sia $A=\{0,1\}$ e sia $X\subseteq A^*$ deciso in tempo $T(n)=n^2$ da una macchina a un nastro di alfabeto $B\supseteq A$ con $|B|=8$. Stimare il tempo di una macchina a un nastro di alfabeto $A$ che decide $X$.
+\end{ex}
+
+\begin{sol}
+Serve $9\leq 3^d$, quindi $d=2$. Con un solo nastro, prima di simulare bisogna riscrivere l'input $w$ come $\omega(w)$, e questo costa $2n^2$ passi, perché va spostata ogni volta a destra la parte restante della parola. Il tempo totale è quindi al più
+\[
+3d\,T(n)+2n^2=6n^2+2n^2=8n^2 .
+\]
+\end{sol}
+
+
+
+\begin{ex}
+Si vuole simulare una macchina di alfabeto $B\supseteq A$ con una di alfabeto $A$ tramite blocchi di lunghezza $d$. Spiegare perché la condizione da imporre su $d$ è $|B|+1\leq(|A|+1)^d$ e non $|B|\leq|A|^d$.
+\end{ex}
+
+\begin{sol}
+Durante la computazione le celle del nastro possono contenere anche il blank, quindi i simboli da codificare sono quelli di $B\cup\{\square\}$, in numero $|B|+1$. I blocchi vanno costruiti sull'alfabeto $A\cup\{\square\}$, perché una cella vuota di $\mu$ corrisponde a $d$ celle vuote della nuova macchina, e quindi sono $(|A|+1)^d$. La codifica deve essere iniettiva, e questo dà la condizione.
+\end{sol}
