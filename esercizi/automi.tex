@@ -1747,34 +1747,136 @@ Sostituiamo il cappio con gli automi di $(0+11)^*$ (stati $t_1,p_1$) e di $(10)^
 \draw[->] (q1) -- node {$1$} (qF);
 \end{tikzpicture}
 \]
-Le $\varepsilon$-mosse $q_0\to t_1\to t_2\to q_0$ formano un ciclo: i tre stati si raggiungono a vicenda senza leggere nulla, quindi possono essere identificati in $q_0$. Le transizioni coinvolte, ridisegnate su $q_0$, sono in grassetto:
+A questo punto vogliamo togliere
+le $\epsilon$-mosse. Per farlo, basta agigugnere
+volta per volta archi sufficienti per
+preservare la accettazione delle parole che dipendono dall'$\epsilon$-mossa tolta.
+Togliamo la $\epsilon$-mossa entrante in $q_0$:
 \[
 \begin{tikzpicture}[
     >=stealth', shorten >=1pt, auto,
     every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
 ]
-\node[state]            (q0) at (0,0)      {$q_0$};
-\node[state]            (p1) at (2.5,2.5)  {$p_1$};
-\node[state]            (t3) at (3.5,0)    {$t_3$};
-\node[state]            (q2) at (2,-2.5)   {$q_2$};
-\node[state]            (q1) at (-2.5,-2)  {$q_1$};
-\node[state, accepting] (qF) at (-2.5,-4.5) {$q_F$};
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (t1) at (3,2.5)  {$t_1$};
+\node[state]            (p1) at (6,2.5)  {$p_1$};
+\node[state]            (t2) at (3,0)    {$t_2$};
+\node[state]            (t3) at (6,0)    {$t_3$};
+\node[state]            (q2) at (0,-3)   {$q_2$};
+\node[state]            (q1) at (-3,0)   {$q_1$};
+\node[state, accepting] (qF) at (-6,0)   {$q_F$};
 
 \draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
 
-% Transizioni ottenute identificando q_0, t_1, t_2
-\path[->, very thick] (q0) edge[loop left] node {$0$} (q0);
-\draw[->, very thick] (q0) to[bend left=20] node {$1$} (p1);
-\draw[->, very thick] (p1) to[bend left=20] node {$1$} (q0);
-\draw[->, very thick] (q0) to[bend left=20] node {$1$} (t3);
-\draw[->, very thick] (t3) to[bend left=20] node {$0$} (q0);
+% (0+11)^*
+\draw[->] (q0) -- node {$\varepsilon$} (t1);
+\path[->] (t1) edge[loop above] node {$0$} (t1);
+\draw[->] (t1) to[bend left=20] node {$1$} (p1);
+\draw[->] (p1) to[bend left=20] node {$1$} (t1);
 
-% Transizioni invariate
-\draw[->] (q0) to[bend left=15] node {$0$} (q2);
+% (10)^*
+\draw[->] (t1) -- node {$\varepsilon$} (t2);
+\draw[->] (t2) to[bend left=25] node {$1$} (t3);
+\draw[->] (t3) to[bend left=25] node {$0$} (t2);
+\draw[->, very thick] (t3) to[bend left=40] node {$0$} (q0);
+
+% 01^*0
+\draw[->] (q0) to[bend left=20] node {$0$} (q2);
+\draw[->] (q2) to[bend left=20] node {$0$} (q0);
 \path[->] (q2) edge[loop below] node {$1$} (q2);
-\draw[->] (q2) to[bend left=15] node {$0$} (q0);
+
+% 11
 \draw[->] (q0) -- node[swap] {$1$} (q1);
-\draw[->] (q1) -- node {$1$} (qF);
+\draw[->] (q1) -- node[swap] {$1$} (qF);
+\end{tikzpicture}
+\]
+Togliamo la $\epsilon$-mossa entrante in $t_2$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (t1) at (3,2.5)  {$t_1$};
+\node[state]            (p1) at (6,2.5)  {$p_1$};
+\node[state]            (t2) at (3,0)    {$t_2$};
+\node[state]            (t3) at (6,0)    {$t_3$};
+\node[state]            (q2) at (0,-3)   {$q_2$};
+\node[state]            (q1) at (-3,0)   {$q_1$};
+\node[state, accepting] (qF) at (-6,0)   {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% (0+11)^*
+\draw[->] (q0) -- node {$\varepsilon$} (t1);
+\path[->] (t1) edge[loop above] node {$0$} (t1);
+\draw[->] (t1) to[bend left=20] node {$1$} (p1);
+\draw[->] (p1) to[bend left=20] node {$1$} (t1);
+\draw[->, very thick] (t1) -- node[swap] {$0$} (t2);
+\draw[->, very thick] (p1) -- node {$1$} (t2);
+\draw[->, very thick, rounded corners=8pt]
+    (t1.30) -- (t1.30 |- 0,3.6) -- node {$1$} (7.3,3.6) -- (7.3,0) -- (t3.0);
+
+% (10)^*
+\draw[->] (t2) to[bend left=25] node {$1$} (t3);
+\draw[->] (t3) to[bend left=25] node {$0$} (t2);
+\draw[->] (t3) to[bend left=40] node {$0$} (q0);
+
+% 01^*0
+\draw[->] (q0) to[bend left=20] node {$0$} (q2);
+\draw[->] (q2) to[bend left=20] node {$0$} (q0);
+\path[->] (q2) edge[loop below] node {$1$} (q2);
+
+% 11
+\draw[->] (q0) -- node[swap] {$1$} (q1);
+\draw[->] (q1) -- node[swap] {$1$} (qF);
+\end{tikzpicture}
+\]
+Togliamo la $\epsilon$-mossa entrante in $t_1$:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (t1) at (3,2.5)  {$t_1$};
+\node[state]            (p1) at (6,2.5)  {$p_1$};
+\node[state]            (t2) at (3,0)    {$t_2$};
+\node[state]            (t3) at (6,0)    {$t_3$};
+\node[state]            (q2) at (0,-3)   {$q_2$};
+\node[state]            (q1) at (-3,0)   {$q_1$};
+\node[state, accepting] (qF) at (-6,0)   {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% (0+11)^*
+\draw[->, very thick] (q0) -- node {$0$} (t1);
+\draw[->, very thick, rounded corners=8pt]
+    (q0.90) -- (q0.90 |- 0,4.8) -- node {$1$} (p1.90 |- 0,4.8) -- (p1.90);
+\draw[->, very thick] (q0) -- node[swap] {$0$} (t2);
+\draw[->, very thick, rounded corners=8pt]
+    (q0.300) -- (1.5,-1.2) -- (1.5,-4.2) -- node {$1$} (6,-4.2) -- (t3.270);
+\path[->] (t1) edge[loop above] node {$0$} (t1);
+\draw[->] (t1) to[bend left=20] node {$1$} (p1);
+\draw[->] (p1) to[bend left=20] node {$1$} (t1);
+\draw[->] (t1) -- node[swap] {$0$} (t2);
+\draw[->] (p1) -- node {$1$} (t2);
+\draw[->, rounded corners=8pt]
+    (t1.30) -- (t1.30 |- 0,3.6) -- node {$1$} (7.3,3.6) -- (7.3,0) -- (t3.0);
+
+% (10)^*
+\draw[->] (t2) to[bend left=25] node {$1$} (t3);
+\draw[->] (t3) to[bend left=25] node {$0$} (t2);
+\draw[->] (t3) to[bend left=40] node {$0$} (q0);
+
+% 01^*0
+\draw[->] (q0) to[bend left=20] node {$0$} (q2);
+\draw[->] (q2) to[bend left=20] node {$0$} (q0);
+\path[->] (q2) edge[loop below] node {$1$} (q2);
+
+% 11
+\draw[->] (q0) -- node[swap] {$1$} (q1);
+\draw[->] (q1) -- node[swap] {$1$} (qF);
 \end{tikzpicture}
 \]
 \end{enumerate}

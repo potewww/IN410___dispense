@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  18 NOV 2026 22:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  18 NOV 2026 23:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1357,26 +1357,26 @@ Overfull \hbox (2.99716pt too wide) detected at line 1144
 
 [157]
 
-[158]) (./esercizi/macchineturing.tex
-\openout7 = `main.listing'.
+[158]
 
- (./main.listing)
-
-[159]
+[159]) (./esercizi/macchineturing.tex
 \openout7 = `main.listing'.
 
  (./main.listing)
 
 [160]
+\openout7 = `main.listing'.
+
+ (./main.listing)
 
 [161]
+
+[162]
 Overfull \hbox (14.85197pt too wide) in paragraph at lines 158--161
 []\OT1/cmr/m/n/12 Se $\OML/cmm/m/it/12 X \OMS/cmsy/m/n/12 2 [][]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ))$ e $\OML/cmm/m/it/12 Y \OMS/cmsy/m/n/12 2 []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ))$ al-lo-ra $\OML/cmm/m/it/12 X \OMS/cmsy/m/n/12 \ \OML/cmm/m/it/12 Y \OMS/cmsy/m/n/12 2 []\OT1/cmr/m/n/12 ([](\OML/cmm/m/it/12 T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; T[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 )))$. 
  []
 
 
-
-[162]
 
 [163]
 
@@ -1398,27 +1398,27 @@ Overfull \hbox (14.85197pt too wide) in paragraph at lines 158--161
 
 [172]
 
-[173]) (./esercizi/pumpinglemma.tex
+[173]
 
-[174]
+[174]) (./esercizi/pumpinglemma.tex
+
+[175]
 Overfull \hbox (3.19432pt too wide) detected at line 48
 \OML/cmm/m/it/12 X[] \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 w \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 a; b\OMS/cmsy/m/n/12 g[] j \OML/cmm/m/it/12 w \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 a[]b[] [] a[]b[];  n \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OML/cmm/m/it/12 ;  k[] \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;  X[] \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 a[]b[]c[] \OMS/cmsy/m/n/12 j \OML/cmm/m/it/12 n; m \OMS/cmsy/m/n/12 2 \U/bbold/m/n/12 N\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 :
  []
 
 
 
-[175]
+[176]
 
-[176])
+[177])
 
-[177] (./esercizi/ricorsione.tex
+[178] (./esercizi/ricorsione.tex
 Overfull \hbox (47.89896pt too wide) detected at line 29
 \OT1/cmss/m/n/12 A \OT1/cmr/m/n/12 := [][][]([]\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 E\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];  \OT1/cmss/m/n/12 B \OT1/cmr/m/n/12 := [][][]([]\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][]:
  []
 
 
-
-[178]
 
 [179]
 
@@ -1427,28 +1427,28 @@ Overfull \hbox (47.89896pt too wide) detected at line 29
 [181]
 
 [182]
+
+[183]
 Overfull \hbox (0.33955pt too wide) detected at line 256
 [][] \OT1/cmr/m/n/12 := []
  []
 
 
 
-[183]
-
 [184]
+
+[185]
 Overfull \hbox (28.23949pt too wide) in paragraph at lines 333--335
 \OT1/cmr/m/n/12 dove $^^A$ ^^Re la dif-fe-ren-za tron-ca-ta, quin-di ha espres-sio-ne $[][] := []([][]\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 )$,
  []
 
 
 
-[185]
-
 [186]
 
-[187]) (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
+[187]
 
-[188]
+[188]) (./esercizi/APPELLI_ESONERI/gestione.tex (./esercizi/APPELLI_ESONERI/esonero1_13_11_24.tex
 
 [189]
 
@@ -1456,32 +1456,32 @@ Overfull \hbox (28.23949pt too wide) in paragraph at lines 333--335
 
 [191]
 
-[192])
+[192]
 
-[193] (./esercizi/APPELLI_ESONERI/esonero1_10_11_23.tex
+[193])
 
-[194]
+[194] (./esercizi/APPELLI_ESONERI/esonero1_10_11_23.tex
 
 [195]
 
-[196])
+[196]
 
-[197] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
+[197])
 
-[198]
+[198] (./esercizi/APPELLI_ESONERI/esonero1_08_11_22.tex
 
 [199]
 
 [200]
 
 [201]
+
+[202]
 Overfull \hbox (16.3123pt too wide) detected at line 308
 \OML/cmm/m/it/12 X \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 w \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 a; b\OMS/cmsy/m/n/12 g[] j \OML/cmm/m/it/12 w \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 u[] [] u[]v;  k \OMS/cmsy/m/n/12 ^^U \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 ;  u[] \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 aab; bb\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;  v \OMS/cmsy/m/n/12 2 f\OML/cmm/m/it/12 aa; b\OMS/cmsy/m/n/12 gg \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 aab; bb\OMS/cmsy/m/n/12 g[]f\OML/cmm/m/it/12 aa; b\OMS/cmsy/m/n/12 g\OML/cmm/m/it/12 ;
  []
 
 
-
-[202]
 
 [203]
 
@@ -1489,11 +1489,11 @@ Overfull \hbox (16.3123pt too wide) detected at line 308
 
 [205]
 
-[206])
+[206]
 
-[207] (./esercizi/APPELLI_ESONERI/esonero1_10_11_21.tex
+[207])
 
-[208]
+[208] (./esercizi/APPELLI_ESONERI/esonero1_10_11_21.tex
 
 [209]
 
@@ -1502,33 +1502,35 @@ Overfull \hbox (16.3123pt too wide) detected at line 308
 [211]
 
 [212]
+
+[213]
 Overfull \hbox (4.88411pt too wide) detected at line 307
 []
  []
 
 
 
-[213])
+[214])
 
-[214] (./esercizi/APPELLI_ESONERI/esonero1_11_11_19.tex
-
-[215]
+[215] (./esercizi/APPELLI_ESONERI/esonero1_11_11_19.tex
 
 [216]
 
 [217]
 
-[218])
+[218]
 
-[219] (./esercizi/APPELLI_ESONERI/esonero1_08_11_18.tex
+[219])
 
-[220]
+[220] (./esercizi/APPELLI_ESONERI/esonero1_08_11_18.tex
 
 [221]
 
 [222]
 
 [223]
+
+[224]
 Overfull \hbox (59.08655pt too wide) in paragraph at lines 257--260
 [][]\OT1/cmr/bx/n/12 Soluzione eser-ci-zio 15.6.3. []\OT1/cmr/m/n/12 Fis-sa-ta $\OML/cmm/m/it/12 ^^V$\OT1/cmr/m/n/12 , sia $\OML/cmm/m/it/12 Y \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 y \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 A[] \OMS/cmsy/m/n/12 j []\OML/cmm/m/it/12 ^^V[]y[]\OMS/cmsy/m/n/12 g$\OT1/cmr/m/n/12 ,
  []
@@ -1545,9 +1547,7 @@ Overfull \hbox (30.80919pt too wide) detected at line 291
 
 )
 
-[224] (./esercizi/APPELLI_ESONERI/esonero1_13_04_17.tex
-
-[225]
+[225] (./esercizi/APPELLI_ESONERI/esonero1_13_04_17.tex
 
 [226]
 
@@ -1555,76 +1555,78 @@ Overfull \hbox (30.80919pt too wide) detected at line 291
 
 [228]
 
-[229])
+[229]
 
-[230] (./esercizi/APPELLI_ESONERI/esonero1_10_11_17.tex
+[230])
 
-[231]
+[231] (./esercizi/APPELLI_ESONERI/esonero1_10_11_17.tex
 
 [232]
 
 [233]
 
-[234])
+[234]
 
-[235] (./esercizi/APPELLI_ESONERI/esonero1_30_10_12.tex
+[235])
 
-[236]
+[236] (./esercizi/APPELLI_ESONERI/esonero1_30_10_12.tex
 
 [237]
 
 [238]
 
-[239])
+[239]
 
-[240] (./esercizi/APPELLI_ESONERI/esonero1_10_11_08.tex
+[240])
 
-[241]
+[241] (./esercizi/APPELLI_ESONERI/esonero1_10_11_08.tex
 
 [242]
 
-[243])
+[243]
 
-[244] (./esercizi/APPELLI_ESONERI/esonero1_08_11_06.tex
+[244])
 
-[245]
+[245] (./esercizi/APPELLI_ESONERI/esonero1_08_11_06.tex
+
+[246]
 Overfull \hbox (18.46391pt too wide) detected at line 55
 \OML/cmm/m/it/12 ^^\\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 w; p; q; ^^Pb\OT1/cmr/m/n/12 ) = []
  []
 
 
 
-[246]
+[247]
 Overfull \hbox (10.87468pt too wide) in paragraph at lines 93--94
 []\OT1/cmr/m/n/12 Sia $\OML/cmm/m/it/12 X$ \OT1/cmr/m/n/12 de-ci-di-bi-le con un DFA $(\OML/cmm/m/it/12 Q; A; ^^N; q[]; F\OT1/cmr/m/n/12 )$. Po-nia-mo $\OML/cmm/m/it/12 B \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 Z[]\OMS/cmsy/m/n/12 g$ \OT1/cmr/m/n/12 e de-fi-nia-mo $\OML/cmm/m/it/12 T\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 q; a; Z[]\OT1/cmr/m/n/12 ) =
  []
 
 
 
-[247]
-
 [248]
+
+[249]
 Overfull \hbox (14.7744pt too wide) in paragraph at lines 168--171
 []\OT1/cmr/m/n/12 Sia $\OML/cmm/m/it/12 M \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 T; q[]; Z[]; F\OT1/cmr/m/n/12 )$ un PD-FA' che de-ci-de $\OML/cmm/m/it/12 X$\OT1/cmr/m/n/12 . Co-struia-mo un PD-FA $\OML/cmm/m/it/12 M[] \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 T[]; q[]; Z[]; F[]\OT1/cmr/m/n/12 )$
  []
 
 
 
-[249]
-
 [250]
 
-[251]) (./esercizi/APPELLI_ESONERI/esonero1_04_11_05.tex
+[251]
 
-[252]
+[252]) (./esercizi/APPELLI_ESONERI/esonero1_04_11_05.tex
 
 [253]
 
 [254]
 
-[255])
+[255]
 
-[256] (./esercizi/APPELLI_ESONERI/esonero2_10_01_23.tex
+[256])
+
+[257] (./esercizi/APPELLI_ESONERI/esonero2_10_01_23.tex
 Overfull \hbox (3.39253pt too wide) detected at line 31
 \OT1/cmr/bx/n/12 1[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ) = [](\OML/cmm/m/it/12 x[]\OT1/cmr/m/n/12 2\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 ([])(\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )) \OMS/cmsy/m/n/12 ^^A []\OT1/cmr/m/n/12 ([]([])(\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; x[]\OT1/cmr/m/n/12 2) \OMS/cmsy/m/n/12 ^^A []\OT1/cmr/m/n/12 (2\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 :
  []
@@ -1636,16 +1638,14 @@ Overfull \hbox (31.21536pt too wide) detected at line 39
 
 
 
-[257]
+[258]
 Overfull \hbox (30.83319pt too wide) detected at line 79
 [] \OT1/cmr/m/n/12 = [][][](\OT1/cmss/m/n/12 N\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 M\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];  [] \OT1/cmr/m/n/12 = [][][](\OT1/cmss/m/n/12 C[]\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 P[]\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];
  []
 
 
 
-[258]) (./esercizi/APPELLI_ESONERI/li_30_10_12.tex
-
-[259]
+[259]) (./esercizi/APPELLI_ESONERI/li_30_10_12.tex
 
 [260]
 
@@ -1657,11 +1657,11 @@ Overfull \hbox (30.83319pt too wide) detected at line 79
 
 [264]
 
-[265])
+[265]
 
-[266] (./esercizi/APPELLI_ESONERI/li_05_11_09.tex
+[266])
 
-[267]
+[267] (./esercizi/APPELLI_ESONERI/li_05_11_09.tex
 
 [268]
 
@@ -1669,7 +1669,9 @@ Overfull \hbox (30.83319pt too wide) detected at line 79
 
 [270]
 
-[271])) (./main.aux)
+[271]
+
+[272])) (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1678,18 +1680,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 28D16F64AD76C29D9DDE862E085DBBDB;15781.
  ) 
 Here is how much of TeX's memory you used:
- 38966 strings out of 473190
- 779017 string characters out of 5715800
- 1238776 words of memory out of 5000000
+ 38967 strings out of 473190
+ 779025 string characters out of 5715800
+ 1239774 words of memory out of 5000000
  59788 multiletter control sequences out of 15000+600000
  580012 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1424b,1646s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (271 pages, 1241256 bytes).
+Output written on main.pdf (272 pages, 1245417 bytes).
 PDF statistics:
- 3578 PDF objects out of 3580 (max. 8388607)
- 3181 compressed objects within 32 object streams
- 1696 named destinations out of 1728 (max. 500000)
+ 3582 PDF objects out of 4296 (max. 8388607)
+ 3184 compressed objects within 32 object streams
+ 1697 named destinations out of 1728 (max. 500000)
  821 words of extra memory for PDF output out of 10000 (max. 10000000)
 

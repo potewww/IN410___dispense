@@ -64,22 +64,22 @@
 \contentsline {subsection}{\numberline {13.4}Automi}{133}{subsection.13.4}%
 \contentsline {section}{\numberline {14}Esercizi}{135}{section.14}%
 \contentsline {subsection}{\numberline {14.1}Automi ed espressioni}{135}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Macchine di Turing}{159}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Pumping lemma}{174}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Funzioni ricorsive}{178}{subsection.14.4}%
-\contentsline {section}{\numberline {15}Esoneri ed esami}{188}{section.15}%
-\contentsline {subsection}{\numberline {15.1}Esonero 1 - 13/11/2024}{188}{subsection.15.1}%
-\contentsline {subsection}{\numberline {15.2}Esonero 1 - 10/11/2023}{194}{subsection.15.2}%
-\contentsline {subsection}{\numberline {15.3}Esonero 1 - 08/11/2022}{198}{subsection.15.3}%
-\contentsline {subsection}{\numberline {15.4}Esonero 1 - 10/11/2021}{208}{subsection.15.4}%
-\contentsline {subsection}{\numberline {15.5}Esonero 1 - 11/11/2019}{215}{subsection.15.5}%
-\contentsline {subsection}{\numberline {15.6}Esonero 1 - 08/11/2018}{220}{subsection.15.6}%
-\contentsline {subsection}{\numberline {15.7}Esonero 1 - 13/04/2017}{225}{subsection.15.7}%
-\contentsline {subsection}{\numberline {15.8}Esonero 1 - 10/11/2017}{231}{subsection.15.8}%
-\contentsline {subsection}{\numberline {15.9}Esonero 1 - 30/10/2012}{236}{subsection.15.9}%
-\contentsline {subsection}{\numberline {15.10}Esonero 1 - 10/11/2008}{241}{subsection.15.10}%
-\contentsline {subsection}{\numberline {15.11}Esonero 1 - 08/11/2006}{245}{subsection.15.11}%
-\contentsline {subsection}{\numberline {15.12}Esonero 1 - 04/11/2005}{252}{subsection.15.12}%
-\contentsline {subsection}{\numberline {15.13}Esonero 2 - 10/01/2023}{257}{subsection.15.13}%
-\contentsline {subsection}{\numberline {15.14}Lavoro individuale 1 - Consegna 30/10/2012}{259}{subsection.15.14}%
-\contentsline {subsection}{\numberline {15.15}Lavoro individuale 1 - Consegna 05/11/2009}{267}{subsection.15.15}%
+\contentsline {subsection}{\numberline {14.2}Macchine di Turing}{160}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Pumping lemma}{175}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Funzioni ricorsive}{179}{subsection.14.4}%
+\contentsline {section}{\numberline {15}Esoneri ed esami}{189}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Esonero 1 - 13/11/2024}{189}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Esonero 1 - 10/11/2023}{195}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Esonero 1 - 08/11/2022}{199}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Esonero 1 - 10/11/2021}{209}{subsection.15.4}%
+\contentsline {subsection}{\numberline {15.5}Esonero 1 - 11/11/2019}{216}{subsection.15.5}%
+\contentsline {subsection}{\numberline {15.6}Esonero 1 - 08/11/2018}{221}{subsection.15.6}%
+\contentsline {subsection}{\numberline {15.7}Esonero 1 - 13/04/2017}{226}{subsection.15.7}%
+\contentsline {subsection}{\numberline {15.8}Esonero 1 - 10/11/2017}{232}{subsection.15.8}%
+\contentsline {subsection}{\numberline {15.9}Esonero 1 - 30/10/2012}{237}{subsection.15.9}%
+\contentsline {subsection}{\numberline {15.10}Esonero 1 - 10/11/2008}{242}{subsection.15.10}%
+\contentsline {subsection}{\numberline {15.11}Esonero 1 - 08/11/2006}{246}{subsection.15.11}%
+\contentsline {subsection}{\numberline {15.12}Esonero 1 - 04/11/2005}{253}{subsection.15.12}%
+\contentsline {subsection}{\numberline {15.13}Esonero 2 - 10/01/2023}{258}{subsection.15.13}%
+\contentsline {subsection}{\numberline {15.14}Lavoro individuale 1 - Consegna 30/10/2012}{260}{subsection.15.14}%
+\contentsline {subsection}{\numberline {15.15}Lavoro individuale 1 - Consegna 05/11/2009}{268}{subsection.15.15}%
