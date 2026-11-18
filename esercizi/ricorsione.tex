@@ -104,9 +104,6 @@ Osserviamo che $g$ è parziale: ad esempio $g(0)=\bot$, perché $f(0)=0$. Per $x
 \newpage 
 
 
-\begin{ex}
-Sia $f(x_1,x_2)$ la funzione parziale definita sui naturali come $2x_1-x_2$ se $x_1\geq\sqrt{x_2}$ e indefinita, altrimenti. Mostrare che $f$ è una funzione ricorsiva, esprimendola nei termini degli schemi e delle funzioni base della definizione di classe delle funzioni ricorsive.
-\end{ex}
 
 \begin{ex}
 Sia $f(x_1,x_2)$ la funzione parziale definita sui naturali come $2x_1-x_2$ se $x_1\geq\sqrt{x_2}$ e indefinita, altrimenti. Mostrare che $f$ è una funzione ricorsiva, esprimendola nei termini degli schemi e delle funzioni base della definizione di classe delle funzioni ricorsive.
@@ -259,8 +256,9 @@ Definiamo
 \]
 Quindi
 \[
-    \texttt{ID}_X:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\texttt{PLUS}^k,f),\texttt{LESSER}\bigr).
+    \texttt{ID}_X:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\texttt{PLUS}^k,\texttt{effe}),\texttt{LESSER}\bigr).
 \]
+dove $\texttt{effe}$ è l'espressione per $f$.
 \end{sol}
 
 \newpage
