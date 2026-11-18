@@ -1,0 +1,161 @@
+
+
+% ============================================================
+% FOGLIO LAVORO INDIVIDUALE 1 - IN2 A.A. 2009-2010
+% ============================================================
+
+\begin{ex}
+Dare una dimostrazione del pumping-lemma semplificando e riadattando agli insiemi $X$ DFA-decidibili, la prova data a lezione per gli $X\in\mathrm{DTIME}_1^A(cn)$.
+\end{ex}
+
+\newpage
+
+\begin{ex}
+Costruire l'automa che riconosce le parole generate dalla seguente espressione regolare:
+\[
+((0^*10^*)+(1(11)^*0))^*.
+\]
+\end{ex}
+
+\begin{sol}
+Partiamo dall'automa con $\varepsilon$-mosse: il ramo $q_1,q_2$ legge $0^*10^*$, il ramo $p_1,p_2$ legge $1(11)^*0$, e lo stato $q_0$, iniziale e finale, realizza la stella.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state, accepting] (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (2.5,2)  {$q_1$};
+\node[state]            (q2) at (5,0)    {$q_2$};
+\node[state]            (p1) at (0,-2.5) {$p_1$};
+\node[state]            (p2) at (0,-5)   {$p_2$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Ramo 0^*10^*
+\draw[->] (q0) -- node {$\varepsilon$} (q1);
+\path[->] (q1) edge[loop above] node {$0$} (q1);
+\draw[->] (q1) -- node {$1$} (q2);
+\path[->] (q2) edge[loop right] node {$0$} (q2);
+\draw[->] (q2) -- node {$\varepsilon$} (q0);
+
+% Ramo 1(11)^*0
+\draw[->] (q0) to[bend right=25] node[swap] {$1$} (p1);
+\draw[->] (p1) to[bend right=25] node[swap] {$0$} (q0);
+\draw[->] (p1) to[bend right=25] node[swap] {$1$} (p2);
+\draw[->] (p2) to[bend right=25] node[swap] {$1$} (p1);
+\end{tikzpicture}
+\]
+Eliminiamo la prima $\varepsilon$-mossa, $q_0\xrightarrow{\varepsilon}q_1$: $q_0$ eredita le transizioni uscenti da $q_1$, cioè $q_0\xrightarrow{0}q_1$ e $q_0\xrightarrow{1}q_2$ (rinominiamo $q_1,q_2$ in $t_1,t_2$).
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state, accepting] (q0) at (0,0)    {$q_0$};
+\node[state]            (t1) at (2.5,2)  {$t_1$};
+\node[state]            (t2) at (5,0)    {$t_2$};
+\node[state]            (p1) at (0,-2.5) {$p_1$};
+\node[state]            (p2) at (0,-5)   {$p_2$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Nuove transizioni al posto della prima epsilon-mossa
+\draw[->, very thick] (q0) -- node {$0$} (t1);
+\draw[->, very thick] (q0) to[bend left=15] node {$1$} (t2);
+
+% Transizioni invariate
+\path[->] (t1) edge[loop above] node {$0$} (t1);
+\draw[->] (t1) -- node {$1$} (t2);
+\path[->] (t2) edge[loop right] node {$0$} (t2);
+\draw[->] (t2) to[bend left=15] node {$\varepsilon$} (q0);
+\draw[->] (q0) to[bend right=25] node[swap] {$1$} (p1);
+\draw[->] (p1) to[bend right=25] node[swap] {$0$} (q0);
+\draw[->] (p1) to[bend right=25] node[swap] {$1$} (p2);
+\draw[->] (p2) to[bend right=25] node[swap] {$1$} (p1);
+\end{tikzpicture}
+\]
+Eliminiamo la seconda $\varepsilon$-mossa, $t_2\xrightarrow{\varepsilon}q_0$: ogni transizione entrante in $t_2$ viene replicata verso $q_0$. Da $t_1\xrightarrow{1}t_2$ otteniamo $t_1\xrightarrow{1}q_0$, da $q_0\xrightarrow{1}t_2$ otteniamo il cappio $q_0\xrightarrow{1}q_0$, e da $t_2\xrightarrow{0}t_2$ otteniamo $t_2\xrightarrow{0}q_0$.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state, accepting] (q0) at (0,0)    {$q_0$};
+\node[state]            (t1) at (2.5,2)  {$t_1$};
+\node[state]            (t2) at (5,0)    {$t_2$};
+\node[state]            (p1) at (0,-2.5) {$p_1$};
+\node[state]            (p2) at (0,-5)   {$p_2$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Nuove transizioni al posto della seconda epsilon-mossa
+\path[->, very thick] (q0) edge[loop left] node {$1$} (q0);
+\draw[->, very thick] (t1) to[bend left=20] node {$1$} (q0);
+\draw[->, very thick] (t2) to[bend left=15] node {$0$} (q0);
+
+% Transizioni invariate
+\draw[->] (q0) to[bend left=20] node {$0$} (t1);
+\path[->] (t1) edge[loop above] node {$0$} (t1);
+\draw[->] (t1) -- node {$1$} (t2);
+\path[->] (t2) edge[loop right] node {$0$} (t2);
+\draw[->] (q0) to[bend left=15] node {$1$} (t2);
+\draw[->] (q0) to[bend right=25] node[swap] {$1$} (p1);
+\draw[->] (p1) to[bend right=25] node[swap] {$0$} (q0);
+\draw[->] (p1) to[bend right=25] node[swap] {$1$} (p2);
+\draw[->] (p2) to[bend right=25] node[swap] {$1$} (p1);
+\end{tikzpicture}
+\]
+\end{sol}
+\newpage
+
+\begin{ex}
+Implementare in Java una classe per le liste di interi e derivarne una per le liste ordinate di interi che fornisca un metodo di inserimento in ordine.
+\end{ex}
+
+
+\newpage
+
+\begin{ex}
+Sia $<$ una relazione tra $X\subset A^*$ definita nel modo seguente:
+\[
+X_1<X_2
+\]
+se e solo se esiste un TM $\mu$ che per ogni $w\in A^*$ computa $\mu(w)\in A^*$ e se $w\in X_1$ allora $\mu(w)\in X_2$ se invece $w\notin X_1$ allora $\mu(w)\notin X_2$.
+\ 
+\begin{enumerate}
+\item Dimostrare che la relazione così definita è una relazione transitiva.
+
+Sia $<_P$ la relazione che si ottiene se nella definizione precedente si può sempre trovare una macchina $\mu$ con tempo di arresto polinomiale.
+\item Dimostrare che la relazione $<_P$ appena definita è una relazione transitiva.
+\end{enumerate}
+\end{ex}
+
+
+\begin{sol}
+\ 
+\begin{enumerate}
+\item Siano $X_1<X_2$ e $X_2<X_3$, e siano $\mu_{1,2}$ e $\mu_{2,3}$ le TM che testimoniano rispettivamente le due relazioni. Sia $\overline{\mu}$ la TM che su input $w$ simula $\mu_{1,2}$ su $w$ e poi simula $\mu_{2,3}$ sul risultato, cioè
+\[
+\overline{\mu}(w):=\mu_{2,3}(\mu_{1,2}(w)).
+\]
+Per ogni $w\in A^*$ la computazione di $\mu_{1,2}(w)$ termina con $\mu_{1,2}(w)\in A^*$, quindi anche $\mu_{2,3}$ termina su tale input e $\overline{\mu}(w)\in A^*$. Distinguiamo due casi.
+\ 
+\begin{enumerate}
+\item Se $w\in X_1$, allora $\mu_{1,2}(w)\in X_2$ e quindi $\overline{\mu}(w)=\mu_{2,3}(\mu_{1,2}(w))\in X_3$.
+\item Se $w\notin X_1$, allora $\mu_{1,2}(w)\notin X_2$ e quindi $\overline{\mu}(w)=\mu_{2,3}(\mu_{1,2}(w))\notin X_3$.
+\end{enumerate}
+Dunque $\overline{\mu}$ testimonia $X_1<X_3$.
+
+\item Siano $X_1<_PX_2$ e $X_2<_PX_3$ con $\mu_{1,2}$ e $\mu_{2,3}$ che hanno tempi di arresto limitati rispettivamente dai polinomi $p_{1,2}$ e $p_{2,3}$. Per il punto precedente $\overline{\mu}=\mu_{2,3}\circ\mu_{1,2}$ testimonia $X_1<X_3$, resta da vedere che il suo tempo di arresto è polinomiale. In tempo $p_{1,2}(|w|)$ la macchina $\mu_{1,2}$ scrive al più $p_{1,2}(|w|)$ nuove celle, quindi
+\[
+|\mu_{1,2}(w)|\leq |w|+p_{1,2}(|w|).
+\]
+Il tempo di $\overline{\mu}$ è allora al più la somma del tempo di $\mu_{1,2}$ su $w$, di un tempo lineare in $|w|+p_{1,2}(|w|)$ per riportare la testina all'inizio del risultato, e del tempo di $\mu_{2,3}$ sul risultato:
+\[
+p_{1,2}(|w|)+c\,(|w|+p_{1,2}(|w|))+p_{2,3}(|w|+p_{1,2}(|w|)).
+\]
+Questa è una somma di polinomi, e la composizione di polinomi è un polinomio, quindi $\overline{\mu}$ ha tempo di arresto polinomiale e $X_1<_PX_3$.
+\end{enumerate}
+\end{sol}
+\newpage

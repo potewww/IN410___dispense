@@ -1611,3 +1611,172 @@ Dato l'automa a stati finiti deterministico in figura
     \end{align*}
 \end{enumerate}
 \end{sol}
+
+\newpage
+
+
+% ============================================================
+% ESPRESSIONI REGOLARI -> AUTOMI
+% ============================================================
+
+
+\begin{ex}
+Costruire gli NDFA che riconoscono le parole generate dalle seguenti espressioni regolari:
+\ 
+\begin{enumerate}
+\item $(0^*1+10^*)$;
+\item $((0+11)^*(10)^*+01^*0)^*11$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+\ 
+\begin{enumerate}
+\item Partiamo dall'automa generalizzato con le due espressioni $0^*1$ e $10^*$ sulle transizioni:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0) {$q_0$};
+\node[state, accepting] (qF) at (5,0) {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) to[bend left=30]  node {$0^*1$} (qF);
+\draw[->] (q0) to[bend right=30] node[swap] {$10^*$} (qF);
+\end{tikzpicture}
+\]
+Sostituendo ogni espressione con il relativo automa otteniamo un automa con $\varepsilon$-mosse:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (3,1.2)  {$q_1$};
+\node[state]            (q2) at (3,-1.2) {$q_2$};
+\node[state, accepting] (qF) at (6,0)    {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->] (q0) -- node {$\varepsilon$} (q1);
+\path[->] (q1) edge[loop above] node {$0$} (q1);
+\draw[->] (q1) -- node {$1$} (qF);
+\draw[->] (q0) -- node[swap] {$1$} (q2);
+\path[->] (q2) edge[loop below] node {$0$} (q2);
+\draw[->] (q2) -- node[swap] {$\varepsilon$} (qF);
+\end{tikzpicture}
+\]
+Eliminiamo le $\varepsilon$-mosse: $q_0\xrightarrow{\varepsilon}q_1$ ci dà le transizioni $q_0\xrightarrow{0}q_1$ e $q_0\xrightarrow{1}q_F$, mentre $q_2\xrightarrow{\varepsilon}q_F$ ci dà $q_2\xrightarrow{0}q_F$. Lo stato $q_2$ non serve renderlo finale, perché la parola $1$ è accettata tramite $q_0\xrightarrow{1}q_F$.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (3,1.2)  {$q_1$};
+\node[state]            (q2) at (3,-1.2) {$q_2$};
+\node[state, accepting] (qF) at (6,0)    {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\draw[->, very thick] (q0) -- node {$0$} (q1);
+\path[->] (q1) edge[loop above] node {$0$} (q1);
+\draw[->] (q1) -- node {$1$} (qF);
+\draw[->, very thick] (q0) -- node {$1$} (qF);
+\draw[->] (q0) -- node[swap] {$1$} (q2);
+\path[->] (q2) edge[loop below] node {$0$} (q2);
+\draw[->, very thick] (q2) -- node[swap] {$0$} (qF);
+\end{tikzpicture}
+\]
+
+\item Anche qui partiamo dall'automa generalizzato: il cappio su $q_0$ legge $(0+11)^*(10)^*$, il percorso per $q_2$ legge $01^*0$, e si termina leggendo $11$.
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)    {$q_0$};
+\node[state]            (q1) at (3,0)    {$q_1$};
+\node[state, accepting] (qF) at (6,0)    {$q_F$};
+\node[state]            (q2) at (3,-2.5) {$q_2$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+\path[->] (q0) edge[loop above, looseness=8] node {$(0+11)^*(10)^*$} (q0);
+\draw[->] (q0) -- node {$1$} (q1);
+\draw[->] (q1) -- node {$1$} (qF);
+\draw[->] (q0) to[bend left=20] node {$0$} (q2);
+\path[->] (q2) edge[loop below] node {$1$} (q2);
+\draw[->] (q2) to[bend left=20] node {$0$} (q0);
+\end{tikzpicture}
+\]
+Sostituiamo il cappio con gli automi di $(0+11)^*$ (stati $t_1,p_1$) e di $(10)^*$ (stati $t_2,t_3$):
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)      {$q_0$};
+\node[state]            (t1) at (3,2.5)    {$t_1$};
+\node[state]            (p1) at (6,2.5)    {$p_1$};
+\node[state]            (t2) at (3,0)      {$t_2$};
+\node[state]            (t3) at (6,0)      {$t_3$};
+\node[state]            (q2) at (2,-2.5)   {$q_2$};
+\node[state]            (q1) at (-2.5,-2)  {$q_1$};
+\node[state, accepting] (qF) at (-2.5,-4.5) {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% (0+11)^*
+\draw[->] (q0) -- node {$\varepsilon$} (t1);
+\path[->] (t1) edge[loop above] node {$0$} (t1);
+\draw[->] (t1) to[bend left=20] node {$1$} (p1);
+\draw[->] (p1) to[bend left=20] node {$1$} (t1);
+
+% (10)^*
+\draw[->] (t1) -- node {$\varepsilon$} (t2);
+\draw[->] (t2) to[bend left=20] node {$1$} (t3);
+\draw[->] (t3) to[bend left=20] node {$0$} (t2);
+\draw[->] (t2) -- node[swap] {$\varepsilon$} (q0);
+
+% 01^*0
+\draw[->] (q0) to[bend left=20] node {$0$} (q2);
+\path[->] (q2) edge[loop below] node {$1$} (q2);
+\draw[->] (q2) to[bend left=20] node {$0$} (q0);
+
+% 11
+\draw[->] (q0) -- node[swap] {$1$} (q1);
+\draw[->] (q1) -- node {$1$} (qF);
+\end{tikzpicture}
+\]
+Le $\varepsilon$-mosse $q_0\to t_1\to t_2\to q_0$ formano un ciclo: i tre stati si raggiungono a vicenda senza leggere nulla, quindi possono essere identificati in $q_0$. Le transizioni coinvolte, ridisegnate su $q_0$, sono in grassetto:
+\[
+\begin{tikzpicture}[
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+\node[state]            (q0) at (0,0)      {$q_0$};
+\node[state]            (p1) at (2.5,2.5)  {$p_1$};
+\node[state]            (t3) at (3.5,0)    {$t_3$};
+\node[state]            (q2) at (2,-2.5)   {$q_2$};
+\node[state]            (q1) at (-2.5,-2)  {$q_1$};
+\node[state, accepting] (qF) at (-2.5,-4.5) {$q_F$};
+
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni ottenute identificando q_0, t_1, t_2
+\path[->, very thick] (q0) edge[loop left] node {$0$} (q0);
+\draw[->, very thick] (q0) to[bend left=20] node {$1$} (p1);
+\draw[->, very thick] (p1) to[bend left=20] node {$1$} (q0);
+\draw[->, very thick] (q0) to[bend left=20] node {$1$} (t3);
+\draw[->, very thick] (t3) to[bend left=20] node {$0$} (q0);
+
+% Transizioni invariate
+\draw[->] (q0) to[bend left=15] node {$0$} (q2);
+\path[->] (q2) edge[loop below] node {$1$} (q2);
+\draw[->] (q2) to[bend left=15] node {$0$} (q0);
+\draw[->] (q0) -- node[swap] {$1$} (q1);
+\draw[->] (q1) -- node {$1$} (qF);
+\end{tikzpicture}
+\]
+\end{enumerate}
+\end{sol}
+\newpage

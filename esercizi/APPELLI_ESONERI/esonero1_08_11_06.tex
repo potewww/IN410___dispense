@@ -1,0 +1,255 @@
+% ============================================================
+% IN2 - MODELLI DI CALCOLO, A.A. 2006-2007, M. PEDICINI
+% ESONERO DEL 8/11/2006
+% ============================================================
+
+% ------------------------------------------------------------
+% ESERCIZIO 1
+% ------------------------------------------------------------
+\begin{ex}
+Introduciamo un nuovo modello di calcolo: l'automa a pila. Un PDFA (push-down finite automata) è una variante dell'automa a stati finiti, ed è definito nel modo seguente.
+
+DEFINIZIONE: Un PDFA di alfabeto $A$, alfabeto della pila $B$ e insieme degli stati $Q$ è definito come una quadrupla $(T,q_0,Z_0,F)$ dove
+\[
+T:Q\times(A\cup\{\varepsilon\})\times B\to Q\times B^*,
+\]
+dove $\varepsilon$ rappresenta la parola vuota, $F:Q\to\{0,1\}$, $q_0\in Q$ è uno stato particolare detto stato iniziale, $Z_0\in B$ è il carattere con cui è inizializzata la pila.
+
+DESCRIZIONE DELLA COMPUTAZIONE ASSOCIATA: La pila contiene ad ogni passo di computazione una parola $w\in B^*$; la funzione di transizione agisce analogamente al caso degli automi finiti in base al carattere letto nella parola di input (eventualmente $\varepsilon$), allo stato corrente e inoltre in funzione dell'ultimo carattere della pila. La transizione determinata dal valore $T(q,a,b)=(q',w')$ consiste nell'aggiornamento dello stato corrente che da $q$ diventa $q'$ (come nel caso dell'automa finito), il puntatore alla posizione corrente viene avanzato se $a\neq\varepsilon$ mentre resta fermo se $a=\varepsilon$ e l'ultimo carattere della pila viene sostituito con la parola $w'$ (quindi se la pila è $wb$ si ha $ww'$).
+
+È necessario richiedere che in corrispondenza del carattere letto $\varepsilon$ non sia possibile applicare nessuna transizione con carattere diverso da $\varepsilon$ (altrimenti si perderebbe il determinismo).
+
+L'automa a pila termina la computazione quando ha letto l'ultimo carattere della parola di ingresso, ha effettuato la transizione associata e non può effettuare transizioni con carattere letto $\varepsilon$. La configurazione finale è data da $q$ e dalla pila $w$; analogamente al caso degli automi finiti, la parola di input è accettata se $F(q)=1$ e viene rifiutata se $F(q)=0$.
+\renewcommand{\labelenumi}{\alph{enumi})}
+\ 
+\begin{enumerate}
+\item Definire l'algoritmo formale associato ad un automa a pila (e quindi il concetto di decidibilità per PDFA).
+\item Valutare il numero di configurazioni possibili per un PDFA in funzione della lunghezza della parola di input.
+\item Dimostrare che ogni $X$ decidibile per automa finito è anche PDFA decidibile.
+\item Dimostrare che l'insieme $X=\{0^p1^p\mid p\in\mathbb N\}$ è PDFA-decidibile.
+\item Dimostrare che se $X$ è decidibile per PDFA allora è decidibile per macchina di Turing.
+\item Fornire una maggiorazione per la complessità (rispetto alla macchina di Turing) degli insiemi PDFA-decidibili.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+Convenzioni. Se $(q,\varepsilon,b)\in\mathrm{dom}\,T$ allora $(q,a,b)\notin\mathrm{dom}\,T$ per ogni $a\in A$ (determinismo), quindi le $\varepsilon$-mosse hanno la precedenza. Se la pila è vuota non c'è alcun ultimo carattere e nessuna transizione è applicabile: un automa che decide $X$ deve su ogni $w$ leggere tutto l'input, quindi non si blocca prima della fine. Per $w\in A^*$ indichiamo con $w(p)$ la $p$-esima lettera.
+\renewcommand{\labelenumi}{\alph{enumi})}
+\ 
+\begin{enumerate}
+\item Lo spazio delle configurazioni è
+\[
+\mathrm{Conf}_{\mathrm{PDFA}}^{A,Q}=A^*\times\mathbb N\times Q\times B^*,
+\]
+dove $(w,p,q,\zeta)$ indica la parola di input $w$, la posizione corrente $p\in\{1,\dots,|w|+1\}$, lo stato $q$ e la pila $\zeta$. La funzione di ingresso è
+\[
+\iota:A^*\to\mathrm{Conf}_{\mathrm{PDFA}}^{A,Q},\qquad w\longmapsto(w,1,q_0,Z_0).
+\]
+La funzione di transizione agisce sull'ultimo carattere della pila: per $\zeta\in B^*$ e $b\in B$,
+\[
+\tau(w,p,q,\zeta b)=
+\begin{cases}
+(w,p,q',\zeta w') & \text{se }(q,\varepsilon,b)\in\mathrm{dom}\,T\text{ e }T(q,\varepsilon,b)=(q',w'),\\[2pt]
+(w,p+1,q',\zeta w') & \text{se }(q,\varepsilon,b)\notin\mathrm{dom}\,T,\ p\leq|w|\text{ e }T(q,w(p),b)=(q',w').
+\end{cases}
+\]
+La funzione di uscita è definita sulle configurazioni finali, cioè quelle con $p>|w|$ in cui non si può applicare nessuna $\varepsilon$-mossa (la pila è vuota oppure $(q,\varepsilon,b)\notin\mathrm{dom}\,T$ con $b$ ultimo carattere della pila):
+\[
+\delta:\mathrm{Conf}_{\mathrm{PDFA}}^{A,Q}\to\{0,1\},\qquad \delta(w,p,q,\zeta)=F(q).
+\]
+L'algoritmo associato è la sestupla
+\[
+\bigl(A,\{0,1\},\mathrm{Conf}_{\mathrm{PDFA}}^{A,Q},\iota,\tau,\delta\bigr).
+\]
+Un insieme $X\subseteq A^*$ è PDFA-decidibile se esiste un PDFA tale che per ogni $w\in A^*$ la successione $\iota(w),\tau(\iota(w)),\tau^2(\iota(w)),\dots$ raggiunge una configurazione finale $\gamma$ con $\delta(\gamma)=1$ se $w\in X$ e $\delta(\gamma)=0$ se $w\notin X$.
+
+\item Lo spazio $\mathrm{Conf}_{\mathrm{PDFA}}^{A,Q}$ è infinito, perché la pila non ha un limite di lunghezza, e un PDFA qualsiasi può non terminare (ad esempio con $T(q,\varepsilon,b)=(q,bb)$ si continua a riempire la pila senza leggere nulla). Consideriamo quindi un PDFA $M$ che decide $X$, cioè che termina su ogni input, e contiamo le configurazioni che visita. Sia $c$ la massima lunghezza di una parola $w'$ che compare come immagine di $T$.
+
+Vogliamo mostrare che su una parola $w$ con $|w|=n$ le configurazioni visitate sono al più $K(n+1)$, con $K$ costante che dipende solo da $M$. Poiché $M$ è deterministico e termina, le configurazioni visitate sono a due a due distinte, quindi basta contare i passi.
+
+Passi di lettura. Ce ne sono esattamente $n$, e ognuno inserisce nella pila al più $c$ caratteri.
+
+Passi di $\varepsilon$-mossa. Sono quelli difficili da contare, perché non leggono input. L'osservazione chiave è che una $\varepsilon$-mossa guarda solo l'ultimo carattere della pila. Se la pila è $\zeta b$ e lo stato è $q$, le $\varepsilon$-mosse successive, finché non si tocca la parte $\zeta$, dipendono solo dalla coppia $(q,b)$. Per ogni coppia $(q,b)$ ci sono quindi tre esiti possibili:
+\ 
+\begin{enumerate}
+\item il carattere $b$ viene eliminato: dopo al più $S$ passi la pila è $\zeta$;
+\item le $\varepsilon$-mosse si fermano senza toccare $\zeta$: dopo al più $S$ passi la pila è $\zeta V$ con $|V|\leq L$ e non ci sono più $\varepsilon$-mosse applicabili;
+\item le $\varepsilon$-mosse non finiscono mai.
+\end{enumerate}
+L'esito (3) non può capitare, perché $M$ termina. Le coppie $(q,b)$ sono in numero finito, quindi $S$ e $L$ sono costanti.
+
+Conteggio. Dopo ogni lettura, e all'inizio, c'è una fase di $\varepsilon$-mosse: sono $n+1$ fasi. Ogni fase è una successione di esiti di tipo (1) seguita al più da un esito di tipo (2).
+\ 
+\begin{enumerate}
+\item Gli esiti di tipo (2) sono al più $n+1$, uno per fase, e ciascuno costa al più $S$ passi.
+\item Ogni esito di tipo (1) elimina un carattere che era stato inserito prima. I caratteri inseriti in totale sono al più $1+nc+(n+1)L$ (quello iniziale, quelli delle letture, quelli degli esiti di tipo (2)), quindi gli esiti di tipo (1) sono al più tanti, e ciascuno costa al più $S$ passi.
+\end{enumerate}
+In totale
+\[
+\#\text{passi}\leq n+S\bigl(1+nc+(n+1)L+(n+1)\bigr)\leq K(n+1).
+\]
+Dunque il numero di configurazioni visitate è $O(n)$, e anche la lunghezza della pila è $O(n)$ (al più $1+cK(n+1)$).
+
+\item Sia $X$ decidibile con un DFA $(Q,A,\delta,q_0,F)$. Poniamo $B=\{Z_0\}$ e definiamo $T(q,a,Z_0)=(\delta(q,a),Z_0)$ per ogni $q\in Q$ e $a\in A$, lasciando $T$ non definita sulle terne con $\varepsilon$; la $F$ è la stessa. La pila contiene sempre $Z_0$, non ci sono $\varepsilon$-mosse e ad ogni passo si legge una lettera: il PDFA si comporta esattamente come il DFA, quindi decide $X$.
+
+\item Usiamo $B=\{Z_0,0\}$. Le etichette $a,b/w'$ nel disegno indicano $T(q,a,b)=(q',w')$, mentre $a$ e $b$ nel cappio di $q_r$ variano rispettivamente in $\{0,1\}$ e in $\{Z_0,0\}$. Gli stati finali sono $F(s)=F(q_a)=1$ e $F(q_0)=F(q_1)=F(q_r)=0$.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Stati
+\node[state, accepting] (s)  at (0,0)    {$s$};
+\node[state]            (q0) at (4,0)    {$q_0$};
+\node[state]            (q1) at (8,0)    {$q_1$};
+\node[state, accepting] (qa) at (12,0)   {$q_a$};
+\node[state]            (qr) at (6,-3.5) {$q_r$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]s.center) -- (s);
+
+% Transizioni lungo la riga principale
+\draw[->] (s)  -- node {$0,Z_0/Z_0\,0$} (q0);
+\draw[->] (q0) -- node {$1,0/\varepsilon$} (q1);
+\draw[->] (q1) -- node {$\varepsilon,Z_0/Z_0$} (qa);
+
+% Cappi
+\draw[->] (q0) to[loop above, looseness=8] node {$0,0/0\,0$} (q0);
+\draw[->] (q1) to[loop above, looseness=8] node {$1,0/\varepsilon$} (q1);
+\draw[->] (qr) to[loop below, looseness=8] node {$a,b/b$} (qr);
+
+% Transizioni verso lo stato di rifiuto
+\draw[->] (s)  -- node[swap, pos=0.4] {$1,Z_0/Z_0$} (qr);
+\draw[->] (q1) -- node[swap, pos=0.4] {$0,0/0$} (qr);
+\draw[->] (qa) -- node[pos=0.4] {$a,Z_0/Z_0$} (qr);
+\end{tikzpicture}
+\]
+Il carattere $Z_0$ non viene mai eliminato, quindi la pila non è mai vuota. Il test di fine input non è visibile a $T$, perciò si usa $F$ insieme alla $\varepsilon$-mossa di $q_1$, che scatta appena la pila contiene solo $Z_0$. Sia $w\in\{0,1\}^*$.
+\ 
+\begin{enumerate}
+\item Se $w=\varepsilon$ il calcolo termina in $s$ e $F(s)=1$: $w$ è accettata.
+\item Se $w=0^p1^q$ con $p\geq1$, dopo $0^p$ si è in $q_0$ con pila $Z_0\,0^p$. Le $q$ cifre $1$ eliminano $q$ zeri: se $q<p$ si termina in $q_1$ con pila $Z_0\,0^{p-q}$ e $F(q_1)=0$, se $q=p$ la $\varepsilon$-mossa porta in $q_a$ e $F(q_a)=1$, se $q>p$ la cifra $1$ successiva porta da $q_a$ in $q_r$. Per $q=0$ si termina in $q_0$ con $F(q_0)=0$.
+\item In tutti gli altri casi (la parola inizia per $1$, oppure una cifra $0$ segue una cifra $1$) si finisce in $q_r$, che non è finale.
+\end{enumerate}
+Quindi $w$ è accettata se e solo se $w=0^p1^p$ per qualche $p\geq0$.
+
+\item Sia $M=(T,q_0,Z_0,F)$ un PDFA che decide $X$. Costruiamo una macchina di Turing $\mathcal M$ a due nastri, con alfabeto $A\cup B\cup\{\square\}$. Sul primo nastro c'è la parola di input, con la testina sulla posizione corrente $p$; sul secondo nastro c'è la pila, con la testina sull'ultimo carattere, e all'inizio vi è scritto $Z_0$. Lo stato di $\mathcal M$ contiene lo stato corrente $q$ di $M$. Ad ogni passo, siano $a$ il carattere sotto la testina del primo nastro e $b$ quello sotto la testina del secondo ($\square$ se la pila è vuota).
+\ 
+\begin{enumerate}
+\item Se $(q,\varepsilon,b)\in\mathrm{dom}\,T$ con $T(q,\varepsilon,b)=(q',w')$, si sostituisce $b$ con $w'$ sul secondo nastro, lasciando ferma la testina del primo.
+\item Altrimenti, se $a\in A$ e $T(q,a,b)=(q',w')$, si sostituisce $b$ con $w'$ sul secondo nastro e si sposta a destra la testina del primo.
+\item Altrimenti ($a=\square$ e nessuna $\varepsilon$-mossa), $\mathcal M$ si ferma accettando se $F(q)=1$ e rifiutando se $F(q)=0$.
+\end{enumerate}
+Sostituire $b$ con $w'=u_1\cdots u_m$ vuol dire scrivere $u_1$ al posto di $b$ e poi $u_2,\dots,u_m$ spostandosi a destra, oppure, se $w'=\varepsilon$, scrivere $\square$ e spostarsi a sinistra. Ogni passo di $M$ richiede quindi al più $c$ passi di $\mathcal M$, e $\mathcal M$ termina perché $M$ termina. Quindi $\mathcal M$ decide $X$.
+
+\item Per il lemma del punto (b) $M$ fa al più $K(n+1)$ passi, quindi la macchina $\mathcal M$ del punto (e) lavora in tempo al più $cK(n+1)$ e
+\[
+X\in\mathrm{DTIME}_2(c'n).
+\]
+Per lo spazio, sul primo nastro si usano $n+1$ celle, mentre sul secondo se ne usano al più $1+cK(n+1)$: lo spazio è $O(n)$ su entrambi i nastri, e non $O(1)$ sul secondo (per $0^p1^p$ la pila contiene $p$ zeri). Passando a una macchina a un solo nastro con la simulazione standard si ottiene $X\in\mathrm{DTIME}_1(c''n^2)$.
+\end{enumerate}
+\end{sol}
+\newpage
+
+% ------------------------------------------------------------
+% ESERCIZIO 2
+% ------------------------------------------------------------
+\begin{ex}
+(facoltativo) Con le notazioni dell'esercizio 1, si consideri la seguente variante PDFA' di automa a pila, che ridefinisce il solo concetto di parola accettata dall'automa nel modo seguente: l'automa a pila termina la computazione quando ha letto l'ultimo carattere della parola di ingresso ed ha effettuato la transizione associata e non può effettuare transizioni con carattere letto $\varepsilon$, terminando con uno stato $q$ e con la pila $w$: in questo caso la parola di input è accettata se $F(q)=1$ e $w$ è la parola vuota e viene rifiutata se $F(q)=0$ oppure se $w$ non è vuota.
+
+Provare che $X$ è PDFA decidibile se e solo se $X$ è PDFA' decidibile.
+\end{ex}
+
+\begin{sol}
+Vale l'implicazione \glqq PDFA'-decidibile $\Rightarrow$ PDFA-decidibile\grqq, mentre l'implicazione opposta è falsa.
+\ 
+\begin{enumerate}
+\item Sia $M=(T,q_0,Z_0,F)$ un PDFA' che decide $X$. Costruiamo un PDFA $M'=(T',q_0',Z_0',F')$ con stati $Q'=Q\cup\{q_0',q_a,q_r\}$ e alfabeto della pila $B'=B\cup\{Z_0'\}$, dove $q_0'$, $q_a$, $q_r$ e $Z_0'$ sono nuovi:
+\ 
+\begin{enumerate}
+\item $T'(q_0',\varepsilon,Z_0')=(q_0,Z_0'Z_0)$;
+\item $T'(q,a,b)=T(q,a,b)$ per $q\in Q$, $a\in A\cup\{\varepsilon\}$, $b\in B$;
+\item per $q\in Q$, $T'(q,\varepsilon,Z_0')=(q_a,Z_0')$ se $F(q)=1$ e $T'(q,\varepsilon,Z_0')=(q_r,Z_0')$ se $F(q)=0$;
+\item $T'(q_a,a,Z_0')=T'(q_r,a,Z_0')=(q_r,Z_0')$ per $a\in A$;
+\item $F'(q_a)=1$ e $F'(q)=0$ per ogni altro stato.
+\end{enumerate}
+Il determinismo è rispettato: su $Z_0'$ sono definite solo $\varepsilon$-mosse (oppure, per $q_a$ e $q_r$, solo mosse con lettura).
+
+Sull'input $w$, $M'$ fa prima l'$\varepsilon$-mossa che porta in $(q_0,Z_0'Z_0)$ e poi simula $M$ passo per passo, con la pila di $M$ sopra $Z_0'$. Quando $M$ termina in uno stato $q$ con pila $\zeta$ ci sono due casi.
+\ 
+\begin{enumerate}
+\item Se $\zeta\neq\varepsilon$, $M'$ ha in cima un carattere di $B$, non ha $\varepsilon$-mosse e ha letto tutto l'input: termina in $q\in Q$ con $F'(q)=0$, e anche $M$ rifiuta.
+\item Se $\zeta=\varepsilon$, $M'$ ha $Z_0'$ in cima e l'$\varepsilon$-mossa porta in $q_a$ se $F(q)=1$ e in $q_r$ se $F(q)=0$, dove $M'$ termina: $M'$ accetta se e solo se $M$ accetta.
+\end{enumerate}
+Se la pila di $M$ si svuotasse prima della fine dell'input, $M$ si bloccherebbe, ma questo non accade perché $M$ decide $X$. Quindi $M'$ decide $X$.
+
+\item Sia $A=\{0\}$ e $X=\{0\}^*$. $X$ è decidibile con un DFA a un solo stato finale, quindi è PDFA-decidibile per il punto (c). Supponiamo che un PDFA' $M$ decida $X$. Poiché $\varepsilon\in X$, sull'input $\varepsilon$ il calcolo termina con pila vuota (dopo le $\varepsilon$-mosse iniziali) e $F(q)=1$. Sull'input $0$ le $\varepsilon$-mosse iniziali sono le stesse, perché non dipendono dall'input, e portano alla stessa configurazione con pila vuota, ma con il carattere $0$ ancora da leggere: nessuna transizione è applicabile, quindi $M$ non decide se $0\in X$. Dunque $X$ non è PDFA'-decidibile.
+\end{enumerate}
+\begin{rema}
+Il motivo è che $T$ non vede la fine dell'input, quindi il PDFA' non può svuotare la pila \glqq alla fine\grqq: dopo ogni prefisso accettato la pila dovrebbe essere già vuota. Lo stesso accade se \glqq pila vuota\grqq{} si intende \glqq pila uguale a $Z_0$\grqq. Ad esempio $X=\{0^p1^q\mid q\leq p\}$ è PDFA-decidibile (si conta con la pila), ma non PDFA'-decidibile. Infatti ogni $0^p$ è in $X$, quindi dopo $0^p$ la configurazione è $(q_p,Z_0)$ con $q_p$ in un insieme finito; per $p<p'$ con $q_p=q_{p'}$ le parole $0^p1^{p'}\notin X$ e $0^{p'}1^{p'}\in X$ avrebbero lo stesso esito, assurdo.
+\end{rema}
+\end{sol}
+\newpage
+
+% ------------------------------------------------------------
+% ESERCIZIO 3
+% ------------------------------------------------------------
+\begin{ex}
+Si consideri la seguente funzione $T:\mathbb N\to\mathbb N$, $b\in\mathbb N$:
+\[
+T(n)=
+\begin{cases}
+b & \text{se }n<3,\\
+3T(n/3)+bn & \text{se }n\geq3.
+\end{cases}
+\]
+\renewcommand{\labelenumi}{\alph{enumi})}
+\ 
+\begin{enumerate}
+\item Mostrare che $T(n)$ è una funzione di complessità;
+\item Mostrare che $\mathrm{DTIME}(T(n))=\mathrm{DTIME}(n\log(n))$.
+\end{enumerate}
+\end{ex}
+
+\begin{sol}
+Qui $n/3$ indica $\lceil n/3\rceil$ (con la parte intera inferiore i calcoli sono identici), e una funzione di complessità è una funzione $T:\mathbb N\to\mathbb N$ non decrescente con $T(n)\geq n$.
+\renewcommand{\labelenumi}{\alph{enumi})}
+\ 
+\begin{enumerate}
+\item Mostriamo prima che $T$ è non decrescente, per induzione forte su $n$, cioè che $T(n)\leq T(n+1)$ per ogni $n$.
+\ 
+\begin{enumerate}
+\item Per $n+1\leq2$ si ha $T(n)=T(n+1)=b$, e per $n=2$ si ha $T(3)=3T(1)+3b=6b\geq b=T(2)$.
+\item Sia $n\geq3$ e supponiamo $T$ non decrescente fino a $n$. Poiché $\lceil n/3\rceil\leq\lceil(n+1)/3\rceil\leq n$, l'ipotesi induttiva dà
+\[
+T(n+1)=3T\bigl(\lceil\tfrac{n+1}3\rceil\bigr)+b(n+1)\geq3T\bigl(\lceil\tfrac n3\rceil\bigr)+bn=T(n).
+\]
+\end{enumerate}
+Mostriamo ora che $T(n)\geq n$. Se $b=0$ allora $T\equiv0$ e $T$ non è di complessità. Sia $b\geq1$. Per $n\geq3$ si ha $T(n)\geq bn\geq n$, e $T(1)=b\geq1$. Per $n=2$ si ha $T(2)=b\geq2$ se $b\geq2$; per $b=1$ la disuguaglianza fallisce solo per $n=2$ ($T(2)=1<2$), cosa irrilevante per l'andamento asintotico. Dunque $T$ è di complessità per $b\geq2$ (e, a meno del valore in $n=2$, per $b=1$).
+
+\item Sia $b\geq1$. Per $n=3^k$, per induzione su $k$ si ha $T(3^k)=b\,3^k(k+1)$: per $k=0$ è $T(1)=b$ e
+\[
+T(3^{k+1})=3T(3^k)+b\,3^{k+1}=b\,3^{k+1}(k+1)+b\,3^{k+1}=b\,3^{k+1}(k+2).
+\]
+In particolare, lungo $n=3^k$,
+\[
+\frac{T(n)}{n\log n}=\frac{b\,3^k(k+1)}{3^k\,k\log3}\longrightarrow\frac b{\log3}.
+\]
+Per ottenere il confronto per ogni $n$, sia $3^k\leq n<3^{k+1}$ con $k\geq1$. Poiché $T$ è non decrescente,
+\[
+b\,3^k(k+1)\leq T(n)\leq b\,3^{k+1}(k+2),
+\qquad
+3^k\,k\log3\leq n\log n\leq3^{k+1}(k+1)\log3,
+\]
+da cui
+\[
+\frac{b}{3\log3}\leq\frac{T(n)}{n\log n}\leq\frac{3b(k+2)}{k\log3}\leq\frac{9b}{\log3}.
+\]
+Esistono dunque $c_1,c_2>0$ con $c_1\,n\log n\leq T(n)\leq c_2\,n\log n$ per ogni $n\geq3$. Poiché $\mathrm{DTIME}(cf)=\mathrm{DTIME}(f)$ per ogni costante $c$ (accelerazione lineare) e $\mathrm{DTIME}$ è monotona rispetto alla funzione, da $T\leq c_2\,n\log n$ segue $\mathrm{DTIME}(T(n))\subseteq\mathrm{DTIME}(n\log n)$ e da $n\log n\leq T(n)/c_1$ segue l'inclusione opposta. Quindi
+\[
+\mathrm{DTIME}(T(n))=\mathrm{DTIME}(n\log n).
+\]
+\end{enumerate}
+\end{sol}
+\newpage

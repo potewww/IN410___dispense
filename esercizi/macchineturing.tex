@@ -568,7 +568,7 @@ Serve $9\leq 3^d$, quindi $d=2$. Con un solo nastro, prima di simulare bisogna r
 \]
 \end{sol}
 
-
+\newpage
 
 \begin{ex}
 Si vuole simulare una macchina di alfabeto $B\supseteq A$ con una di alfabeto $A$ tramite blocchi di lunghezza $d$. Spiegare perché la condizione da imporre su $d$ è $|B|+1\leq(|A|+1)^d$ e non $|B|\leq|A|^d$.
@@ -577,3 +577,74 @@ Si vuole simulare una macchina di alfabeto $B\supseteq A$ con una di alfabeto $A
 \begin{sol}
 Durante la computazione le celle del nastro possono contenere anche il blank, quindi i simboli da codificare sono quelli di $B\cup\{\square\}$, in numero $|B|+1$. I blocchi vanno costruiti sull'alfabeto $A\cup\{\square\}$, perché una cella vuota di $\mu$ corrisponde a $d$ celle vuote della nuova macchina, e quindi sono $(|A|+1)^d$. La codifica deve essere iniettiva, e questo dà la condizione.
 \end{sol}
+
+\newpage 
+
+% ============================================================
+% MACCHINA DI TURING PER a^n b^n c^n
+% ============================================================
+
+\begin{ex}
+Dare una macchina di Turing che decide $X=\{a^nb^nc^n\mid n\geq 0\}$ sull'alfabeto $A=\{a,b,c\}$.
+\end{ex}
+
+\begin{sol}
+Ad ogni ciclo la macchina cancella la prima $a$, trasforma una $b$ in $c$ e cancella due $c$ (il numero di $a$, di $b$ e di $c$ diminuisce di uno), poi torna indietro fino al blanco lasciato dalla $a$ cancellata. Le transizioni verso $q_F^0$ rifiutano le parole con simboli fuori posto, mentre si accetta in $q_F^1$ quando $q_0$ legge $\square$.
+\[
+\begin{tikzpicture}[
+    scale=0.8, transform shape,
+    >=stealth', shorten >=1pt, auto,
+    every state/.style={circle, draw, fill=white, minimum size=0.8cm, inner sep=1pt}
+]
+% Riga principale
+\node[state] (q0) at (0,0)   {$q_0$};
+\node[state] (q1) at (3,0)   {$q_1$};
+\node[state] (q2) at (6,0)   {$q_2$};
+\node[state] (q3) at (9,0)   {$q_3$};
+\node[state] (q4) at (12,0)  {$q_4$};
+
+% Seconda riga (ritorno a sinistra)
+\node[state] (q5) at (12,-3) {$q_5$};
+\node[state] (q6) at (9,-3)  {$q_6$};
+\node[state] (q7) at (6,-3)  {$q_7$};
+
+% Stati finali
+\node[state, accepting] (qF1) at (-3,0) {$q_F^1$};
+\node[state, accepting] (qF0) at (3,-6) {$q_F^0$};
+
+% Freccia d'ingresso
+\draw[->] ([shift={(-0.7,0.7)}]q0.center) -- (q0);
+
+% Transizioni lungo la riga principale
+\draw[->] (q0) -- node {$a/\square,+1$} (q1);
+\draw[->] (q1) -- node {$b/b,+1$} (q2);
+\draw[->] (q2) -- node {$c/c,-1$} (q3);
+\draw[->] (q3) -- node {$b/c,+1$} (q4);
+\draw[->] (q4) -- node {$\square/\square,-1$} (q5);
+
+% Transizioni sulla seconda riga
+\draw[->] (q5) -- node[swap] {$c/\square,-1$} (q6);
+\draw[->] (q6) -- node[swap] {$c/\square,-1$} (q7);
+
+% Cappi
+\draw[->] (q1) to[loop above, looseness=8] node {$a/a,+1$} (q1);
+\draw[->] (q2) to[loop above, looseness=8] node {$b/b,+1$} (q2);
+\draw[->] (q4) to[loop above, looseness=8] node {$c/c,+1$} (q4);
+\draw[->] (q7) to[loop below, looseness=8] node {$(a/a,\ b/b,\ c/c),-1$} (q7);
+
+% Ritorno da q_7 a q_0
+\draw[->, rounded corners=6pt] (q7.west) -- node[pos=0.8, above] {$\square/\square,+1$} (0.23,-3) -- (q0.305);
+
+% Accettazione
+\draw[->] (q0) -- node {$\square/$} (qF1);
+
+% Rifiuto
+\draw[->] (q0.south west) .. controls (-1.5,-3) and (0,-6) .. node[pos=0.4, left] {$b,c$} (qF0.west);
+\draw[->] (q1) -- node[pos=0.3, left] {$c,\square$} (qF0);
+\draw[->] (q2) -- node[pos=0.25, right] {$a,\square$} (qF0);
+\draw[->] (q4.east) .. controls (17,-1) and (11,-8) .. node[pos=0.8, below] {$a,b$} (qF0.east);
+\end{tikzpicture}
+\]
+\end{sol}
+
+\newpage
