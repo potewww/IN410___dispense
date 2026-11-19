@@ -81,5 +81,5 @@
 \contentsline {subsection}{\numberline {15.11}Esonero 1 - 08/11/2006}{246}{subsection.15.11}%
 \contentsline {subsection}{\numberline {15.12}Esonero 1 - 04/11/2005}{253}{subsection.15.12}%
 \contentsline {subsection}{\numberline {15.13}Esonero 2 - 10/01/2023}{258}{subsection.15.13}%
-\contentsline {subsection}{\numberline {15.14}Lavoro individuale 1 - Consegna 30/10/2012}{260}{subsection.15.14}%
-\contentsline {subsection}{\numberline {15.15}Lavoro individuale 1 - Consegna 05/11/2009}{268}{subsection.15.15}%
+\contentsline {subsection}{\numberline {15.14}Lavoro individuale 1 - Consegna 30/10/2012}{261}{subsection.15.14}%
+\contentsline {subsection}{\numberline {15.15}Lavoro individuale 1 - Consegna 05/11/2009}{269}{subsection.15.15}%

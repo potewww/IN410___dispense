@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  18 NOV 2026 23:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  19 NOV 2026 01:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1627,27 +1627,12 @@ Overfull \hbox (14.7744pt too wide) in paragraph at lines 168--171
 [256])
 
 [257] (./esercizi/APPELLI_ESONERI/esonero2_10_01_23.tex
-Overfull \hbox (3.39253pt too wide) detected at line 31
-\OT1/cmr/bx/n/12 1[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ) = [](\OML/cmm/m/it/12 x[]\OT1/cmr/m/n/12 2\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 ([])(\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )) \OMS/cmsy/m/n/12 ^^A []\OT1/cmr/m/n/12 ([]([])(\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; x[]\OT1/cmr/m/n/12 2) \OMS/cmsy/m/n/12 ^^A []\OT1/cmr/m/n/12 (2\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 :
- []
-
-
-Overfull \hbox (31.21536pt too wide) detected at line 39
-[] \OT1/cmr/m/n/12 = [][][][][]([](\OT1/cmss/m/n/12 P[]\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 (\OT1/cmss/m/n/12 P[]\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 S\OT1/cmr/m/n/12 ))\OML/cmm/m/it/12 ; []\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  \OT1/cmss/m/n/12 P[][]\OML/cmm/m/it/12 ;  [][]:
- []
-
-
 
 [258]
-Overfull \hbox (30.83319pt too wide) detected at line 79
-[] \OT1/cmr/m/n/12 = [][][](\OT1/cmss/m/n/12 N\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 M\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];  [] \OT1/cmr/m/n/12 = [][][](\OT1/cmss/m/n/12 C[]\OML/cmm/m/it/12 ; \OT1/cmss/m/n/12 P[]\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;  [][];
- []
 
+[259]
 
-
-[259]) (./esercizi/APPELLI_ESONERI/li_30_10_12.tex
-
-[260]
+[260]) (./esercizi/APPELLI_ESONERI/li_30_10_12.tex
 
 [261]
 
@@ -1659,11 +1644,11 @@ Overfull \hbox (30.83319pt too wide) detected at line 79
 
 [265]
 
-[266])
+[266]
 
-[267] (./esercizi/APPELLI_ESONERI/li_05_11_09.tex
+[267])
 
-[268]
+[268] (./esercizi/APPELLI_ESONERI/li_05_11_09.tex
 
 [269]
 
@@ -1671,7 +1656,9 @@ Overfull \hbox (30.83319pt too wide) detected at line 79
 
 [271]
 
-[272])) (./main.aux)
+[272]
+
+[273])) (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1680,18 +1667,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 28D16F64AD76C29D9DDE862E085DBBDB;15781.
  ) 
 Here is how much of TeX's memory you used:
- 38967 strings out of 473190
- 779025 string characters out of 5715800
- 1239774 words of memory out of 5000000
- 59788 multiletter control sequences out of 15000+600000
+ 38954 strings out of 473190
+ 778953 string characters out of 5715800
+ 1239849 words of memory out of 5000000
+ 59789 multiletter control sequences out of 15000+600000
  580012 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,18n,108p,1424b,1646s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/filipporossi/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/bbold-type1/bbold7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (272 pages, 1245417 bytes).
+Output written on main.pdf (273 pages, 1246154 bytes).
 PDF statistics:
- 3582 PDF objects out of 4296 (max. 8388607)
- 3184 compressed objects within 32 object streams
- 1697 named destinations out of 1728 (max. 500000)
+ 3568 PDF objects out of 3580 (max. 8388607)
+ 3169 compressed objects within 32 object streams
+ 1683 named destinations out of 1728 (max. 500000)
  821 words of extra memory for PDF output out of 10000 (max. 10000000)
 

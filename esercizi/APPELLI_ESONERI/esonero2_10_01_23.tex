@@ -1,88 +1,156 @@
 \begin{ex}
-    \ 
-    \begin{enumerate}
-        \item  Mostrare che la funzione caratteristica $\mathbb 1_X$ dell’insieme $X$ dei numeri primi è una funzione ricorsiva.
-\item  Fornire l’espressione ricorsiva di $\mathbb 1_X$ e delle eventu
-    \end{enumerate}
+Mostrare che l'insieme $X=\{p\in\mathbb N\mid p\text{ è primo}\}$ è ricorsivo.
 \end{ex}
 
 \begin{sol}
-Supponiamo già note le espressioni ricorsive $\mathsf{SUM}$, $\mathsf{MUL}$, $\mathsf{DIFF}$ e $\mathsf{LESSER}$, che calcolano rispettivamente la somma, il prodotto, la differenza troncata $a\dot-b$ e la funzione caratteristica di $a\le b$.
+Dobbiamo mostrare che la funzione caratteristica $\mathbb 1_X$ è ricorsiva.
 \ 
 \begin{enumerate}
-    \item Per $x\ge 2$ il più piccolo divisore $m(x)\ge 2$ di $x$ esiste, e $x$ è primo se e solo se $m(x)=x$. Costruiamo le funzioni ausiliarie passo per passo.
-    \begin{enumerate}
-        \item Sia $\texttt{phi}:\mathbb N^3\to\mathbb N$ data da
-        \[
-        \texttt{phi}(x,d,k):=\begin{cases}1 & \text{se } d(k+1)\le x\\ 0 & \text{altrimenti.}\end{cases}
-        \]
-        È ricorsiva perché ottenuta per composizione da $\texttt{mul}$, dal successore e da $\texttt{lesser}$.
-        \item Sia $\texttt{sum\_phi}:\mathbb N^3\to\mathbb N$ definita per ricorsione da
-        \[
-        \texttt{sum\_phi}(x,d,0):=0,\qquad \texttt{sum\_phi}(x,d,i+1):=\texttt{sum\_phi}(x,d,i)+\texttt{phi}(x,d,i),
-        \]
-        cioè $\texttt{sum\_phi}(x,d,n)=\sum_{k=0}^{n-1}\texttt{phi}(x,d,k)$.
-        \item Sia $\texttt{q}(x,d):=\texttt{sum\_phi}(x,d,x)$. Per $d\ge 1$ vale $d(k+1)\le x\iff k+1\le\lfloor x/d\rfloor$, e tutti questi $k$ stanno in $\{0,\dots,x-1\}$, quindi $\texttt{q}(x,d)=\lfloor x/d\rfloor$.
-        \item Sia $\texttt{rem}(x,d):=x\dot- d\cdot\texttt{q}(x,d)$, che per $d\ge 1$ è il resto della divisione di $x$ per $d$.
-        \item Sia $\texttt{sigma}:\mathbb N^2\to\mathbb N$ data da $\texttt{sigma}(x,i):=\texttt{rem}(x,i+2)\cdot(x\dot-1)$. Per $x\ge 2$ si annulla se e solo se $i+2$ divide $x$, e in particolare in $i=x-2$. Per $x\le 1$ si annulla sempre. Quindi per ogni $x$ esiste $i$ con $\texttt{sigma}(x,i)=0$, e $\min(\texttt{sigma})$ è una funzione totale di un solo argomento: $\min(\texttt{sigma})(x)$ è il minimo $i$ tale che $\texttt{sigma}(x,i)=0$.
-        \item Per $x\ge2$ si ha $\min(\texttt{sigma})(x)=m(x)-2$, quindi $x$ è primo se e solo se $\min(\texttt{sigma})(x)=x\dot-2$. Per $x\le 1$ vale $\min(\texttt{sigma})(x)=0=x\dot-2$, quindi serve escluderli con la condizione $2\le x$. Dunque
-        \[
-        \mathbf 1_X(x)=\texttt{lesser}(x\dot-2,\min(\texttt{sigma})(x))\cdot\texttt{lesser}(\min(\texttt{sigma})(x),x\dot-2)\cdot\texttt{lesser}(2,x).
-        \]
-    \end{enumerate}
-    Tutte le funzioni sono ottenute dalle funzioni base e da $\texttt{sum}$, $\texttt{mul}$, $\texttt{diff}$, $\texttt{lesser}$ tramite composizione, concatenazione, ricorsione primitiva e minimizzazione di una funzione totale. Quindi $\mathbf 1_X$ è ricorsiva.
-    \item Scriviamo le espressioni corrispondenti, ricordando che $\mathsf{CONCAT}$ è associativo, quindi $\mathsf{CONCAT}(a,b,c)$ sta per $\mathsf{CONCAT}(a,\mathsf{CONCAT}(b,c))$.
-    \begin{enumerate}
-        \item Per $\texttt{phi}$:
-        \[
-        \mathsf{PHI}=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,3},\mathsf{COMP}(\mathsf P_{3,3},\mathsf S)),\mathsf{MUL}),\ \mathsf P_{1,3}\big),\ \mathsf{LESSER}\Big).
-        \]
-        \item Per $\texttt{sum\_phi}$, con $\mathsf{BASE}=\mathsf C_{0,2}$ e
-        \[
-        \mathsf{PASSO}=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{1,4},\mathsf P_{2,4},\mathsf P_{3,4}),\mathsf{PHI}),\ \mathsf P_{4,4}\big),\ \mathsf{SUM}\Big),
-        \]
-        poniamo
-        \[
-        \mathsf{SUMPHI}=\mathsf{REC}(\mathsf{BASE},\mathsf{PASSO}).
-        \]
-        \item Per $\texttt{q}$:
-        \[
-        \mathsf{CU}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,2},\mathsf P_{2,2},\mathsf P_{1,2}),\ \mathsf{SUMPHI}\big),\qquad \llbracket\mathsf{CU}\rrbracket=\texttt{q}.
-        \]
-        \item Per $\texttt{rem}$:
-        \[
-        \mathsf{PSI}=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf P_{1,2},\ \mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf{CU}),\mathsf{MUL})\big),\ \mathsf{DIFF}\Big).
-        \]
-         \item Per $\texttt{sigma}$, poniamo
-        \[
-        \mathsf{RES}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,2},\ \mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf C_{2,2}),\mathsf{SUM})),\ \mathsf{PSI}\big),
-        \]
-        \[
-        \mathsf{PRE}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,2},\mathsf C_{1,2}),\ \mathsf{DIFF}\big),
-        \]
-        che calcolano rispettivamente $\texttt{rem}(x,i+2)$ e $x\dot-1$, e
-        \[
-        \mathsf{SIGMA}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{RES},\mathsf{PRE}),\ \mathsf{MUL}\big).
-        \]
-        \item Per $\min(\texttt{sigma})$ poniamo $\mathsf M=\mathsf{MIN}(\mathsf{SIGMA})$, e per $x\dot-2$ poniamo
-        \[
-        \mathsf N=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf C_{2,1}),\ \mathsf{DIFF}\big).
-        \]
-        \item Per l'uguaglianza, usando $a=b\iff a\le b\ \wedge\ b\le a$:
-        \[
-        \mathsf{EQ}=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf{LESSER},\ \mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{1,2}),\mathsf{LESSER})\big),\ \mathsf{MUL}\Big).
-        \]
-        \item Per $\mathbf 1_X$, poniamo
-        \[
-        \mathsf{UG}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf N,\mathsf M),\ \mathsf{EQ}\big),\qquad
-        \mathsf{MAG}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf C_{2,1},\mathsf P_{1,1}),\ \mathsf{LESSER}\big),
-        \]
-        che calcolano rispettivamente la funzione caratteristica di $x\dot-2=\min(\texttt{sigma})(x)$ e quella di $2\le x$, e
-        \[
-        \mathsf{IND}=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf{UG},\mathsf{MAG}),\ \mathsf{MUL}\big),
-        \]
-        con $\llbracket\mathsf{IND}\rrbracket=\mathbf 1_X$.
-    \end{enumerate}
+\item Costruiamo la funzione \texttt{r} che calcola il resto della divisione. Sia
+\[
+\texttt{r}\colon\mathbb N^2\to\mathbb N,\qquad
+(x,y)\longmapsto
+\begin{cases}
+[x]_y & y>0,\\
+\bot & y=0.
+\end{cases}
+\]
+Mostriamo che è ricorsiva. Se $y>0$ si ha $x=ky+r$ con $0\le r<y$, quindi dobbiamo trovare $k$. Sia allora
+\[
+\texttt{q}\colon\mathbb N^2\to\mathbb N,\qquad
+(x,y)\longmapsto
+\begin{cases}
+k & k\text{ minimo tale che }ky>x,\\
+\bot & \text{altrimenti.}
+\end{cases}
+\]
+Osserviamo che se $y=0$ non esiste alcun $k$ tale che $ky>x$, e quindi $\texttt{q}(x,0)=\bot$; vale anche il viceversa, dunque $\texttt{q}$ è definita se e solo se $y\neq0$. Per costruirla poniamo $\texttt{q}=\min(\texttt{sigma})$, dove
+\[
+\texttt{sigma}\colon\mathbb N^3\to\mathbb N,\qquad (x,y,i)\longmapsto 1-\texttt{lesser}(x,iy).
+\]
+In questo modo, per ogni $(x,y)\in\mathbb N\times(\mathbb N\setminus\{0\})$ esiste $r$ con $0\le r<y$ tale che $x=(\texttt{q}(x,y)-1)\,y+r$ (si noti che $\texttt{q}(x,y)\ge1$, perché $0\cdot y=0\not>x$). Possiamo quindi definire $\texttt{r}(x,y):=x-y\,(\texttt{q}(x,y)-1)$. Dalla definizione di $\texttt{q}$ abbiamo
+\[
+\texttt{r}\colon\mathbb N^2\to\mathbb N,\qquad
+(x,y)\longmapsto
+\begin{cases}
+x-y\,(\texttt{q}(x,y)-1) & y\neq0,\\
+\bot & y=0,
+\end{cases}
+\]
+che è una funzione ricorsiva.
+
+\item Vogliamo costruire $\mathbb 1_X$. I casi base $0$ e $1$ li consideriamo a parte, cioè
+\[
+\mathbb 1_X=(1-\mathbb 1_{\{0\}})(1-\mathbb 1_{\{1\}})\cdot\texttt{tau},
+\]
+dove $\texttt{tau}$ deve decidere i numeri primi. Poniamo
+\[
+\texttt{test}_{=}(x,y):=\Delta\big(1,\Delta(x,y)+\Delta(y,x)\big),
+\]
+che vale $1$ se $x=y$ e $0$ altrimenti. Per costruire $\texttt{tau}$ definiamo
+\[
+\texttt{f}\colon\mathbb N\to\mathbb N,\qquad
+x\longmapsto k+2\quad\text{con $k$ minimo tale che }[x]_{k+2}=0\ \text{ oppure }\ x=1.
+\]
+Un tale $k$ esiste sempre (per $x=0$ si ha $k=0$, per $x=1$ vale la seconda condizione, per $x\ge2$ si può prendere $k=x-2$), quindi $\texttt{f}$ è totale. Si ha $\texttt{f}(0)=\texttt{f}(1)=2$ e, per $x\ge2$, $\texttt{f}(x)$ è il più piccolo divisore di $x$ maggiore o uguale a $2$.
+
+Questa funzione è ricorsiva, infatti sia
+\[
+\texttt{eta}\colon\mathbb N^2\to\mathbb N,\qquad
+(x,i)\longmapsto
+\begin{cases}
+0 & \text{se } [x]_{i+2}=0 \text{ oppure } x=1,\\
+1 & \text{altrimenti,}
+\end{cases}
+\]
+e abbiamo $\texttt{f}(x)=\min(\texttt{eta})(x)+2$.
+
+Ora, per $x\ge2$, $x$ è primo se e solo se $\texttt{f}(x)=x$, e quindi
+\[
+\texttt{tau}(x):=\texttt{test}_{=}\big(\texttt{f}(x),x\big).
+\]
+In conclusione
+\[
+\mathbb 1_X=(1-\mathbb 1_{\{0\}})(1-\mathbb 1_{\{1\}})\cdot\texttt{tau}.
+\]
+
+\item Troviamo ora l'espressione per ogni pezzo. Sia
+\[
+\begin{aligned}
+\mathsf{SIGMA}:=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf C_{3,1},\ &\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf P_{3,1},\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{3,2}),\mathsf{MULT})\big),\\
+&\mathsf{LESSER}\big)\big),\mathsf{DIFF}\Big),
+\end{aligned}
+\]
+e vale $\llbracket\mathsf{SIGMA}\rrbracket=\texttt{sigma}$. Quindi
+\[
+\mathsf Q:=\mathsf{MIN}(\mathsf{SIGMA}),\qquad \llbracket\mathsf Q\rrbracket=\texttt{q},
+\]
+e di nuovo
+\[
+\begin{aligned}
+\mathsf R:=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf P_{2,1},\ &\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf P_{2,2},\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf Q,\mathsf C_{2,1}),\mathsf{DIFF})\big),\mathsf{MULT}\big)\big),\mathsf{DIFF}\Big),
+\end{aligned}
+\]
+e abbiamo $\llbracket\mathsf R\rrbracket=\texttt{r}$. Inoltre
+\[
+\begin{aligned}
+\mathsf{TEST}_{=}:=\mathsf{COMP}\Big(\mathsf{CONCAT}\big(\mathsf C_{2,1},\ &\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf{DIFF},\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{2,1}),\mathsf{DIFF})\big),\mathsf{SUM}\big)\big),\mathsf{DIFF}\Big),
+\end{aligned}
+\]
+e vale $\llbracket\mathsf{TEST}_{=}\rrbracket=\texttt{test}_{=}$. Poniamo poi
+\[
+\begin{aligned}
+\mathsf{ISZERO}&:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf C_{1,0}),\mathsf{TEST}_{=}\big),\\
+\mathsf{ISUNO}&:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf C_{1,1}),\mathsf{TEST}_{=}\big),
+\end{aligned}
+\]
+e quindi
+\[
+\begin{aligned}
+\mathsf{NOTZERO}&:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf C_{1,1},\mathsf{ISZERO}),\mathsf{DIFF}\big),\\
+\mathsf{NOTUNO}&:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf C_{1,1},\mathsf{ISUNO}),\mathsf{DIFF}\big),
+\end{aligned}
+\]
+e abbiamo $\llbracket\mathsf{NOTZERO}\rrbracket=1-\mathbb 1_{\{0\}}$ e $\llbracket\mathsf{NOTUNO}\rrbracket=1-\mathbb 1_{\{1\}}$.
+
+Infine $\texttt{eta}(x,i)=\texttt{a}(x,i)\cdot\texttt{b}(x,i)$, dove
+\[
+\texttt{a}(x,i)=1-\mathbb 1_{\{1\}}(x),\qquad
+\texttt{b}(x,i)=1-\texttt{test}_{=}\big(0,[x]_{i+2}\big).
+\]
+Se scriviamo
+\[
+\mathsf A:=\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf C_{2,1},\ \mathsf{COMP}(\mathsf P_{2,1},\mathsf{ISUNO})\big),\mathsf{DIFF}\big),
+\]
+\[
+\begin{aligned}
+\mathsf B:=\mathsf{COMP}\Big(\mathsf{CONCAT}\Big(\mathsf C_{2,1},\ &\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf C_{2,0},\\
+&\mathsf{COMP}\big(\mathsf{CONCAT}\big(\mathsf P_{2,1},\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf C_{2,2}),\mathsf{SUM})\big),\mathsf R\big)\big),\\
+&\mathsf{TEST}_{=}\big)\Big),\mathsf{DIFF}\Big),
+\end{aligned}
+\]
+e quindi
+\[
+\mathsf{ETA}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf A,\mathsf B),\mathsf{MULT}\big),\qquad \llbracket\mathsf{ETA}\rrbracket=\texttt{eta},
+\]
+e quindi
+\[
+\mathsf F:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf C_{1,2},\mathsf{MIN}(\mathsf{ETA})),\mathsf{SUM}\big),\qquad \llbracket\mathsf F\rrbracket=\texttt{f},
+\]
+\[
+\mathsf{TAU}:=\mathsf{COMP}\big(\mathsf{CONCAT}(\mathsf F,\mathsf P_{1,1}),\mathsf{TEST}_{=}\big),\qquad \llbracket\mathsf{TAU}\rrbracket=\texttt{tau},
+\]
+e quindi, indicando con $\mathsf{MULT}^3$ il prodotto di tre fattori,
+\begin{gather*}
+\mathsf{IND}_X:=\mathsf{COMP}\big(\mathsf{CONCAT}^3(\mathsf{NOTZERO},\mathsf{NOTUNO},\mathsf{TAU}),\mathsf{MULT}^3\big),\\
+\llbracket\mathsf{IND}_X\rrbracket=\mathbb 1_X.
+\end{gather*}
+Dunque $\mathbb 1_X$ è ricorsiva e $X$ è un insieme ricorsivo.
 \end{enumerate}
 \end{sol}
+
 \newpage
