@@ -143,8 +143,8 @@ funzioni base:
     \item Predecessore (o decremento): $D(x)=\begin{cases}x-1 & x>0\\ 0 & \text{altrimenti.}\end{cases}$
     \item Schemi per funzioni:
     \begin{itemize}
-        \item costanti: $C_{x_0,n}\colon\mathbb N^n\to\mathbb N$, $(-)\mapsto x_0$;
-        \item proiezione: $P_{i,n}\colon\mathbb N^n\to\mathbb N$, $(x_1,\dots,x_n)\mapsto x_i$.
+        \item costanti: $C_{n,x_0}\colon\mathbb N^n\to\mathbb N$, $(-)\mapsto x_0$;
+        \item proiezione: $P_{n,i}\colon\mathbb N^n\to\mathbb N$, $(x_1,\dots,x_n)\mapsto x_i$.
     \end{itemize}
 \end{itemize}
 
@@ -215,7 +215,7 @@ L'introduzione dell'operatore di minimalizzazione nell'insieme $\mathcal R$ è c
 
 \begin{defi}
 \textit{Le espressioni ricorsive di profondità $0$} sono $\mathsf S$, 
-$\mathsf D$, $\mathsf C_{x_0,n}$ e $\mathsf P_{i,n}$. 
+$\mathsf D$, $\mathsf C_{n,x_0}$ e $\mathsf P_{n,i}$. 
 Per $d\geq 1$, una espressione ricorsiva $\mathsf e$ è di 
 \textit{profondità $d$} se è di profondità $d-1$ oppure se può essere scritta 
 per composizione $\mathsf{COMP}(\mathsf f)$, 
@@ -227,7 +227,7 @@ L'insieme delle espressioni ricorsive sarà indicato con $\mathsf R$.
 \begin{rema}
 Dal punto di vista sintattico, la costruzione di tutte le espressioni mostra in modo induttivo che i ``costrutti'' introdotti sopra possono essere ottenuti come interpretazione delle espressioni ricorsive generate dalla grammatica con simbolo iniziale $\mathsf R$ le cui regole di produzione sono
 \[
-\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{x_0,n}\mid\mathsf P_{i,n}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
+\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{n,x_0}\mid\mathsf P_{n,i}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
 \]
 \end{rema}
 
@@ -259,7 +259,7 @@ anche cambiando l'interpretazione, potremmo non avere modifche in $\mathcal R$).
 \begin{rema}
 È anche possibile avere presentazioni alternative della stessa classe di funzioni: ad esempio si potrebbe cambiare l'interpretazione del simbolo $\mathsf S$ dalla somma alla funzione successore, $[[\mathsf S]](x):=x+1$, senza cambiare il linguaggio:
 \[
-\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{x_0,n}\mid\mathsf P_{i,n}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
+\mathsf R:=\mathsf S\mid\mathsf D\mid\mathsf C_{n,x_0}\mid\mathsf P_{n,i}\mid\mathsf{COMP}(\mathsf R,\mathsf R)\mid\mathsf{CONCAT}(\mathsf R,\mathsf R)\mid\mathsf{REC}(\mathsf R,\mathsf R)\mid\mathsf{MIN}(\mathsf R).
 \]
 Si vede facilmente che la classe delle funzioni che sono interpretazione delle (stesse) espressioni ricorsive non cambia, in quanto la funzione successore si può ottenere dalla somma e dalla funzione costante a $1$ per composizione, e la funzione somma si può ottenere come iterazione del successore per ricorsione primitiva di base la funzione identità e il successore come passo di ricorsione. In pratica, denotando con $[[\ ]]_1$ la prima interpretazione e con $[[\ ]]_2$ la seconda, quella che associa a $\mathsf S$ il successore, abbiamo le seguenti equazioni:
 \[
@@ -402,9 +402,9 @@ Cerca l'$n$-esimo blank a destra, ritorna cancellando tutti i caratteri fino a t
 \end{figure}
 
 \begin{rema}
-La macchina che calcola $F_1=[[\mathsf C_{m,1}]]$ è diversa da quella che calcola $F_2=[[\mathsf C_{m,2}]]$: l'elenco delle istruzioni necessarie per cancellare un blocco di $1$ non è affatto lo stesso di quello che cancella due blocchi di $1$. In effetti non possiamo costruire la macchina di Turing che, qualunque sia il numero intero $n$, calcoli la funzione $[[\mathsf C_{m,n}]]$, perché, necessariamente il valore del parametro $n$ deve essere codificato in un modo o nell'altro negli stati della macchina. L'impossibilità viene quindi dal fatto che $n$ non è un valore limitato, quindi non è possibile codificarlo in un insieme finito di stati.
+La macchina che calcola $F_1=[[\mathsf C_{1,m}]]$ è diversa da quella che calcola $F_2=[[\mathsf C_{2,m}]]$: l'elenco delle istruzioni necessarie per cancellare un blocco di $1$ non è affatto lo stesso di quello che cancella due blocchi di $1$. In effetti non possiamo costruire la macchina di Turing che, qualunque sia il numero intero $n$, calcoli la funzione $[[\mathsf C_{n,m}]]$, perché, necessariamente il valore del parametro $n$ deve essere codificato in un modo o nell'altro negli stati della macchina. L'impossibilità viene quindi dal fatto che $n$ non è un valore limitato, quindi non è possibile codificarlo in un insieme finito di stati.
 
-Tuttavia, possiamo facilmente costruire una macchina che calcola ciascuna delle funzioni $[[\mathsf C_{m,n}]]$ per ogni valore di $n$ inferiore a un valore $n_{\max}$. Infatti, una macchina che cancella $n_{\max}$ blocchi di $1$ procede allo stesso modo anche quando alcuni blocchi possono essere mancanti. Inoltre, vedremo questo tipo di proprietà molto più in generale più avanti.
+Tuttavia, possiamo facilmente costruire una macchina che calcola ciascuna delle funzioni $[[\mathsf C_{n,m}]]$ per ogni valore di $n$ inferiore a un valore $n_{\max}$. Infatti, una macchina che cancella $n_{\max}$ blocchi di $1$ procede allo stesso modo anche quando alcuni blocchi possono essere mancanti. Inoltre, vedremo questo tipo di proprietà molto più in generale più avanti.
 
 D'altra parte potremmo anche scrivere una macchina che, a partire dal valore di $n$ e di qualsiasi tupla, porta alla configurazione terminale associata alla costante $m$: assumendo il valore di $n$ codificato in rappresentazione unaria, la macchina cancellerà tanti blocchi di $1$ quanti ce ne sono nel primo di questi blocchi (che verrà cancellato per ultimo).
 \end{rema}
@@ -416,7 +416,7 @@ Per ogni coppia di interi $n$ ed $i$ con $i\leq n$, la proiezione che associa ad
 \begin{proof}
 Ancora una volta, si tratta di cancellare $n$ blocchi di numeri. Durante il passaggio in corrispondenza dell'$i$-esimo blocco, questo viene copiato sul secondo nastro e quindi, quando la cancellazione di tutti i blocchi è terminata, il puntatore torna alla casella iniziale, e infine il blocco dei numeri del secondo nastro viene copiato sul primo (e cancellato dal secondo).
 \end{proof}
-Utilizzeremo l'espressione $\mathsf P_{i,n}$ e la sua interpretazione $[[\mathsf P_{i,n}]](x_1,\dots,x_n)=x_i$.
+Utilizzeremo l'espressione $\mathsf P_{n,i}$ e la sua interpretazione $[[\mathsf P_{n,i}]](x_1,\dots,x_n)=x_i$.
 \begin{prop}\
 \begin{enumerate}
     \item Qualsiasi funzione ricorsiva su numeri interi è calcolabile mediante macchina di Turing.
@@ -449,7 +449,7 @@ che raccogliamo in questa sezione. Il teorema vero e proprio è nella sezione su
 \begin{rema}[Convenzioni]
 In tutto ciò che segue useremo le seguenti convenzioni sulle espressioni ricorsive.
 \begin{itemize}
-\item $\mathsf P_{i,n}$ è la proiezione $i$-esima su $n$ argomenti e $\mathsf C_{x_0,n}$ è la costante $x_0$ su $n$ argomenti.
+\item $\mathsf P_{n,i}$ è la proiezione $i$-esima su $n$ argomenti e $\mathsf C_{n,x_0}$ è la costante $x_0$ su $n$ argomenti.
 \item $\mathsf S$ è la somma (come nella definizione delle funzioni base) e $\mathsf D$ il predecessore. Poniamo
 $\mathsf{SUCC}:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf C_{1,1}),\mathsf S)$, per cui $\llbracket\mathsf{SUCC}\rrbracket(x)=x+1$.
 \item $\mathsf{COMP}(\mathsf f,\mathsf g)$ è la funzione ``prima $\mathsf f$ e poi $\mathsf g$'', cioè $\llbracket\mathsf g\rrbracket\circ\llbracket\mathsf f\rrbracket$, e
@@ -479,7 +479,7 @@ M(n,m):=\begin{cases}0 & \text{se } m=0\\ n+M(n,m-1) & \text{se } m>0\end{cases}
 \]
 quindi, ponendo l'espressione ricorsiva
 \[
-\mathsf{MULT}:=\mathsf{REC}(\mathsf C_{0,1},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{1,3}),\mathsf S)),
+\mathsf{MULT}:=\mathsf{REC}(\mathsf C_{1,0},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{3,1}),\mathsf S)),
 \]
 si ha che $\llbracket\mathsf{MULT}\rrbracket=M\colon\mathbb N^2\to\mathbb N$.
 
@@ -489,7 +489,7 @@ E(n,m):=\begin{cases}1 & \text{se } m=0\\ n\cdot E(n,m-1) & \text{se } m>0\end{c
 \]
 quindi, ponendo
 \[
-\mathsf{EXP}:=\mathsf{REC}(\mathsf C_{1,1},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{1,3}),\mathsf{MULT})),
+\mathsf{EXP}:=\mathsf{REC}(\mathsf C_{1,1},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf P_{3,1}),\mathsf{MULT})),
 \]
 si ha che $\llbracket\mathsf{EXP}\rrbracket=E\colon\mathbb N^2\to\mathbb N$.
 \end{proof}
@@ -528,7 +528,7 @@ Per la funzione caratteristica del singleton $\{0\}$ si ha $\mathbb 1_{\{0\}}(m)
 soddisfa $\llbracket\mathsf{ISZERO}\rrbracket=\mathbb 1_{\{0\}}$.
 Infine $n<m$ equivale a $\Delta(m,n)\neq0$, e quindi $\mathbb 1_{<}(n,m)=\mathbb 1_{\{0\}}(\mathbb 1_{\{0\}}(\Delta(m,n)))$; possiamo definire
 \[
-\mathsf{LESSER}:=\mathsf{COMP}(\mathsf{COMP}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{1,2}),\mathsf{DIFF}),\mathsf{ISZERO}),\mathsf{ISZERO})
+\mathsf{LESSER}:=\mathsf{COMP}(\mathsf{COMP}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{2,1}),\mathsf{DIFF}),\mathsf{ISZERO}),\mathsf{ISZERO})
 \]
 e quindi $\llbracket\mathsf{LESSER}\rrbracket=\mathbb 1_{<}$.
 \end{proof}
@@ -548,16 +548,16 @@ La funzione caratteristica dell'unione è il massimo delle funzioni caratteristi
 \end{align*}
 Poiché $\mathbb 1_X$ assume solo i valori $0$ e $1$, la funzione caratteristica del complemento è $1-\mathbb 1_X=\mathbb 1_{\{0\}}(\mathbb 1_X)$, ovvero $\llbracket\mathsf{COMP}(\mathsf e_X,\mathsf{ISZERO})\rrbracket$.
 
-Rimane da mostrare che i sottoinsiemi finiti sono ricorsivi. L'insieme vuoto ha funzione caratteristica $\llbracket\mathsf C_{0,r}\rrbracket$, e ogni insieme finito è un'unione finita di singoletti, quindi basta trattare i singoletti.
+Rimane da mostrare che i sottoinsiemi finiti sono ricorsivi. L'insieme vuoto ha funzione caratteristica $\llbracket\mathsf C_{r,0}\rrbracket$, e ogni insieme finito è un'unione finita di singoletti, quindi basta trattare i singoletti.
 Sia $(m_1,\dots,m_r)\in\mathbb N^r$. Poniamo
 \[
-\mathsf{ABSD}:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf{DIFF},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{1,2}),\mathsf{DIFF})),\mathsf S\bigr),
+\mathsf{ABSD}:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf{DIFF},\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,2},\mathsf P_{2,1}),\mathsf{DIFF})),\mathsf S\bigr),
 \]
 per cui $\llbracket\mathsf{ABSD}\rrbracket(x,y)=\Delta(x,y)+\Delta(y,x)=|x-y|$. Allora
 \[
 \mathbb 1_{\{(m_1,\dots,m_r)\}}(n_1,\dots,n_r)=\mathbb 1_{\{0\}}\Bigl(\sum_{i=1}^r|n_i-m_i|\Bigr),
 \]
-e quindi, ponendo $\mathsf E_i:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{i,r},\mathsf C_{m_i,r}),\mathsf{ABSD})$,
+e quindi, ponendo $\mathsf E_i:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{r,i},\mathsf C_{r,m_i}),\mathsf{ABSD})$,
 \[
 \mathsf F:=\mathsf{COMP}\bigl(\mathsf{PLUS}^r(\mathsf E_1,\dots,\mathsf E_r),\mathsf{ISZERO}\bigr)
 \]
@@ -580,7 +580,7 @@ f_1(x_1,\dots,x_n) & \text{se } (x_1,\dots,x_n)\in X\\
 Sia $\mathsf e_X$ tale che $\llbracket\mathsf e_X\rrbracket=\mathbb 1_X$ e sia $\mathsf{effe1}$ tale che $\llbracket\mathsf{effe1}\rrbracket=f_1$.
 Consideriamo la funzione $g\colon\mathbb N^{n+1}\to\mathbb N$ definita da $g(x_1,\dots,x_n,k):=\mathbb 1_{\overline X}(x_1,\dots,x_n)$, che non dipende da $k$ ed è ricorsiva:
 \[
-\mathsf g:=\mathsf{COMP}\bigl(\mathsf{CONCAT}^n(\mathsf P_{1,n+1},\dots,\mathsf P_{n,n+1}),\mathsf{COMP}(\mathsf e_X,\mathsf{ISZERO})\bigr).
+\mathsf g:=\mathsf{COMP}\bigl(\mathsf{CONCAT}^n(\mathsf P_{n+1,1},\dots,\mathsf P_{n+1,n}),\mathsf{COMP}(\mathsf e_X,\mathsf{ISZERO})\bigr).
 \]
 Per minimalizzazione otteniamo la funzione $e:=\llbracket\mathsf{MIN}(\mathsf g)\rrbracket$: se $x\in X$ si ha $g(x,0)=0$ e quindi $e(x)=0$, mentre se $x\notin X$ si ha $g(x,k)=1$ per ogni $k$, quindi $e(x)$ non è definita. Dunque $f=f_1+e$, ovvero
 \[
@@ -607,8 +607,8 @@ f(n_1,\dots,n_r,m)+g(n_1,\dots,n_r,m-1) & \text{se } m>0.
 \]
 Pertanto, se $\mathsf F$ è un'espressione ricorsiva per cui $\llbracket\mathsf F\rrbracket=f$, ponendo
 \begin{align*}
-\mathsf{BASE}&:=\mathsf{COMP}\bigl(\mathsf{CONCAT}^{r+1}(\mathsf P_{1,r},\dots,\mathsf P_{r,r},\mathsf C_{0,r}),\mathsf F\bigr),\\
-\mathsf{STEP}&:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\\&\qquad\mathsf{COMP}(\mathsf{CONCAT}^{r+1}(\mathsf P_{1,r+2},\dots,\mathsf P_{r+1,r+2}),\mathsf F),\mathsf P_{r+2,r+2}),\mathsf S\bigr)
+\mathsf{BASE}&:=\mathsf{COMP}\bigl(\mathsf{CONCAT}^{r+1}(\mathsf P_{r,1},\dots,\mathsf P_{r,r},\mathsf C_{r,0}),\mathsf F\bigr),\\
+\mathsf{STEP}&:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\\&\qquad\mathsf{COMP}(\mathsf{CONCAT}^{r+1}(\mathsf P_{r+2,1},\dots,\mathsf P_{r+2,r+1}),\mathsf F),\mathsf P_{r+2,r+2}),\mathsf S\bigr)
 \end{align*}
 e $\mathsf G:=\mathsf{REC}(\mathsf{BASE},\mathsf{STEP})$ si ha che $\llbracket\mathsf G\rrbracket=g$.
 \end{proof}
@@ -679,7 +679,7 @@ pertanto si può definire l'espressione ricorsiva corrispondente
 \[
 \begin{aligned}
 \mathsf{FLOOR2}:=\mathsf{COMP}\Bigl(&\mathsf{CONCAT}(\mathsf P_{1,1},\mathsf P_{1,1}),\\
-&\mathsf{REC}\bigl(\mathsf C_{0,1},\\&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf P_{2,3},\mathsf{ISEVEN}),\mathsf P_{3,3}),\mathsf S)\bigr)\Bigr)
+&\mathsf{REC}\bigl(\mathsf C_{1,0},\\&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf P_{3,2},\mathsf{ISEVEN}),\mathsf P_{3,3}),\mathsf S)\bigr)\Bigr)
 \end{aligned}
 \]
 e avere che $\llbracket\mathsf{FLOOR2}\rrbracket=f$.
@@ -710,7 +710,7 @@ V_2(n)=\sum_{i=0}^{n}\mathbb 1_{<}\bigl(\sigma(n,i+1),\sigma(n,i)\bigr),
 (e questa formula vale anche per $n=0$). La funzione $h(n,i):=\mathbb 1_{<}(\sigma(n,i+1),\sigma(n,i))$ è ricorsiva, con espressione
 \[
 \begin{aligned}
-\mathsf H:=\mathsf{COMP}\bigl(&\mathsf{CONCAT}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{1,2},\mathsf{COMP}(\mathsf P_{2,2},\mathsf{SUCC})),\mathsf{V2AUX}),\\
+\mathsf H:=\mathsf{COMP}\bigl(&\mathsf{CONCAT}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{2,1},\mathsf{COMP}(\mathsf P_{2,2},\mathsf{SUCC})),\mathsf{V2AUX}),\\
 &\mathsf{V2AUX}),\mathsf{LESSER}\bigr),
 \end{aligned}
 \]
@@ -729,8 +729,8 @@ Per ogni intero $s\ge1$ esiste una biiezione ricorsiva $K_s\colon\mathbb N^s\to\
 Per $s=1$ prendiamo l'identità. Per $s=2$ poniamo $K_2(n,m):=2^n(2m+1)-1$. Ogni intero positivo si scrive in modo unico come $2^n(2m+1)$, quindi $K_2$ è biiettiva; ha espressione
 \[
 \begin{aligned}
-\mathsf{K2}:=\mathsf{COMP}\Bigl(\mathsf{COMP}\bigl(\mathsf{CONCAT}(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,2},\mathsf P_{1,2}),\mathsf{EXP}),\\
-&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,2},\mathsf P_{2,2}),\mathsf{MULT}),\mathsf C_{1,2}),\mathsf S)),\mathsf{MULT}\bigr),\mathsf D\Bigr)
+\mathsf{K2}:=\mathsf{COMP}\Bigl(\mathsf{COMP}\bigl(\mathsf{CONCAT}(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,2},\mathsf P_{2,1}),\mathsf{EXP}),\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,2},\mathsf P_{2,2}),\mathsf{MULT}),\mathsf C_{2,1}),\mathsf S)),\mathsf{MULT}\bigr),\mathsf D\Bigr)
 \end{aligned}
 \]
 e quindi $\llbracket\mathsf{K2}\rrbracket=K_2$. L'inversa è $K_2^{-1}(y)=(V_2(y+1),\lfloor\sigma(y+1,y+1)/2\rfloor)$ (esponente di $2$ e $m$, dove $2m+1$ è la parte dispari di $y+1$), e dunque $K_2^{-1}=\llbracket\mathsf{K2INV}\rrbracket$ dove
@@ -749,16 +749,16 @@ che è biiettiva per induzione su $s$. Resta così stabilita una famiglia di esp
 \mathsf K^s:=\begin{cases}
 \mathsf P_{1,1} & \text{se } s=1\\
 \mathsf{K2} & \text{se } s=2\\
-\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf P_{1,s},\mathsf Z_s),\mathsf{K2}\bigr) & \text{se } s>2,
+\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf P_{s,1},\mathsf Z_s),\mathsf{K2}\bigr) & \text{se } s>2,
 \end{cases}
 \]
-dove $\mathsf Z_s:=\mathsf{COMP}(\mathsf{CONCAT}^{s-1}(\mathsf P_{2,s},\dots,\mathsf P_{s,s}),\mathsf K^{s-1})$ calcola $K_{s-1}(n_2,\dots,n_s)$.
+dove $\mathsf Z_s:=\mathsf{COMP}(\mathsf{CONCAT}^{s-1}(\mathsf P_{s,2},\dots,\mathsf P_{s,s}),\mathsf K^{s-1})$ calcola $K_{s-1}(n_2,\dots,n_s)$.
 Similmente per l'inversa: $K_s^{-1}(n)$ si ottiene applicando $K_2^{-1}(n)=(n_1,n_2)$, tenendo $n_1$ come prima componente e applicando a $n_2$ l'inversa $K_{s-1}^{-1}$; dunque
 \[
 \mathsf{KINV}^s:=\begin{cases}
 \mathsf P_{1,1} & \text{se } s=1\\
 \mathsf{K2INV} & \text{se } s=2\\
-\mathsf{COMP}\bigl(\mathsf{K2INV},\mathsf{CONCAT}(\mathsf P_{1,2},\mathsf{COMP}(\mathsf P_{2,2},\mathsf{KINV}^{s-1}))\bigr) & \text{se } s>2.
+\mathsf{COMP}\bigl(\mathsf{K2INV},\mathsf{CONCAT}(\mathsf P_{2,1},\mathsf{COMP}(\mathsf P_{2,2},\mathsf{KINV}^{s-1}))\bigr) & \text{se } s>2.
 \end{cases}
 \]
 \end{proof}
@@ -790,7 +790,7 @@ K_s\bigl(H(n,m,K_s^{-1}(\tilde F(n,m-1)))\bigr) & \text{se } m>0,
 che è una ricorsione primitiva ordinaria di base $K_s\circ G$ e di passo $(n,m,z)\mapsto K_s(H(n,m,K_s^{-1}(z)))$. Ponendo
 \begin{align*}
 \mathsf{BASE}&:=\mathsf{COMP}(\mathsf G,\mathsf K^s),\\
-\mathsf{STEP}&:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf{CONCAT}^{r+1}(\mathsf P_{1,r+2},\dots,\mathsf P_{r+1,r+2}),\mathsf{COMP}(\mathsf P_{r+2,r+2},\mathsf{KINV}^s)),\mathsf{COMP}(\mathsf H,\mathsf K^s)\bigr)
+\mathsf{STEP}&:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf{CONCAT}^{r+1}(\mathsf P_{r+2,1},\dots,\mathsf P_{r+2,r+1}),\mathsf{COMP}(\mathsf P_{r+2,r+2},\mathsf{KINV}^s)),\mathsf{COMP}(\mathsf H,\mathsf K^s)\bigr)
 \end{align*}
 si ha $\tilde F=\llbracket\mathsf{REC}(\mathsf{BASE},\mathsf{STEP})\rrbracket$ e quindi
 \[
@@ -931,14 +931,14 @@ F^+(f^-,f^+,q',a',m):=\Bigl(2f^-+a',\ \lfloor f^+/2\rfloor,\ q'\Bigr).
 
 Un'espressione ricorsiva per $T_\mu\colon\mathbb N^3\to\mathbb N^3$ sarà
 \begin{align*}
-\mathsf{TIMU}:=\mathsf{COMP}\Big(&\mathsf{CONCAT}^3\bigl(\mathsf P_{1,3},\mathsf P_{2,3},\\
-&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf{COMP}(\mathsf P_{2,3},\mathsf{ISODD})),\mathsf{MU})\bigr),\\
+\mathsf{TIMU}:=\mathsf{COMP}\Big(&\mathsf{CONCAT}^3\bigl(\mathsf P_{3,1},\mathsf P_{3,2},\\
+&\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{3,3},\mathsf{COMP}(\mathsf P_{3,2},\mathsf{ISODD})),\mathsf{MU})\bigr),\\
 &\mathsf{COMP}\Big(\mathsf{COMP}\Big(\mathsf{CONCAT}\Big(\\
 &\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf P_{5,5},\mathsf{ISEVEN}),\mathsf{effeleft}),\mathsf{MULT}),\\
 &\qquad\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf P_{5,5},\mathsf{ISODD}),\mathsf{efferight}),\mathsf{MULT})\Big),\\
 &\qquad\mathsf S\Big),\mathsf{KINV}^3\Big)\Big)
 \end{align*}
-Il primo blocco prende $(f^-,f^+,q)$ e, ponendo in parallelo (con $\mathsf{CONCAT}$) le due proiezioni $\mathsf P_{1,3}$, $\mathsf P_{2,3}$ e il blocco che calcola $\mathsf{MU}$ sulla coppia $(q,a)$, restituisce le $5$ componenti $(f^-,f^+,q',a',m)$. Il secondo blocco sceglie, mediante la moltiplicazione per $\mathbb 1_{2\mathbb N}(m)$ oppure per $\mathbb 1_{\mathrm{odd}}(m)$, quale tra le due funzioni (codificate) $\mathsf{effeleft}$ ed $\mathsf{efferight}$ applicare; la somma delle due scelte è il codice della nuova tripla, che viene decodificato da $\mathsf{KINV}^3$.
+Il primo blocco prende $(f^-,f^+,q)$ e, ponendo in parallelo (con $\mathsf{CONCAT}$) le due proiezioni $\mathsf P_{3,1}$, $\mathsf P_{3,2}$ e il blocco che calcola $\mathsf{MU}$ sulla coppia $(q,a)$, restituisce le $5$ componenti $(f^-,f^+,q',a',m)$. Il secondo blocco sceglie, mediante la moltiplicazione per $\mathbb 1_{2\mathbb N}(m)$ oppure per $\mathbb 1_{\mathrm{odd}}(m)$, quale tra le due funzioni (codificate) $\mathsf{effeleft}$ ed $\mathsf{efferight}$ applicare; la somma delle due scelte è il codice della nuova tripla, che viene decodificato da $\mathsf{KINV}^3$.
 
 \begin{figure}[H]
 \centering
@@ -951,13 +951,13 @@ Il primo blocco prende $(f^-,f^+,q)$ e, ponendo in parallelo (con $\mathsf{CONCA
 \draw (-1.6,-1.2) -- (-1.6,2.4);
 
 % Proiezioni
-\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p1) at (0,2.4) {$\mathsf P_{1,3}$};
-\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p2) at (0,1.2) {$\mathsf P_{2,3}$};
+\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p1) at (0,2.4) {$\mathsf P_{3,1}$};
+\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p2) at (0,1.2) {$\mathsf P_{3,2}$};
 
 % Blocco grande
 \draw[rounded corners=3pt, line width=1pt] (-1.1,-2.2) rectangle (5,0.3);
 \node[draw, minimum width=1.4cm, minimum height=0.7cm] (p33) at (0,-0.35) {$\mathsf P_{3,3}$};
-\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p32) at (0,-1.6)  {$\mathsf P_{2,3}$};
+\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p32) at (0,-1.6)  {$\mathsf P_{3,2}$};
 \node[draw, minimum width=1.4cm, minimum height=0.7cm] (iso) at (1.9,-1.6) {$\mathsf{ISODD}$};
 \node[draw, minimum width=1.2cm, minimum height=1.6cm] (mu)  at (3.9,-0.98) {$\mathsf{MU}$};
 
@@ -982,21 +982,21 @@ Il primo blocco prende $(f^-,f^+,q)$ e, ponendo in parallelo (con $\mathsf{CONCA
 
 \noindent Poniamo, per semplificare la scrittura,
 \begin{align*}
-\mathsf L_1&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,5},\mathsf{COMP}(\mathsf P_{2,5},\mathsf{FLOOR2})),\mathsf{MULT}) &&(2\lfloor f^+/2\rfloor)\\
-\mathsf L_2&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{4,5},\mathsf L_1),\mathsf S) &&(a'+2\lfloor f^+/2\rfloor)\\
-\mathsf L_3&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,5},\mathsf L_2),\mathsf{MULT}) &&(2(a'+2\lfloor f^+/2\rfloor))
+\mathsf L_1&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{5,2},\mathsf{COMP}(\mathsf P_{5,2},\mathsf{FLOOR2})),\mathsf{MULT}) &&(2\lfloor f^+/2\rfloor)\\
+\mathsf L_2&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{5,4},\mathsf L_1),\mathsf S) &&(a'+2\lfloor f^+/2\rfloor)\\
+\mathsf L_3&:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{5,2},\mathsf L_2),\mathsf{MULT}) &&(2(a'+2\lfloor f^+/2\rfloor))
 \end{align*}
 Un'espressione ricorsiva $\mathsf{effeleft}$ per (la versione codificata mediante $\mathsf K^3$ di) $F^-\colon\mathbb N^5\to\mathbb N^3$ sarà:
 \begin{align*}
-\mathsf{effeleft}:=\mathsf{COMP}\Big(\mathsf{CONCAT}^3\Big(&\mathsf{COMP}(\mathsf P_{1,5},\mathsf{FLOOR2}),\\
-&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf P_{1,5},\mathsf{ISODD}),\mathsf L_3),\mathsf S),\\
-&\mathsf P_{3,5}\Big),\mathsf K^3\Big)
+\mathsf{effeleft}:=\mathsf{COMP}\Big(\mathsf{CONCAT}^3\Big(&\mathsf{COMP}(\mathsf P_{5,1},\mathsf{FLOOR2}),\\
+&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf{COMP}(\mathsf P_{5,1},\mathsf{ISODD}),\mathsf L_3),\mathsf S),\\
+&\mathsf P_{5,3}\Big),\mathsf K^3\Big)
 \end{align*}
-come pure, ponendo $\mathsf R_1:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,5},\mathsf P_{1,5}),\mathsf{MULT})$ (che calcola $2f^-$), un'espressione ricorsiva $\mathsf{efferight}$ per (la versione codificata di) $F^+\colon\mathbb N^5\to\mathbb N^3$ sarà, in modo simile:
+come pure, ponendo $\mathsf R_1:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{5,2},\mathsf P_{5,1}),\mathsf{MULT})$ (che calcola $2f^-$), un'espressione ricorsiva $\mathsf{efferight}$ per (la versione codificata di) $F^+\colon\mathbb N^5\to\mathbb N^3$ sarà, in modo simile:
 \begin{align*}
-\mathsf{efferight}:=\mathsf{COMP}\Big(\mathsf{CONCAT}^3\Big(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{4,5},\mathsf R_1),\mathsf S),\\
-&\mathsf{COMP}(\mathsf P_{2,5},\mathsf{FLOOR2}),\\
-&\mathsf P_{3,5}\Big),\mathsf K^3\Big)
+\mathsf{efferight}:=\mathsf{COMP}\Big(\mathsf{CONCAT}^3\Big(&\mathsf{COMP}(\mathsf{CONCAT}(\mathsf P_{5,4},\mathsf R_1),\mathsf S),\\
+&\mathsf{COMP}(\mathsf P_{5,2},\mathsf{FLOOR2}),\\
+&\mathsf P_{5,3}\Big),\mathsf K^3\Big)
 \end{align*}
 
 \begin{figure}[H]
@@ -1007,11 +1007,11 @@ come pure, ponendo $\mathsf R_1:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,5},\
 ]
 % Prima componente: 2*f^- + a'
 \draw[rounded corners=3pt] (-0.2,2.4) rectangle (1.9,3.9);
-\node (c52) at (0.85,3.5) {$\mathsf C_{2,5}$};
-\node (p51) at (0.85,2.8) {$\mathsf P_{1,5}$};
+\node (c52) at (0.85,3.5) {$\mathsf C_{5,2}$};
+\node (p51) at (0.85,2.8) {$\mathsf P_{5,1}$};
 \draw (-0.2,3.15) -- (1.9,3.15);
 \node[draw, minimum width=1cm, minimum height=1.5cm] (mul) at (3,3.15) {$\mathsf{MULT}$};
-\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p54) at (0.85,1.6) {$\mathsf P_{4,5}$};
+\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p54) at (0.85,1.6) {$\mathsf P_{5,4}$};
 \draw[rounded corners=3pt] (-0.2,1.1) rectangle (4.1,4.1);
 \node[draw, minimum width=1cm, minimum height=1.4cm] (add) at (5.4,2.6) {$\mathsf S$};
 \draw[->] (1.9,3.15) -- (mul);
@@ -1019,12 +1019,12 @@ come pure, ponendo $\mathsf R_1:=\mathsf{COMP}(\mathsf{CONCAT}(\mathsf C_{2,5},\
 \draw[->] (p54.east) -| (4.5,2.0) -- (add.west |- 0,2.0);
 
 % Seconda componente: floor(f^+/2)
-\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p52) at (0.85,0.2) {$\mathsf P_{2,5}$};
+\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p52) at (0.85,0.2) {$\mathsf P_{5,2}$};
 \node[draw, minimum width=1.8cm, minimum height=0.7cm] (fl) at (3.2,0.2) {$\mathsf{FLOOR2}$};
 \draw[->] (p52) -- (fl);
 
 % Terza componente: q'
-\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p53) at (0.85,-1) {$\mathsf P_{3,5}$};
+\node[draw, minimum width=1.4cm, minimum height=0.7cm] (p53) at (0.85,-1) {$\mathsf P_{5,3}$};
 
 % Codifica finale
 \node[draw, minimum width=1.2cm, minimum height=5.2cm] (k3) at (8,1.4) {$\mathsf K^3$};
@@ -1052,10 +1052,10 @@ T_\mu(\varphi(f^-,f^+,q,m-1)) & \text{se } m>0
 \]
 e pertanto una espressione ricorsiva per $\varphi$ è $\mathsf{PHI}:=\mathsf{REC}^3(\mathsf{PHIBASE},\mathsf{PHISTEP})$ dove
 \[
-\mathsf{PHIBASE}:=\mathsf{CONCAT}^3(\mathsf P_{1,3},\mathsf P_{2,3},\mathsf P_{3,3})
+\mathsf{PHIBASE}:=\mathsf{CONCAT}^3(\mathsf P_{3,1},\mathsf P_{3,2},\mathsf P_{3,3})
 \]
 \[
-\mathsf{PHISTEP}:=\mathsf{COMP}(\mathsf{CONCAT}^3(\mathsf P_{5,7},\mathsf P_{6,7},\mathsf P_{7,7}),\mathsf{TIMU}).
+\mathsf{PHISTEP}:=\mathsf{COMP}(\mathsf{CONCAT}^3(\mathsf P_{7,5},\mathsf P_{7,6},\mathsf P_{7,7}),\mathsf{TIMU}).
 \]
 (Dopo l'arrivo nello stato finale i valori di $\varphi$ non hanno più un significato, ma $\varphi$ resta definita ovunque.)
 
@@ -1067,7 +1067,7 @@ Possiamo determinare il numero di volte che $T_\mu$ deve essere applicata calcol
 \]
 Infatti $d$ è la codifica per lo stato finale e, finché la computazione non è terminata, $q_k<d$, dunque $\psi(\langle c\rangle,k)=0$ se e solo se $q_k=d$. Un'espressione ricorsiva per $\psi$ è
 \[
-\mathsf{PSI}:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf C_{d,4},\mathsf{COMP}(\mathsf{PHI},\mathsf P_{3,3})),\mathsf{DIFF}\bigr)
+\mathsf{PSI}:=\mathsf{COMP}\bigl(\mathsf{CONCAT}(\mathsf C_{4,d},\mathsf{COMP}(\mathsf{PHI},\mathsf P_{3,3})),\mathsf{DIFF}\bigr)
 \]
 e dunque $\mathsf{TAUSTEPS}:=\mathsf{MIN}(\mathsf{PSI})$ è una espressione ricorsiva per la funzione $s_{\tau_\mu}\colon\mathbb N^3\to\mathbb N$ tale che
 \[
@@ -1091,11 +1091,11 @@ y=\log_2(f^++1)-1=V_2(f^++1)-1
 \]
 e pertanto una sua espressione ricorsiva sarà
 \[
-\mathsf{OUT}:=\mathsf{COMP}\bigl(\mathsf{COMP}(\mathsf{COMP}(\mathsf P_{2,3},\mathsf{SUCC}),\mathsf{V2}),\mathsf D\bigr).
+\mathsf{OUT}:=\mathsf{COMP}\bigl(\mathsf{COMP}(\mathsf{COMP}(\mathsf P_{3,2},\mathsf{SUCC}),\mathsf{V2}),\mathsf D\bigr).
 \]
 A questo punto, per composizione, avremo che
 \[
-\mathsf{effeaux}:=\mathsf{COMP}\bigl(\mathsf{COMP}(\mathsf{CONCAT}^4(\mathsf P_{1,3},\mathsf P_{2,3},\mathsf P_{3,3},\mathsf{TAUSTEPS}),\mathsf{PHI}),\mathsf{OUT}\bigr)
+\mathsf{effeaux}:=\mathsf{COMP}\bigl(\mathsf{COMP}(\mathsf{CONCAT}^4(\mathsf P_{3,1},\mathsf P_{3,2},\mathsf P_{3,3},\mathsf{TAUSTEPS}),\mathsf{PHI}),\mathsf{OUT}\bigr)
 \]
 rappresenta una funzione che prende in input la tripla che codifica una configurazione corrispondente all'input $(x_1,\dots,x_n)$ e restituisce il valore di $f(x_1,\dots,x_n)$ se questo esiste (se la computazione non termina $\mathsf{TAUSTEPS}$, e dunque $\mathsf{effeaux}$, non è definita).
 

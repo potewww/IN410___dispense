@@ -17,7 +17,7 @@ Sia $T\colon\mathbb N\to\mathbb N$.
 
 La scelta dell'alfabeto binario $\{0,1\}$ è solo una delle scelte possibili: funziona bene in questo capitolo poiché siamo nel contesto delle macchine universali per l'alfabeto binario, ma si potrebbero stabilire nozioni e risultati simili per un qualsiasi altro alfabeto, incluso l'alfabeto unario.
 
-\begin{prop}
+\begin{prop}\
 \begin{enumerate}
 \item Ogni funzione costruibile in tempo è Turing calcolabile;
 \item Ogni funzione totale Turing calcolabile da $\mathbb N$ in $\mathbb N$ è maggiorabile da una funzione costruibile in tempo, ovvero se $f$ è tale funzione esiste $T$ costruibile in tempo con $f(n)\le T(n)$ per ogni $n$.
@@ -28,7 +28,20 @@ La scelta dell'alfabeto binario $\{0,1\}$ è solo una delle scelte possibili: fu
 \ 
 \begin{enumerate}
 \item Supponiamo di avere un $T$-timer $\mu$ a $k$ nastri. Costruiamo a partire da $\mu$ una macchina $\mu'$ a $k+1$ nastri che, dato l'input $n$ rappresentato in unario (cioè $1^{n+1}$), cancella un $1$ per ottenere una parola di lunghezza $n$ su cui esegue $\mu$, e che ad ogni passo di $\mu$ scrive un $1$ sul $(k+1)$-esimo nastro. Al termine di $\mu$ sono stati scritti $T(n)$ uni; ne aggiungiamo uno, copiamo il risultato $1^{T(n)+1}$ sul primo nastro e ripuliamo gli altri nastri (lemma~\ref{lem: pulizia nastri}). La macchina $\mu'$ termina quindi in una configurazione terminale che rappresenta $T(n)$ in unario, ovvero $\mu'$ calcola $T$.
-\item Supponiamo che $f$ sia una funzione Turing calcolabile totale da $\mathbb N$ in $\mathbb N$ e sia $\mu$ una macchina che calcola $f$ a partire da un input $m$ rappresentato in binario e restituisce il valore $f(m)$ in unario. Sia $\mu'$ la macchina che, a partire da una parola $w\in\{0,1\}^*$ di lunghezza $n$ (di cui ignora il contenuto), esegue la computazione di $\mu$ su ciascuno degli interi $m=0,1,\dots,n$ (rappresentati in binario, generati ad esempio mediante un contatore). Poiché $f$ è totale, ogni computazione termina e la durata totale dipende solo da $n$ e non dal contenuto di $w$: chiamiamo $T(n)$ tale durata, per cui $\mu'$ è un $T$-timer e $T$ è costruibile in tempo. La durata totale è la somma delle durate delle singole computazioni, e dunque maggiora ognuna di queste durate. In particolare maggiora la durata della computazione di $\mu$ su $n$, che è almeno il tempo necessario a scrivere $f(n)$ in unario, cioè almeno $f(n)+1$. Dunque $T(n)\ge f(n)+1>f(n)$.
+\item Supponiamo che $f$ sia una 
+funzione Turing calcolabile totale da $\mathbb N$ in $\mathbb N$ e sia $\mu$ una macchina che calcola $f$ a partire 
+da un input $m$ rappresentato in binario e restituisce il valore $f(m)$ in unario. Sia $\mu'$ la macchina che, 
+a partire da una parola $w\in\{0,1\}^*$ di lunghezza $n$ (di cui ignora il contenuto), 
+esegue la computazione di $\mu$ su ciascuno degli interi $m=0,1,\dots,n$ 
+(rappresentati in binario, generati ad esempio mediante un contatore)\footnote{Per la prima lettera di $w$, si scrive $0$ 
+sul secondo nastro, si fa agire $\mu$ prendendo come input $0$, alla fine della computazione (e finisce sicuramente poihchè $f$ è Turing calcolabile
+) si scorre il puntatore della prima riga sulla seconda lettera e si puliscono tutti gli altri nastri scrivendo $01$ sul secondo nastro. A questo punto si fa 
+agire di nuovo $\mu$ prendendo come input $01$. Questo fino a quando il puntatore della prima riga arriva sul primo blank. Ovviamente questa computazione finisce.}. 
+Poiché $f$ è totale, ogni computazione termina e la durata totale dipende solo da $n$ e non dal 
+contenuto di $w$: chiamiamo $T(n)$ tale durata, per cui $\mu'$ è un $T$-timer e $T$ è costruibile in tempo. 
+La durata totale è la somma delle durate delle singole computazioni, e dunque maggiora ognuna di queste durate. 
+In particolare maggiora la durata della computazione di $\mu$ su $n$, che è almeno il tempo necessario a scrivere $f(n)$ 
+in unario, cioè almeno $f(n)+1$. Dunque $T(n)\ge f(n)+1>f(n)$.
 \end{enumerate}
 \end{proof}
 
@@ -57,11 +70,213 @@ In questo modo la macchina si ferma dopo esattamente $c$ passi, qualunque sia l'
 \end{proof}
 
 \begin{lemm}
-Siano $f_1$ ed $f_2$ due funzioni costruibili in tempo. Allora la funzione somma $f(n)=f_1(n)+f_2(n)$ è costruibile in tempo.
+Siano $f_1$ ed $f_2$ due funzioni costruibili in tempo. Allora la funzione somma $f(n)=f_1(n)+f_2(n)$ \`e costruibile in tempo.
 \end{lemm}
 
 \begin{proof}
-Siano $\mu_1$ un $f_1$-timer ed $\mu_2$ un $f_2$-timer: bisogna concatenare la computazione di $\mu_1$ con quella di $\mu_2$, quindi definiamo $\mu=\mu_1\otimes\mu_2$ (la macchina che esegue prima $\mu_1$ su un suo nastro e poi $\mu_2$ su un secondo nastro, in modo che il numero totale di passi sia $f_1(n)+f_2(n)$). L'unica difficoltà consiste nel preparare l'input di $\mu_2$ mentre $\mu_1$ svolge la sua computazione.
+Siano $\mu_1$ un $f_1$-timer ed $\mu_2$ un $f_2$-timer di alfabeto $A \supseteq \{0,1\}$. Per costruire un $f$-timer $\mu$ che termini su ogni $w \in \{0,1\}^*$ in esattamente $f_1(|w|)+f_2(|w|)$ passi, distinguiamo due casi:
 
-Ma questo è possibile in quanto $\mu_1$ dovrà necessariamente leggere l'intero input (per definizione di $f_1$-timer) --- oppure non leggerlo affatto, come ad esempio nelle funzioni costanti. Nel primo caso, ogni volta che leggeremo un carattere di input che non abbiamo ancora letto dovremo copiarlo sul nastro di $\mu_2$; nel secondo caso basterà riservare l'accesso all'input alla macchina $\mu_2$.
+\begin{itemize}
+    \item \textbf{Almeno una delle due funzioni \`e costante.} Per commutativit\`a della somma possiamo supporre senza perdita di generalit\`a che $f_2(n) = c$ per ogni $n \in \mathbb{N}$. La macchina $\mu$ esegue dapprima $\mu_1$ sull'input $w$ (impiegando $f_1(|w|)$ passi) e, al raggiungimento dello stato finale di $\mu_1$, avvia $\mu_2$ su un nastro ausiliario inizialmente vuoto. Poich\'e $f_2$ \`e costante, $\mu_2$ non dipende dall'input e termina in esattamente $c$ passi, per un totale di $f_1(|w|) + c$ passi.
+
+    \item \textbf{Entrambe le funzioni sono non costanti.} Su ogni input $w = w_1 \dots w_n \in \{0,1\}^*$, ciascun timer non costante deve necessariamente scandire l'intero input fino al primo simbolo \textit{blank} $\square$ (altrimenti, arrestandosi prima su una parola, tutti i suoi prolungamenti produrrebbero la stessa computazione e la funzione sarebbe costante); in particolare $f_i(n) \ge n+1$ per $i \in \{1,2\}$.
+
+    Fissiamo una dimensione di blocco $d := 6$ e consideriamo l'alfabeto esteso $B := A \cup \{\hat{0},\hat{1}\} \cup A^d \cup \{\triangleright\}$ come nella costruzione del Teorema~\ref{thm:speedup}. La macchina $\mu$ opera dotando $\mu_1$ di un nastro ausiliario in tre fasi:
+    \begin{enumerate}
+        \item \textbf{Simulazione di $\mu_1$ e compressione a blocchi.} Inizialmente $\mu$ scrive il marcatore di bordo $\triangleright$ sul nastro ausiliario e simula $\mu_1$ sul nastro di input, accumulando nello stato corrente gli ultimi simboli di $\{0,1\}$ scoperti per la prima volta (e marcandoli sul nastro di input con $\hat{0},\hat{1}$). Ogni volta che vengono raccolti $d$ nuovi simboli, $\mu$ scrive il blocco corrispondente $\beta_i \in A^d$ sul nastro ausiliario e sposta la testina ausiliaria di una cella a destra; al raggiungimento del simbolo $\square$, l'eventuale ultimo blocco incompleto viene completato con $\square$ e scritto nell'ultima cella. Al termine dei primi $f_1(n)$ passi, il nastro ausiliario contiene la codifica a blocchi $\beta_0 \beta_1 \dots \beta_{m-1}$ di $w$, dove $m = \lceil n/d \rceil \le n/d + 1$, e la testina ausiliaria dista al pi\`u $m$ celle da $\triangleright$.
+
+        \item \textbf{Riavvolgimento del nastro ausiliario.} La testina del nastro ausiliario retrocede fino a $\triangleright$ in esattamente $k \le m$ passi, lasciando la testina posizionata sul blocco iniziale $\beta_0$.
+
+        \item \textbf{Simulazione accelerata a tempo esatto di $\mu_2$.} Applichiamo la tecnica a blocchi del Teorema~\ref{thm:speedup} (Lemma~\ref{lem:vicino}) per simulare $\mu_2$ sul nastro ausiliario con blocchi di taglia $d = 6$. Poich\'e per un timer il numero di passi deve essere esatto, uniformiamo la durata di ciascun ciclo a esattamente $3$ passi (aggiungendo un passo fittizio di attesa nei cicli che terminano al passo~(b) anzich\'e~(c)). In tal modo, dopo $k$ cicli (che richiedono esattamente $3k$ passi), $\mu$ ha simulato esattamente $dk = 6k$ passi di $\mu_2$. Successivamente, $\mu$ prosegue simulando $\mu_2$ con cicli standard (oppure, per i rimanenti $f_2(n) - 6k$ passi, eseguendo $1$ passo di $\mu_2$ per ogni transizione dopo aver decompresso localmente il blocco corrente, o ancora completando i restanti $\lfloor (f_2(n)-6k)/d \rfloor$ cicli da $3$ passi pi\`u gli ultimi $r = (f_2(n)-6k) \bmod d$ passi).
+    \end{enumerate}
+    Per $n$ sufficientemente grande (gestendo i finiti input restanti tramite una tabella negli stati), si ha $6k \le 6\lceil n/6 \rceil \le n+5 \le f_2(n)$ non appena $n \ge 4$ (essendo $f_2(n) \ge n+1$, mentre se $f_2(n) < 6k$ per qualche $n$ basta aumentare $d$ affinch\'e $dk \le f_2(n)$). Il bilancio complessivo dei passi \`e quindi:
+    \[
+        \underbrace{f_1(n)}_{\text{fase 1}} + \underbrace{k}_{\text{fase 2}} + \underbrace{3k}_{\text{primi } 6k \text{ passi di } \mu_2} + \underbrace{\bigl(f_2(n) - 6k\bigr)}_{\text{passi rimanenti}} = f_1(n) + f_2(n) - 2k,
+    \]
+    e aggiungendo esattamente $2k$ passi fittizi di attesa al termine (contati ripercorrendo per due volte le $k$ celle marcate sul nastro ausiliario prima dell'arresto), $\mu$ si arresta in esattamente $f_1(n) + f_2(n)$ passi.
+\end{itemize}
+In entrambi i casi $f$ \`e dunque costruibile in tempo.
 \end{proof}
+
+% ----------------------------------------------------------------------
+% Lezione 19
+% ----------------------------------------------------------------------
+\begin{lemm}
+La funzione esponenziale $f(n)=2^n$ è costruibile in tempo.
+\end{lemm}
+
+% NOTA: nella lezione il conteggio è 1+2+...+2^{n-1}=2^n-1, più un ulteriore passo. Per giustificare che
+% un ciclo costi esattamente quanto scritto, qui il ciclo j viene contato come 2^j passi (la parola 1^{2^{j-1}}
+% viene letta due volte) e il conteggio totale è rifatto di conseguenza: il risultato finale (2^n passi) non cambia.
+\begin{proof}
+Consideriamo una macchina a tre nastri: sul primo nastro si trova l'input $w$, di lunghezza $n$, mentre sul secondo e sul terzo nastro la macchina costruisce, per cicli successivi, parole formate da soli $1$ la cui lunghezza raddoppia ad ogni ciclo.
+
+Il primo passo legge il primo carattere dell'input: se è un blank (cioè $n=0$) la macchina si arresta, avendo eseguito $1=2^0$ passi; altrimenti scrive un $1$ sul secondo nastro e sposta a destra la testina del primo nastro. Dopo questo passo, sul secondo nastro c'è la parola $1^{2^0}$.
+
+Per $j=1,2,\dots$ il ciclo di ordine $j$ lavora come segue. I cicli di ordine dispari prendono come \emph{sorgente} il secondo nastro e come \emph{destinazione} il terzo; i cicli di ordine pari fanno viceversa. Il ciclo $j$ parte con la parola $1^{2^{j-1}}$ sul nastro sorgente. Questa viene letta due volte (la seconda volta percorrendola in senso inverso, in modo da non dover riportare la testina all'inizio) e per ogni simbolo letto la macchina scrive un $1$ sul nastro destinazione, che al termine del ciclo contiene dunque $1^{2\cdot 2^{j-1}}=1^{2^j}$. Il ciclo dura pertanto $2\cdot 2^{j-1}=2^j$ passi. Poiché la parola sul nastro destinazione è più lunga di quella che il nastro conteneva prima, la nuova parola ricopre interamente la vecchia e non serve cancellare nulla; la fine di una parola è riconosciuta dal blank che la segue.
+
+Nel primo passo di ciascun ciclo la testina del primo nastro viene spostata di una cella a destra, consumando un carattere dell'input: se il carattere letto è un blank, l'input è finito e la macchina si arresta (questo passo è l'ultimo ed è l'unico del ciclo che viene eseguito). Poiché l'input ha $n$ caratteri, vengono completati esattamente i cicli $j=1,\dots,n-1$ e poi la macchina si arresta, per un totale di
+\[
+\underbrace{1}_{\text{primo passo}}+\sum_{j=1}^{n-1}2^j+\underbrace{1}_{\text{passo di arresto}}=1+(2^n-2)+1=2^n
+\]
+passi (per $n=0$ la macchina esegue il solo primo passo, e $2^0=1$). Quindi la macchina è un $2^n$-timer, e l'esponenziale è costruibile in tempo.
+\end{proof}
+
+\begin{prop}
+Se le funzioni $T_1$ e $T_2$ sono costruibili in tempo, allora la funzione composta $T_2\circ T_1$, cioè $n\mapsto T_2(T_1(n))$, è costruibile in tempo.
+\end{prop}
+
+% NOTA: se T_2(T_1(n)) < T_1(n) la macchina prodotto si arresta quando si arresta mu_2, interrompendo mu_1:
+% in lezione questo caso è nascosto nelle clausole della funzione di transizione (non leggibili con chiarezza).
+\begin{proof}
+Per ipotesi esistono un $T_1$-timer $\mu_1$ e un $T_2$-timer $\mu_2$. Cerchiamo una macchina $\mu$ che per ogni parola binaria $w$ di lunghezza $n$ abbia una computazione di lunghezza $T_2(T_1(n))$, ovvero tale che
+\[
+T_\mu(w)=T_{\mu_2}(w')\qquad\text{se } |w'|=T_{\mu_1}(w)=T_1(n).
+\]
+
+In prima battuta, osserviamo che è possibile modificare la computazione di $\mu_1$ in modo che produca un output $w'$ (aggiungendo un contatore unario che scrive un $1$ per ogni passo di $\mu_1$). Se facessimo agire $\mu_2$ su $w'$ una volta terminato $\mu_1$, la parte di computazione eseguita da $\mu_2$ sarebbe lunga proprio $T_2(T_1(|w|))$.
+
+In verità, la macchina così disegnata eseguirebbe in una prima fase la computazione che produce $w'$, di lunghezza $T_1(n)$, a cui sommerebbe la computazione di lunghezza $T_2(T_1(n))$; questo non dimostrerebbe la tesi. Per risolvere il problema bisogna sovrapporre le due computazioni, in modo da produrre la parola $w'$ \emph{mentre} la seconda macchina esegue la sua computazione sui simboli di $w'$ già prodotti. Questo evita di avere una computazione più lunga di $T_1(n)$ passi rispetto al valore cercato $T_2(T_1(n))$.
+
+Costruiamo quindi la composizione parallela delle due macchine, con l'aggiunta di un nastro in cui viene memorizzato l'output $w'$ di $\mu_1$, che fa da nastro di input per $\mu_2$. Per semplicità illustriamo la costruzione come se $\mu_1$ e $\mu_2$ fossero macchine ad un nastro ($k_1=k_2=1$), senza esplicitare i vettori di caratteri in input e in output. La macchina $\mu$ ha insieme degli stati $Q_1\times Q_2$ e ad ogni passo:
+\begin{enumerate}
+\item finché $\mu_1$ non è nello stato finale, applica la transizione di $\mu_1$ e contemporaneamente scrive un $1$ sulla cella successiva del nastro di $w'$;
+\item applica contemporaneamente la transizione di $\mu_2$, che legge il nastro di $w'$;
+\item quando $\mu_2$ raggiunge lo stato finale, anche $\mu$ si arresta (anche se $\mu_1$ non avesse ancora terminato: il suo output non serve più).
+\end{enumerate}
+Il punto delicato è che $\mu_2$ può dover leggere una cella di $w'$ non ancora scritta. Questo non accade: la testina di $\mu_2$ si sposta al più di una cella per passo, quindi al passo $t$ si trova al più sulla cella $t$ di $w'$, e la cella $t$ è scritta proprio al passo $t$. Poiché il simbolo scritto è sempre lo stesso ($1$), la macchina $\mu$ può \emph{anticipare} il simbolo letto da $\mu_2$: se $\mu_1$ non è ancora arrivata allo stato finale e la cella letta da $\mu_2$ sul nastro di $w'$ è vuota, questa è la cella che viene scritta in quel passo e $\mu_2$ la legge come un $1$; se invece $\mu_1$ è già arrivata allo stato finale, un blank è un vero blank (siamo oltre la fine di $w'$). Questa anticipazione è anche la ragione per cui lo stato iniziale di $\mu$ è la coppia $(q_0,q_2')$, dove $q_2'$ è lo stato in cui $\mu_2$ si porta dopo la prima mossa, calcolata come se avesse letto un $1$.
+
+In questo modo $\mu_2$ esegue la propria computazione esattamente come se avesse ricevuto in ingresso $w'$ (di lunghezza $T_1(n)$), e dunque $\mu$ si ferma dopo $T_2(T_1(n))$ passi.
+\end{proof}
+
+\begin{prop}
+Se le funzioni $f_1$ ed $f_2$ sono costruibili in tempo, lo è anche il prodotto $g(n):=f_1(n)\cdot f_2(n)$.
+\end{prop}
+
+\begin{proof}
+Siano $\mu_1$ e $\mu_2$ rispettivamente un $f_1$-timer e un $f_2$-timer, macchine di Turing a $k_1$ e $k_2$ nastri rispettivamente. L'idea è di eseguire il lavoro della macchina $\mu_1$ (su nastri disgiunti da quelli di $\mu_2$) in modo tale che \emph{ogni passo} di $\mu_1$ sia simulato da una fase di $\mu_2$ sull'input $w$, lunga $f_2(n)$ passi. Nel calcolo a partire da una parola di lunghezza $n$, le $f_1(n)$ fasi richiedono in totale $f_1(n)\cdot f_2(n)$ passi. Le fasi di $\mu_2$ leggono la parola di input alternativamente da sinistra a destra e da destra a sinistra, in modo da non dover riportare la testina all'inizio ad ogni fase.
+
+Il problema è che, non avendo posto alcuna condizione sulla configurazione finale di un timer, non sappiamo se la parola iniziale (o almeno una parola della stessa lunghezza) sia ancora scritta sul primo nastro al termine di $\mu_2$, né se il simbolo attualmente accessibile sia il primo, come sarebbe necessario per poter ripetere la computazione. Mostriamo che si può trasformare $\mu_2$ in modo da ottenere questa situazione (o quasi).
+
+L'idea è di usare il primo nastro solo in lettura, e mai per scrivere. Per questo usiamo un nastro ausiliario, inizialmente vuoto, che chiamiamo \emph{nastro $1^{\mathrm{bis}}$}, su cui scriviamo ciò che $\mu_2$ avrebbe scritto sul nastro $1$. Il problema è che la parola iniziale è presente sul nastro $1$ e non sul nastro $1^{\mathrm{bis}}$ (e vogliamo evitare di iniziare con una copia sistematica di tutta la parola dal nastro $1$ al nastro $1^{\mathrm{bis}}$, perché questo cambierebbe la lunghezza del calcolo).
+
+La difficoltà consiste quindi nel riconoscere, quando si legge una cella vuota del nastro $1^{\mathrm{bis}}$, se si tratta di un ``vero'' blank o di un blank corrispondente a un carattere del nastro $1$ che non è ancora stato copiato. La distinzione si può fare se siamo certi che ad ogni passo della computazione viene scritto un carattere sul nastro $1^{\mathrm{bis}}$: in tal caso le celle visitate non contengono blank ``interni'', e quindi un blank letto a sinistra è un vero blank, mentre una cella vuota a destra (cioè letta dopo una mossa a destra) è un falso blank, che viene trattato come il carattere corrispondente del nastro $1$ (che può essere a sua volta vuoto se la lettura della parola iniziale è completata, momento dal quale non è più necessario fare distinzione). Il processo di copia del nastro $1$ sul nastro $1^{\mathrm{bis}}$ può essere dunque eseguito in contemporanea al calcolo, a patto che non vengano lasciate celle vuote durante il calcolo. Questa condizione è facile da soddisfare: poiché l'alfabeto non è stato vincolato, basta usare un carattere $*$ che rappresenta il blank ma non è un blank.
+
+A questo punto l'ipotesi desiderata è assicurata, tranne per il fatto che la casella accessibile alla fine del calcolo è quella che contiene l'ultimo carattere della parola e non quella che contiene il primo, come invece richiederebbe la definizione. Per evitare un ritorno (che cambierebbe la lunghezza del calcolo), è sufficiente modificare $\mu_2$ in modo che funzioni come prima ma a partire dall'ultimo carattere e non dal primo: basta considerare la macchina ``mirror'' di $\mu_2$, ottenuta invertendo la direzione di tutti i movimenti. Le fasi pari e dispari useranno rispettivamente $\mu_2$ e la sua macchina mirror. Questo conclude la dimostrazione.
+\end{proof}
+
+L'argomento precedente può essere facilmente modificato per mostrare che anche l'esponenziale di due funzioni costruibili in tempo è ancora costruibile in tempo (la somma era già stata trattata nel lemma precedente). Per i nostri scopi basterà sapere che le funzioni di complessità più comuni sono costruibili in tempo, la qual cosa si deduce dalle proprietà di chiusura che abbiamo appena mostrato.
+
+% ======================================================================
+% Lezione 20: la gerarchia in tempo
+% ======================================================================
+\section{La gerarchia in tempo}
+
+Le macchine di Turing universali ci hanno permesso di dimostrare l'esistenza di problemi semidecidibili per macchina di Turing che non sono decidibili. Vedremo ora che le stesse macchine di Turing (universali) permettono di ottenere risultati analoghi relativamente alle classi di complessità in tempo. In pratica mostreremo l'esistenza di una gerarchia di classi di complessità tra loro separabili.
+
+Vedremo due risultati di separazione di classi di complessità, precisamente:
+\begin{itemize}
+\item il risultato di separazione tra la classe $\mathrm{DTIME}(cn)$ e $\mathrm{DTIME}(cn^2)$, ottenuto mediante il pumping lemma;
+\item il risultato ottenuto utilizzando il concetto di funzione costruibile in tempo e l'argomento diagonale di Turing, che permette di mostrare l'indecidibilità del problema dell'arresto. Infatti, modificando il concetto di macchina universale con quello di macchina universale per le computazioni che terminano entro un certo tempo, si può mostrare una separazione tra i problemi decidibili in tempo $T_2(n)$ e quelli decidibili in tempo $T_1(n)$.
+\end{itemize}
+
+Per questo, iniziamo con l'introdurre una versione quantitativa del risultato della simulazione di qualsiasi macchina mediante una macchina universale.
+
+\begin{lemm}
+Esiste una macchina di Turing universale $U$ tale che, per ogni macchina $\mu$ ad un nastro di alfabeto $A=\{0,1\}$ e per ogni parola $w$, il calcolo di $U$ a partire da $0^i\,e(\mu)\,w$ si svolge in al massimo $i+7\,|e(\mu)|\,T_\mu(w)$ passi.
+\end{lemm}
+
+% NOTA: nell'enunciato della lezione compare la costante 10, mentre la dimostrazione e il teorema di gerarchia
+% usano 7: qui è stata messa la costante 7, coerente con l'uso successivo.
+
+\begin{theo}[Teorema di gerarchia in tempo, caso deterministico]
+Supponiamo di avere due funzioni di complessità $T_1$ e $T_2$, e che $T_2$ sia costruibile in tempo e che $T_1^2(n)$ sia trascurabile rispetto a $T_2(n)$, cioè $T_1(n)^2=o(T_2(n))$. Allora l'inclusione $\mathrm{DTIME}(T_1(n))\subset\mathrm{DTIME}(T_2(n))$ è stretta, ovvero esiste un insieme $X$ che separa le due classi.
+\end{theo}
+
+\begin{proof}
+Sia $U$ una macchina di Turing universale a cui si applica il lemma precedente. Sia $X$ l'insieme delle parole $w\in\{0,1\}^*$ tali che $U$ \emph{non} accetta la parola $ww$ in un tempo minore o uguale a $T_2(|w|)$.
+
+\medskip
+\noindent\emph{Primo punto: $X\in\mathrm{DTIME}(T_2(n))$.} Sia $\mu_{T_2}$ un $T_2$-timer, che esiste perché $T_2$ è costruibile in tempo. Consideriamo la macchina $\mu'$ che, dato $w$ di lunghezza $n$, prima ricopia l'input ottenendo $ww$, e poi simula (su nastri disgiunti) la computazione di $U$ a partire da $ww$ e quella del timer $\mu_{T_2}$ a partire da $w$. La macchina si arresta non appena termina la computazione di $U$ oppure quella del timer. Più precisamente, $\mu'$ accetta $w$ se e solo se $U$ rifiuta $ww$ prima che il timer termini, oppure il timer termina prima che $U$ abbia terminato la sua computazione. Quindi $\mu'$ accetta esattamente le parole per cui $ww$ viene rifiutata da $U$ in tempo inferiore a $T_2(|w|)$, oppure per le quali la computazione di $U$ a partire da $ww$ è di lunghezza superiore a $T_2(|w|)$: ovvero, esattamente gli elementi di $X$.
+
+Per costruzione, la macchina $\mu'$ ha tempo di arresto al più $3n+T_2(n)$: infatti sono necessari $3n$ passi per passare dall'input $w$ a $ww$ prima di iniziare la computazione di $U$, e poi la computazione dura al più $T_2(n)$ passi, scanditi dal timer. Pertanto $X\in\mathrm{DTIME}(3n+T_2(n))$. Poiché $T_1(n)\ge n$, dall'ipotesi $T_1(n)^2=o(T_2(n))$ segue che $n^2=o(T_2(n))$, e dunque $n=o(T_2(n))$; per il teorema di speed-up si ha allora $\mathrm{DTIME}(3n+T_2(n))=\mathrm{DTIME}(T_2(n))$, e quindi $X\in\mathrm{DTIME}(T_2(n))$.
+
+\medskip
+\noindent\emph{Secondo punto: $X\notin\mathrm{DTIME}(T_1(n))$.} Supponiamo per assurdo che $X$ appartenga alla classe $\mathrm{DTIME}(T_1(n))$; si tratta di trovare una contraddizione. Simulando la macchina con una macchina ad un nastro di alfabeto $\{0,1\}$ (il che costa al più un quadrato del tempo, a meno di una costante) e applicando il teorema di speed-up, esiste una costante $c>0$ e una macchina di Turing $\mu$ ad un nastro, di alfabeto $A=\{0,1\}$, che decide $X$ in tempo al più $c\cdot T_1(n)^2$. Sia $e(\mu)$ un codice per $\mu$. Per ipotesi, $T_1(n)^2=o(T_2(n))$, quindi esiste un intero $i$ che soddisfa
+\[
+i+7\,|e(\mu)|\,c\,T_1(i+|e(\mu)|)^2<T_2(i+|e(\mu)|).
+\]
+Sia $w$ la parola $0^i\,e(\mu)$, di lunghezza $|w|=i+|e(\mu)|$: la parola $0^i\,e(\mu)\,w$ è allora esattamente $ww$.
+\begin{itemize}
+\item Supponiamo prima che $w$ sia in $X$. Allora la macchina $\mu$ accetta $w$ in tempo al massimo $c\,T_1(|w|)^2$, quindi la macchina $U$ accetta la parola $0^i\,e(\mu)\,w=ww$ in tempo al più $i+7|e(\mu)|\,c\,T_1(|w|)^2$ e, pertanto, a fortiori, in tempo al massimo $T_2(|w|)$. Ma questo significa che $U$ accetta $ww$ in tempo al più $T_2(|w|)$, il che implica che $w$ non è in $X$. Quindi l'ipotesi che $w$ sia in $X$ è da rifiutare.
+\item Supponiamo al contrario che $w\notin X$. Allora la macchina $\mu$ rifiuta $w$ con tempo di arresto al massimo $c\,T_1(|w|)^2$, quindi la macchina $U$ rifiuta la parola $0^i\,e(\mu)\,w=ww$ con tempo di arresto al più $i+7|e(\mu)|\,c\,T_1(|w|)^2$, e quindi, a fortiori, al più in tempo $T_2(|w|)$. Ma questo implica che $U$ non accetta $ww$ in tempo inferiore a $T_2(|w|)$, e quindi $w\in X$. Quindi anche l'ipotesi che $w$ non sia in $X$ è da scartare.
+\end{itemize}
+È quindi in definitiva l'ipotesi dell'esistenza della macchina $\mu$ a essere contraddittoria.
+\end{proof}
+
+\subsection{Considerazioni conclusive sulla gerarchia in tempo}
+
+L'idea della macchina universale può sembrare banale oggi a causa della diffusione dei computer programmabili. Certamente non era lo stesso intorno al 1935, quando Alan Turing introdusse il suo formalismo: trattare i dati e le macchine (tramite il loro programma) come lo stesso tipo di oggetto era una nuova idea, proprio come lo era trattare numeri e formule sui numeri (tramite la loro aritmetizzazione) quando Gödel la introdusse all'inizio di questo straordinario decennio per i fondamenti della logica e della matematica. In larga misura, l'idea del calcolatore programmabile è nata da questa idea di macchina universale di Turing, progettata almeno dieci anni prima che una realizzazione materiale arrivasse a concretizzarla. Nella sua versione originale, essa permise a Turing di dare, all'incirca contemporaneamente ad A.\ Church con il $\lambda$-calcolo, un primo risultato di indecidibilità \cite{Turing1936}.
+
+Questo nuovo tipo di risultato è stato ottenuto in risposta all'Entscheidungsproblem\footnote{L'Entscheidungsproblem (in italiano: ``problema della decisione'') è un problema posto da David Hilbert nel 1928, all'interno dell'allora fervente dibattito sui fondamenti della matematica. Il problema consiste nel chiedere di esibire una procedura, eseguibile del tutto meccanicamente, in grado di stabilire, per ogni formula espressa nel linguaggio formale della logica del primo ordine, se tale formula è o meno un teorema della logica del primo ordine: in altri termini, se tale enunciato è o meno deducibile all'interno del sistema formale. Una risposta negativa al problema venne data da Alonzo Church nel 1936 \cite{Church1936} e da Alan Turing, indipendentemente, pochi mesi dopo \cite{Turing1936}, in due lavori che, insieme, costituiscono le basi per la fondazione della teoria della calcolabilità.} di Hilbert, e ha rivelato quanto fosse errata la convinzione che una sufficiente formalizzazione avrebbe portato, almeno in teoria, alla possibilità di determinare la verità effettiva di ogni affermazione matematica. Il teorema di incompletezza di Gödel aveva dimostrato che ci sono affermazioni vere ma non dimostrabili nella usuale aritmetica: l'algoritmo per decidere se un'affermazione è vera, consistente nel tentare di costruire una prova, non potrebbe quindi risolvere completamente il problema. Qui entra in gioco il risultato di indecidibilità di Turing, che va in qualche senso oltre: esso mostra che ci sono problemi (come quello dell'arresto di una macchina universale) che non sono risolvibili non solo con un processo particolare come quello fornito da una prova in aritmetica, ma con nessuna procedura effettivamente calcolabile.
+
+La versione quantitativa e minimalistica dei risultati sull'indecidibilità costituisce il teorema di gerarchia deterministica (in tempo), che appare in \cite{Hartmanis1965}. Naturalmente ci sono risultati simili per la gerarchia in spazio: ad esempio in \cite{HopcroftUllman1979}.
+
+% ======================================================================
+% Lezione 21: proiezioni
+% ======================================================================
+% NOTA: titolo provvisorio, la pagina iniziale della lezione non è inclusa nel PDF.
+\section{Proiezioni e testimoni}
+
+È un'idea abbastanza naturale quella di introdurre una nuova misura di complessità per la decidibilità di un insieme $X$ che tenga conto di un problema di decisione che utilizza dei parametri addizionali, che eventualmente semplificano la procedura. Ci sono due modi per definire precisamente questo approccio, a seconda che i parametri aggiuntivi siano considerati come dati a priori o siano costruiti durante il processo di decisione. Vedremo che questi approcci sono perfettamente equivalenti. L'approccio che utilizza la verifica sarà considerato per primo.
+
+Questo problema può dunque essere considerato il prototipo di un modo più generale per valutare la complessità computazionale di un insieme: valutando la complessità di un insieme di cui esso è proiezione.
+
+\begin{defi}
+Fissiamo un alfabeto $A$ e un insieme $Y\subseteq A^*\times A^*$. Diciamo che $X\subseteq A^*$ è la \emph{prima componente} (o \emph{prima proiezione}) di $Y$ se
+\[
+X=\{x\in A^*\mid (x,w)\in Y\text{ per qualche } w\in A^*\}.
+\]
+Se $(x,w)\in Y$, la parola $w$ si dice \emph{testimone} (o \emph{certificato}) dell'appartenenza di $x$ a $X$.
+\end{defi}
+
+La prima proprietà che discende da questa definizione è di natura qualitativa.
+
+\begin{prop}
+Sia $A$ un alfabeto qualunque e sia $X\subseteq A^*$. Le tre proposizioni seguenti sono equivalenti:
+\begin{enumerate}
+\item $X$ è semidecidibile per macchina di Turing;
+\item $X$ è proiezione di un sottoinsieme decidibile di $A^*\times A^*$;
+\item $X$ è proiezione di un sottoinsieme semidecidibile di $A^*\times A^*$.
+\end{enumerate}
+\end{prop}
+
+\begin{proof}
+\ 
+\begin{itemize}
+\item[$1\Rightarrow 2$] Supponiamo $X$ Turing semidecidibile e sia $\mu$ una macchina che semidecide $X$. Fissiamo un simbolo $a\in A$ una volta per tutte e usiamo come enumerazione di tutti i possibili tempi di calcolo l'applicazione iniettiva $\mathbb N\to A^*$ che associa a $t$ la parola $a^{t+1}$. Poniamo
+\[
+Y=\{(x,a^{t+1})\mid \mu \text{ accetta } x \text{ in al più } t \text{ passi}\}.
+\]
+Costruiamo una macchina di Turing $\mu'$ a partire da $\mu$: su input $(x,a^{t+1})$, la macchina $\mu'$ ricopia la seconda parola $a^{t+1}$ su un nastro aggiuntivo rispetto a quelli necessari per la simulazione della computazione di $\mu$, e simula i primi $t$ passi di computazione di $\mu$ a partire da $x$. Durante la simulazione, $\mu'$ procede leggendo uno ad uno i simboli della parola contenuta sul nastro aggiuntivo (che funge da orologio); la simulazione termina quando $\mu$ si arresta oppure quando la parola sul nastro aggiuntivo è finita. La macchina $\mu'$ accetta se e solo se $\mu$ ha accettato $x$ entro questo limite di tempo. Per costruzione $\mu'$ decide $Y$ (termina sempre), e l'insieme $X$ è la prima proiezione di $Y$, poiché $x\in X$ se e solo se la macchina $\mu$ accetta $x$ in al più $t$ passi per qualche $t$. Dunque abbiamo mostrato che $1$ implica $2$.
+\item[$2\Rightarrow 3$] Per definizione: da una macchina che decide $Y$ si ottiene banalmente una macchina che semidecide $Y$.
+\item[$3\Rightarrow 1$] Supponiamo che $X$ sia la prima proiezione di $Y$ e che $\mu$ sia una macchina di Turing che semidecide $Y$. Per ottenere una macchina che semidecide $X$ fissiamo un'enumerazione $w_1,w_2,\dots$ di $A^*$ che sia Turing calcolabile, ovvero tale che $w_{k+1}$ si costruisca a partire da $w_k$. Su input $x$ la nuova macchina $\mu'$ procede per \emph{stadi}: nello stadio $s$ avvia la computazione di $\mu$ sulla coppia $(x,w_s)$ (eseguendone un primo passo) e poi esegue un ulteriore passo di ciascuna delle computazioni già avviate sulle coppie $(x,w_1),\dots,(x,w_{s-1})$. In altre parole, si esegue un passo di calcolo di $\mu$ a partire da $(x,w_1)$, poi si genera la nuova coppia $(x,w_2)$ e si esegue il primo passo di calcolo per questa inizializzazione insieme ad un ulteriore passo per la computazione su $(x,w_1)$, poi si genera la terza coppia $(x,w_3)$, e così via, incrementando di un passo ogni computazione ad ogni stadio. Se uno di questi calcoli raggiunge una configurazione finale accettante, $\mu'$ si arresta accettando.
+
+Se esiste una parola $w_k$ per cui $(x,w_k)\in Y$, la computazione di $\mu$ su $(x,w_k)$ accetta in un certo numero $t$ di passi e viene quindi completata entro lo stadio $k+t$: dunque $\mu'$ accetta $x$. Se invece $x\notin X$, allora $(x,w)\notin Y$ per ogni $w$, e per nessuna delle combinazioni di input la macchina $\mu$ termina la computazione: $\mu'$ non si arresta. Dunque $\mu'$ è proprio una macchina che semidecide $X$.\qedhere
+\end{itemize}
+\end{proof}
+
+\begin{coro}
+Esiste un insieme decidibile $Y\subseteq\mathbb N^2$ la cui prima proiezione $X\subseteq\mathbb N$ non è decidibile.
+\end{coro}
+
+% NOTA: nell'enunciato della lezione manca "decidibile" (senza di esso l'enunciato è banale: basta Y = X x {0}).
+\begin{proof}
+Si consideri un insieme $X\subseteq\mathbb N$ che è semidecidibile ma non è decidibile (per macchina di Turing deterministica), ad esempio
+\[
+X=\{x\mid \text{la computazione della macchina universale } U \text{ a partire dalla parola } x \text{ termina}\}.
+\]
+Sappiamo che $X$ è semidecidibile ma non è decidibile. Per la proposizione precedente ($1\Rightarrow 2$), $X$ è la prima proiezione di un insieme decidibile $Y$.
+\end{proof}
+
+Vediamo così che la classe degli insiemi ottenuti come proiezione di insiemi decidibili coincide con la classe degli insiemi semidecidibili: l'operazione di proiezione non estende ulteriormente la classe dei semidecidibili, ma questa non è la stessa della classe degli insiemi Turing decidibili. Come suggerisce la dimostrazione del corollario precedente, il fenomeno è dovuto all'assenza di un limite effettivo che permetta di limitare lo spazio dei possibili $w$ (la seconda componente, detta \emph{witness}) a partire dalla prima componente $x$.
