@@ -1,0 +1,194 @@
+\begin{defi}[Occorrenza libera]
+Dato un termine $t\in\Lambda$ definiamo induttivamente sulla lunghezza di $t$ le occorrenze libere della variabile $x$ in $t$:
+\begin{itemize}
+    \item Se $t$ è la variabile $x$, l'occorrenza di $x$ in $t$ è libera;
+    \item Se $t=(u)v$, le occorrenze libere di $x$ in $t$ sono quelle di $x$ in $u$ e $v$;
+    \item Se $t=\lambda y\,u$, le occorrenze libere di $x$ in $t$ sono quelle di $x$ in $u$ quando $x\neq y$ e se invece $x=y$ allora $x$ non ha occorrenze libere in $t$.
+\end{itemize}
+\end{defi}
+
+Una \emph{variabile libera} di $t$ è una variabile avente almeno un'occorrenza libera in $t$, mentre una \emph{variabile legata} di $t$ è una variabile che compare in $t$ subito dopo il simbolo $\lambda$. Possiamo definire per induzione strutturale i due insiemi di variabili di un termine:
+
+\begin{defi}
+Per ogni $t\in\Lambda$ definiamo l'insieme delle variabili libere di $t$ come
+\[
+\mathrm{FV}(t)=
+\begin{cases}
+\{x\} & \text{se } t=x\in V,\\
+\mathrm{FV}(u)\cup\mathrm{FV}(v) & \text{se } t=(u)v,\\
+\mathrm{FV}(u)\setminus\{x\} & \text{se } t=\lambda x\,u.
+\end{cases}
+\]
+Analogamente definiamo l'insieme delle variabili legate di $t$ come
+\[
+\mathrm{BV}(t)=
+\begin{cases}
+\emptyset & \text{se } t=x\in V,\\
+\mathrm{BV}(u)\cup\mathrm{BV}(v) & \text{se } t=(u)v,\\
+\mathrm{BV}(u)\cup\{x\} & \text{se } t=\lambda x\,u.
+\end{cases}
+\]
+\end{defi}
+
+Da quanto detto, una variabile $x$ può essere tanto libera quanto legata in un $\lambda$-termine $t$; per esempio in $(x)\lambda x\,x$, $x$ compare libera in $x$ e legata in $\lambda x\,x$, quindi
+\[
+x\in\mathrm{BV}((x)\lambda x\,x)\qquad\text{e}\qquad x\in\mathrm{FV}((x)\lambda x\,x).
+\]
+
+\begin{defi}
+Un $\lambda$-termine senza variabili libere è detto \emph{chiuso}.
+\end{defi}
+
+Ad esempio è chiuso il $\lambda$-termine $\lambda x\lambda y\,(x)y$.
+
+Accanto alla definizione di ``occorrenze libere di una variabile in un $\lambda$-termine'', è opportuno dare la definizione di ``occorrenza di un $\lambda$-termine $t$ in un $\lambda$-termine $u$''.
+
+\begin{defi}[Sottotermine]
+Dato un termine $t$ si definisce induttivamente l'insieme di termini che occorrono in $t$:
+\begin{itemize}
+    \item $t$ occorre in $t$;
+    \item Se $t$ occorre in $u$ o in $v$, allora $t$ occorre in $(u)v$;
+    \item Se $t$ occorre in $u$, allora, per ogni $y$, $t$ occorre in $\lambda y\,u$.
+\end{itemize}
+Sia dato allora un termine $v$, si dirà che $v$ è un \emph{sottotermine} di $t$ se $v$ occorre in $t$.
+\end{defi}
+
+Il significato di ``occorrenza di $t$ in $u$'' è assunto come intuitivamente chiaro: per esempio ci sono due occorrenze di $(x)y$ in $((x)y)\lambda x\,(x)y$.
+
+\begin{defi}[Sostituzione semplice]
+Siano $u,t_1,\dots,t_k\in\Lambda$ e $x_1,\dots,x_k\in V$, tali che $x_i\neq x_j$ se $i\neq j$. Il risultato della sostituzione di $t_i$ ad ogni occorrenza libera di $x_i$ in $u$ è il $\lambda$-termine $u\langle t_1/x_1,\dots,t_k/x_k\rangle$ definito, per induzione sulla lunghezza di $u$, come segue:
+\begin{itemize}
+    \item se $u\in V$ allora distinguiamo due casi:
+    \begin{enumerate}
+        \item[i)] Se $u=x_i$ per qualche $1\le i\le k$ allora $u\langle t_1/x_1,\dots,t_k/x_k\rangle=t_i$;
+        \item[ii)] Se $u\neq x_i$ per ogni $1\le i\le k$ allora $u\langle t_1/x_1,\dots,t_k/x_k\rangle=u$;
+    \end{enumerate}
+    \item Se $u=(w)v$, allora
+    \[
+    u\langle t_1/x_1,\dots,t_k/x_k\rangle=(w\langle t_1/x_1,\dots,t_k/x_k\rangle)\,v\langle t_1/x_1,\dots,t_k/x_k\rangle;
+    \]
+    \item Se $u=\lambda x\,v$ abbiamo ancora due sottocasi:
+    \begin{enumerate}
+        \item[i)] se $x=x_i$ per qualche $1\le i\le k$
+        \[
+        u\langle t_1/x_1,\dots,t_k/x_k\rangle=\lambda x_i\,v'
+        \quad\text{dove}\quad
+        v'=v\langle t_1/x_1,\dots,t_{i-1}/x_{i-1},t_{i+1}/x_{i+1},\dots,t_k/x_k\rangle;
+        \]
+        \item[ii)] se $x\neq x_i$ per ogni $1\le i\le k$ allora
+        \[
+        u\langle t_1/x_1,\dots,t_k/x_k\rangle=\lambda x\,w
+        \quad\text{dove}\quad
+        w=v\langle t_1/x_1,\dots,t_k/x_k\rangle.
+        \]
+    \end{enumerate}
+\end{itemize}
+\end{defi}
+
+\begin{rema}
+Il risultato della sostituzione, appena definita, resta inalterato se viene modificato l'ordine delle variabili.
+\end{rema}
+
+Più formalmente, per ogni permutazione $\sigma$ degli indici $\{1,\dots,k\}$ delle variabili da sostituire si ha che:
+\[
+u\langle t_1/x_1,\dots,t_k/x_k\rangle=u\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle.
+\]
+
+\begin{proof}
+La dimostrazione di questa affermazione è immediata, e può essere fatta per induzione sulla lunghezza di $u$ distinguendo i sotto-casi della definizione di sostituzione semplice; poniamo $j$ l'indice tale che $\sigma(j)=i$, allora:
+\begin{itemize}
+    \item se $u\in V$, distinguiamo due casi:
+    \begin{enumerate}
+        \item[i)] Se $u=x_i$ per qualche $1\le i\le k$ allora $u\langle t_1/x_1,\dots,t_k/x_k\rangle=t_i$ e poiché $i=\sigma(j)$ avremo che $u=x_{\sigma(j)}$; di conseguenza per definizione $u\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle=t_{\sigma(j)}$.
+        \item[ii)] Se $u\neq x_i$ per ogni $1\le i\le k$ allora $u\neq x_{\sigma(j)}$ per ogni $1\le j\le k$ e dunque avremo che $u\langle t_1/x_1,\dots,t_k/x_k\rangle=u$ ma anche $u\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle=u$.
+    \end{enumerate}
+    \item Se $u=(w)v$, allora
+    \[
+    u\langle t_1/x_1,\dots,t_k/x_k\rangle=(w\langle t_1/x_1,\dots,t_k/x_k\rangle)\,v\langle t_1/x_1,\dots,t_k/x_k\rangle;
+    \]
+    e inoltre
+    \begin{align*}
+    u\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle={}&(w\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle)\\
+    &\cdot\,v\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle
+    \end{align*}
+    dunque per ipotesi induttiva avremo che
+    \[
+    w\langle t_1/x_1,\dots,t_k/x_k\rangle=w\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle
+    \]
+    e
+    \[
+    v\langle t_1/x_1,\dots,t_k/x_k\rangle=v\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle.
+    \]
+    \item Se $u=\lambda x\,v$ abbiamo ancora due sottocasi:
+    \begin{enumerate}
+        \item[i)] se $x=x_i$ per qualche $1\le i\le k$, allora si avrà che $x=x_{\sigma(j)}$ per $j$ tale che $\sigma(j)=i$ e dunque
+        \[
+        u\langle t_1/x_1,\dots,t_k/x_k\rangle=\lambda x_i\,v'
+        \]
+        dove $v'=v\langle t_1/x_1,\dots,t_{i-1}/x_{i-1},t_{i+1}/x_{i+1},\dots,t_k/x_k\rangle$ e
+        \[
+        u\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle=\lambda x_{\sigma(j)}\,v''
+        \]
+        dove $v''=v\langle t_{\sigma(1)}/x_{\sigma(1)},\dots,t_{\sigma(j)-1}/x_{\sigma(j)-1},t_{\sigma(j)+1}/x_{\sigma(j)+1},\dots,t_{\sigma(k)}/x_{\sigma(k)}\rangle$;
+        \item[ii)] se $x\neq x_i$ per ogni $1\le i\le k$ allora
+        \[
+        u\langle t_1/x_1,\dots,t_k/x_k\rangle=\lambda x\,w
+        \quad\text{dove}\quad
+        w=v\langle t_1/x_1,\dots,t_k/x_k\rangle.
+        \]
+    \end{enumerate}
+\end{itemize}
+\end{proof}
+
+\begin{defi}[Sostituibilità]
+Un termine $t$ si dice \emph{liberamente sostituibile} al posto di $x$ in $u$ se e soltanto se ogni occorrenza libera delle variabili in $t$ resta libera in $u\langle t/x\rangle$.
+\end{defi}
+
+Ad esempio, il termine $t=y$ non è liberamente sostituibile in $u=\lambda y\,((z)x)t$ al posto di $x$, perché in $u\langle t/x\rangle=\lambda y\,((z)y)t$ la variabile $y$, che in $t$ era libera, risulterebbe legata.
+
+\begin{lemm}
+Siano $v,t_1,\dots,t_k,u_1,\dots,u_l$ dei $\lambda$-termini, e $x_1,\dots,x_k,y_1,\dots,y_l$ delle variabili distinte. Se $y_1,\dots,y_l$ non sono libere in $v$, si ha:
+\[
+v\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle=v\langle t_1/x_1,\dots,t_k/x_k\rangle.
+\]
+\end{lemm}
+
+\begin{proof}
+La dimostrazione verrà fatta per induzione sulla lunghezza di $v$.
+\begin{itemize}
+    \item Se $v$ è una variabile, deve essere $v=x_i$ con $(1\le i\le k)$ oppure $v=z$ con $z\neq x_1,\dots,x_k,y_1,\dots,y_l$, poiché se fosse $v=y_j$ $(1\le j\le l)$, $y_j$ sarebbe libera in $v$.
+    \begin{itemize}
+        \item Se $v=x_i$ allora
+        \[
+        v\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle=t_i=v\langle t_1/x_1,\dots,t_k/x_k\rangle.
+        \]
+        \item Se $v=z$ allora
+        \[
+        v\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle=v=v\langle t_1/x_1,\dots,t_k/x_k\rangle.
+        \]
+    \end{itemize}
+    \item Se $v=(v_1)v_2$ e $y_1,\dots,y_l$ non sono libere in $v$, allora $y_1,\dots,y_l$ non sono libere né in $v_1$ né in $v_2$ e, quindi, la tesi si ottiene immediatamente applicando l'ipotesi induttiva a $v_1$ e $v_2$. Infatti,
+    \begin{align*}
+    v\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle={}&(v_1\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle)\\
+    &\cdot\,v_2\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle
+    \end{align*}
+    per l'ipotesi induttiva,
+    \begin{align*}
+    &={}(v_1\langle t_1/x_1,\dots,t_k/x_k\rangle)\,v_2\langle t_1/x_1,\dots,t_k/x_k\rangle\\
+    &={}v\langle t_1/x_1,\dots,t_k/x_k\rangle.
+    \end{align*}
+    \item Se $v=\lambda x\,w$, allora:
+    \begin{itemize}
+        \item se $x=x_i$ $(1\le i\le k)$, si ha:
+        \begin{align*}
+        v\langle t_1/x_1,\dots,t_k/x_k,u_1/y_1,\dots,u_l/y_l\rangle={}&\lambda x_i\,w\langle x_1/y_1,\dots,x_{i-1}/y_{i-1},x_{i+1}/y_{i+1},\dots,x_k/y_k,u_1/y_1,\dots,u_l/y_l\rangle\\
+        ={}&\lambda x_i\,w\langle x_1/y_1,\dots,x_{i-1}/y_{i-1},x_{i+1}/y_{i+1},\dots,x_k/y_k\rangle
+        \end{align*}
+        per l'ipotesi induttiva,
+        \[
+        =v\langle t_1/x_1,\dots,t_k/x_k\rangle;
+        \]
+        % la dimostrazione continua a pagina 127
+    \end{itemize}
+\end{itemize}
+\end{proof}
